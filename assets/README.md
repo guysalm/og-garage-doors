@@ -21,6 +21,8 @@ Centre-cropped to the exact display aspect ratio, saved as JPEG q82.
 | `service-gate-repair-installation.jpg` | `Gate automatic opener 1.jpg` | Driveway gate + LiftMaster gate operator |
 | `service-commercial-garage-door.jpg` | `Cemmercial Roll up door.jpg` | Green commercial roll-up door on a warehouse |
 | `service-jackshaft-side-mount-openers.jpg` | `commercial garage door opener 2.jpg` | Jackshaft operator beside the torsion shaft |
+| `service-cable-drum-repair.jpg` | `Cable and Drum.jpg` | Cable drum with the lift cable wound on the shaft |
+| `service-sensor-repair.jpg` | `Sensoe.jpg` | Safety sensor on the track, indicator lit |
 | `expertise-residential-opener.jpg` | `Broken Spring 2.jpg` | Torsion spring + opener rail above the door |
 | `expertise-garage-door-interior.jpg` | `chain hoist.jpg` | Chain hoist on a commercial roll-up door |
 
@@ -31,10 +33,8 @@ extension in `index.html` from `.svg` to `.jpg` (or `.webp`).
 
 | File | Used for | Aspect / target size |
 |---|---|---|
-| `service-cable-drum-repair.svg` | Cable & drum card | 11:5 — 660×300 |
 | `service-tune-up-maintenance.svg` | Tune-up card | 11:5 — 660×300 |
 | `service-new-door-installation.svg` | New door install card | 11:5 — 660×300 |
-| `service-sensor-repair.svg` | Sensor repair card | 11:5 — 660×300 |
 | `before-after-1…8.svg` | Before & After slider | ~3:2 — 480×330 |
 | `review-avatar-1…3.svg` | Reviewer avatars | 1:1 — 64×64 |
 | `og-garage-doors-logo.svg` | Header + footer logo | keep as SVG |
@@ -43,8 +43,8 @@ extension in `index.html` from `.svg` to `.jpg` (or `.webp`).
 | `badge-*.svg` (4 files) | Guarantee & discount badges | 1:1 — 200×200 |
 | `brand-*.svg` (6 files) | Amarr / Hurricane Master / Clopay / LiftMaster / Genie / Chamberlain | height 44px |
 
-**Four service cards to go**, then the whole services grid is real photography:
-cable & drum, tune-up, new door installation, sensor repair.
+**Two service cards to go** — tune-up & maintenance and new door installation —
+then the whole services grid is real photography.
 
 ## Named photos not yet used
 
