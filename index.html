@@ -299,9 +299,23 @@ button{font:inherit}
   scrollbar-width:none;-ms-overflow-style:none;
 }
 .gallery__track::-webkit-scrollbar{display:none}
-.gallery__track img{
-  flex:0 0 25%;min-width:260px;height:330px;object-fit:cover;
-  scroll-snap-align:start;background:var(--bg-alt)
+.ba-card{
+  flex:0 0 50%;min-width:420px;margin:0;
+  scroll-snap-align:start;background:var(--ink)
+}
+.ba-card__pair{display:grid;grid-template-columns:1fr 1fr;gap:3px}
+.ba-shot{position:relative;overflow:hidden;background:var(--bg-alt)}
+.ba-shot img{width:100%;height:330px;object-fit:cover;display:block}
+.ba-shot__tag{
+  position:absolute;top:0;left:0;z-index:1;
+  padding:6px 14px;font-size:.72rem;font-weight:700;
+  text-transform:uppercase;letter-spacing:.8px;color:#fff
+}
+.ba-shot__tag--before{background:var(--ink)}
+.ba-shot__tag--after{background:var(--crimson)}
+.ba-card figcaption{
+  padding:12px 16px;font-size:.88rem;color:#C6CDD5;
+  text-align:center;background:var(--ink)
 }
 .gallery__nav{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:18px}
 .gallery__arrow{
@@ -398,7 +412,7 @@ button{font:inherit}
 @media (max-width:1024px){
   .hero h1{font-size:2.5rem}
   .services .grid,.reviews .grid,.values .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .gallery__track img{flex:0 0 50%}
+  .ba-card{flex:0 0 100%;min-width:0}
   .footer__grid{grid-template-columns:1fr 1fr}
 }
 @media (max-width:900px){
@@ -434,6 +448,9 @@ button{font:inherit}
   .brands__list{gap:28px}
   .brands__list img{height:34px}
   .mobile-bar{display:grid}
+  .ba-shot img{height:190px}
+  .ba-shot__tag{padding:4px 9px;font-size:.64rem;letter-spacing:.4px}
+  .ba-card figcaption{font-size:.8rem;padding:10px 12px}
   .contact h2{font-size:1.6rem}
   .about h2{font-size:1.7rem}
   .brand__logo{width:150px}
@@ -887,14 +904,55 @@ button{font:inherit}
       <h2 class="section-title section-title--rule" id="gallery-title">Before &amp; After</h2>
     </div>
     <div class="gallery__track" id="gallery-track" tabindex="0" role="region" aria-label="Before and after photos of garage door repairs in {{location}}">
-      <img src="assets/img/before-after-1.svg" width="480" height="330" loading="lazy" alt="Before and after garage door opener replacement in {{location}}">
-      <img src="assets/img/before-after-2.svg" width="480" height="330" loading="lazy" alt="Before and after new garage door with windows installed in {{location}}">
-      <img src="assets/img/before-after-3.svg" width="480" height="330" loading="lazy" alt="Before and after garage door rail and spring repair in {{location}}">
-      <img src="assets/img/before-after-4.svg" width="480" height="330" loading="lazy" alt="Before and after garage door panel replacement in {{location}}">
-      <img src="assets/img/before-after-5.svg" width="480" height="330" loading="lazy" alt="Before and after off-track garage door realignment in {{location}}">
-      <img src="assets/img/before-after-6.svg" width="480" height="330" loading="lazy" alt="Before and after belt drive opener upgrade in {{location}}">
-      <img src="assets/img/before-after-7.svg" width="480" height="330" loading="lazy" alt="Before and after garage door roller and track replacement in {{location}}">
-      <img src="assets/img/before-after-8.svg" width="480" height="330" loading="lazy" alt="Before and after hurricane-rated garage door installation in {{location}}">
+
+      <figure class="ba-card">
+        <div class="ba-card__pair">
+          <div class="ba-shot">
+            <span class="ba-shot__tag ba-shot__tag--before">Before</span>
+            <img src="assets/img/ba-panel-replacement-before.jpg" width="440" height="440" loading="lazy"
+                 alt="Before: residential double garage door with a damaged top panel in {{location}}">
+          </div>
+          <div class="ba-shot">
+            <span class="ba-shot__tag ba-shot__tag--after">After</span>
+            <img src="assets/img/ba-panel-replacement-after.jpg" width="440" height="440" loading="lazy"
+                 alt="After: the same double garage door with a new top panel fitted in {{location}}">
+          </div>
+        </div>
+        <figcaption>Damaged top panel on a residential double door &mdash; replaced.</figcaption>
+      </figure>
+
+      <figure class="ba-card">
+        <div class="ba-card__pair">
+          <div class="ba-shot">
+            <span class="ba-shot__tag ba-shot__tag--before">Before</span>
+            <img src="assets/img/ba-off-track-before.jpg" width="440" height="440" loading="lazy"
+                 alt="Before: garage door pulled off its tracks with bent rails in {{location}}">
+          </div>
+          <div class="ba-shot">
+            <span class="ba-shot__tag ba-shot__tag--after">After</span>
+            <img src="assets/img/ba-off-track-after.jpg" width="440" height="440" loading="lazy"
+                 alt="After: the same garage door reinstalled on straight tracks with a new torsion spring in {{location}}">
+          </div>
+        </div>
+        <figcaption>Door off its tracks &mdash; tracks, hardware and spring reset.</figcaption>
+      </figure>
+
+      <figure class="ba-card">
+        <div class="ba-card__pair">
+          <div class="ba-shot">
+            <span class="ba-shot__tag ba-shot__tag--before">Before</span>
+            <img src="assets/img/ba-commercial-rollup-before.jpg" width="440" height="440" loading="lazy"
+                 alt="Before: old commercial roll-up door removed and laid outside the building in {{location}}">
+          </div>
+          <div class="ba-shot">
+            <span class="ba-shot__tag ba-shot__tag--after">After</span>
+            <img src="assets/img/ba-commercial-rollup-after.jpg" width="440" height="440" loading="lazy"
+                 alt="After: new commercial roll-up door installed in the steel building in {{location}}">
+          </div>
+        </div>
+        <figcaption>Old commercial roll-up door removed and replaced.</figcaption>
+      </figure>
+
     </div>
     <div class="wrap">
       <div class="gallery__nav">
@@ -1202,9 +1260,11 @@ var SITE = {
   var dots  = document.getElementById("gallery-dots");
   if (!track || !dots) return;
 
-  var slides = track.querySelectorAll("img");
+  var slides = track.querySelectorAll(".ba-card");
+  if (!slides.length) return;
   var perView = function(){
-    return Math.max(1, Math.round(track.clientWidth / slides[0].getBoundingClientRect().width));
+    var w = slides[0].getBoundingClientRect().width;
+    return w ? Math.max(1, Math.round(track.clientWidth / w)) : 1;
   };
   var pages = function(){ return Math.max(1, Math.ceil(slides.length / perView())); };
 

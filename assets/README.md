@@ -25,6 +25,9 @@ Centre-cropped to the exact display aspect ratio, saved as JPEG q82.
 | `service-sensor-repair.jpg` | `Sensoe.jpg` | Safety sensor on the track, indicator lit |
 | `expertise-residential-opener.jpg` | `Broken Spring 2.jpg` | Torsion spring + opener rail above the door |
 | `expertise-garage-door-interior.jpg` | `chain hoist.jpg` | Chain hoist on a commercial roll-up door |
+| `ba-panel-replacement-before/-after.jpg` | `1 Before.jpg` / `1 After.jpg` | Damaged top panel, then replaced |
+| `ba-off-track-before/-after.jpg` | `2 beore.jpg` / `2 After.jpg` | Door off its tracks, then reset |
+| `ba-commercial-rollup-before/-after.jpg` | `commercial door before/after.jpg` | Old commercial roll-up out, new one in |
 
 ## Still placeholders
 
@@ -35,7 +38,6 @@ extension in `index.html` from `.svg` to `.jpg` (or `.webp`).
 |---|---|---|
 | `service-tune-up-maintenance.svg` | Tune-up card | 11:5 — 660×300 |
 | `service-new-door-installation.svg` | New door install card | 11:5 — 660×300 |
-| `before-after-1…8.svg` | Before & After slider | ~3:2 — 480×330 |
 | `review-avatar-1…3.svg` | Reviewer avatars | 1:1 — 64×64 |
 | `og-garage-doors-logo.svg` | Header + footer logo | keep as SVG |
 | `icon-google-g.svg` | Google mark on review cards | keep as SVG |
@@ -53,10 +55,9 @@ then the whole services grid is real photography.
 | `Gavlanized sprnings 2 .jpg` | Superseded — `Broken Spring 1.jpg` is a clearer spring shot |
 | `commercial garage door opener 1.jpg` | Second angle of the same operator as `…opener 2.jpg` |
 | `Gate automatin operner 2.jpg` | Second angle of the same gate job |
-| `Rollup door before.jpg` | A "before" with no matching "after" |
 
-The Before & After slider needs **pairs**. Supply the matching "after" for the
-roll-up door and it can fill the first slot.
+The Before & After section now runs on three real pairs. To add another, drop in
+a `<job> before.jpg` / `<job> after.jpg` pair and add one more `.ba-card`.
 
 ## Notes
 
