@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 300" width="660" height="300" role="img" aria-label="Gate repair and installation">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.3" y2="1">
+      <stop offset="0" stop-color="#3B434C"/><stop offset="1" stop-color="#1B2126"/>
+    </linearGradient>
+  </defs>
+  <rect width="660" height="300" fill="url(#bg)"/>
+  <g fill="none" stroke="#6E7A87" stroke-width="2" opacity=".55"
+     transform="translate(190 30) scale(1)">
+    <rect x="0" y="0" width="280" height="190" rx="4"/>
+    <path d="M0 47h280M0 95h280M0 142h280"/>
+    <path d="M70 0v190M140 0v190M210 0v190" opacity=".45"/>
+  </g>
+  <rect x="0" y="254" width="660" height="46" fill="#14181D" opacity=".72"/>
+  <text x="330" y="283" fill="#C6CDD5" font-family="Roboto,Arial,sans-serif"
+        font-size="19" font-weight="500" text-anchor="middle">Gate repair and installation</text>
+</svg>

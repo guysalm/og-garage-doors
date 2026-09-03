@@ -1,0 +1,1285 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+<!-- ============================================================
+     DYNAMIC SEO PLACEHOLDERS
+     Replace at build time (or let the preview script at the bottom
+     fill the defaults). Available tokens:
+       {{business_name}}   {{location}}        {{service_name}}
+       {{phone_number}}    {{phone_display}}  {{whatsapp_number}}
+       {{email}}           {{site_url}}       {{street}}
+       {{city}}            {{state}}          {{zip}}
+       {{rating}}          {{review_count}}   {{service_area}}
+       {{review_1_name}} {{review_1_text}} ... {{review_3_text}}
+     ============================================================ -->
+
+<title>{{service_name}} {{location}} | Same-Day Service — Call {{phone_display}}</title>
+<meta name="description" content="Fast, affordable {{service_name}} in {{location}}. Licensed &amp; insured local techs, 24/7 emergency service, free estimates and no extra charge on weekends. Call {{phone_display}} now.">
+<link rel="canonical" href="{{site_url}}">
+
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="{{business_name}}">
+<meta property="og:title" content="{{service_name}} {{location}} | Same-Day Service — Call {{phone_display}}">
+<meta property="og:description" content="Fast, affordable {{service_name}} in {{location}}. Licensed &amp; insured, 24/7 emergency service, free estimates. Call {{phone_display}}.">
+<meta property="og:url" content="{{site_url}}">
+<meta property="og:image" content="{{site_url}}assets/img/hero-garage-door-repair.svg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#14181D">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" media="print" onload="this.media='all'">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "@id": "{{site_url}}#localbusiness",
+  "name": "{{business_name}}",
+  "image": "{{site_url}}assets/img/hero-garage-door-repair.svg",
+  "logo": "{{site_url}}assets/img/og-garage-doors-logo.svg",
+  "url": "{{site_url}}",
+  "telephone": "{{phone_number}}",
+  "email": "{{email}}",
+  "priceRange": "$$",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "{{street}}",
+    "addressLocality": "{{city}}",
+    "addressRegion": "{{state}}",
+    "postalCode": "{{zip}}",
+    "addressCountry": "US"
+  },
+  "areaServed": { "@type": "City", "name": "{{location}}" },
+  "openingHoursSpecification": [{
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+    "opens": "00:00",
+    "closes": "23:59"
+  }],
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "{{rating}}",
+    "reviewCount": "{{review_count}}",
+    "bestRating": "5",
+    "worstRating": "1"
+  },
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Garage Door Services in {{location}}",
+    "itemListElement": [
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Broken Spring Repair" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Opener Repair & Installation" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Off-Track Door Repair" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Cable & Drum Repair" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Garage Door Roller Replacement" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "New Garage Door Installation" } }
+    ]
+  }
+}
+</script>
+
+<style>
+/* ========== Design tokens — Graphite + Crimson ========== */
+:root{
+  --ink:#14181D;          /* graphite */
+  --ink-2:#1C222A;        /* graphite raised */
+  --ink-3:#0E1216;        /* graphite deep */
+  --crimson:#D22630;      /* primary CTA */
+  --crimson-2:#F04E58;    /* CTA hover / light */
+  --crimson-3:#A81C25;    /* crimson text on white (AA) */
+  --steel:#8A939E;        /* accent / dividers on dark */
+  --bg:#FFFFFF;
+  --bg-alt:#F4F5F7;
+  --text:#14181D;
+  --muted:#5A6270;
+  --line:#E3E6EA;
+  --shadow-sm:0 1px 3px rgba(20,24,29,.10);
+  --shadow-md:0 4px 14px rgba(20,24,29,.10);
+  --shadow-lg:0 10px 34px rgba(20,24,29,.16);
+  --radius:6px;
+  --radius-pill:999px;
+  --maxw:1140px;
+  --font:"Roboto",-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+  /* inline SVG checkmark — no icon font, no extra request */
+  --check-mask:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 12'%3E%3Cpath d='M6 9.2 2.3 5.5.9 6.9 6 12 15.1 2.9 13.7 1.5z'/%3E%3C/svg%3E");
+}
+
+/* ========== Reset ========== */
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font:400 16px/1.65 var(--font);
+  overflow-x:hidden;
+}
+img{max-width:100%;height:auto;display:block}
+a{color:var(--crimson-3);text-decoration:none}
+a:hover{text-decoration:underline}
+h1,h2,h3,h4{margin:0 0 .5em;line-height:1.2;color:var(--ink);font-weight:700}
+p{margin:0 0 1em}
+ul{margin:0;padding:0;list-style:none}
+button{font:inherit}
+:focus-visible{outline:3px solid var(--crimson-2);outline-offset:2px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.skip-link{position:absolute;left:-9999px;top:0;z-index:200;background:var(--crimson);color:#fff;padding:12px 20px;font-weight:700}
+.skip-link:focus{left:0}
+
+/* ========== Layout ========== */
+.wrap{width:100%;max-width:var(--maxw);margin:0 auto;padding:0 20px}
+.section{padding:70px 0}
+.section--alt{background:var(--bg-alt)}
+.section--tight{padding:44px 0}
+.section-title{text-align:center;font-size:2.35rem;font-weight:700;margin-bottom:38px}
+.section-title--rule::after{content:"";display:block;width:132px;height:3px;background:var(--crimson);margin:14px auto 0}
+.grid{display:grid;gap:26px}
+
+/* ========== Buttons ========== */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  padding:13px 26px;border:0;border-radius:var(--radius-pill);
+  font-weight:700;font-size:.95rem;letter-spacing:.2px;
+  cursor:pointer;text-align:center;transition:background .18s,transform .18s,box-shadow .18s;
+}
+.btn:hover{text-decoration:none;transform:translateY(-1px)}
+.btn svg{width:16px;height:16px;flex:0 0 16px;fill:currentColor}
+.btn--call{background:var(--crimson);color:#fff;box-shadow:0 3px 10px rgba(210,38,48,.34)}
+.btn--call:hover{background:var(--crimson-2)}
+.btn--ghost{background:transparent;color:#fff;border:2px solid #fff}
+.btn--ghost:hover{background:#fff;color:var(--ink)}
+.btn--est{
+  background:linear-gradient(180deg,var(--crimson-2),var(--crimson));
+  color:#fff;width:100%;text-transform:uppercase;font-size:.86rem;
+  box-shadow:0 3px 9px rgba(210,38,48,.3)
+}
+.btn--est:hover{background:linear-gradient(180deg,var(--crimson),var(--crimson-3))}
+.btn--square{border-radius:var(--radius);background:var(--crimson);color:#fff;padding:12px 24px}
+.btn--square:hover{background:var(--crimson-3)}
+.btn--dark{background:var(--ink);color:#fff;border-radius:var(--radius);width:100%;padding:14px}
+.btn--dark:hover{background:var(--ink-2)}
+
+/* ========== Check lists ========== */
+.checks li{position:relative;padding-left:26px;margin-bottom:7px}
+.checks li::before{
+  content:"";position:absolute;left:0;top:.5em;width:15px;height:11px;
+  background:var(--crimson);
+  -webkit-mask:var(--check-mask) no-repeat center/contain;
+          mask:var(--check-mask) no-repeat center/contain;
+}
+.checks--light li::before{background:var(--crimson-2)}
+
+/* ========== Sticky header ========== */
+.site-header{
+  position:sticky;top:0;z-index:100;
+  background:var(--ink);border-bottom:3px solid var(--crimson);
+}
+.header-inner{
+  display:flex;align-items:center;justify-content:space-between;gap:18px;
+  min-height:92px;padding:10px 20px;max-width:var(--maxw);margin:0 auto;
+}
+.brand{display:flex;flex-direction:column;align-items:center;gap:6px;flex:0 0 auto}
+.brand__logo{width:196px;height:auto}
+.brand__rating{display:flex;align-items:center;gap:6px;font-size:.72rem;color:#cfd4da}
+.stars{color:#FFB400;letter-spacing:1px;font-size:.82rem}
+.site-nav ul{display:flex;gap:26px}
+.site-nav a{color:#E7EAEE;font-size:.92rem;font-weight:500;padding:6px 0;border-bottom:2px solid transparent}
+.site-nav a:hover,.site-nav a:focus{color:#fff;border-bottom-color:var(--crimson);text-decoration:none}
+.header-cta{display:flex;align-items:center;gap:14px;flex:0 0 auto}
+.badge-open{
+  display:inline-flex;align-items:center;gap:7px;
+  color:#fff;border:1.5px solid var(--steel);
+  border-radius:var(--radius-pill);padding:8px 18px;font-size:.86rem;font-weight:500;
+}
+.badge-open::before{content:"";width:8px;height:8px;border-radius:50%;background:#35C759;box-shadow:0 0 0 3px rgba(53,199,89,.25)}
+.nav-toggle{display:none;background:transparent;border:1.5px solid var(--steel);border-radius:var(--radius);padding:8px 10px;cursor:pointer}
+.nav-toggle span{display:block;width:20px;height:2px;background:#fff;margin:4px 0}
+
+/* ========== Hero ========== */
+.hero{
+  position:relative;color:#fff;text-align:center;
+  padding:74px 0 84px;
+  background:#2a2f35 url("assets/img/hero-garage-door-repair.svg") center/cover no-repeat;
+}
+.hero::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(14,18,22,.62),rgba(14,18,22,.72))}
+.hero .wrap{position:relative;z-index:1}
+.hero h1{
+  color:#fff;font-size:3.05rem;font-weight:900;text-transform:uppercase;
+  letter-spacing:.5px;margin-bottom:30px;text-shadow:0 2px 12px rgba(0,0,0,.45);
+}
+.hero-checks{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:2px 46px;max-width:720px;margin:0 auto 30px;text-align:left;
+}
+.hero-checks li{font-weight:700;font-size:1rem;color:#fff;padding-left:26px;margin-bottom:5px}
+.hero-checks li::before{background:#F0B429}
+.hero h2{color:#fff;font-size:1.62rem;font-weight:700;line-height:1.32;margin-bottom:18px;text-shadow:0 2px 10px rgba(0,0,0,.4)}
+.hero__lead{font-size:1.06rem;margin-bottom:26px}
+.hero__actions{display:flex;flex-wrap:wrap;gap:14px;justify-content:center}
+
+/* ========== Trust strip ========== */
+.trust{background:#fff;padding:26px 0}
+.trust__list{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:38px}
+.trust__list img{height:66px;width:auto;opacity:.95}
+
+/* ========== Reviews ========== */
+.reviews{background:var(--ink);padding:44px 0 56px}
+.reviews .grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.review-card{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow-md);overflow:hidden}
+.review-card__top{display:flex;align-items:flex-start;gap:11px;padding:14px 16px 12px;border-bottom:1px solid var(--line)}
+.review-card__avatar{width:32px;height:32px;border-radius:50%;flex:0 0 32px;background:var(--bg-alt)}
+.review-card__who{flex:1;min-width:0}
+.review-card__name{font-weight:700;font-size:.92rem;color:var(--ink);margin:0}
+.review-card__meta{font-size:.74rem;color:var(--muted);margin:0}
+.review-card__g{width:20px;height:20px;flex:0 0 20px}
+.review-card__body{padding:14px 16px 20px;font-size:.9rem;color:#3f464f;margin:0}
+
+/* ========== Guarantee badges ========== */
+.badges__list{display:flex;flex-wrap:wrap;justify-content:center;gap:34px}
+.badges__list img{width:130px;height:130px}
+
+/* ========== Services ========== */
+.services .grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.service-card{
+  display:flex;flex-direction:column;
+  background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+  padding:16px 16px 20px;box-shadow:var(--shadow-sm);
+  transition:box-shadow .2s,transform .2s,border-color .2s;
+}
+.service-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-3px);border-color:#cfd4da}
+.service-card img{width:100%;height:150px;object-fit:cover;border-radius:4px;background:var(--bg-alt)}
+.service-card h3{font-size:1.16rem;margin:16px 0 10px;text-align:center}
+.service-card__desc{font-size:.92rem;color:var(--muted);margin-bottom:14px}
+.service-card .checks{font-size:.88rem;color:#3f464f;margin-bottom:18px}
+.service-card .checks li{margin-bottom:4px}
+.service-card .btn{margin-top:auto}
+
+/* ========== Value props ========== */
+.values .grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.value-card{
+  background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+  padding:36px 26px;text-align:center;box-shadow:var(--shadow-md);
+}
+.value-card svg{width:42px;height:42px;stroke:var(--crimson);fill:none;stroke-width:1.7;margin:0 auto 14px}
+.value-card h3{font-size:1.3rem;font-weight:500;margin-bottom:12px}
+.value-card p{font-size:.94rem;color:var(--muted);margin:0}
+
+/* ========== About ========== */
+.about__grid{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:center}
+.about__img{border-radius:var(--radius);box-shadow:var(--shadow-md);width:100%;max-height:520px;object-fit:cover}
+.eyebrow{color:var(--crimson-3);font-weight:500;font-size:1rem;margin-bottom:6px}
+.about h2{font-size:2.1rem;margin-bottom:16px}
+.about__kicker{font-weight:700;color:#3f464f;font-size:.98rem}
+.quote{
+  border-left:3px solid var(--crimson);padding:2px 0 2px 18px;margin:0 0 20px;
+  color:var(--muted);font-size:.95rem;
+}
+.about__actions{margin-bottom:22px}
+.about p{color:var(--muted);font-size:.96rem}
+
+/* ========== Expertise ========== */
+.expertise__grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.expertise h2{font-size:2.35rem;margin-bottom:34px}
+.expertise h2::after{content:"";display:block;width:100px;height:3px;background:var(--crimson);margin-top:12px}
+.expertise-item{margin-bottom:38px}
+.expertise-item svg{width:30px;height:30px;fill:var(--crimson);margin-bottom:10px}
+.expertise-item h3{font-size:1.22rem;margin-bottom:10px}
+.expertise-item p{color:var(--muted);font-size:.94rem;margin:0}
+.expertise__media{display:grid;gap:20px}
+.expertise__media img{width:100%;height:250px;object-fit:cover;border-radius:var(--radius);box-shadow:var(--shadow-sm)}
+
+/* ========== Before & After ========== */
+.gallery__track{
+  display:flex;gap:4px;overflow-x:auto;scroll-snap-type:x mandatory;
+  scrollbar-width:none;-ms-overflow-style:none;
+}
+.gallery__track::-webkit-scrollbar{display:none}
+.gallery__track img{
+  flex:0 0 25%;min-width:260px;height:330px;object-fit:cover;
+  scroll-snap-align:start;background:var(--bg-alt)
+}
+.gallery__nav{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:18px}
+.gallery__arrow{
+  background:var(--ink);color:#fff;border:0;border-radius:50%;
+  width:38px;height:38px;cursor:pointer;font-size:1.1rem;line-height:1;
+}
+.gallery__arrow:hover{background:var(--crimson)}
+.gallery__dots{display:flex;gap:8px}
+.gallery__dots button{width:9px;height:9px;padding:0;border:0;border-radius:50%;background:#cfd4da;cursor:pointer}
+.gallery__dots button[aria-current="true"]{background:var(--crimson);width:11px;height:11px}
+
+/* ========== Brand logos ========== */
+.brands__list{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:44px}
+.brands__list img{height:44px;width:auto;filter:grayscale(1);opacity:.7;transition:filter .2s,opacity .2s}
+.brands__list img:hover{filter:none;opacity:1}
+
+/* ========== FAQ ========== */
+.faq{max-width:840px;margin:0 auto}
+.faq details{
+  background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+  margin-bottom:12px;box-shadow:var(--shadow-sm)
+}
+.faq summary{
+  cursor:pointer;list-style:none;padding:17px 48px 17px 20px;position:relative;
+  font-weight:700;font-size:1rem;color:var(--ink)
+}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{
+  content:"+";position:absolute;right:20px;top:50%;transform:translateY(-50%);
+  color:var(--crimson);font-size:1.5rem;font-weight:400;line-height:1
+}
+.faq details[open] summary::after{content:"\2013"}
+.faq p{padding:0 20px 18px;margin:0;color:var(--muted);font-size:.95rem}
+
+/* ========== Contact ========== */
+.contact{
+  position:relative;padding:64px 0;color:#fff;
+  background:#2a2f35 url("assets/img/contact-garage-door-background.svg") center/cover no-repeat;
+}
+.contact::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(14,18,22,.86),rgba(14,18,22,.62))}
+.contact .wrap{position:relative;z-index:1}
+.contact__grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+.contact h2{color:#fff;font-size:2.1rem;line-height:1.24;margin-bottom:24px}
+.contact .checks li{color:#E7EAEE;font-size:.98rem;margin-bottom:10px}
+.form-card{
+  background:#fff;border-left:4px solid var(--crimson);border-radius:2px;
+  padding:24px;box-shadow:var(--shadow-lg)
+}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.field{margin-bottom:14px}
+.field label{display:block;font-weight:700;font-size:.86rem;color:var(--ink);margin-bottom:6px}
+.field .req{color:var(--crimson-3)}
+.field input,.field select,.field textarea{
+  width:100%;padding:11px 12px;font:400 .95rem/1.4 var(--font);color:var(--text);
+  background:#fff;border:1px solid #c9cfd6;border-radius:3px
+}
+.field textarea{min-height:96px;resize:vertical}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--crimson);outline:none;box-shadow:0 0 0 3px rgba(210,38,48,.14)}
+.form-note{font-size:.78rem;color:var(--muted);margin:10px 0 0;text-align:center}
+.form-status{margin:12px 0 0;font-size:.9rem;font-weight:700;color:var(--crimson-3)}
+
+/* ========== Footer ========== */
+.site-footer{background:var(--ink);color:#B9C0C9;padding:54px 0 0;font-size:.92rem}
+.footer__grid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:44px}
+.site-footer .brand__logo{width:180px;margin-bottom:18px}
+.site-footer h2{color:#fff;font-size:1.12rem;margin-bottom:16px}
+.footer-links a{color:#B9C0C9;display:inline-block;padding:5px 0 5px 18px;position:relative;font-size:.9rem}
+.footer-links a::before{content:"\203A";position:absolute;left:0;top:5px;color:var(--crimson-2);font-weight:700}
+.footer-links a:hover{color:#fff;text-decoration:none}
+.footer__phone{display:inline-flex;align-items:center;gap:9px;color:#fff;font-weight:700;font-size:1.12rem;margin-top:6px}
+.footer__phone svg{width:16px;height:16px;fill:var(--crimson-2)}
+.footer__bottom{
+  border-top:1px solid #2a3038;margin-top:44px;padding:20px 0;
+  text-align:center;font-size:.82rem;color:#8A939E
+}
+
+/* ========== Sticky mobile CTA bar ========== */
+.mobile-bar{
+  position:fixed;left:0;right:0;bottom:0;z-index:120;display:none;
+  grid-template-columns:repeat(3,1fr);gap:1px;
+  background:#2a3038;box-shadow:0 -3px 16px rgba(0,0,0,.28)
+}
+.mobile-bar a{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+  padding:10px 4px;font-size:.72rem;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:.3px
+}
+.mobile-bar a:hover{text-decoration:none}
+.mobile-bar svg{width:19px;height:19px;fill:#fff}
+.mobile-bar__call{background:var(--crimson)}
+.mobile-bar__wa{background:#25D366}
+.mobile-bar__quote{background:var(--ink)}
+
+/* ========== Responsive ========== */
+@media (max-width:1024px){
+  .hero h1{font-size:2.5rem}
+  .services .grid,.reviews .grid,.values .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .gallery__track img{flex:0 0 50%}
+  .footer__grid{grid-template-columns:1fr 1fr}
+}
+@media (max-width:900px){
+  .site-nav{
+    display:none;position:absolute;top:100%;left:0;right:0;
+    background:var(--ink-2);border-top:1px solid #2a3038;padding:10px 20px 18px
+  }
+  .site-nav.is-open{display:block}
+  .site-nav ul{flex-direction:column;gap:0}
+  .site-nav a{display:block;padding:12px 0;border-bottom:1px solid #2a3038}
+  .nav-toggle{display:block}
+  .header-inner{min-height:76px}
+  .badge-open{display:none}
+  .about__grid,.expertise__grid,.contact__grid{grid-template-columns:1fr;gap:32px}
+  .expertise__media{order:-1}
+}
+@media (max-width:640px){
+  body{padding-bottom:60px}
+  .section{padding:46px 0}
+  .section-title,.expertise h2{font-size:1.8rem}
+  .hero{padding:44px 0 54px}
+  .hero h1{font-size:1.92rem}
+  .hero h2{font-size:1.24rem}
+  .hero-checks{grid-template-columns:1fr;gap:0;max-width:340px}
+  .hero__actions .btn{width:100%}
+  .services .grid,.reviews .grid,.values .grid{grid-template-columns:1fr}
+  .form-row{grid-template-columns:1fr;gap:0}
+  .footer__grid{grid-template-columns:1fr;gap:30px}
+  .trust__list{gap:24px}
+  .trust__list img{height:48px}
+  .badges__list{gap:20px}
+  .badges__list img{width:104px;height:104px}
+  .brands__list{gap:28px}
+  .brands__list img{height:34px}
+  .mobile-bar{display:grid}
+  .contact h2{font-size:1.6rem}
+  .about h2{font-size:1.7rem}
+  .brand__logo{width:150px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{transition:none !important;animation:none !important}
+}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- ==================== STICKY HEADER ==================== -->
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/" aria-label="{{business_name}} — {{service_name}} in {{location}}, home">
+      <img class="brand__logo" src="assets/img/og-garage-doors-logo.svg" width="196" height="52"
+           alt="{{business_name}} logo — garage door repair and installation in {{location}}">
+      <span class="brand__rating">
+        <span class="stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+        <span>{{rating}} from {{review_count}} Google reviews</span>
+      </span>
+    </a>
+
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="site-nav" id="primary-nav" aria-label="Primary">
+      <ul>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#reviews">Reviews</a></li>
+        <li><a href="#gallery">Our Work</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <div class="header-cta">
+      <span class="badge-open">Open Now</span>
+      <a class="btn btn--call" href="tel:{{phone_number}}" data-cta="header-call">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
+        {{phone_display}}
+      </a>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ==================== HERO ==================== -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="wrap">
+      <h1 id="hero-title">Same-Day {{service_name}} in {{location}}</h1>
+
+      <ul class="hero-checks checks">
+        <li>Emergency 24/7</li>
+        <li>Springs Repair</li>
+        <li>Same Day Service</li>
+        <li>Opener Repair</li>
+        <li>Free Estimates</li>
+        <li>Cable Repair</li>
+        <li>Licensed, Insured &amp; Bonded</li>
+        <li>Panel Dent Repair</li>
+        <li>Off Track Repair</li>
+        <li>Commercial Service</li>
+        <li>Garage Doors Install</li>
+        <li>No Extra Charge On Weekend &amp; Holiday</li>
+      </ul>
+
+      <h2>Need {{service_name}} Near Me?<br>Garage Door Stuck or Not Responding?</h2>
+
+      <p class="hero__lead">Don&rsquo;t Wait &ndash; <strong>Call Today For Fast, Same-Day Service &amp; a Free Estimate!</strong> OPEN 24/7</p>
+
+      <div class="hero__actions">
+        <a class="btn btn--call" href="tel:{{phone_number}}" data-cta="hero-call">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
+          Call Now {{phone_display}}
+        </a>
+        <a class="btn btn--ghost" href="#contact" data-cta="hero-contact">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4.2-8 5-8-5V6l8 5 8-5v2.2z"/></svg>
+          Contact Us
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== REVIEW PLATFORMS ==================== -->
+  <section class="trust" aria-label="Review platforms where {{business_name}} is rated 5 stars">
+    <div class="wrap">
+      <ul class="trust__list">
+        <li><img src="assets/img/reviews-facebook-5-star.svg" width="150" height="66" loading="lazy" alt="{{business_name}} rated 5 stars for garage door repair on Facebook"></li>
+        <li><img src="assets/img/reviews-thumbtack-5-star.svg" width="150" height="66" loading="lazy" alt="5 star garage door service rating on Thumbtack"></li>
+        <li><img src="assets/img/reviews-homeadvisor-top-rated.svg" width="90" height="66" loading="lazy" alt="HomeAdvisor Top Rated garage door contractor badge"></li>
+        <li><img src="assets/img/reviews-yelp-5-star.svg" width="200" height="66" loading="lazy" alt="5-Star garage door repair business on Yelp"></li>
+        <li><img src="assets/img/reviews-google-5-star.svg" width="160" height="66" loading="lazy" alt="Google customer reviews 5 stars for {{business_name}} in {{location}}"></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ==================== GOOGLE REVIEWS ==================== -->
+  <section class="reviews" id="reviews" aria-labelledby="reviews-title">
+    <div class="wrap">
+      <h2 class="sr-only" id="reviews-title">What {{location}} customers say about our garage door service</h2>
+      <div class="grid">
+
+        <article class="review-card">
+          <div class="review-card__top">
+            <img class="review-card__avatar" src="assets/img/review-avatar-1.svg" width="32" height="32" loading="lazy" alt="Photo of {{review_1_name}}, garage door repair customer in {{location}}">
+            <div class="review-card__who">
+              <p class="review-card__name">{{review_1_name}}</p>
+              <p class="review-card__meta"><span class="stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span></p>
+              <p class="review-card__meta">{{review_1_date}} &middot; {{review_1_count}} reviews</p>
+            </div>
+            <img class="review-card__g" src="assets/img/icon-google-g.svg" width="20" height="20" loading="lazy" alt="Google review">
+          </div>
+          <p class="review-card__body">{{review_1_text}}</p>
+        </article>
+
+        <article class="review-card">
+          <div class="review-card__top">
+            <img class="review-card__avatar" src="assets/img/review-avatar-2.svg" width="32" height="32" loading="lazy" alt="Photo of {{review_2_name}}, garage door opener repair customer in {{location}}">
+            <div class="review-card__who">
+              <p class="review-card__name">{{review_2_name}}</p>
+              <p class="review-card__meta"><span class="stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span></p>
+              <p class="review-card__meta">{{review_2_date}} &middot; {{review_2_count}} reviews</p>
+            </div>
+            <img class="review-card__g" src="assets/img/icon-google-g.svg" width="20" height="20" loading="lazy" alt="Google review">
+          </div>
+          <p class="review-card__body">{{review_2_text}}</p>
+        </article>
+
+        <article class="review-card">
+          <div class="review-card__top">
+            <img class="review-card__avatar" src="assets/img/review-avatar-3.svg" width="32" height="32" loading="lazy" alt="Photo of {{review_3_name}}, garage door spring replacement customer in {{location}}">
+            <div class="review-card__who">
+              <p class="review-card__name">{{review_3_name}}</p>
+              <p class="review-card__meta"><span class="stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span></p>
+              <p class="review-card__meta">{{review_3_date}} &middot; {{review_3_count}} reviews</p>
+            </div>
+            <img class="review-card__g" src="assets/img/icon-google-g.svg" width="20" height="20" loading="lazy" alt="Google review">
+          </div>
+          <p class="review-card__body">{{review_3_text}}</p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== GUARANTEE BADGES ==================== -->
+  <section class="section section--tight badges" aria-labelledby="badges-title">
+    <div class="wrap">
+      <h2 class="sr-only" id="badges-title">Our guarantees and discounts</h2>
+      <ul class="badges__list">
+        <li><img src="assets/img/badge-parts-made-in-usa.svg" width="130" height="130" loading="lazy" alt="Garage door parts made in USA badge"></li>
+        <li><img src="assets/img/badge-senior-discount.svg" width="130" height="130" loading="lazy" alt="Senior discount on garage door repair badge"></li>
+        <li><img src="assets/img/badge-labor-parts-guarantee.svg" width="130" height="130" loading="lazy" alt="Labor and parts guarantee on all garage door repairs badge"></li>
+        <li><img src="assets/img/badge-veterans-first-responders.svg" width="130" height="130" loading="lazy" alt="Veterans and first responders garage door discount badge"></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ==================== SERVICES ==================== -->
+  <section class="section services" id="services" aria-labelledby="services-title">
+    <div class="wrap">
+      <h2 class="section-title" id="services-title">Our Services</h2>
+      <div class="grid">
+
+        <article class="service-card">
+          <img src="assets/img/service-broken-spring-repair.svg" width="330" height="150" loading="lazy" alt="Technician replacing a broken torsion spring on a garage door in {{location}}">
+          <h3>Broken Spring Repair</h3>
+          <p class="service-card__desc">Door won&rsquo;t open or slams shut? We replace broken springs safely and same-day.</p>
+          <ul class="checks">
+            <li>Broken Springs Repair &amp; Replacement</li>
+            <li>Torsion &amp; Extension Springs</li>
+            <li>Spring Adjustment</li>
+            <li>Spring Lubrication</li>
+          </ul>
+          <a class="btn btn--est" href="tel:{{phone_number}}" data-cta="service-spring">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
+            Free Estimate
+          </a>
+        </article>
+
+        <article class="service-card">
+          <img src="assets/img/service-opener-repair-installation.svg" width="330" height="150" loading="lazy" alt="Belt drive garage door opener installed on a garage ceiling in {{location}}">
+          <h3>Opener Repair &amp; Installation</h3>
+          <p class="service-card__desc">Opener won&rsquo;t work or makes noise? We repair or replace it fast and affordably.</p>
+          <ul class="checks">
+            <li>Belt and Chain Repair</li>
+            <li>Keypad &amp; Remotes</li>
+            <li>Opener Repair &amp; Replacement</li>
+            <li>Sensor Replacement &amp; Repair</li>
+          </ul>
+          <a class="btn btn--est" href="tel:{{phone_number}}" data-cta="service-opener">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
+            Free Estimate
+          </a>
+        </article>
+
+        <article class="service-card">
+          <img src="assets/img/service-off-track-repair.svg" width="330" height="150" loading="lazy" alt="Garage door off its track being realigned by a repair technician in {{location}}">
+          <h3>Garage Door &amp; Off-Track Repair</h3>
+          <p class="service-card__desc">Door came off the track? We realign it safely and get it back on track today.</p>
+          <ul class="checks">
+            <li>Garage Door Repair</li>
+            <li>Bent Rails Repair &amp; Replace</li>
+            <li>Door Balance &amp; Adjustment</li>
+            <li>Bottom Seal Replacement</li>
+          </ul>
+          <a class="btn btn--est" href="tel:{{phone_number}}" data-cta="service-offtrack">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
+            Free Estimate
+          </a>
+        </article>
+
+        <article class="service-card">
+          <img src="assets/img/service-cable-drum-repair.svg" width="330" height="150" loading="lazy" alt="Frayed garage door cable and drum being replaced in a {{location}} home">
+          <h3>Broken Cable &amp; Drum Repair</h3>
+          <p class="service-card__desc">Snapped or frayed cables? We replace them quickly to restore safe door movement.</p>
+          <ul class="checks">
+            <li>Loose Cable Adjustment</li>
+            <li>Cable Installation &amp; Repair</li>
+            <li>Cable Drums</li>
+            <li>Cable Maintenance</li>
+          </ul>
+          <a class="btn btn--est" href="tel:{{phone_number}}" data-cta="service-cable">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
+            Free Estimate
+          </a>
+        </article>
+
+        <article class="service-card">
+          <img src="assets/img/service-remote-program-repair.svg" width="330" height="150" loading="lazy" alt="Homeowner programming a garage door remote control outside a {{location}} garage">
+          <h3>Remote Program &amp; Repair</h3>
+          <p class="service-card__desc">Remote not working or lost? We program and replace all remote types including universal, on the spot.</p>
+          <ul class="checks">
+            <li>Remote Program to Vehicle</li>
+            <li>Remote Programming</li>
+            <li>Remote Replacement</li>
+            <li>New Remote</li>
+          </ul>
+          <a class="btn btn--est" href="tel:{{phone_number}}" data-cta="service-remote">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
+            Free Estimate
+          </a>
+        </article>
+
+        <article class="service-card">
+          <img src="assets/img/service-roller-replacement.svg" width="330" height="150" loading="lazy" alt="Set of new nylon garage door rollers ready for installation in {{location}}">
+          <h3>Garage Door Roller Replace</h3>
+          <p class="service-card__desc">Door shaking or noisy? We replace damaged rollers and realign the track properly.</p>
+          <ul class="checks">
+            <li>Roller Installation</li>
+            <li>Roller Lubrication</li>
+            <li>Roller Alignment</li>
+            <li>Roller Replacement</li>
+          </ul>
+          <a class="btn btn--est" href="tel:{{phone_number}}" data-cta="service-roller">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
+            Free Estimate
+          </a>
+        </article>
+
+        <article class="service-card">
+          <img src="assets/img/service-panels-replacement.svg" width="330" height="150" loading="lazy" alt="Technician replacing a dented garage door panel on a {{location}} property">
+          <h3>Garage Door Panels Replacement</h3>
+          <p class="service-card__desc">Dents or damaged panels? We repair or replace panels for a clean door look.</p>
+          <ul class="checks">
+            <li>Panel Bent Repair</li>
+            <li>Panel Repair &amp; Replace</li>
+            <li>Panels Adjustment</li>
+          </ul>
+          <a class="btn btn--est" href="tel:{{phone_number}}" data-cta="service-panels">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
+            Free Estimate
+          </a>
+        </article>
+
+        <article class="service-card">
+          <img src="assets/img/service-commercial-garage-door.svg" width="330" height="150" loading="lazy" alt="Commercial overhead garage door at a warehouse in {{location}}">
+          <h3>Commercial Garage Door</h3>
+          <p class="service-card__desc">We service all commercial garage doors &ndash; fast, reliable and fully insured.</p>
+          <ul class="checks">
+            <li>Commercial Springs Repair</li>
+            <li>Commercial Opener Repair</li>
+            <li>Commercial Rollers Repair</li>
+          </ul>
+          <a class="btn btn--est" href="tel:{{phone_number}}" data-cta="service-commercial">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
+            Free Estimate
+          </a>
+        </article>
+
+        <article class="service-card">
+          <img src="assets/img/service-gate-repair-installation.svg" width="330" height="150" loading="lazy" alt="Automatic sliding driveway gate installed at a {{location}} residence">
+          <h3>Gate Repair &amp; Installation</h3>
+          <p class="service-card__desc">Gate won&rsquo;t open or wheels stuck? We repair or install automatic gates.</p>
+          <ul class="checks">
+            <li>Gate Repair</li>
+            <li>Automatic Gate Repair &amp; Replace</li>
+            <li>Wheel Repair / Replace</li>
+          </ul>
+          <a class="btn btn--est" href="tel:{{phone_number}}" data-cta="service-gate">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
+            Free Estimate
+          </a>
+        </article>
+
+        <article class="service-card">
+          <img src="assets/img/service-tune-up-maintenance.svg" width="330" height="150" loading="lazy" alt="Garage door technician lubricating hinges during a tune-up in {{location}}">
+          <h3>Garage Tune-up &amp; Maintenance</h3>
+          <p class="service-card__desc">Door too loud or uneven? We lubricate, adjust and balance for smooth operation.</p>
+          <ul class="checks">
+            <li>Noisy Garage Door Repair</li>
+            <li>Lubricate Moving Parts</li>
+            <li>Check Door Balance</li>
+            <li>Lubricate Belt And Chain</li>
+          </ul>
+          <a class="btn btn--est" href="tel:{{phone_number}}" data-cta="service-tuneup">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
+            Free Estimate
+          </a>
+        </article>
+
+        <article class="service-card">
+          <img src="assets/img/service-new-door-installation.svg" width="330" height="150" loading="lazy" alt="Newly installed white hurricane-rated garage door on a {{location}} home">
+          <h3>New Garage Door Installation</h3>
+          <p class="service-card__desc">We install all garage door types &ndash; including hurricane-rated doors. Old door removal included.</p>
+          <ul class="checks">
+            <li>New Door Installation</li>
+            <li>Panel Replacement</li>
+            <li>New Rail &amp; Track Installment</li>
+            <li>Panels Bent Repair &amp; Replace</li>
+          </ul>
+          <a class="btn btn--est" href="tel:{{phone_number}}" data-cta="service-newdoor">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
+            Free Estimate
+          </a>
+        </article>
+
+        <article class="service-card">
+          <img src="assets/img/service-sensor-repair.svg" width="330" height="150" loading="lazy" alt="Garage door safety sensor mounted near the floor being aligned in {{location}}">
+          <h3>Garage Door Sensor Repair</h3>
+          <p class="service-card__desc">Door won&rsquo;t close or sensors blink? We adjust or replace garage door sensors.</p>
+          <ul class="checks">
+            <li>Sensor Replace</li>
+            <li>Sensor Repair</li>
+            <li>Sensor Adjustment</li>
+            <li>Sensor Alignment</li>
+          </ul>
+          <a class="btn btn--est" href="tel:{{phone_number}}" data-cta="service-sensor">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
+            Free Estimate
+          </a>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== VALUE PROPS ==================== -->
+  <section class="section section--tight values" aria-labelledby="values-title">
+    <div class="wrap">
+      <h2 class="sr-only" id="values-title">Why {{location}} homeowners choose {{business_name}}</h2>
+      <div class="grid">
+        <article class="value-card">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+          <h3>Fast Response</h3>
+          <p>Contact us to schedule a fast response, no extra cost repair.</p>
+        </article>
+        <article class="value-card">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h14l-7 7z"/><circle cx="12" cy="16" r="5"/></svg>
+          <h3>Experienced Technicians</h3>
+          <p>Team of highly knowledgeable and skilled garage door experts.</p>
+        </article>
+        <article class="value-card">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>
+          <h3>Local Service Provider</h3>
+          <p>As a locally owned and operated company in {{location}}, we aim to provide top-notch service.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== ABOUT ==================== -->
+  <section class="section section--alt about" id="about" aria-labelledby="about-title">
+    <div class="wrap">
+      <div class="about__grid">
+        <img class="about__img" src="assets/img/about-garage-door-service-home.svg" width="520" height="480" loading="lazy"
+             alt="{{business_name}} technician arriving at a {{location}} home for same-day garage door repair">
+        <div>
+          <p class="eyebrow">{{business_name}}</p>
+          <h2 id="about-title">Looking for {{service_name}} near me?</h2>
+          <p class="about__kicker">Need to replace a broken garage door spring? Contact us today for a speedy garage door repair service.</p>
+          <blockquote class="quote">
+            {{business_name}} is a locally managed, full-service garage door repair company serving {{location}}. We take pride in providing a fast and affordable garage door repair service with a team of highly experienced garage door technicians. Contact us today for additional information.
+          </blockquote>
+          <blockquote class="quote">
+            At {{business_name}}, we understand the frustration of not being able to get your car out in the morning or coming home to a jammed door after work.
+          </blockquote>
+          <p class="about__actions"><a class="btn btn--square" href="#contact" data-cta="about-book">Book Now</a></p>
+          <p>We&rsquo;ve been repairing garage doors for the residents of {{service_area}} and our results are second to none. From broken door rollers to spring replacements, our team of professionals can handle all types of garage door problems, at an affordable price.</p>
+          <ul class="checks">
+            <li>Weekend Service Available</li>
+            <li>Friendly Professional Service</li>
+            <li>Emergency Service 24/7</li>
+            <li>Same Day Service</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== EXPERTISE ==================== -->
+  <section class="section expertise" aria-labelledby="expertise-title">
+    <div class="wrap">
+      <div class="expertise__grid">
+        <div>
+          <h2 id="expertise-title">Our Expertise</h2>
+
+          <article class="expertise-item">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.7 18.6l-6.3-6.3a5.5 5.5 0 0 0-1.3-5.6 5.5 5.5 0 0 0-5.8-1.3l2.9 2.9-2.1 2.1L6.2 7.5a5.5 5.5 0 0 0 1.3 5.8 5.5 5.5 0 0 0 5.6 1.3l6.3 6.3a1.1 1.1 0 0 0 1.6 0l.7-.7a1.1 1.1 0 0 0 0-1.6z"/></svg>
+            <h3>Residential Garage Door Repair</h3>
+            <p>We provide garage door opener installation and repair, as well as inspections and tune-ups. No matter what type of service you need for your residential garage door, you can count on {{business_name}} to deliver high-quality, fast, efficient and affordable services. We promise to get the job done, right!</p>
+          </article>
+
+          <article class="expertise-item">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7h-3V5.5A2.5 2.5 0 0 0 14.5 3h-5A2.5 2.5 0 0 0 7 5.5V7H4a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1zM9 5.5c0-.3.2-.5.5-.5h5c.3 0 .5.2.5.5V7H9V5.5zM13 15h-2v2H9v-2H7v-2h2v-2h2v2h2v2z"/></svg>
+            <h3>Need A Garage Door Repair?</h3>
+            <p>Our professional team is ready to head over immediately to help you! Call us now to get a free estimate for the needed repair or to ask any question you might have. We will go over your garage door concerns to provide a solution that meets your needs and requirements.</p>
+          </article>
+        </div>
+
+        <div class="expertise__media">
+          <img src="assets/img/expertise-residential-opener.svg" width="520" height="250" loading="lazy"
+               alt="Residential garage door opener and rail mounted inside a {{location}} garage">
+          <img src="assets/img/expertise-garage-door-interior.svg" width="520" height="250" loading="lazy"
+               alt="Interior view of a white sectional garage door repaired by {{business_name}} in {{location}}">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== BEFORE & AFTER ==================== -->
+  <section class="section gallery" id="gallery" aria-labelledby="gallery-title">
+    <div class="wrap">
+      <h2 class="section-title section-title--rule" id="gallery-title">Before &amp; After</h2>
+    </div>
+    <div class="gallery__track" id="gallery-track" tabindex="0" role="region" aria-label="Before and after photos of garage door repairs in {{location}}">
+      <img src="assets/img/before-after-1.svg" width="480" height="330" loading="lazy" alt="Before and after garage door opener replacement in {{location}}">
+      <img src="assets/img/before-after-2.svg" width="480" height="330" loading="lazy" alt="Before and after new garage door with windows installed in {{location}}">
+      <img src="assets/img/before-after-3.svg" width="480" height="330" loading="lazy" alt="Before and after garage door rail and spring repair in {{location}}">
+      <img src="assets/img/before-after-4.svg" width="480" height="330" loading="lazy" alt="Before and after garage door panel replacement in {{location}}">
+      <img src="assets/img/before-after-5.svg" width="480" height="330" loading="lazy" alt="Before and after off-track garage door realignment in {{location}}">
+      <img src="assets/img/before-after-6.svg" width="480" height="330" loading="lazy" alt="Before and after belt drive opener upgrade in {{location}}">
+      <img src="assets/img/before-after-7.svg" width="480" height="330" loading="lazy" alt="Before and after garage door roller and track replacement in {{location}}">
+      <img src="assets/img/before-after-8.svg" width="480" height="330" loading="lazy" alt="Before and after hurricane-rated garage door installation in {{location}}">
+    </div>
+    <div class="wrap">
+      <div class="gallery__nav">
+        <button class="gallery__arrow" type="button" data-gallery="prev" aria-label="Previous photos">&#8249;</button>
+        <div class="gallery__dots" id="gallery-dots"></div>
+        <button class="gallery__arrow" type="button" data-gallery="next" aria-label="Next photos">&#8250;</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== BRANDS ==================== -->
+  <section class="section section--tight brands" aria-labelledby="brands-title">
+    <div class="wrap">
+      <h2 class="sr-only" id="brands-title">Garage door brands we install and service</h2>
+      <ul class="brands__list">
+        <li><img src="assets/img/brand-amarr.svg" width="120" height="44" loading="lazy" alt="Amarr garage doors installed and serviced in {{location}}"></li>
+        <li><img src="assets/img/brand-hurricane-master.svg" width="120" height="44" loading="lazy" alt="Hurricane Master impact-rated garage doors for Florida homes"></li>
+        <li><img src="assets/img/brand-clopay.svg" width="120" height="44" loading="lazy" alt="Clopay garage doors dealer serving {{location}}"></li>
+        <li><img src="assets/img/brand-liftmaster.svg" width="120" height="44" loading="lazy" alt="LiftMaster garage door openers repaired and installed in {{location}}"></li>
+        <li><img src="assets/img/brand-genie.svg" width="120" height="44" loading="lazy" alt="Genie garage door opener service in {{location}}"></li>
+        <li><img src="assets/img/brand-chamberlain.svg" width="120" height="44" loading="lazy" alt="Chamberlain smart garage door openers with MyQ installed in {{location}}"></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ==================== FAQ ==================== -->
+  <section class="section section--alt" id="faq" aria-labelledby="faq-title">
+    <div class="wrap">
+      <h2 class="section-title section-title--rule" id="faq-title">Frequently Asked Questions</h2>
+      <div class="faq">
+        <details open>
+          <summary>How fast can a technician reach my home in {{location}}?</summary>
+          <p>Our service trucks are staged across {{location}} and the surrounding area, so we offer same-day appointments and emergency dispatch, typically within 60&ndash;90 minutes of your call.</p>
+        </details>
+        <details>
+          <summary>Do you charge extra for weekends or holidays?</summary>
+          <p>No. We charge the same rate seven days a week &mdash; there is no extra charge on weekends or holidays, and emergency service is available 24/7.</p>
+        </details>
+        <details>
+          <summary>Is the estimate really free?</summary>
+          <p>Yes. We give you a clear, upfront price before any work begins, with no hidden fees. If you decide not to proceed, the estimate costs you nothing.</p>
+        </details>
+        <details>
+          <summary>Are your garage doors hurricane and wind-code rated?</summary>
+          <p>Yes. We install impact-rated, wind-code approved garage doors that meet Florida building requirements, including HVHZ standards where they apply, plus corrosion-resistant hardware built for coastal salt air.</p>
+        </details>
+        <details>
+          <summary>Do you handle HOA-approved garage door styles?</summary>
+          <p>We do. We carry Carriage House, Modern Glass and traditional raised-panel styles that meet most Architectural Review Committee guidelines in {{location}} communities.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CONTACT / QUICK LEAD FORM ==================== -->
+  <section class="contact" id="contact" aria-labelledby="contact-title">
+    <div class="wrap">
+      <div class="contact__grid">
+        <div>
+          <h2 id="contact-title">Don&rsquo;t Hesitate To Contact Us<br>For More Information And Services</h2>
+          <ul class="checks checks--light">
+            <li>We are committed to providing quality garage door services</li>
+            <li>We really know the needs and expectations of our customers</li>
+            <li>Expert garage door technicians</li>
+          </ul>
+          <p style="margin-top:24px">
+            <a class="btn btn--call" href="tel:{{phone_number}}" data-cta="contact-call">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
+              Call 24/7 &mdash; {{phone_display}}
+            </a>
+          </p>
+        </div>
+
+        <div class="form-card">
+          <h3 class="sr-only">Request a free garage door estimate in {{location}}</h3>
+          <form id="lead-form" action="{{form_action}}" method="post" novalidate>
+            <!-- hidden routing fields for dynamic landing pages -->
+            <input type="hidden" name="page_location" value="{{location}}">
+            <input type="hidden" name="page_service" value="{{service_name}}">
+            <input type="hidden" name="page_url" value="{{site_url}}">
+
+            <div class="form-row">
+              <div class="field">
+                <label for="lead-name">Full Name <span class="req" aria-hidden="true">*</span></label>
+                <input id="lead-name" name="name" type="text" autocomplete="name" placeholder="Your full name" required>
+              </div>
+              <div class="field">
+                <label for="lead-zip">Zip Code <span class="req" aria-hidden="true">*</span></label>
+                <input id="lead-zip" name="zip" type="text" inputmode="numeric" pattern="[0-9]{5}" autocomplete="postal-code" placeholder="{{zip}}" required>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="field">
+                <label for="lead-phone">Phone <span class="req" aria-hidden="true">*</span></label>
+                <input id="lead-phone" name="phone" type="tel" autocomplete="tel" placeholder="(000) 000-0000" required>
+              </div>
+              <div class="field">
+                <label for="lead-email">Email <span class="req" aria-hidden="true">*</span></label>
+                <input id="lead-email" name="email" type="email" autocomplete="email" placeholder="you@email.com" required>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="lead-service">Service Needed <span class="req" aria-hidden="true">*</span></label>
+              <select id="lead-service" name="service" required>
+                <option value="" selected>Select a service&hellip;</option>
+                <option>Broken Spring Repair</option>
+                <option>Opener Repair &amp; Installation</option>
+                <option>Garage Door &amp; Off-Track Repair</option>
+                <option>Broken Cable &amp; Drum Repair</option>
+                <option>Remote Program &amp; Repair</option>
+                <option>Garage Door Roller Replace</option>
+                <option>Garage Door Panels Replacement</option>
+                <option>Commercial Garage Door</option>
+                <option>Gate Repair &amp; Installation</option>
+                <option>Garage Tune-up &amp; Maintenance</option>
+                <option>New Garage Door Installation</option>
+                <option>Garage Door Sensor Repair</option>
+                <option>Emergency &mdash; Not Sure / Other</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="lead-message">Please let us know how we can help in a short message</label>
+              <textarea id="lead-message" name="message" placeholder="Tell us what your garage door is doing&hellip;"></textarea>
+            </div>
+
+            <button class="btn btn--dark" type="submit">Submit</button>
+            <p class="form-status" id="lead-status" role="status" aria-live="polite"></p>
+            <p class="form-note">Or call us now &mdash; <a href="tel:{{phone_number}}">{{phone_display}}</a> &middot; Free estimate, 24/7</p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer__grid">
+      <div>
+        <img class="brand__logo" src="assets/img/og-garage-doors-logo.svg" width="180" height="48" loading="lazy"
+             alt="{{business_name}} — garage door repair company in {{location}}">
+        <p>{{business_name}} prides itself as repair experts for garage doors. We offer a wide range of garage door services for a fraction of the cost quoted by many other companies.</p>
+        <a class="footer__phone" href="tel:{{phone_number}}" data-cta="footer-call">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
+          Call now {{phone_display}}
+        </a>
+      </div>
+
+      <nav aria-labelledby="footer-services-1">
+        <h2 id="footer-services-1">Our Services</h2>
+        <ul class="footer-links">
+          <li><a href="#services">Garage Door Seal Replace</a></li>
+          <li><a href="#services">Electric Garage Door Openers</a></li>
+          <li><a href="#services">Remote Repair Program</a></li>
+          <li><a href="#services">Broken Spring Repair</a></li>
+          <li><a href="#services">Cable &amp; Drum Repair</a></li>
+          <li><a href="#services">New Garage Door Installation</a></li>
+        </ul>
+      </nav>
+
+      <nav aria-labelledby="footer-services-2">
+        <h2 id="footer-services-2">More Services</h2>
+        <ul class="footer-links">
+          <li><a href="#services">Door Off-Track Repair</a></li>
+          <li><a href="#services">Garage Door Sensor Repair</a></li>
+          <li><a href="#services">Garage Door Spring Installation</a></li>
+          <li><a href="#services">Garage Door Roller Repair</a></li>
+          <li><a href="#services">Garage Door Tune-Up</a></li>
+          <li><a href="#services">Noisy Garage Door Repair</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="footer__bottom">
+      Copyright &copy; <span id="year">2026</span> {{business_name}} &nbsp;|&nbsp; All rights reserved &nbsp;|&nbsp;
+      Serving {{service_area}}
+    </div>
+  </div>
+</footer>
+
+<!-- ==================== STICKY MOBILE CTA BAR ==================== -->
+<nav class="mobile-bar" aria-label="Quick contact">
+  <a class="mobile-bar__call" href="tel:{{phone_number}}" data-cta="mobile-call">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
+    Call Now
+  </a>
+  <a class="mobile-bar__wa" href="https://wa.me/{{whatsapp_number}}?text=Hi%2C%20I%20need%20garage%20door%20service%20in%20{{location}}"
+     target="_blank" rel="noopener nofollow" data-cta="mobile-whatsapp">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.5 15.2L2 22l4.9-1.4A10 10 0 1 0 12 2zm5.1 14.1c-.2.6-1.2 1.2-1.7 1.2-.5.1-1 .1-1.7-.1-1-.3-2.6-1-4-2.6-1.1-1.2-1.8-2.6-2-3.2-.2-.6-.1-1.2.1-1.6.2-.4.5-.7.8-.9.2-.1.4-.1.6-.1h.4c.2 0 .3.1.4.4l.6 1.5c.1.2 0 .4-.1.5l-.4.5c-.1.1-.2.3-.1.5.3.6.8 1.3 1.4 1.8.5.4 1.1.7 1.5.9.2.1.4 0 .5-.1l.5-.6c.1-.2.3-.2.5-.1l1.5.7c.2.1.3.2.3.4 0 .2 0 .5-.1.6z"/></svg>
+    WhatsApp
+  </a>
+  <a class="mobile-bar__quote" href="#contact" data-cta="mobile-quote">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 3H5a2 2 0 0 0-2 2v16l4-3h12a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm-2 9H7v-2h10v2zm0-4H7V6h10v2z"/></svg>
+    Free Quote
+  </a>
+</nav>
+
+<script>
+/* =========================================================================
+   1. DYNAMIC SEO PLACEHOLDER DEFAULTS
+   Build-time generators should replace {{tokens}} before deploy. This block
+   is a local-preview fallback: it fills any token still present in the DOM.
+   Edit these values per landing page, or delete the fill() call once your
+   generator injects real values server-side.
+   ========================================================================= */
+var SITE = {
+  business_name  : "OG Garage Doors",
+  location       : "Sarasota, FL",
+  city           : "Sarasota",
+  state          : "FL",
+  zip            : "34232",
+  street         : "",
+  service_name   : "Garage Door Repair",
+  service_area   : "Sarasota, Manatee & Charlotte County",
+  phone_number   : "+10000000000",
+  phone_display  : "(000) 000-0000",
+  whatsapp_number: "10000000000",
+  email          : "info@oggaragedoors.com",
+  site_url       : "https://oggaragedoors.com/",
+  form_action    : "#",
+  rating         : "5.0",
+  review_count   : "127",
+
+  review_1_name : "Sample Customer A",
+  review_1_date : "2 months ago",
+  review_1_count: "11",
+  review_1_text : "[Placeholder review — replace with a real Google review before launch.]",
+  review_2_name : "Sample Customer B",
+  review_2_date : "4 months ago",
+  review_2_count: "4",
+  review_2_text : "[Placeholder review — replace with a real Google review before launch.]",
+  review_3_name : "Sample Customer C",
+  review_3_date : "a month ago",
+  review_3_count: "7",
+  review_3_text : "[Placeholder review — replace with a real Google review before launch.]"
+};
+
+(function fillPlaceholders(){
+  var re = /\{\{(\w+)\}\}/g;
+  var sub = function(str){
+    return str.replace(re, function(m, key){
+      return Object.prototype.hasOwnProperty.call(SITE, key) ? SITE[key] : m;
+    });
+  };
+
+  /* text nodes */
+  var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null);
+  var node;
+  while ((node = walker.nextNode())) {
+    if (node.nodeValue.indexOf("{{") > -1) node.nodeValue = sub(node.nodeValue);
+  }
+
+  /* attributes that matter for SEO / links / forms */
+  var attrs = ["href","src","alt","title","content","value","placeholder","aria-label","aria-labelledby"];
+  Array.prototype.forEach.call(document.querySelectorAll("*"), function(el){
+    attrs.forEach(function(a){
+      var v = el.getAttribute && el.getAttribute(a);
+      if (v && v.indexOf("{{") > -1) el.setAttribute(a, sub(v));
+    });
+  });
+
+  /* head: title, meta, canonical, JSON-LD */
+  document.title = sub(document.title);
+  Array.prototype.forEach.call(document.querySelectorAll("head meta[content], head link[href]"), function(el){
+    ["content","href"].forEach(function(a){
+      var v = el.getAttribute(a);
+      if (v && v.indexOf("{{") > -1) el.setAttribute(a, sub(v));
+    });
+  });
+  var ld = document.querySelector('script[type="application/ld+json"]');
+  if (ld && ld.textContent.indexOf("{{") > -1) ld.textContent = sub(ld.textContent);
+})();
+
+/* =========================================================================
+   2. MOBILE NAV
+   ========================================================================= */
+(function(){
+  var btn = document.querySelector(".nav-toggle");
+  var nav = document.getElementById("primary-nav");
+  if (!btn || !nav) return;
+  btn.addEventListener("click", function(){
+    var open = nav.classList.toggle("is-open");
+    btn.setAttribute("aria-expanded", String(open));
+    btn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+  });
+  nav.addEventListener("click", function(e){
+    if (e.target.tagName === "A") {
+      nav.classList.remove("is-open");
+      btn.setAttribute("aria-expanded", "false");
+    }
+  });
+})();
+
+/* =========================================================================
+   3. BEFORE & AFTER SLIDER (native scroll-snap + dots)
+   ========================================================================= */
+(function(){
+  var track = document.getElementById("gallery-track");
+  var dots  = document.getElementById("gallery-dots");
+  if (!track || !dots) return;
+
+  var slides = track.querySelectorAll("img");
+  var perView = function(){
+    return Math.max(1, Math.round(track.clientWidth / slides[0].getBoundingClientRect().width));
+  };
+  var pages = function(){ return Math.max(1, Math.ceil(slides.length / perView())); };
+
+  function buildDots(){
+    dots.innerHTML = "";
+    for (var i = 0; i < pages(); i++) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.setAttribute("aria-label", "Go to photo group " + (i + 1));
+      b.dataset.page = String(i);
+      dots.appendChild(b);
+    }
+    markActive();
+  }
+
+  function markActive(){
+    var w = track.clientWidth || 1;
+    var i = Math.round(track.scrollLeft / w);
+    Array.prototype.forEach.call(dots.children, function(b, n){
+      if (n === i) { b.setAttribute("aria-current", "true"); }
+      else { b.removeAttribute("aria-current"); }
+    });
+  }
+
+  dots.addEventListener("click", function(e){
+    var b = e.target.closest("button");
+    if (!b) return;
+    track.scrollTo({ left: track.clientWidth * Number(b.dataset.page), behavior: "smooth" });
+  });
+
+  document.querySelectorAll("[data-gallery]").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var dir = btn.dataset.gallery === "next" ? 1 : -1;
+      track.scrollBy({ left: track.clientWidth * dir, behavior: "smooth" });
+    });
+  });
+
+  var ticking = false;
+  track.addEventListener("scroll", function(){
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function(){ markActive(); ticking = false; });
+  });
+  window.addEventListener("resize", buildDots);
+  buildDots();
+})();
+
+/* =========================================================================
+   4. LEAD FORM
+   ========================================================================= */
+(function(){
+  var form = document.getElementById("lead-form");
+  if (!form) return;
+  var status = document.getElementById("lead-status");
+
+  form.addEventListener("submit", function(e){
+    var invalid = form.querySelector(":invalid");
+    if (invalid) {
+      e.preventDefault();
+      invalid.focus();
+      status.textContent = "Please fill in the required fields so we can call you back.";
+      return;
+    }
+    /* No endpoint wired yet — keep the lead from being lost silently. */
+    if (!form.getAttribute("action") || form.getAttribute("action") === "#") {
+      e.preventDefault();
+      status.textContent = "Thanks! Your request is ready to send — connect a form endpoint (SITE.form_action) to deliver it.";
+    }
+  });
+})();
+
+/* =========================================================================
+   5. FOOTER YEAR
+   ========================================================================= */
+(function(){
+  var y = document.getElementById("year");
+  if (y) y.textContent = String(new Date().getFullYear());
+})();
+</script>
+</body>
+</html>

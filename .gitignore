@@ -1,0 +1,8 @@
+# Source material for the rebuild — not part of the site
+reference/
+
+# OS / editor cruft
+Thumbs.db
+Desktop.ini
+.DS_Store
+*.tmp
