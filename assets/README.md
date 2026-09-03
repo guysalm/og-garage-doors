@@ -61,9 +61,6 @@ then the whole services grid is real photography.
 | `commercial garage door opener 1.jpg` | Second angle of the same operator as `…opener 2.jpg` |
 | `Gate automatin operner 2.jpg` | Second angle of the same gate job |
 
-The manufacturer logos link out to each brand site with `target="_blank"`
-and `rel="noopener nofollow"`, and lift with a crimson underline on hover.
-
 The Before & After section now runs on three real pairs. To add another, drop in
 a `<job> before.jpg` / `<job> after.jpg` pair and add one more `.ba-card`.
 
