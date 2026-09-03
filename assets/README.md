@@ -32,6 +32,8 @@ Centre-cropped to the exact display aspect ratio, saved as JPEG q82.
 | `reviews-google-5-star.png` | `cbd59134…png` | Google 5.0 with five stars |
 | `reviews-facebook-5-star.png` | `fts-reviews-1.png` | Facebook 5-star tile |
 | `reviews-yelp-5-star.png` | `yelp_logos.zip` (Light bg / RGB) | Yelp wordmark + burst |
+| `reviews-thumbtack-5-star.png` | `thumbtack-vector-logo.zip` | Thumbtack wordmark + shield |
+| `reviews-homeadvisor-top-rated.png` | `homeadvisor-top_rated (1).svg` | HomeAdvisor Top Rated shield badge |
 | `payments-credit-cards.png` | `credit-cards-color-logo-pack.zip` | Visa, MasterCard, Amex, Discover |
 
 ## Still placeholders
@@ -50,16 +52,6 @@ extension in `index.html` from `.svg` to `.jpg` (or `.webp`).
 
 **Two service cards to go** — tune-up & maintenance and new door installation —
 then the whole services grid is real photography.
-
-### Review badges not yet added
-
-The trust strip now shows three real badges: Google, Facebook, Yelp. Two slots
-were removed rather than left as fake placeholders:
-
-| Platform | Blocker |
-|---|---|
-| HomeAdvisor | `homeadvisor-top_rated.ai` is a vector-only PDF. There is no PDF/AI rasteriser on this machine (no ImageMagick, Inkscape or Ghostscript) and headless Chrome renders it blank. **Export it from Illustrator as PNG (≥132px tall, transparent) or SVG** and it drops straight in. |
-| Thumbtack | No logo file supplied. |
 
 ## Named photos not yet used
 
@@ -87,9 +79,13 @@ a `<job> before.jpg` / `<job> after.jpg` pair and add one more `.ba-card`.
   `assets/Logos/` to 88px-tall transparent PNGs (2× the 44px display height). They
   render inside a fixed 158×54 box with `object-fit:contain`, so a 9:1 wordmark
   (Chamberlain) and a 2.7:1 mark (Amarr) sit optically even.
-- The **review-platform files are still neutral placeholders** — not the real Facebook,
-  Thumbtack, HomeAdvisor, Yelp or Google marks. Confirm you are licensed to display
-  every logo on the page before launch.
+- Review-platform badges are the **real marks** too, at 132px tall (2× the 66px
+  display height). The Facebook file is a designed tile, so it keeps its own padding;
+  the transparent marks are trimmed to their ink bounds. Thumbtack and HomeAdvisor
+  were rendered from SVG via headless Chrome, then trimmed.
+- **Confirm you are licensed to display every third-party logo on the page** — and
+  that the Google/Facebook/Yelp/HomeAdvisor/Thumbtack badges reflect ratings the
+  business actually holds — before launch.
 - Reviewer names and review text are placeholders in `SITE` (in `index.html`).
   Replace them with real Google reviews — the page also carries an
   `aggregateRating` in its JSON-LD, which must match real, verifiable reviews.
