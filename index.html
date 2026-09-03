@@ -132,6 +132,9 @@ button{font:inherit}
 .skip-link:focus{left:0}
 
 /* ========== Layout ========== */
+/* keep anchored targets clear of the sticky header */
+section[id],.service-card[id],#main{scroll-margin-top:112px}
+@media (max-width:900px){section[id],.service-card[id],#main{scroll-margin-top:92px}}
 .wrap{width:100%;max-width:var(--maxw);margin:0 auto;padding:0 20px}
 .section{padding:70px 0}
 .section--alt{background:var(--bg-alt)}
@@ -252,6 +255,8 @@ button{font:inherit}
   transition:box-shadow .2s,transform .2s,border-color .2s;
 }
 .service-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-3px);border-color:#cfd4da}
+/* show which card an anchor link landed on */
+.service-card:target{border-color:var(--crimson);box-shadow:0 0 0 3px rgba(210,38,48,.18),var(--shadow-md)}
 .service-card img{width:100%;height:150px;object-fit:cover;border-radius:4px;background:var(--bg-alt)}
 .service-card h3{font-size:1.16rem;margin:16px 0 10px;text-align:center}
 .service-card__desc{font-size:.92rem;color:var(--muted);margin-bottom:14px}
@@ -331,6 +336,20 @@ button{font:inherit}
 .brands__list{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:38px}
 /* fixed box + contain keeps a 9:1 wordmark and a 2.7:1 mark optically even */
 .brands__list li{display:flex;align-items:center;justify-content:center;width:158px;height:54px}
+.brands__list a{
+  display:flex;align-items:center;justify-content:center;
+  width:100%;height:100%;padding:4px;position:relative;border-radius:4px;
+  transition:transform .22s ease,box-shadow .22s ease;
+}
+.brands__list a::after{
+  content:"";position:absolute;left:50%;right:50%;bottom:-7px;height:2px;
+  background:var(--crimson);transition:left .24s ease,right .24s ease;
+}
+.brands__list a:hover,.brands__list a:focus-visible{
+  transform:translateY(-4px);box-shadow:0 8px 20px rgba(20,24,29,.14);
+  text-decoration:none;
+}
+.brands__list a:hover::after,.brands__list a:focus-visible::after{left:12%;right:12%}
 .brands__list img{
   max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain
 }
@@ -470,7 +489,7 @@ button{font:inherit}
 <!-- ==================== STICKY HEADER ==================== -->
 <header class="site-header">
   <div class="header-inner">
-    <a class="brand" href="/" aria-label="{{business_name}} — {{service_name}} in {{location}}, home">
+    <a class="brand" href="{{site_url}}" aria-label="{{business_name}} — {{service_name}} in {{location}}, home">
       <img class="brand__logo" src="assets/img/og-garage-doors-logo.svg" width="196" height="52"
            alt="{{business_name}} logo — garage door repair and installation in {{location}}">
       <span class="brand__rating">
@@ -624,7 +643,7 @@ button{font:inherit}
       <h2 class="section-title" id="services-title">Our Services</h2>
       <div class="grid">
 
-        <article class="service-card">
+        <article class="service-card" id="svc-spring">
           <img src="assets/img/service-broken-spring-repair.jpg" width="660" height="300" loading="lazy" alt="Galvanized torsion spring and centre bracket above a garage door in {{location}}">
           <h3>Broken Spring Repair</h3>
           <p class="service-card__desc">Door won&rsquo;t open or slams shut? We replace broken springs safely and same-day.</p>
@@ -640,7 +659,7 @@ button{font:inherit}
           </a>
         </article>
 
-        <article class="service-card">
+        <article class="service-card" id="svc-opener">
           <img src="assets/img/service-opener-repair-installation.jpg" width="660" height="300" loading="lazy" alt="Garage door opener and rail installed on the ceiling of a {{location}} garage">
           <h3>Opener Repair &amp; Installation</h3>
           <p class="service-card__desc">Opener won&rsquo;t work or makes noise? We repair or replace it fast and affordably.</p>
@@ -656,7 +675,7 @@ button{font:inherit}
           </a>
         </article>
 
-        <article class="service-card">
+        <article class="service-card" id="svc-off-track">
           <img src="assets/img/service-off-track-repair.jpg" width="660" height="300" loading="lazy" alt="Residential garage door hanging off its track at a {{location}} home">
           <h3>Garage Door &amp; Off-Track Repair</h3>
           <p class="service-card__desc">Door came off the track? We realign it safely and get it back on track today.</p>
@@ -672,7 +691,7 @@ button{font:inherit}
           </a>
         </article>
 
-        <article class="service-card">
+        <article class="service-card" id="svc-cable">
           <img src="assets/img/service-cable-drum-repair.jpg" width="660" height="300" loading="lazy" alt="Garage door cable drum with the lift cable wound on the torsion shaft in {{location}}">
           <h3>Broken Cable &amp; Drum Repair</h3>
           <p class="service-card__desc">Snapped or frayed cables? We replace them quickly to restore safe door movement.</p>
@@ -689,7 +708,7 @@ button{font:inherit}
         </article>
 
 
-        <article class="service-card">
+        <article class="service-card" id="svc-jackshaft">
           <img src="assets/img/service-jackshaft-side-mount-openers.jpg" width="660" height="300" loading="lazy" alt="Jackshaft opener mounted beside the torsion shaft on a commercial garage door in {{location}}">
           <h3>Jackshaft &amp; Side-Mount Openers</h3>
           <p class="service-card__desc">Low ceiling or storage overhead? We install wall-mounted jackshaft openers that free up the whole ceiling.</p>
@@ -705,7 +724,7 @@ button{font:inherit}
           </a>
         </article>
 
-        <article class="service-card">
+        <article class="service-card" id="svc-roller">
           <img src="assets/img/service-roller-replacement.jpg" width="660" height="300" loading="lazy" alt="Set of new nylon garage door rollers ready for installation in {{location}}">
           <h3>Garage Door Roller Replace</h3>
           <p class="service-card__desc">Door shaking or noisy? We replace damaged rollers and realign the track properly.</p>
@@ -721,7 +740,7 @@ button{font:inherit}
           </a>
         </article>
 
-        <article class="service-card">
+        <article class="service-card" id="svc-panels">
           <img src="assets/img/service-panels-replacement.jpg" width="660" height="300" loading="lazy" alt="Garage door panels laid out on a driveway during a panel replacement in {{location}}">
           <h3>Garage Door Panels Replacement</h3>
           <p class="service-card__desc">Dents or damaged panels? We repair or replace panels for a clean door look.</p>
@@ -736,7 +755,7 @@ button{font:inherit}
           </a>
         </article>
 
-        <article class="service-card">
+        <article class="service-card" id="svc-commercial">
           <img src="assets/img/service-commercial-garage-door.jpg" width="660" height="300" loading="lazy" alt="Green commercial roll-up garage door on a warehouse in {{location}}">
           <h3>Commercial Garage Door</h3>
           <p class="service-card__desc">We service all commercial garage doors &ndash; fast, reliable and fully insured.</p>
@@ -751,7 +770,7 @@ button{font:inherit}
           </a>
         </article>
 
-        <article class="service-card">
+        <article class="service-card" id="svc-gate">
           <img src="assets/img/service-gate-repair-installation.jpg" width="660" height="300" loading="lazy" alt="Automatic sliding driveway gate installed at a {{location}} residence">
           <h3>Gate Repair &amp; Installation</h3>
           <p class="service-card__desc">Gate won&rsquo;t open or wheels stuck? We repair or install automatic gates.</p>
@@ -766,7 +785,7 @@ button{font:inherit}
           </a>
         </article>
 
-        <article class="service-card">
+        <article class="service-card" id="svc-tuneup">
           <img src="assets/img/service-tune-up-maintenance.svg" width="330" height="150" loading="lazy" alt="Garage door technician lubricating hinges during a tune-up in {{location}}">
           <h3>Garage Tune-up &amp; Maintenance</h3>
           <p class="service-card__desc">Door too loud or uneven? We lubricate, adjust and balance for smooth operation.</p>
@@ -782,7 +801,7 @@ button{font:inherit}
           </a>
         </article>
 
-        <article class="service-card">
+        <article class="service-card" id="svc-new-door">
           <img src="assets/img/service-new-door-installation.svg" width="330" height="150" loading="lazy" alt="Newly installed white hurricane-rated garage door on a {{location}} home">
           <h3>New Garage Door Installation</h3>
           <p class="service-card__desc">We install all garage door types &ndash; including hurricane-rated doors. Old door removal included.</p>
@@ -798,7 +817,7 @@ button{font:inherit}
           </a>
         </article>
 
-        <article class="service-card">
+        <article class="service-card" id="svc-sensor">
           <img src="assets/img/service-sensor-repair.jpg" width="660" height="300" loading="lazy" alt="Garage door safety sensor with its indicator lit, mounted on the track in {{location}}">
           <h3>Garage Door Sensor Repair</h3>
           <p class="service-card__desc">Door won&rsquo;t close or sensors blink? We adjust or replace garage door sensors.</p>
@@ -971,12 +990,18 @@ button{font:inherit}
     <div class="wrap">
       <h2 class="sr-only" id="brands-title">Garage door brands we install and service</h2>
       <ul class="brands__list">
-        <li><img src="assets/img/brand-amarr.png" width="236" height="88" loading="lazy" alt="Amarr garage doors installed and serviced in {{location}}"></li>
-        <li><img src="assets/img/brand-chi-overhead-doors.png" width="281" height="88" loading="lazy" alt="C.H.I. Overhead Doors installed and serviced in {{location}}"></li>
-        <li><img src="assets/img/brand-clopay.png" width="256" height="88" loading="lazy" alt="Clopay garage doors dealer serving {{location}}"></li>
-        <li><img src="assets/img/brand-liftmaster.png" width="374" height="88" loading="lazy" alt="LiftMaster garage door openers repaired and installed in {{location}}"></li>
-        <li><img src="assets/img/brand-genie.png" width="332" height="88" loading="lazy" alt="Genie garage door opener service in {{location}}"></li>
-        <li><img src="assets/img/brand-chamberlain.png" width="804" height="88" loading="lazy" alt="Chamberlain smart garage door openers with MyQ installed in {{location}}"></li>
+        <li><a href="https://www.amarr.com/" target="_blank" rel="noopener nofollow" title="Amarr — manufacturer site (opens in a new tab)">
+          <img src="assets/img/brand-amarr.png" width="236" height="88" loading="lazy" alt="Amarr garage doors installed and serviced in {{location}}"></a></li>
+        <li><a href="https://www.chiohd.com/" target="_blank" rel="noopener nofollow" title="C.H.I. Overhead Doors — manufacturer site (opens in a new tab)">
+          <img src="assets/img/brand-chi-overhead-doors.png" width="281" height="88" loading="lazy" alt="C.H.I. Overhead Doors installed and serviced in {{location}}"></a></li>
+        <li><a href="https://www.clopaydoor.com/" target="_blank" rel="noopener nofollow" title="Clopay — manufacturer site (opens in a new tab)">
+          <img src="assets/img/brand-clopay.png" width="256" height="88" loading="lazy" alt="Clopay garage doors dealer serving {{location}}"></a></li>
+        <li><a href="https://www.liftmaster.com/" target="_blank" rel="noopener nofollow" title="LiftMaster — manufacturer site (opens in a new tab)">
+          <img src="assets/img/brand-liftmaster.png" width="374" height="88" loading="lazy" alt="LiftMaster garage door openers repaired and installed in {{location}}"></a></li>
+        <li><a href="https://www.geniecompany.com/" target="_blank" rel="noopener nofollow" title="Genie — manufacturer site (opens in a new tab)">
+          <img src="assets/img/brand-genie.png" width="332" height="88" loading="lazy" alt="Genie garage door opener service in {{location}}"></a></li>
+        <li><a href="https://www.chamberlain.com/" target="_blank" rel="noopener nofollow" title="Chamberlain — manufacturer site (opens in a new tab)">
+          <img src="assets/img/brand-chamberlain.png" width="804" height="88" loading="lazy" alt="Chamberlain smart garage door openers with MyQ installed in {{location}}"></a></li>
       </ul>
     </div>
   </section>
@@ -1112,25 +1137,25 @@ button{font:inherit}
       <nav aria-labelledby="footer-services-1">
         <h2 id="footer-services-1">Our Services</h2>
         <ul class="footer-links">
-          <li><a href="#services">Garage Door Seal Replace</a></li>
-          <li><a href="#services">Electric Garage Door Openers</a></li>
-          <li><a href="#services">Jackshaft &amp; Side-Mount Openers</a></li>
-          <li><a href="#services">Broken Spring Repair</a></li>
-          <li><a href="#services">Cable &amp; Drum Repair</a></li>
-          <li><a href="#services">New Garage Door Installation</a></li>
-          <li><a href="#services">Gate Repair &amp; Installation</a></li>
+          <li><a href="#svc-off-track">Garage Door Seal Replace</a></li>
+          <li><a href="#svc-opener">Electric Garage Door Openers</a></li>
+          <li><a href="#svc-jackshaft">Jackshaft &amp; Side-Mount Openers</a></li>
+          <li><a href="#svc-spring">Broken Spring Repair</a></li>
+          <li><a href="#svc-cable">Cable &amp; Drum Repair</a></li>
+          <li><a href="#svc-new-door">New Garage Door Installation</a></li>
+          <li><a href="#svc-gate">Gate Repair &amp; Installation</a></li>
         </ul>
       </nav>
 
       <nav aria-labelledby="footer-services-2">
         <h2 id="footer-services-2">More Services</h2>
         <ul class="footer-links">
-          <li><a href="#services">Door Off-Track Repair</a></li>
-          <li><a href="#services">Garage Door Sensor Repair</a></li>
-          <li><a href="#services">Garage Door Spring Installation</a></li>
-          <li><a href="#services">Garage Door Roller Repair</a></li>
-          <li><a href="#services">Garage Door Tune-Up</a></li>
-          <li><a href="#services">Noisy Garage Door Repair</a></li>
+          <li><a href="#svc-off-track">Door Off-Track Repair</a></li>
+          <li><a href="#svc-sensor">Garage Door Sensor Repair</a></li>
+          <li><a href="#svc-spring">Garage Door Spring Installation</a></li>
+          <li><a href="#svc-roller">Garage Door Roller Repair</a></li>
+          <li><a href="#svc-tuneup">Garage Door Tune-Up</a></li>
+          <li><a href="#svc-tuneup">Noisy Garage Door Repair</a></li>
         </ul>
       </nav>
     </div>
@@ -1219,7 +1244,11 @@ var SITE = {
   Array.prototype.forEach.call(document.querySelectorAll("*"), function(el){
     attrs.forEach(function(a){
       var v = el.getAttribute && el.getAttribute(a);
-      if (v && v.indexOf("{{") > -1) el.setAttribute(a, sub(v));
+      if (!v || v.indexOf("{{") === -1) return;
+      var out = sub(v);
+      /* a value like "Sarasota, FL" must not land raw inside a URL */
+      if (a === "href" && /^https?:/i.test(out)) out = encodeURI(out);
+      el.setAttribute(a, out);
     });
   });
 
