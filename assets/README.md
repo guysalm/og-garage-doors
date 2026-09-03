@@ -67,10 +67,10 @@ a `<job> before.jpg` / `<job> after.jpg` pair and add one more `.ba-card`.
   lazy-loaded by design (above the fold / large decorative art).
 - Alt text describes what is actually in each photo — when you swap an image,
   update its alt to match, or the alt becomes a lie to both users and crawlers.
-- Manufacturer logos are the **real marks**, trimmed from `assets/Logos/` to 88px-tall
-  transparent PNGs (2× the 44px display height). They render inside a fixed 158×54 box
-  with `object-fit:contain`, so a 9:1 wordmark (Chamberlain) and a 2.7:1 mark (Amarr)
-  sit optically even; grayscale at 72% opacity, full colour on hover.
+- Manufacturer logos are the **real marks, shown in full colour**, trimmed from
+  `assets/Logos/` to 88px-tall transparent PNGs (2× the 44px display height). They
+  render inside a fixed 158×54 box with `object-fit:contain`, so a 9:1 wordmark
+  (Chamberlain) and a 2.7:1 mark (Amarr) sit optically even.
 - The **review-platform files are still neutral placeholders** — not the real Facebook,
   Thumbtack, HomeAdvisor, Yelp or Google marks. Confirm you are licensed to display
   every logo on the page before launch.
