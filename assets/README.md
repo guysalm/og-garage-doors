@@ -29,6 +29,10 @@ Centre-cropped to the exact display aspect ratio, saved as JPEG q82.
 | `ba-off-track-before/-after.jpg` | `2 beore.jpg` / `2 After.jpg` | Door off its tracks, then reset |
 | `ba-commercial-rollup-before/-after.jpg` | `commercial door before/after.jpg` | Old commercial roll-up out, new one in |
 | `brand-*.png` (6 files) | `assets/Logos/` | Amarr, C.H.I., Clopay, LiftMaster, Genie, Chamberlain |
+| `reviews-google-5-star.png` | `cbd59134…png` | Google 5.0 with five stars |
+| `reviews-facebook-5-star.png` | `fts-reviews-1.png` | Facebook 5-star tile |
+| `reviews-yelp-5-star.png` | `yelp_logos.zip` (Light bg / RGB) | Yelp wordmark + burst |
+| `payments-credit-cards.png` | `credit-cards-color-logo-pack.zip` | Visa, MasterCard, Amex, Discover |
 
 ## Still placeholders
 
@@ -42,11 +46,20 @@ extension in `index.html` from `.svg` to `.jpg` (or `.webp`).
 | `review-avatar-1…3.svg` | Reviewer avatars | 1:1 — 64×64 |
 | `og-garage-doors-logo.svg` | Header + footer logo | keep as SVG |
 | `icon-google-g.svg` | Google mark on review cards | keep as SVG |
-| `reviews-*.svg` (5 files) | Facebook / Thumbtack / HomeAdvisor / Yelp / Google | height 66px |
 | `badge-*.svg` (4 files) | Guarantee & discount badges | 1:1 — 200×200 |
 
 **Two service cards to go** — tune-up & maintenance and new door installation —
 then the whole services grid is real photography.
+
+### Review badges not yet added
+
+The trust strip now shows three real badges: Google, Facebook, Yelp. Two slots
+were removed rather than left as fake placeholders:
+
+| Platform | Blocker |
+|---|---|
+| HomeAdvisor | `homeadvisor-top_rated.ai` is a vector-only PDF. There is no PDF/AI rasteriser on this machine (no ImageMagick, Inkscape or Ghostscript) and headless Chrome renders it blank. **Export it from Illustrator as PNG (≥132px tall, transparent) or SVG** and it drops straight in. |
+| Thumbtack | No logo file supplied. |
 
 ## Named photos not yet used
 
