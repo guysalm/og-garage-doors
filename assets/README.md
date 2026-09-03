@@ -14,7 +14,7 @@ attributes already on each `<img>` so nothing shifts while loading.
 | `about-garage-door-service-home.svg` | About section photo | ~11:10 — 900×820 |
 | `expertise-residential-opener.svg` | Expertise photo (top) | ~2:1 — 900×440 |
 | `expertise-garage-door-interior.svg` | Expertise photo (bottom) | ~2:1 — 900×440 |
-| `service-*.svg` (12 files) | Service card thumbnails | 11:5 — 660×300 |
+| `service-*.svg` (11 files) | Service card thumbnails | 11:5 — 660×300 |
 | `before-after-1…8.svg` | Before & After slider | ~3:2 — 480×330 |
 | `og-garage-doors-logo.svg` | Header + footer logo | keep as SVG |
 | `icon-google-g.svg` | Google mark on review cards | keep as SVG |
