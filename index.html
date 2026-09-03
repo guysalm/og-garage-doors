@@ -328,8 +328,13 @@ button{font:inherit}
 .gallery__dots button[aria-current="true"]{background:var(--crimson);width:11px;height:11px}
 
 /* ========== Brand logos ========== */
-.brands__list{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:44px}
-.brands__list img{height:44px;width:auto;filter:grayscale(1);opacity:.7;transition:filter .2s,opacity .2s}
+.brands__list{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:38px}
+/* fixed box + contain keeps a 9:1 wordmark and a 2.7:1 mark optically even */
+.brands__list li{display:flex;align-items:center;justify-content:center;width:158px;height:54px}
+.brands__list img{
+  max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;
+  filter:grayscale(1);opacity:.72;transition:filter .2s,opacity .2s
+}
 .brands__list img:hover{filter:none;opacity:1}
 
 /* ========== FAQ ========== */
@@ -446,7 +451,7 @@ button{font:inherit}
   .badges__list{gap:20px}
   .badges__list img{width:104px;height:104px}
   .brands__list{gap:28px}
-  .brands__list img{height:34px}
+  .brands__list li{width:112px;height:40px}
   .mobile-bar{display:grid}
   .ba-shot img{height:190px}
   .ba-shot__tag{padding:4px 9px;font-size:.64rem;letter-spacing:.4px}
@@ -968,12 +973,12 @@ button{font:inherit}
     <div class="wrap">
       <h2 class="sr-only" id="brands-title">Garage door brands we install and service</h2>
       <ul class="brands__list">
-        <li><img src="assets/img/brand-amarr.svg" width="120" height="44" loading="lazy" alt="Amarr garage doors installed and serviced in {{location}}"></li>
-        <li><img src="assets/img/brand-hurricane-master.svg" width="120" height="44" loading="lazy" alt="Hurricane Master impact-rated garage doors for Florida homes"></li>
-        <li><img src="assets/img/brand-clopay.svg" width="120" height="44" loading="lazy" alt="Clopay garage doors dealer serving {{location}}"></li>
-        <li><img src="assets/img/brand-liftmaster.svg" width="120" height="44" loading="lazy" alt="LiftMaster garage door openers repaired and installed in {{location}}"></li>
-        <li><img src="assets/img/brand-genie.svg" width="120" height="44" loading="lazy" alt="Genie garage door opener service in {{location}}"></li>
-        <li><img src="assets/img/brand-chamberlain.svg" width="120" height="44" loading="lazy" alt="Chamberlain smart garage door openers with MyQ installed in {{location}}"></li>
+        <li><img src="assets/img/brand-amarr.png" width="236" height="88" loading="lazy" alt="Amarr garage doors installed and serviced in {{location}}"></li>
+        <li><img src="assets/img/brand-chi-overhead-doors.png" width="281" height="88" loading="lazy" alt="C.H.I. Overhead Doors installed and serviced in {{location}}"></li>
+        <li><img src="assets/img/brand-clopay.png" width="256" height="88" loading="lazy" alt="Clopay garage doors dealer serving {{location}}"></li>
+        <li><img src="assets/img/brand-liftmaster.png" width="374" height="88" loading="lazy" alt="LiftMaster garage door openers repaired and installed in {{location}}"></li>
+        <li><img src="assets/img/brand-genie.png" width="332" height="88" loading="lazy" alt="Genie garage door opener service in {{location}}"></li>
+        <li><img src="assets/img/brand-chamberlain.png" width="804" height="88" loading="lazy" alt="Chamberlain smart garage door openers with MyQ installed in {{location}}"></li>
       </ul>
     </div>
   </section>

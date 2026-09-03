@@ -28,6 +28,7 @@ Centre-cropped to the exact display aspect ratio, saved as JPEG q82.
 | `ba-panel-replacement-before/-after.jpg` | `1 Before.jpg` / `1 After.jpg` | Damaged top panel, then replaced |
 | `ba-off-track-before/-after.jpg` | `2 beore.jpg` / `2 After.jpg` | Door off its tracks, then reset |
 | `ba-commercial-rollup-before/-after.jpg` | `commercial door before/after.jpg` | Old commercial roll-up out, new one in |
+| `brand-*.png` (6 files) | `assets/Logos/` | Amarr, C.H.I., Clopay, LiftMaster, Genie, Chamberlain |
 
 ## Still placeholders
 
@@ -43,7 +44,6 @@ extension in `index.html` from `.svg` to `.jpg` (or `.webp`).
 | `icon-google-g.svg` | Google mark on review cards | keep as SVG |
 | `reviews-*.svg` (5 files) | Facebook / Thumbtack / HomeAdvisor / Yelp / Google | height 66px |
 | `badge-*.svg` (4 files) | Guarantee & discount badges | 1:1 — 200×200 |
-| `brand-*.svg` (6 files) | Amarr / Hurricane Master / Clopay / LiftMaster / Genie / Chamberlain | height 44px |
 
 **Two service cards to go** — tune-up & maintenance and new door installation —
 then the whole services grid is real photography.
@@ -67,8 +67,13 @@ a `<job> before.jpg` / `<job> after.jpg` pair and add one more `.ba-card`.
   lazy-loaded by design (above the fold / large decorative art).
 - Alt text describes what is actually in each photo — when you swap an image,
   update its alt to match, or the alt becomes a lie to both users and crawlers.
-- The review-platform and manufacturer files are **neutral wordmark placeholders**,
-  not the real trademarks. Drop in logo files you are licensed to use before launch.
+- Manufacturer logos are the **real marks**, trimmed from `assets/Logos/` to 88px-tall
+  transparent PNGs (2× the 44px display height). They render inside a fixed 158×54 box
+  with `object-fit:contain`, so a 9:1 wordmark (Chamberlain) and a 2.7:1 mark (Amarr)
+  sit optically even; grayscale at 72% opacity, full colour on hover.
+- The **review-platform files are still neutral placeholders** — not the real Facebook,
+  Thumbtack, HomeAdvisor, Yelp or Google marks. Confirm you are licensed to display
+  every logo on the page before launch.
 - Reviewer names and review text are placeholders in `SITE` (in `index.html`).
   Replace them with real Google reviews — the page also carries an
   `aggregateRating` in its JSON-LD, which must match real, verifiable reviews.
