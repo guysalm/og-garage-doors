@@ -20,7 +20,7 @@ cmd.exe /c start "" "index.html"
 ## Page structure
 
 `sticky header` → `hero (H1)` → `review platforms` → `Google reviews` →
-`guarantee badges` → `Our Services (11 cards)` → `value props` → `About` →
+`guarantee badges` → `Our Services (12 cards)` → `value props` → `About` →
 `Our Expertise` → `Before & After` → `brands` → `FAQ` → `contact form` →
 `footer` → `sticky mobile CTA bar`
 
