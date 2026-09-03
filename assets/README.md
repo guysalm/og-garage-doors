@@ -11,14 +11,17 @@ Centre-cropped to the exact display aspect ratio, saved as JPEG q82.
 | File | Source | Shows |
 |---|---|---|
 | `hero-garage-door-repair.jpg` | `Hero background.jpg` | Florida home, double garage door, palm + sky |
-| `service-broken-spring-repair.jpg` | `Gavlanized sprnings 2 .jpg` | Galvanized torsion spring above the door |
+| `contact-garage-door-background.jpg` | `LiftMaster cemmercial garage door opener.jpg` | Commercial operator (sits under a dark overlay) |
+| `about-garage-door-service-home.jpg` | `Galvanized springs.jpg` | Residential door with window panels, from inside |
+| `service-broken-spring-repair.jpg` | `Broken Spring 1.jpg` | Torsion spring + centre bracket on the header |
 | `service-opener-repair-installation.jpg` | `Galvanized springs 2.jpg` | Residential garage, opener + rail overhead |
+| `service-off-track-repair.jpg` | `Garage Door Off Track.jpg` | Door hanging off its track at a home |
 | `service-roller-replacement.jpg` | `rellers.jpg` | Set of new nylon rollers |
 | `service-panels-replacement.jpg` | `Panel replacment .jpg` | Door panels laid out on the driveway |
 | `service-gate-repair-installation.jpg` | `Gate automatic opener 1.jpg` | Driveway gate + LiftMaster gate operator |
-| `service-commercial-garage-door.jpg` | `LiftMaster cemmercial garage door opener.jpg` | Commercial roll-up door + overhead operator |
+| `service-commercial-garage-door.jpg` | `Cemmercial Roll up door.jpg` | Green commercial roll-up door on a warehouse |
 | `service-jackshaft-side-mount-openers.jpg` | `commercial garage door opener 2.jpg` | Jackshaft operator beside the torsion shaft |
-| `expertise-residential-opener.jpg` | `Galvanized springs.jpg` | Sectional door with windows, rail overhead |
+| `expertise-residential-opener.jpg` | `Broken Spring 2.jpg` | Torsion spring + opener rail above the door |
 | `expertise-garage-door-interior.jpg` | `chain hoist.jpg` | Chain hoist on a commercial roll-up door |
 
 ## Still placeholders
@@ -28,9 +31,6 @@ extension in `index.html` from `.svg` to `.jpg` (or `.webp`).
 
 | File | Used for | Aspect / target size |
 |---|---|---|
-| `contact-garage-door-background.svg` | Contact section background (CSS) | ~16:7 — 1600×700 |
-| `about-garage-door-service-home.svg` | About section photo | ~11:10 — 900×820 |
-| `service-off-track-repair.svg` | Off-track repair card | 11:5 — 660×300 |
 | `service-cable-drum-repair.svg` | Cable & drum card | 11:5 — 660×300 |
 | `service-tune-up-maintenance.svg` | Tune-up card | 11:5 — 660×300 |
 | `service-new-door-installation.svg` | New door install card | 11:5 — 660×300 |
@@ -43,22 +43,25 @@ extension in `index.html` from `.svg` to `.jpg` (or `.webp`).
 | `badge-*.svg` (4 files) | Guarantee & discount badges | 1:1 — 200×200 |
 | `brand-*.svg` (6 files) | Amarr / Hurricane Master / Clopay / LiftMaster / Genie / Chamberlain | height 44px |
 
+**Four service cards to go**, then the whole services grid is real photography:
+cable & drum, tune-up, new door installation, sensor repair.
+
 ## Named photos not yet used
 
-Three of the named originals are duplicates or incomplete pairs, so they have no
-slot yet:
-
-- `commercial garage door opener 1.jpg` — second angle of the same operator as
-  `commercial garage door opener 2.jpg`
-- `Gate automatin operner 2.jpg` — second angle of the same gate job
-- `Rollup door before.jpg` — a "before" with no matching "after" shot
+| File | Why |
+|---|---|
+| `Gavlanized sprnings 2 .jpg` | Superseded — `Broken Spring 1.jpg` is a clearer spring shot |
+| `commercial garage door opener 1.jpg` | Second angle of the same operator as `…opener 2.jpg` |
+| `Gate automatin operner 2.jpg` | Second angle of the same gate job |
+| `Rollup door before.jpg` | A "before" with no matching "after" |
 
 The Before & After slider needs **pairs**. Supply the matching "after" for the
 roll-up door and it can fill the first slot.
 
 ## Notes
 
-- Every `<img>` uses `loading="lazy"` and carries a keyword + `{{location}}` alt.
+- Every `<img>` uses `loading="lazy"`, carries a keyword + `{{location}}` alt, and
+  declares its real intrinsic `width`/`height` so nothing shifts while loading.
   The hero and contact backgrounds are CSS `background-image`, so they are not
   lazy-loaded by design (above the fold / large decorative art).
 - Alt text describes what is actually in each photo — when you swap an image,
