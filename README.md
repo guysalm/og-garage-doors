@@ -81,7 +81,9 @@ text, `tel:` links, the WhatsApp link and the form's hidden routing fields.
 | `{{phone_number}}` | `+19410000000` (tel: format) |
 | `{{phone_display}}` | (941) 000-0000 |
 | `{{whatsapp_number}}` | 19410000000 (digits only) |
-| `{{email}}` / `{{site_url}}` | — |
+| `{{email}}` | — |
+| `{{site_url}}` | site root — logo link, og:image, sharing |
+| `{{page_url}}` | this page — canonical, og:url, form field |
 | `{{rating}}` / `{{review_count}}` | 5.0 / 127 |
 
 Review cards are **not** tokenised — they render from the `REVIEWS` array in the

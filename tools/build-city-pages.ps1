@@ -126,7 +126,9 @@ foreach ($c in $cities) {
   $vals["city"]         = $c.City
   $vals["state"]        = "FL"
   $vals["zip"]          = $c.FirstZip
-  $vals["site_url"]     = $url
+  # page_url is this page; site_url stays the site root, otherwise the logo
+  # link, og:image and the share dialog all end up pointing at the city page
+  $vals["page_url"]     = $url
   $vals["service_area"] = "$($c.City) and the surrounding area"
 
   $page = $tpl
@@ -136,7 +138,7 @@ foreach ($c in $cities) {
 
   # 2. keep the runtime SITE object in step (the review cards read it)
   $newSite = $siteBlock
-  foreach ($k in @("location","city","state","zip","site_url","service_area")) {
+  foreach ($k in @("location","city","state","zip","page_url","service_area")) {
     $newSite = [regex]::Replace($newSite, "(?m)^(\s*$k\s*:\s*"")(.*?)("")", { param($m) $m.Groups[1].Value + $vals[$k] + $m.Groups[3].Value })
   }
   $page = $page.Replace($siteBlock, $newSite)

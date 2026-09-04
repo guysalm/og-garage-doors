@@ -11,7 +11,9 @@
      fill the defaults). Available tokens:
        {{business_name}}   {{location}}        {{service_name}}
        {{phone_number}}    {{phone_display}}  {{whatsapp_number}}
-       {{email}}           {{site_url}}       {{street}}
+       {{email}}           {{street}}
+       {{site_url}}   site root, same on every page (logo, og:image, sharing)
+       {{page_url}}   this page's own URL (canonical, og:url, form field)
        {{city}}            {{state}}          {{zip}}
        {{rating}}          {{review_count}}   {{service_area}}
      Review cards are not tokenised — they render from the REVIEWS
@@ -20,14 +22,14 @@
 
 <title>{{service_name}} {{location}} | Same-Day Service — Call {{phone_display}}</title>
 <meta name="description" content="Fast, affordable {{service_name}} in {{location}}. Licensed &amp; insured local techs, 24/7 emergency service, free estimates and no extra charge on weekends. Call {{phone_display}} now.">
-<link rel="canonical" href="{{site_url}}">
+<link rel="canonical" href="{{page_url}}">
 
 <meta property="og:locale" content="en_US">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="{{business_name}}">
 <meta property="og:title" content="{{service_name}} {{location}} | Same-Day Service — Call {{phone_display}}">
 <meta property="og:description" content="Fast, affordable {{service_name}} in {{location}}. Licensed &amp; insured, 24/7 emergency service, free estimates. Call {{phone_display}}.">
-<meta property="og:url" content="{{site_url}}">
+<meta property="og:url" content="{{page_url}}">
 <meta property="og:image" content="{{site_url}}assets/img/hero-garage-door-repair.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#14181D">
@@ -44,7 +46,7 @@
   "name": "{{business_name}}",
   "image": "{{site_url}}assets/img/hero-garage-door-repair.jpg",
   "logo": "{{site_url}}assets/img/og-garage-doors-logo.svg",
-  "url": "{{site_url}}",
+  "url": "{{page_url}}",
   "telephone": "{{phone_number}}",
   "email": "{{email}}",
   "priceRange": "$$",
@@ -1181,7 +1183,7 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
             <!-- hidden routing fields for dynamic landing pages -->
             <input type="hidden" name="page_location" value="{{location}}">
             <input type="hidden" name="page_service" value="{{service_name}}">
-            <input type="hidden" name="page_url" value="{{site_url}}">
+            <input type="hidden" name="page_url" value="{{page_url}}">
 
             <div class="form-row">
               <div class="field">
@@ -1382,6 +1384,7 @@ var SITE = {
   whatsapp_number: "10000000000",
   email          : "info@oggaragedoors.com",
   site_url       : "https://oggaragedoors.com/",
+  page_url       : "https://oggaragedoors.com/",
   rating         : "5.0",
   review_count   : "127"
 };

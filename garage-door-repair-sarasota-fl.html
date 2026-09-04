@@ -11,7 +11,9 @@
      fill the defaults). Available tokens:
        OG Garage Doors   Sarasota, FL        Garage Door Repair
        +10000000000    (000) 000-0000  10000000000
-       info@oggaragedoors.com           https://oggaragedoors.com/garage-door-repair-sarasota-fl.html       
+       info@oggaragedoors.com           
+       https://oggaragedoors.com/   site root, same on every page (logo, og:image, sharing)
+       https://oggaragedoors.com/garage-door-repair-sarasota-fl.html   this page's own URL (canonical, og:url, form field)
        Sarasota            FL          34231
        5.0          127   Sarasota and the surrounding area
      Review cards are not tokenised — they render from the REVIEWS
@@ -28,7 +30,7 @@
 <meta property="og:title" content="Garage Door Repair Sarasota FL | Same-Day Emergency Service">
 <meta property="og:description" content="Fast, reliable garage door repair &amp; installation in Sarasota, FL. Serving Lakewood Ranch, Palmer Ranch, and Siesta Key. Call today for a free quote!">
 <meta property="og:url" content="https://oggaragedoors.com/garage-door-repair-sarasota-fl.html">
-<meta property="og:image" content="https://oggaragedoors.com/garage-door-repair-sarasota-fl.htmlassets/img/hero-garage-door-repair.jpg">
+<meta property="og:image" content="https://oggaragedoors.com/assets/img/hero-garage-door-repair.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#14181D">
 
@@ -40,10 +42,10 @@
 {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
-  "@id": "https://oggaragedoors.com/garage-door-repair-sarasota-fl.html#localbusiness",
+  "@id": "https://oggaragedoors.com/#localbusiness",
   "name": "OG Garage Doors",
-  "image": "https://oggaragedoors.com/garage-door-repair-sarasota-fl.htmlassets/img/hero-garage-door-repair.jpg",
-  "logo": "https://oggaragedoors.com/garage-door-repair-sarasota-fl.htmlassets/img/og-garage-doors-logo.svg",
+  "image": "https://oggaragedoors.com/assets/img/hero-garage-door-repair.jpg",
+  "logo": "https://oggaragedoors.com/assets/img/og-garage-doors-logo.svg",
   "url": "https://oggaragedoors.com/garage-door-repair-sarasota-fl.html",
   "telephone": "+10000000000",
   "email": "info@oggaragedoors.com",
@@ -636,7 +638,7 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
 <!-- ==================== STICKY HEADER ==================== -->
 <header class="site-header">
   <div class="header-inner">
-    <a class="brand" href="https://oggaragedoors.com/garage-door-repair-sarasota-fl.html" aria-label="OG Garage Doors — Garage Door Repair in Sarasota, FL, home">
+    <a class="brand" href="https://oggaragedoors.com/" aria-label="OG Garage Doors — Garage Door Repair in Sarasota, FL, home">
       <img class="brand__logo" src="assets/img/og-garage-doors-logo.svg" width="196" height="52"
            alt="OG Garage Doors logo — garage door repair and installation in Sarasota, FL">
       <span class="brand__rating">
@@ -1419,7 +1421,8 @@ var SITE = {
   phone_display  : "(000) 000-0000",
   whatsapp_number: "10000000000",
   email          : "info@oggaragedoors.com",
-  site_url       : "https://oggaragedoors.com/garage-door-repair-sarasota-fl.html",
+  site_url       : "https://oggaragedoors.com/",
+  page_url       : "https://oggaragedoors.com/garage-door-repair-sarasota-fl.html",
   rating         : "5.0",
   review_count   : "127"
 };
