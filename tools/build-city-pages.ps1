@@ -329,6 +329,14 @@ foreach ($file in $checks.Keys) {
   if ($t -match 'href="/[a-z0-9-]+\.html"') { $problems += "$name links to a .html URL (should be extensionless)" }
 }
 
+# Screaming Frog flags served images over 100KB; keep every one under it.
+$IMG_LIMIT_KB = 100
+$imgGlob = Join-Path $root "assets\img\*"   # -Include needs a wildcard path or it matches nothing
+foreach ($img in Get-ChildItem $imgGlob -File -Include *.webp,*.png,*.jpg,*.jpeg) {
+  $kb = [math]::Round($img.Length / 1KB, 1)
+  if ($kb -gt $IMG_LIMIT_KB) { $problems += "assets/img/$($img.Name) is ${kb}KB, over the ${IMG_LIMIT_KB}KB limit" }
+}
+
 if ($problems.Count) {
   $problems | ForEach-Object { Write-Host "  FAIL  $_" -ForegroundColor Red }
   throw "$($problems.Count) canonical/link problem(s) - fix before deploying."

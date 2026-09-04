@@ -107,7 +107,8 @@ canonicals, internal links and `sitemap.xml` all use the **extensionless,
 root-relative** form (`/garage-door-repair-sarasota-fl`). Anything else produces
 a redirect hop and a canonical that disagrees with the crawled URL.
 
-The build asserts every page has a self-referencing canonical, and that no
+The build asserts every page has a self-referencing canonical, that no served
+image exceeds 100KB, and that no
 title exceeds 561px or description 985px when measured in the SERP font
 (Arial 20px / 14px) — Google truncates on pixel width, not character count.
 

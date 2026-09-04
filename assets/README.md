@@ -6,30 +6,32 @@ that folder, or a **generated SVG placeholder** still waiting for one.
 
 ## Real photos in place
 
-Centre-cropped to the exact display aspect ratio, saved as JPEG q82.
+Centre-cropped to the exact display aspect ratio, then encoded as WebP (q0.80;
+the hero at q0.62 since it sits under a 65% dark overlay). No image exceeds
+100KB and the build fails if one does.
 
 | File | Source | Shows |
 |---|---|---|
-| `hero-garage-door-repair.jpg` | `Hero background.jpg` | Florida home, double garage door, palm + sky |
-| `contact-garage-door-background.jpg` | `LiftMaster cemmercial garage door opener.jpg` | Commercial operator (sits under a dark overlay) |
-| `about-garage-door-service-home.jpg` | `Galvanized springs.jpg` | Residential door with window panels, from inside |
-| `service-broken-spring-repair.jpg` | `Broken Spring 1.jpg` | Torsion spring + centre bracket on the header |
-| `service-opener-repair-installation.jpg` | `Galvanized springs 2.jpg` | Residential garage, opener + rail overhead |
-| `service-off-track-repair.jpg` | `Garage Door Off Track.jpg` | Door hanging off its track at a home |
-| `service-roller-replacement.jpg` | `rellers.jpg` | Set of new nylon rollers |
-| `service-panels-replacement.jpg` | `Panel replacment .jpg` | Door panels laid out on the driveway |
-| `service-gate-repair-installation.jpg` | `Gate automatic opener 1.jpg` | Driveway gate + LiftMaster gate operator |
-| `service-commercial-garage-door.jpg` | `Cemmercial Roll up door.jpg` | Green commercial roll-up door on a warehouse |
-| `service-jackshaft-side-mount-openers.jpg` | `commercial garage door opener 2.jpg` | Jackshaft operator beside the torsion shaft |
-| `service-cable-drum-repair.jpg` | `Cable and Drum.jpg` | Cable drum with the lift cable wound on the shaft |
-| `service-sensor-repair.jpg` | `Sensoe.jpg` | Safety sensor on the track, indicator lit |
-| `service-new-door-installation.jpg` | `Garage door installation.png` | Two techs fitting a windowed top section |
-| `service-tune-up-maintenance.jpg` | `Garage door tuneup.png` | Tech servicing door hardware with a hand tool |
-| `expertise-residential-opener.jpg` | `Broken Spring 2.jpg` | Torsion spring + opener rail above the door |
-| `expertise-garage-door-interior.jpg` | `chain hoist.jpg` | Chain hoist on a commercial roll-up door |
-| `ba-panel-replacement-before/-after.jpg` | `1 Before.jpg` / `1 After.jpg` | Damaged top panel, then replaced |
-| `ba-off-track-before/-after.jpg` | `2 beore.jpg` / `2 After.jpg` | Door off its tracks, then reset |
-| `ba-commercial-rollup-before/-after.jpg` | `commercial door before/after.jpg` | Old commercial roll-up out, new one in |
+| `hero-garage-door-repair.webp` | `Hero background.webp` | Florida home, double garage door, palm + sky |
+| `contact-garage-door-background.webp` | `LiftMaster cemmercial garage door opener.webp` | Commercial operator (sits under a dark overlay) |
+| `about-garage-door-service-home.webp` | `Galvanized springs.webp` | Residential door with window panels, from inside |
+| `service-broken-spring-repair.webp` | `Broken Spring 1.webp` | Torsion spring + centre bracket on the header |
+| `service-opener-repair-installation.webp` | `Galvanized springs 2.webp` | Residential garage, opener + rail overhead |
+| `service-off-track-repair.webp` | `Garage Door Off Track.webp` | Door hanging off its track at a home |
+| `service-roller-replacement.webp` | `rellers.webp` | Set of new nylon rollers |
+| `service-panels-replacement.webp` | `Panel replacment .webp` | Door panels laid out on the driveway |
+| `service-gate-repair-installation.webp` | `Gate automatic opener 1.webp` | Driveway gate + LiftMaster gate operator |
+| `service-commercial-garage-door.webp` | `Cemmercial Roll up door.webp` | Green commercial roll-up door on a warehouse |
+| `service-jackshaft-side-mount-openers.webp` | `commercial garage door opener 2.webp` | Jackshaft operator beside the torsion shaft |
+| `service-cable-drum-repair.webp` | `Cable and Drum.webp` | Cable drum with the lift cable wound on the shaft |
+| `service-sensor-repair.webp` | `Sensoe.webp` | Safety sensor on the track, indicator lit |
+| `service-new-door-installation.webp` | `Garage door installation.png` | Two techs fitting a windowed top section |
+| `service-tune-up-maintenance.webp` | `Garage door tuneup.png` | Tech servicing door hardware with a hand tool |
+| `expertise-residential-opener.webp` | `Broken Spring 2.webp` | Torsion spring + opener rail above the door |
+| `expertise-garage-door-interior.webp` | `chain hoist.webp` | Chain hoist on a commercial roll-up door |
+| `ba-panel-replacement-before/-after.webp` | `1 Before.webp` / `1 After.webp` | Damaged top panel, then replaced |
+| `ba-off-track-before/-after.webp` | `2 beore.webp` / `2 After.webp` | Door off its tracks, then reset |
+| `ba-commercial-rollup-before/-after.webp` | `commercial door before/after.webp` | Old commercial roll-up out, new one in |
 | `brand-*.png` (6 files) | `assets/Logos/` | Amarr, C.H.I., Clopay, LiftMaster, Genie, Chamberlain |
 | `reviews-google-5-star.png` | `cbd59134…png` | Google 5.0 with five stars |
 | `reviews-facebook-5-star.png` | `fts-reviews-1.png` | Facebook 5-star tile |
@@ -41,7 +43,7 @@ Centre-cropped to the exact display aspect ratio, saved as JPEG q82.
 ## Still placeholders
 
 Replace with a real photo at the listed aspect ratio, then change the `src`
-extension in `index.html` from `.svg` to `.jpg` (or `.webp`).
+extension in `index.html` from `.svg` to `.webp` (or `.webp`).
 
 | File | Used for | Aspect / target size |
 |---|---|---|
@@ -57,12 +59,12 @@ extension in `index.html` from `.svg` to `.jpg` (or `.webp`).
 
 | File | Why |
 |---|---|
-| `Gavlanized sprnings 2 .jpg` | Superseded — `Broken Spring 1.jpg` is a clearer spring shot |
-| `commercial garage door opener 1.jpg` | Second angle of the same operator as `…opener 2.jpg` |
-| `Gate automatin operner 2.jpg` | Second angle of the same gate job |
+| `Gavlanized sprnings 2 .webp` | Superseded — `Broken Spring 1.webp` is a clearer spring shot |
+| `commercial garage door opener 1.webp` | Second angle of the same operator as `…opener 2.webp` |
+| `Gate automatin operner 2.webp` | Second angle of the same gate job |
 
 The Before & After section now runs on three real pairs. To add another, drop in
-a `<job> before.jpg` / `<job> after.jpg` pair and add one more `.ba-card`.
+a `<job> before.webp` / `<job> after.webp` pair and add one more `.ba-card`.
 
 ## Notes
 
