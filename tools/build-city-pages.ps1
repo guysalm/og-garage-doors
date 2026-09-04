@@ -156,6 +156,22 @@ $homeVals["page_url"] = $SITE.site_url          # the home page is the site root
 foreach ($k in $homeVals.Keys) { $homePage = $homePage.Replace("{{$k}}", $homeVals[$k]) }
 $homePage = [regex]::Replace($homePage, '(?m)^(\s*page_url\s*:\s*")(.*?)(")', { param($m) $m.Groups[1].Value + $SITE.site_url + $m.Groups[3].Value })
 
+# The home page must not compete with the Sarasota page for "garage door repair
+# Sarasota". It targets the region; each city page owns its own city. The
+# postal address stays Sarasota because that is where the business actually is.
+$homeTitle = "Garage Door Repair SW Florida &amp; Tampa Bay | 24/7 Service"
+$homeDesc  = "Same-day garage door repair across Southwest Florida and Tampa Bay. Licensed &amp; insured, 24/7 emergency service, free estimates. Call $($SITE.phone_display)."
+$homePage = [regex]::Replace($homePage, '(?s)<title>.*?</title>', "<title>$homeTitle</title>")
+$homePage = [regex]::Replace($homePage, '<meta name="description" content=".*?">', "<meta name=""description"" content=""$homeDesc"">")
+$homePage = [regex]::Replace($homePage, '<meta property="og:title" content=".*?">', "<meta property=""og:title"" content=""$homeTitle"">")
+$homePage = [regex]::Replace($homePage, '<meta property="og:description" content=".*?">', "<meta property=""og:description"" content=""$homeDesc"">")
+
+# a region is not a schema.org City, so list the markets actually served
+$areaList = ($cities | ForEach-Object { "      { ""@type"": ""City"", ""name"": ""$($_.City), FL"" }" }) -join ",`n"
+$homePage = [regex]::Replace($homePage,
+  '"areaServed": \{ "@type": "City", "name": "[^"]*" \},',
+  """areaServed"": [`n$areaList`n  ],")
+
 $leftover = [regex]::Matches($homePage, '\{\{\w+\}\}')
 if ($leftover.Count) { throw "Home page still has unresolved tokens: $(($leftover | ForEach-Object { $_.Value } | Select-Object -Unique) -join ', ')" }
 
