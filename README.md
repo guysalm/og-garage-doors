@@ -1,14 +1,19 @@
 # OG Garage Doors
 
-Garage door service website for Florida. Single-file, no build step, no
-dependencies — hand-written HTML5 + CSS3 + vanilla ES6.
+Garage door service website for Florida. Hand-written HTML5 + CSS3 + vanilla ES6,
+no dependencies and no bundler. One template page, plus ten generated city
+landing pages.
 
 ```
 og-garage-doors/
-├─ index.html      # the whole site (inline <style> + <script>)
-├─ assets/img/     # SVG placeholders — see assets/README.md
-├─ SPEC.md         # build spec (performance + SEO requirements)
-└─ reference/      # source material, not deployed (gitignored)
+├─ index.html                              # the template — layout, CSS, JS, SITE defaults
+├─ garage-door-repair-<city>-fl.html       # 10 generated city pages
+├─ sitemap.xml, robots.txt                 # generated
+├─ netlify.toml                            # publish root, no build step
+├─ tools/build-city-pages.ps1              # the generator
+├─ assets/img/                             # photos + logos — see assets/README.md
+├─ SPEC.md                                 # build spec (performance + SEO)
+└─ reference/                              # source material, not deployed (gitignored)
 ```
 
 Open it locally:
@@ -19,53 +24,81 @@ cmd.exe /c start "" "index.html"
 
 ## Page structure
 
-`sticky header` → `hero (H1)` → `review platforms` → `Google reviews` →
-`guarantee badges` → `Our Services (12 cards)` → `value props` → `About` →
-`Our Expertise` → `Before & After` → `brands` → `FAQ` → `contact form` →
-`footer` → `sticky mobile CTA bar`
+`sticky header` → `hero (H1)` → `review platforms` → `Google reviews (rotating)` →
+`guarantee badges` → `Our Services (12 cards)` → `value props` →
+**`local section (city pages only)`** → `About` → `Our Expertise` →
+`Before & After` → `brands` → `FAQ` → `contact form` → `footer` →
+`sticky mobile CTA bar`
+
+## City pages
+
+Ten markets, each on its own URL with its own title, description, canonical, H1,
+localized copy, service list, zip codes and FAQs:
+
+| City | Page |
+|---|---|
+| Sarasota | `garage-door-repair-sarasota-fl.html` |
+| Venice | `garage-door-repair-venice-fl.html` |
+| Englewood | `garage-door-repair-englewood-fl.html` |
+| North Port | `garage-door-repair-north-port-fl.html` |
+| Port Charlotte | `garage-door-repair-port-charlotte-fl.html` |
+| Fort Myers | `garage-door-repair-fort-myers-fl.html` |
+| Brandon | `garage-door-repair-brandon-fl.html` |
+| Ruskin | `garage-door-repair-ruskin-fl.html` |
+| Tampa | `garage-door-repair-tampa-fl.html` |
+| St. Pete & Clearwater | `garage-door-repair-st-petersburg-clearwater-fl.html` |
+
+They are **generated, not hand-edited**. Edit `index.html` (or the content file in
+`reference/`) and re-run:
+
+```powershell
+powershell -File tools\build-city-pages.ps1
+```
+
+The generator reads the `SITE` object out of `index.html`, overrides the per-city
+values, substitutes every `{{token}}` at build time — so the shipped pages contain
+final HTML rather than tokens a crawler has to execute JS to resolve — then swaps
+in the city head tags, H1 and JSON-LD, inserts the local content section, and puts
+the city's FAQs above the shared ones. It also writes `sitemap.xml` and
+`robots.txt`.
+
+**Re-run it after any change to `index.html`**, including the phone number, since
+those values are baked into the generated pages.
 
 ## Dynamic SEO framework
 
-Every SEO-relevant string is a `{{token}}` — meta title, meta description,
-canonical, Open Graph, JSON-LD, the `<h1>`, body copy, image `alt` text,
-`tel:` links, the WhatsApp link and the form's hidden routing fields.
-
-Tokens:
+Every SEO-relevant string in `index.html` is a `{{token}}` — meta title, meta
+description, canonical, Open Graph, JSON-LD, the `<h1>`, body copy, image `alt`
+text, `tel:` links, the WhatsApp link and the form's hidden routing fields.
 
 | Token | Example |
 |---|---|
 | `{{business_name}}` | OG Garage Doors |
 | `{{service_name}}` | Garage Door Repair |
 | `{{location}}` | Sarasota, FL |
-| `{{city}}` / `{{state}}` / `{{zip}}` | Sarasota / FL / 34232 |
-| `{{service_area}}` | Sarasota, Manatee & Charlotte County |
+| `{{city}}` / `{{state}}` / `{{zip}}` | Sarasota / FL / 34231 |
+| `{{service_area}}` | Sarasota and the surrounding area |
 | `{{phone_number}}` | `+19410000000` (tel: format) |
 | `{{phone_display}}` | (941) 000-0000 |
 | `{{whatsapp_number}}` | 19410000000 (digits only) |
 | `{{email}}` / `{{site_url}}` | — |
 | `{{rating}}` / `{{review_count}}` | 5.0 / 127 |
-| `{{review_1..3_name|date|count|text}}` | — |
 
-**Two ways to fill them:**
+Review cards are **not** tokenised — they render from the `REVIEWS` array in the
+script at the bottom of `index.html`.
 
-1. **Build time (production).** Run `index.html` through any templating step and
-   substitute the tokens per service × city page. Crawlers then see final HTML.
-   Delete the `fillPlaceholders()` call once this is in place.
-2. **Local preview.** The `SITE` object at the bottom of `index.html` holds
-   defaults and a small script replaces any remaining token in the DOM, `<title>`,
-   meta tags and the JSON-LD block. Good enough to look at; not what you ship.
-
-City copy for 10 Florida markets (Sarasota, Venice, Englewood, North Port,
-Port Charlotte, Fort Myers, Brandon, Ruskin, Tampa, St. Pete/Clearwater) is in
-`reference/` — meta titles, H1s, localized climate copy, zip codes and FAQs.
+`index.html` keeps its tokens and fills them at runtime from `SITE` for local
+preview. The generated city pages have no tokens left.
 
 ## Before launch
 
-- [ ] Fill real values in `SITE` (phone, WhatsApp, email, domain, address).
-- [x] Form posts to **Netlify Forms** (`name="contact"`). Nothing to configure in
-      code — deploy to Netlify and submissions appear under Forms → contact.
-- [ ] Replace the SVG placeholders in `assets/img/` with real WebP photos.
-- [ ] Replace placeholder reviews with real Google reviews, and make
-      `aggregateRating` in the JSON-LD match them.
-- [ ] Swap the review-platform and manufacturer wordmarks for licensed logos.
-- [ ] Add `robots.txt` + `sitemap.xml` once the city pages are generated.
+- [ ] Fill real values in `SITE` (phone, WhatsApp, email, domain, address), then
+      re-run the generator.
+- [x] Form posts to **Netlify Forms** (`name="contact"`). Deploy to Netlify and
+      submissions appear under Forms → contact.
+- [x] `robots.txt` + `sitemap.xml` generated with all 11 URLs.
+- [ ] Replace the remaining SVG placeholders in `assets/img/` (avatars, guarantee
+      badges, the OG logo) — see `assets/README.md`.
+- [ ] Confirm the ten reviews are genuine, then add `Review` + a corrected
+      `AggregateRating` to the JSON-LD. The current `5.0 / 127` is placeholder.
+- [ ] Confirm you are licensed to display every third-party logo on the page.

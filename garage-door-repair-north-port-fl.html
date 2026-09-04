@@ -9,26 +9,26 @@
      DYNAMIC SEO PLACEHOLDERS
      Replace at build time (or let the preview script at the bottom
      fill the defaults). Available tokens:
-       {{business_name}}   {{location}}        {{service_name}}
-       {{phone_number}}    {{phone_display}}  {{whatsapp_number}}
-       {{email}}           {{site_url}}       {{street}}
-       {{city}}            {{state}}          {{zip}}
-       {{rating}}          {{review_count}}   {{service_area}}
+       OG Garage Doors   North Port, FL        Garage Door Repair
+       +10000000000    (000) 000-0000  10000000000
+       info@oggaragedoors.com           https://oggaragedoors.com/garage-door-repair-north-port-fl.html       
+       North Port            FL          34286
+       5.0          127   North Port and the surrounding area
      Review cards are not tokenised — they render from the REVIEWS
      array in the script at the bottom of this file.
      ============================================================ -->
 
-<title>{{service_name}} {{location}} | Same-Day Service — Call {{phone_display}}</title>
-<meta name="description" content="Fast, affordable {{service_name}} in {{location}}. Licensed &amp; insured local techs, 24/7 emergency service, free estimates and no extra charge on weekends. Call {{phone_display}} now.">
-<link rel="canonical" href="{{site_url}}">
+<title>Garage Door Repair North Port FL | Fast, Smart Home Solutions</title>
+<meta name="description" content="Fast, modern garage door repairs in North Port, FL. Smart opener installs, spring fixes, and insulated door upgrades for growing families.">
+<link rel="canonical" href="https://oggaragedoors.com/garage-door-repair-north-port-fl.html">
 
 <meta property="og:locale" content="en_US">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="{{business_name}}">
-<meta property="og:title" content="{{service_name}} {{location}} | Same-Day Service — Call {{phone_display}}">
-<meta property="og:description" content="Fast, affordable {{service_name}} in {{location}}. Licensed &amp; insured, 24/7 emergency service, free estimates. Call {{phone_display}}.">
-<meta property="og:url" content="{{site_url}}">
-<meta property="og:image" content="{{site_url}}assets/img/hero-garage-door-repair.jpg">
+<meta property="og:site_name" content="OG Garage Doors">
+<meta property="og:title" content="Garage Door Repair North Port FL | Fast, Smart Home Solutions">
+<meta property="og:description" content="Fast, modern garage door repairs in North Port, FL. Smart opener installs, spring fixes, and insulated door upgrades for growing families.">
+<meta property="og:url" content="https://oggaragedoors.com/garage-door-repair-north-port-fl.html">
+<meta property="og:image" content="https://oggaragedoors.com/garage-door-repair-north-port-fl.htmlassets/img/hero-garage-door-repair.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#14181D">
 
@@ -40,23 +40,23 @@
 {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
-  "@id": "{{site_url}}#localbusiness",
-  "name": "{{business_name}}",
-  "image": "{{site_url}}assets/img/hero-garage-door-repair.jpg",
-  "logo": "{{site_url}}assets/img/og-garage-doors-logo.svg",
-  "url": "{{site_url}}",
-  "telephone": "{{phone_number}}",
-  "email": "{{email}}",
+  "@id": "https://oggaragedoors.com/garage-door-repair-north-port-fl.html#localbusiness",
+  "name": "OG Garage Doors",
+  "image": "https://oggaragedoors.com/garage-door-repair-north-port-fl.htmlassets/img/hero-garage-door-repair.jpg",
+  "logo": "https://oggaragedoors.com/garage-door-repair-north-port-fl.htmlassets/img/og-garage-doors-logo.svg",
+  "url": "https://oggaragedoors.com/garage-door-repair-north-port-fl.html",
+  "telephone": "+10000000000",
+  "email": "info@oggaragedoors.com",
   "priceRange": "$$",
   "address": {
     "@type": "PostalAddress",
-    "streetAddress": "{{street}}",
-    "addressLocality": "{{city}}",
-    "addressRegion": "{{state}}",
-    "postalCode": "{{zip}}",
+    "streetAddress": "",
+    "addressLocality": "North Port",
+    "addressRegion": "FL",
+    "postalCode": "34286",
     "addressCountry": "US"
   },
-  "areaServed": { "@type": "City", "name": "{{location}}" },
+  "areaServed": { "@type": "City", "name": "North Port, FL" },
   "openingHoursSpecification": [{
     "@type": "OpeningHoursSpecification",
     "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
@@ -65,14 +65,14 @@
   }],
   "aggregateRating": {
     "@type": "AggregateRating",
-    "ratingValue": "{{rating}}",
-    "reviewCount": "{{review_count}}",
+    "ratingValue": "5.0",
+    "reviewCount": "127",
     "bestRating": "5",
     "worstRating": "1"
   },
   "hasOfferCatalog": {
     "@type": "OfferCatalog",
-    "name": "Garage Door Services in {{location}}",
+    "name": "Garage Door Services in North Port, FL",
     "itemListElement": [
       { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Broken Spring Repair" } },
       { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Opener Repair & Installation" } },
@@ -636,12 +636,12 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
 <!-- ==================== STICKY HEADER ==================== -->
 <header class="site-header">
   <div class="header-inner">
-    <a class="brand" href="{{site_url}}" aria-label="{{business_name}} — {{service_name}} in {{location}}, home">
+    <a class="brand" href="https://oggaragedoors.com/garage-door-repair-north-port-fl.html" aria-label="OG Garage Doors — Garage Door Repair in North Port, FL, home">
       <img class="brand__logo" src="assets/img/og-garage-doors-logo.svg" width="196" height="52"
-           alt="{{business_name}} logo — garage door repair and installation in {{location}}">
+           alt="OG Garage Doors logo — garage door repair and installation in North Port, FL">
       <span class="brand__rating">
         <span class="stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-        <span>{{rating}} from {{review_count}} Google reviews</span>
+        <span>5.0 from 127 Google reviews</span>
       </span>
     </a>
 
@@ -662,9 +662,9 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
 
     <div class="header-cta">
       <span class="badge-open">Open Now</span>
-      <a class="btn btn--call" href="tel:{{phone_number}}" data-cta="header-call">
+      <a class="btn btn--call" href="tel:+10000000000" data-cta="header-call">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
-        {{phone_display}}
+        (000) 000-0000
       </a>
     </div>
   </div>
@@ -675,7 +675,7 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
   <!-- ==================== HERO ==================== -->
   <section class="hero" aria-labelledby="hero-title">
     <div class="wrap">
-      <h1 id="hero-title">Same-Day {{service_name}} in {{location}}</h1>
+      <h1 id="hero-title">Modern Garage Door Repair &amp; Smart Opener Installation in North Port, FL</h1>
 
       <ul class="hero-checks checks">
         <li>Emergency 24/7</li>
@@ -692,14 +692,14 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
         <li>No Extra Charge On Weekend &amp; Holiday</li>
       </ul>
 
-      <h2>Need {{service_name}} Near Me?<br>Garage Door Stuck or Not Responding?</h2>
+      <h2>Need Garage Door Repair Near Me?<br>Garage Door Stuck or Not Responding?</h2>
 
       <p class="hero__lead">Don&rsquo;t Wait &ndash; <strong>Call Today For Fast, Same-Day Service &amp; a Free Estimate!</strong> OPEN 24/7</p>
 
       <div class="hero__actions">
-        <a class="btn btn--call" href="tel:{{phone_number}}" data-cta="hero-call">
+        <a class="btn btn--call" href="tel:+10000000000" data-cta="hero-call">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
-          Call Now {{phone_display}}
+          Call Now (000) 000-0000
         </a>
         <a class="btn btn--ghost" href="#contact" data-cta="hero-contact">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4.2-8 5-8-5V6l8 5 8-5v2.2z"/></svg>
@@ -710,14 +710,14 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
   </section>
 
   <!-- ==================== REVIEW PLATFORMS ==================== -->
-  <section class="trust" aria-label="Review platforms where {{business_name}} is rated 5 stars">
+  <section class="trust" aria-label="Review platforms where OG Garage Doors is rated 5 stars">
     <div class="wrap">
       <ul class="trust__list">
-        <li><img src="assets/img/reviews-facebook-5-star.png" width="198" height="132" loading="lazy" alt="{{business_name}} rated 5 stars for garage door repair on Facebook"></li>
-        <li><img src="assets/img/reviews-thumbtack-5-star.png" width="581" height="132" loading="lazy" alt="{{business_name}} on Thumbtack for garage door repair in {{location}}"></li>
+        <li><img src="assets/img/reviews-facebook-5-star.png" width="198" height="132" loading="lazy" alt="OG Garage Doors rated 5 stars for garage door repair on Facebook"></li>
+        <li><img src="assets/img/reviews-thumbtack-5-star.png" width="581" height="132" loading="lazy" alt="OG Garage Doors on Thumbtack for garage door repair in North Port, FL"></li>
         <li><img src="assets/img/reviews-homeadvisor-top-rated.png" width="114" height="132" loading="lazy" alt="HomeAdvisor Top Rated garage door contractor badge"></li>
-        <li><img src="assets/img/reviews-yelp-5-star.png" width="346" height="132" loading="lazy" alt="{{business_name}} reviewed on Yelp for garage door repair in {{location}}"></li>
-        <li><img src="assets/img/reviews-google-5-star.png" width="265" height="132" loading="lazy" alt="Google customer reviews — {{rating}} stars for {{business_name}} in {{location}}"></li>
+        <li><img src="assets/img/reviews-yelp-5-star.png" width="346" height="132" loading="lazy" alt="OG Garage Doors reviewed on Yelp for garage door repair in North Port, FL"></li>
+        <li><img src="assets/img/reviews-google-5-star.png" width="265" height="132" loading="lazy" alt="Google customer reviews — 5.0 stars for OG Garage Doors in North Port, FL"></li>
       </ul>
     </div>
   </section>
@@ -728,7 +728,7 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
        ========================================================= -->
   <section class="reviews" id="reviews" aria-labelledby="reviews-title">
     <div class="wrap">
-      <h2 class="sr-only" id="reviews-title">What {{location}} customers say about our garage door service</h2>
+      <h2 class="sr-only" id="reviews-title">What North Port, FL customers say about our garage door service</h2>
       <div class="reviews__row" id="reviews-row"></div>
       <div class="reviews__dots" id="reviews-dots" role="group" aria-label="Review pages"></div>
     </div>
@@ -754,7 +754,7 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
       <div class="grid">
 
         <article class="service-card" id="svc-spring">
-          <img src="assets/img/service-broken-spring-repair.jpg" width="660" height="300" loading="lazy" alt="Galvanized torsion spring and centre bracket above a garage door in {{location}}">
+          <img src="assets/img/service-broken-spring-repair.jpg" width="660" height="300" loading="lazy" alt="Galvanized torsion spring and centre bracket above a garage door in North Port, FL">
           <h3>Broken Spring Repair</h3>
           <p class="service-card__desc">Door won&rsquo;t open or slams shut? We replace broken springs safely and same-day.</p>
           <ul class="checks">
@@ -763,14 +763,14 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
             <li>Spring Adjustment</li>
             <li>Spring Lubrication</li>
           </ul>
-          <a class="btn btn--est" href="tel:{{phone_number}}" data-cta="service-spring">
+          <a class="btn btn--est" href="tel:+10000000000" data-cta="service-spring">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
             Free Estimate
           </a>
         </article>
 
         <article class="service-card" id="svc-opener">
-          <img src="assets/img/service-opener-repair-installation.jpg" width="660" height="300" loading="lazy" alt="Garage door opener and rail installed on the ceiling of a {{location}} garage">
+          <img src="assets/img/service-opener-repair-installation.jpg" width="660" height="300" loading="lazy" alt="Garage door opener and rail installed on the ceiling of a North Port, FL garage">
           <h3>Opener Repair &amp; Installation</h3>
           <p class="service-card__desc">Opener won&rsquo;t work or makes noise? We repair or replace it fast and affordably.</p>
           <ul class="checks">
@@ -779,14 +779,14 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
             <li>Opener Repair &amp; Replacement</li>
             <li>Sensor Replacement &amp; Repair</li>
           </ul>
-          <a class="btn btn--est" href="tel:{{phone_number}}" data-cta="service-opener">
+          <a class="btn btn--est" href="tel:+10000000000" data-cta="service-opener">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
             Free Estimate
           </a>
         </article>
 
         <article class="service-card" id="svc-off-track">
-          <img src="assets/img/service-off-track-repair.jpg" width="660" height="300" loading="lazy" alt="Residential garage door hanging off its track at a {{location}} home">
+          <img src="assets/img/service-off-track-repair.jpg" width="660" height="300" loading="lazy" alt="Residential garage door hanging off its track at a North Port, FL home">
           <h3>Garage Door &amp; Off-Track Repair</h3>
           <p class="service-card__desc">Door came off the track? We realign it safely and get it back on track today.</p>
           <ul class="checks">
@@ -795,14 +795,14 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
             <li>Door Balance &amp; Adjustment</li>
             <li>Bottom Seal Replacement</li>
           </ul>
-          <a class="btn btn--est" href="tel:{{phone_number}}" data-cta="service-offtrack">
+          <a class="btn btn--est" href="tel:+10000000000" data-cta="service-offtrack">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
             Free Estimate
           </a>
         </article>
 
         <article class="service-card" id="svc-cable">
-          <img src="assets/img/service-cable-drum-repair.jpg" width="660" height="300" loading="lazy" alt="Garage door cable drum with the lift cable wound on the torsion shaft in {{location}}">
+          <img src="assets/img/service-cable-drum-repair.jpg" width="660" height="300" loading="lazy" alt="Garage door cable drum with the lift cable wound on the torsion shaft in North Port, FL">
           <h3>Broken Cable &amp; Drum Repair</h3>
           <p class="service-card__desc">Snapped or frayed cables? We replace them quickly to restore safe door movement.</p>
           <ul class="checks">
@@ -811,7 +811,7 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
             <li>Cable Drums</li>
             <li>Cable Maintenance</li>
           </ul>
-          <a class="btn btn--est" href="tel:{{phone_number}}" data-cta="service-cable">
+          <a class="btn btn--est" href="tel:+10000000000" data-cta="service-cable">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
             Free Estimate
           </a>
@@ -819,7 +819,7 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
 
 
         <article class="service-card" id="svc-jackshaft">
-          <img src="assets/img/service-jackshaft-side-mount-openers.jpg" width="660" height="300" loading="lazy" alt="Jackshaft opener mounted beside the torsion shaft on a commercial garage door in {{location}}">
+          <img src="assets/img/service-jackshaft-side-mount-openers.jpg" width="660" height="300" loading="lazy" alt="Jackshaft opener mounted beside the torsion shaft on a commercial garage door in North Port, FL">
           <h3>Jackshaft &amp; Side-Mount Openers</h3>
           <p class="service-card__desc">Low ceiling or storage overhead? We install wall-mounted jackshaft openers that free up the whole ceiling.</p>
           <ul class="checks">
@@ -828,14 +828,14 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
             <li>Low-Ceiling Garage Solutions</li>
             <li>Battery Backup &amp; Smart Control</li>
           </ul>
-          <a class="btn btn--est" href="tel:{{phone_number}}" data-cta="service-jackshaft">
+          <a class="btn btn--est" href="tel:+10000000000" data-cta="service-jackshaft">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
             Free Estimate
           </a>
         </article>
 
         <article class="service-card" id="svc-roller">
-          <img src="assets/img/service-roller-replacement.jpg" width="660" height="300" loading="lazy" alt="Set of new nylon garage door rollers ready for installation in {{location}}">
+          <img src="assets/img/service-roller-replacement.jpg" width="660" height="300" loading="lazy" alt="Set of new nylon garage door rollers ready for installation in North Port, FL">
           <h3>Garage Door Roller Replace</h3>
           <p class="service-card__desc">Door shaking or noisy? We replace damaged rollers and realign the track properly.</p>
           <ul class="checks">
@@ -844,14 +844,14 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
             <li>Roller Alignment</li>
             <li>Roller Replacement</li>
           </ul>
-          <a class="btn btn--est" href="tel:{{phone_number}}" data-cta="service-roller">
+          <a class="btn btn--est" href="tel:+10000000000" data-cta="service-roller">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
             Free Estimate
           </a>
         </article>
 
         <article class="service-card" id="svc-panels">
-          <img src="assets/img/service-panels-replacement.jpg" width="660" height="300" loading="lazy" alt="Garage door panels laid out on a driveway during a panel replacement in {{location}}">
+          <img src="assets/img/service-panels-replacement.jpg" width="660" height="300" loading="lazy" alt="Garage door panels laid out on a driveway during a panel replacement in North Port, FL">
           <h3>Garage Door Panels Replacement</h3>
           <p class="service-card__desc">Dents or damaged panels? We repair or replace panels for a clean door look.</p>
           <ul class="checks">
@@ -859,14 +859,14 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
             <li>Panel Repair &amp; Replace</li>
             <li>Panels Adjustment</li>
           </ul>
-          <a class="btn btn--est" href="tel:{{phone_number}}" data-cta="service-panels">
+          <a class="btn btn--est" href="tel:+10000000000" data-cta="service-panels">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
             Free Estimate
           </a>
         </article>
 
         <article class="service-card" id="svc-commercial">
-          <img src="assets/img/service-commercial-garage-door.jpg" width="660" height="300" loading="lazy" alt="Green commercial roll-up garage door on a warehouse in {{location}}">
+          <img src="assets/img/service-commercial-garage-door.jpg" width="660" height="300" loading="lazy" alt="Green commercial roll-up garage door on a warehouse in North Port, FL">
           <h3>Commercial Garage Door</h3>
           <p class="service-card__desc">We service all commercial garage doors &ndash; fast, reliable and fully insured.</p>
           <ul class="checks">
@@ -874,14 +874,14 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
             <li>Commercial Opener Repair</li>
             <li>Commercial Rollers Repair</li>
           </ul>
-          <a class="btn btn--est" href="tel:{{phone_number}}" data-cta="service-commercial">
+          <a class="btn btn--est" href="tel:+10000000000" data-cta="service-commercial">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
             Free Estimate
           </a>
         </article>
 
         <article class="service-card" id="svc-gate">
-          <img src="assets/img/service-gate-repair-installation.jpg" width="660" height="300" loading="lazy" alt="Automatic sliding driveway gate installed at a {{location}} residence">
+          <img src="assets/img/service-gate-repair-installation.jpg" width="660" height="300" loading="lazy" alt="Automatic sliding driveway gate installed at a North Port, FL residence">
           <h3>Gate Repair &amp; Installation</h3>
           <p class="service-card__desc">Gate won&rsquo;t open or wheels stuck? We repair or install automatic gates.</p>
           <ul class="checks">
@@ -889,14 +889,14 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
             <li>Automatic Gate Repair &amp; Replace</li>
             <li>Wheel Repair / Replace</li>
           </ul>
-          <a class="btn btn--est" href="tel:{{phone_number}}" data-cta="service-gate">
+          <a class="btn btn--est" href="tel:+10000000000" data-cta="service-gate">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
             Free Estimate
           </a>
         </article>
 
         <article class="service-card" id="svc-tuneup">
-          <img src="assets/img/service-tune-up-maintenance.jpg" width="660" height="300" loading="lazy" alt="Technician servicing garage door hardware with a hand tool during a tune-up in {{location}}">
+          <img src="assets/img/service-tune-up-maintenance.jpg" width="660" height="300" loading="lazy" alt="Technician servicing garage door hardware with a hand tool during a tune-up in North Port, FL">
           <h3>Garage Tune-up &amp; Maintenance</h3>
           <p class="service-card__desc">Door too loud or uneven? We lubricate, adjust and balance for smooth operation.</p>
           <ul class="checks">
@@ -905,14 +905,14 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
             <li>Check Door Balance</li>
             <li>Lubricate Belt And Chain</li>
           </ul>
-          <a class="btn btn--est" href="tel:{{phone_number}}" data-cta="service-tuneup">
+          <a class="btn btn--est" href="tel:+10000000000" data-cta="service-tuneup">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
             Free Estimate
           </a>
         </article>
 
         <article class="service-card" id="svc-new-door">
-          <img src="assets/img/service-new-door-installation.jpg" width="660" height="300" loading="lazy" alt="Two technicians fitting the windowed top section of a new garage door in {{location}}">
+          <img src="assets/img/service-new-door-installation.jpg" width="660" height="300" loading="lazy" alt="Two technicians fitting the windowed top section of a new garage door in North Port, FL">
           <h3>New Garage Door Installation</h3>
           <p class="service-card__desc">We install all garage door types &ndash; including hurricane-rated doors. Old door removal included.</p>
           <ul class="checks">
@@ -921,14 +921,14 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
             <li>New Rail &amp; Track Installment</li>
             <li>Panels Bent Repair &amp; Replace</li>
           </ul>
-          <a class="btn btn--est" href="tel:{{phone_number}}" data-cta="service-newdoor">
+          <a class="btn btn--est" href="tel:+10000000000" data-cta="service-newdoor">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
             Free Estimate
           </a>
         </article>
 
         <article class="service-card" id="svc-sensor">
-          <img src="assets/img/service-sensor-repair.jpg" width="660" height="300" loading="lazy" alt="Garage door safety sensor with its indicator lit, mounted on the track in {{location}}">
+          <img src="assets/img/service-sensor-repair.jpg" width="660" height="300" loading="lazy" alt="Garage door safety sensor with its indicator lit, mounted on the track in North Port, FL">
           <h3>Garage Door Sensor Repair</h3>
           <p class="service-card__desc">Door won&rsquo;t close or sensors blink? We adjust or replace garage door sensors.</p>
           <ul class="checks">
@@ -937,7 +937,7 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
             <li>Sensor Adjustment</li>
             <li>Sensor Alignment</li>
           </ul>
-          <a class="btn btn--est" href="tel:{{phone_number}}" data-cta="service-sensor">
+          <a class="btn btn--est" href="tel:+10000000000" data-cta="service-sensor">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
             Free Estimate
           </a>
@@ -950,7 +950,7 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
   <!-- ==================== VALUE PROPS ==================== -->
   <section class="section section--tight values" aria-labelledby="values-title">
     <div class="wrap">
-      <h2 class="sr-only" id="values-title">Why {{location}} homeowners choose {{business_name}}</h2>
+      <h2 class="sr-only" id="values-title">Why North Port, FL homeowners choose OG Garage Doors</h2>
       <div class="grid">
         <article class="value-card">
           <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
@@ -965,8 +965,42 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
         <article class="value-card">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>
           <h3>Local Service Provider</h3>
-          <p>As a locally owned and operated company in {{location}}, we aim to provide top-notch service.</p>
+          <p>As a locally owned and operated company in North Port, FL, we aim to provide top-notch service.</p>
         </article>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==================== LOCAL: NORTH PORT ==================== -->
+  <section class="section local" id="local" aria-labelledby="local-title">
+    <div class="wrap">
+      <h2 class="section-title section-title--rule" id="local-title">Garage Door Repair in North Port, FL</h2>
+      <div class="local__grid">
+        <div>
+          <p class="local__lead">As one of Florida's fastest-growing cities, North Port demands fast, efficient, and tech-forward home services. If your garage door is failing or you want to upgrade to smartphone-controlled access, our North Port team is ready to help.</p>
+          <ul class="checks local__highlights">
+            <li>Same-Day Repair Service</li>
+            <li>Smartphone-Enabled Opener Upgrades (MyQ / WiFi)</li>
+            <li>Energy-Efficient Insulated Doors</li>
+          </ul>
+          <p>With thousands of new homes and young families moving into North Port, garage doors experience heavy daily use. From school runs to commute times along Sumter Blvd and Price Blvd, a broken spring can ruin your morning schedule. We stock our trucks with heavy-duty, high-cycle replacement springs designed for frequent residential operation.</p>
+          <p>Additionally, we install insulated, energy-efficient garage doors that help lower cooling costs in large modern homes, paired with smart openers that allow you to monitor and control your garage door directly from your mobile phone.</p>
+        </div>
+
+        <aside class="local__aside">
+          <h3>Services We Provide in North Port</h3>
+          <ul class="checks">
+            <li>High-Cycle Heavy Duty Spring Replacements</li>
+            <li>Smart Garage Door Opener Installations (Camera &amp; App Control)</li>
+            <li>Insulated Replacement Garage Doors</li>
+            <li>Cable, Roller &amp; Track Tune-Ups</li>
+          </ul>
+          <h3>Local Service Area</h3>
+          <p>Serving all neighborhoods along Price Blvd, Sumter Blvd, Toledo Blade Blvd, and Tamiami Trail.</p>
+          <p class="local__zips"><strong>Zip codes served:</strong> 34286, 34287, 34288, 34289, 34291</p>
+          <p><a class="btn btn--call" href="tel:+10000000000" data-cta="local-call">Call (000) 000-0000</a></p>
+        </aside>
       </div>
     </div>
   </section>
@@ -976,19 +1010,19 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
     <div class="wrap">
       <div class="about__grid">
         <img class="about__img" src="assets/img/about-garage-door-service-home.jpg" width="900" height="820" loading="lazy"
-             alt="Residential garage door with window panels serviced by {{business_name}} in {{location}}">
+             alt="Residential garage door with window panels serviced by OG Garage Doors in North Port, FL">
         <div>
-          <p class="eyebrow">{{business_name}}</p>
-          <h2 id="about-title">Looking for {{service_name}} near me?</h2>
+          <p class="eyebrow">OG Garage Doors</p>
+          <h2 id="about-title">Looking for Garage Door Repair near me?</h2>
           <p class="about__kicker">Need to replace a broken garage door spring? Contact us today for a speedy garage door repair service.</p>
           <blockquote class="quote">
-            {{business_name}} is a locally managed, full-service garage door repair company serving {{location}}. We take pride in providing a fast and affordable garage door repair service with a team of highly experienced garage door technicians. Contact us today for additional information.
+            OG Garage Doors is a locally managed, full-service garage door repair company serving North Port, FL. We take pride in providing a fast and affordable garage door repair service with a team of highly experienced garage door technicians. Contact us today for additional information.
           </blockquote>
           <blockquote class="quote">
-            At {{business_name}}, we understand the frustration of not being able to get your car out in the morning or coming home to a jammed door after work.
+            At OG Garage Doors, we understand the frustration of not being able to get your car out in the morning or coming home to a jammed door after work.
           </blockquote>
           <p class="about__actions"><a class="btn btn--square" href="#contact" data-cta="about-book">Book Now</a></p>
-          <p>We&rsquo;ve been repairing garage doors for the residents of {{service_area}} and our results are second to none. From broken door rollers to spring replacements, our team of professionals can handle all types of garage door problems, at an affordable price.</p>
+          <p>We&rsquo;ve been repairing garage doors for the residents of North Port and the surrounding area and our results are second to none. From broken door rollers to spring replacements, our team of professionals can handle all types of garage door problems, at an affordable price.</p>
           <ul class="checks">
             <li>Weekend Service Available</li>
             <li>Friendly Professional Service</li>
@@ -1010,7 +1044,7 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
           <article class="expertise-item">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.7 18.6l-6.3-6.3a5.5 5.5 0 0 0-1.3-5.6 5.5 5.5 0 0 0-5.8-1.3l2.9 2.9-2.1 2.1L6.2 7.5a5.5 5.5 0 0 0 1.3 5.8 5.5 5.5 0 0 0 5.6 1.3l6.3 6.3a1.1 1.1 0 0 0 1.6 0l.7-.7a1.1 1.1 0 0 0 0-1.6z"/></svg>
             <h3>Residential Garage Door Repair</h3>
-            <p>We provide garage door opener installation and repair, as well as inspections and tune-ups. No matter what type of service you need for your residential garage door, you can count on {{business_name}} to deliver high-quality, fast, efficient and affordable services. We promise to get the job done, right!</p>
+            <p>We provide garage door opener installation and repair, as well as inspections and tune-ups. No matter what type of service you need for your residential garage door, you can count on OG Garage Doors to deliver high-quality, fast, efficient and affordable services. We promise to get the job done, right!</p>
           </article>
 
           <article class="expertise-item">
@@ -1022,9 +1056,9 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
 
         <div class="expertise__media">
           <img src="assets/img/expertise-residential-opener.jpg" width="900" height="440" loading="lazy"
-               alt="Torsion spring and opener rail above a residential garage door in {{location}}">
+               alt="Torsion spring and opener rail above a residential garage door in North Port, FL">
           <img src="assets/img/expertise-garage-door-interior.jpg" width="900" height="440" loading="lazy"
-               alt="Chain hoist operator installed on a commercial roll-up door in {{location}}">
+               alt="Chain hoist operator installed on a commercial roll-up door in North Port, FL">
         </div>
       </div>
     </div>
@@ -1035,19 +1069,19 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
     <div class="wrap">
       <h2 class="section-title section-title--rule" id="gallery-title">Before &amp; After</h2>
     </div>
-    <div class="gallery__track" id="gallery-track" tabindex="0" role="region" aria-label="Before and after photos of garage door repairs in {{location}}">
+    <div class="gallery__track" id="gallery-track" tabindex="0" role="region" aria-label="Before and after photos of garage door repairs in North Port, FL">
 
       <figure class="ba-card">
         <div class="ba-card__pair">
           <div class="ba-shot">
             <span class="ba-shot__tag ba-shot__tag--before">Before</span>
             <img src="assets/img/ba-panel-replacement-before.jpg" width="440" height="440" loading="lazy"
-                 alt="Before: residential double garage door with a damaged top panel in {{location}}">
+                 alt="Before: residential double garage door with a damaged top panel in North Port, FL">
           </div>
           <div class="ba-shot">
             <span class="ba-shot__tag ba-shot__tag--after">After</span>
             <img src="assets/img/ba-panel-replacement-after.jpg" width="440" height="440" loading="lazy"
-                 alt="After: the same double garage door with a new top panel fitted in {{location}}">
+                 alt="After: the same double garage door with a new top panel fitted in North Port, FL">
           </div>
         </div>
         <figcaption>Damaged top panel on a residential double door &mdash; replaced.</figcaption>
@@ -1058,12 +1092,12 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
           <div class="ba-shot">
             <span class="ba-shot__tag ba-shot__tag--before">Before</span>
             <img src="assets/img/ba-off-track-before.jpg" width="440" height="440" loading="lazy"
-                 alt="Before: garage door pulled off its tracks with bent rails in {{location}}">
+                 alt="Before: garage door pulled off its tracks with bent rails in North Port, FL">
           </div>
           <div class="ba-shot">
             <span class="ba-shot__tag ba-shot__tag--after">After</span>
             <img src="assets/img/ba-off-track-after.jpg" width="440" height="440" loading="lazy"
-                 alt="After: the same garage door reinstalled on straight tracks with a new torsion spring in {{location}}">
+                 alt="After: the same garage door reinstalled on straight tracks with a new torsion spring in North Port, FL">
           </div>
         </div>
         <figcaption>Door off its tracks &mdash; tracks, hardware and spring reset.</figcaption>
@@ -1074,12 +1108,12 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
           <div class="ba-shot">
             <span class="ba-shot__tag ba-shot__tag--before">Before</span>
             <img src="assets/img/ba-commercial-rollup-before.jpg" width="440" height="440" loading="lazy"
-                 alt="Before: old commercial roll-up door removed and laid outside the building in {{location}}">
+                 alt="Before: old commercial roll-up door removed and laid outside the building in North Port, FL">
           </div>
           <div class="ba-shot">
             <span class="ba-shot__tag ba-shot__tag--after">After</span>
             <img src="assets/img/ba-commercial-rollup-after.jpg" width="440" height="440" loading="lazy"
-                 alt="After: new commercial roll-up door installed in the steel building in {{location}}">
+                 alt="After: new commercial roll-up door installed in the steel building in North Port, FL">
           </div>
         </div>
         <figcaption>Old commercial roll-up door removed and replaced.</figcaption>
@@ -1101,17 +1135,17 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
       <h2 class="sr-only" id="brands-title">Garage door brands we install and service</h2>
       <ul class="brands__list">
         <li><a href="https://www.amarr.com/" target="_blank" rel="noopener nofollow" title="Amarr — manufacturer site (opens in a new tab)">
-          <img src="assets/img/brand-amarr.png" width="236" height="88" loading="lazy" alt="Amarr garage doors installed and serviced in {{location}}"></a></li>
+          <img src="assets/img/brand-amarr.png" width="236" height="88" loading="lazy" alt="Amarr garage doors installed and serviced in North Port, FL"></a></li>
         <li><a href="https://www.chiohd.com/" target="_blank" rel="noopener nofollow" title="C.H.I. Overhead Doors — manufacturer site (opens in a new tab)">
-          <img src="assets/img/brand-chi-overhead-doors.png" width="281" height="88" loading="lazy" alt="C.H.I. Overhead Doors installed and serviced in {{location}}"></a></li>
+          <img src="assets/img/brand-chi-overhead-doors.png" width="281" height="88" loading="lazy" alt="C.H.I. Overhead Doors installed and serviced in North Port, FL"></a></li>
         <li><a href="https://www.clopaydoor.com/" target="_blank" rel="noopener nofollow" title="Clopay — manufacturer site (opens in a new tab)">
-          <img src="assets/img/brand-clopay.png" width="256" height="88" loading="lazy" alt="Clopay garage doors dealer serving {{location}}"></a></li>
+          <img src="assets/img/brand-clopay.png" width="256" height="88" loading="lazy" alt="Clopay garage doors dealer serving North Port, FL"></a></li>
         <li><a href="https://www.liftmaster.com/" target="_blank" rel="noopener nofollow" title="LiftMaster — manufacturer site (opens in a new tab)">
-          <img src="assets/img/brand-liftmaster.png" width="374" height="88" loading="lazy" alt="LiftMaster garage door openers repaired and installed in {{location}}"></a></li>
+          <img src="assets/img/brand-liftmaster.png" width="374" height="88" loading="lazy" alt="LiftMaster garage door openers repaired and installed in North Port, FL"></a></li>
         <li><a href="https://www.geniecompany.com/" target="_blank" rel="noopener nofollow" title="Genie — manufacturer site (opens in a new tab)">
-          <img src="assets/img/brand-genie.png" width="332" height="88" loading="lazy" alt="Genie garage door opener service in {{location}}"></a></li>
+          <img src="assets/img/brand-genie.png" width="332" height="88" loading="lazy" alt="Genie garage door opener service in North Port, FL"></a></li>
         <li><a href="https://www.chamberlain.com/" target="_blank" rel="noopener nofollow" title="Chamberlain — manufacturer site (opens in a new tab)">
-          <img src="assets/img/brand-chamberlain.png" width="804" height="88" loading="lazy" alt="Chamberlain smart garage door openers with MyQ installed in {{location}}"></a></li>
+          <img src="assets/img/brand-chamberlain.png" width="804" height="88" loading="lazy" alt="Chamberlain smart garage door openers with MyQ installed in North Port, FL"></a></li>
       </ul>
     </div>
   </section>
@@ -1122,8 +1156,13 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
       <h2 class="section-title section-title--rule" id="faq-title">Frequently Asked Questions</h2>
       <div class="faq">
         <details open>
-          <summary>How fast can a technician reach my home in {{location}}?</summary>
-          <p>Our service trucks are staged across {{location}} and the surrounding area, so we offer same-day appointments and emergency dispatch, typically within 60&ndash;90 minutes of your call.</p>
+          <summary>Can I control my garage door from my phone if I upgrade my motor?</summary>
+          <p>Yes! We install modern smart openers featuring built-in WiFi, allowing you to open, close, and receive alerts on your smartphone from anywhere.</p>
+        </details>
+
+        <details>
+          <summary>How fast can a technician reach my home in North Port, FL?</summary>
+          <p>Our service trucks are staged across North Port, FL and the surrounding area, so we offer same-day appointments and emergency dispatch, typically within 60&ndash;90 minutes of your call.</p>
         </details>
         <details>
           <summary>Do you charge extra for weekends or holidays?</summary>
@@ -1139,7 +1178,7 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
         </details>
         <details>
           <summary>Do you handle HOA-approved garage door styles?</summary>
-          <p>We do. We carry Carriage House, Modern Glass and traditional raised-panel styles that meet most Architectural Review Committee guidelines in {{location}} communities.</p>
+          <p>We do. We carry Carriage House, Modern Glass and traditional raised-panel styles that meet most Architectural Review Committee guidelines in North Port, FL communities.</p>
         </details>
       </div>
     </div>
@@ -1157,15 +1196,15 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
             <li>Expert garage door technicians</li>
           </ul>
           <p style="margin-top:24px">
-            <a class="btn btn--call" href="tel:{{phone_number}}" data-cta="contact-call">
+            <a class="btn btn--call" href="tel:+10000000000" data-cta="contact-call">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
-              Call 24/7 &mdash; {{phone_display}}
+              Call 24/7 &mdash; (000) 000-0000
             </a>
           </p>
         </div>
 
         <div class="form-card">
-          <h3 class="sr-only">Request a free garage door estimate in {{location}}</h3>
+          <h3 class="sr-only">Request a free garage door estimate in North Port, FL</h3>
           <!-- Netlify Forms: detected at deploy time by parsing this markup, so
                name + data-netlify must be present in the built HTML. Submissions
                land under "contact" in the Netlify dashboard. -->
@@ -1179,9 +1218,9 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
             </p>
 
             <!-- hidden routing fields for dynamic landing pages -->
-            <input type="hidden" name="page_location" value="{{location}}">
-            <input type="hidden" name="page_service" value="{{service_name}}">
-            <input type="hidden" name="page_url" value="{{site_url}}">
+            <input type="hidden" name="page_location" value="North Port, FL">
+            <input type="hidden" name="page_service" value="Garage Door Repair">
+            <input type="hidden" name="page_url" value="https://oggaragedoors.com/garage-door-repair-north-port-fl.html">
 
             <div class="form-row">
               <div class="field">
@@ -1190,7 +1229,7 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
               </div>
               <div class="field">
                 <label for="lead-zip">Zip Code <span class="req" aria-hidden="true">*</span></label>
-                <input id="lead-zip" name="zip" type="text" inputmode="numeric" pattern="[0-9]{5}" autocomplete="postal-code" placeholder="{{zip}}" required>
+                <input id="lead-zip" name="zip" type="text" inputmode="numeric" pattern="[0-9]{5}" autocomplete="postal-code" placeholder="34286" required>
               </div>
             </div>
 
@@ -1232,7 +1271,7 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
 
             <button class="btn btn--dark" type="submit">Submit</button>
             <p class="form-status" id="lead-status" role="status" aria-live="polite"></p>
-            <p class="form-note">Or call us now &mdash; <a href="tel:{{phone_number}}">{{phone_display}}</a> &middot; Free estimate, 24/7</p>
+            <p class="form-note">Or call us now &mdash; <a href="tel:+10000000000">(000) 000-0000</a> &middot; Free estimate, 24/7</p>
           </form>
         </div>
       </div>
@@ -1247,11 +1286,11 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
     <div class="footer__grid">
       <div>
         <img class="brand__logo" src="assets/img/og-garage-doors-logo.svg" width="180" height="48" loading="lazy"
-             alt="{{business_name}} — garage door repair company in {{location}}">
-        <p>{{business_name}} prides itself as repair experts for garage doors. We offer a wide range of garage door services for a fraction of the cost quoted by many other companies.</p>
-        <a class="footer__phone" href="tel:{{phone_number}}" data-cta="footer-call">
+             alt="OG Garage Doors — garage door repair company in North Port, FL">
+        <p>OG Garage Doors prides itself as repair experts for garage doors. We offer a wide range of garage door services for a fraction of the cost quoted by many other companies.</p>
+        <a class="footer__phone" href="tel:+10000000000" data-cta="footer-call">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
-          Call now {{phone_display}}
+          Call now (000) 000-0000
         </a>
         <p class="footer__pay">
           <span>We accept</span>
@@ -1279,7 +1318,7 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
           <li><a href="garage-door-repair-sarasota-fl.html">Sarasota</a></li>
           <li><a href="garage-door-repair-venice-fl.html">Venice</a></li>
           <li><a href="garage-door-repair-englewood-fl.html">Englewood</a></li>
-          <li><a href="garage-door-repair-north-port-fl.html">North Port</a></li>
+          <li><a href="garage-door-repair-north-port-fl.html" aria-current="page">North Port</a></li>
           <li><a href="garage-door-repair-port-charlotte-fl.html">Port Charlotte</a></li>
           <li><a href="garage-door-repair-fort-myers-fl.html">Fort Myers</a></li>
           <li><a href="garage-door-repair-brandon-fl.html">Brandon</a></li>
@@ -1303,8 +1342,8 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
     </div>
 
     <div class="footer__bottom">
-      Copyright &copy; <span id="year">2026</span> {{business_name}} &nbsp;|&nbsp; All rights reserved &nbsp;|&nbsp;
-      Serving {{service_area}}
+      Copyright &copy; <span id="year">2026</span> OG Garage Doors &nbsp;|&nbsp; All rights reserved &nbsp;|&nbsp;
+      Serving North Port and the surrounding area
     </div>
   </div>
 </footer>
@@ -1345,11 +1384,11 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
 
 <!-- ==================== STICKY MOBILE CTA BAR ==================== -->
 <nav class="mobile-bar" aria-label="Quick contact">
-  <a class="mobile-bar__call" href="tel:{{phone_number}}" data-cta="mobile-call">
+  <a class="mobile-bar__call" href="tel:+10000000000" data-cta="mobile-call">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
     Call Now
   </a>
-  <a class="mobile-bar__wa" href="https://wa.me/{{whatsapp_number}}?text=Hi%2C%20I%20need%20garage%20door%20service%20in%20{{location}}"
+  <a class="mobile-bar__wa" href="https://wa.me/10000000000?text=Hi%2C%20I%20need%20garage%20door%20service%20in%20North Port, FL"
      target="_blank" rel="noopener nofollow" data-cta="mobile-whatsapp">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.5 15.2L2 22l4.9-1.4A10 10 0 1 0 12 2zm5.1 14.1c-.2.6-1.2 1.2-1.7 1.2-.5.1-1 .1-1.7-.1-1-.3-2.6-1-4-2.6-1.1-1.2-1.8-2.6-2-3.2-.2-.6-.1-1.2.1-1.6.2-.4.5-.7.8-.9.2-.1.4-.1.6-.1h.4c.2 0 .3.1.4.4l.6 1.5c.1.2 0 .4-.1.5l-.4.5c-.1.1-.2.3-.1.5.3.6.8 1.3 1.4 1.8.5.4 1.1.7 1.5.9.2.1.4 0 .5-.1l.5-.6c.1-.2.3-.2.5-.1l1.5.7c.2.1.3.2.3.4 0 .2 0 .5-.1.6z"/></svg>
     WhatsApp
@@ -1370,18 +1409,18 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
    ========================================================================= */
 var SITE = {
   business_name  : "OG Garage Doors",
-  location       : "Sarasota, FL",
-  city           : "Sarasota",
+  location       : "North Port, FL",
+  city           : "North Port",
   state          : "FL",
-  zip            : "34232",
+  zip            : "34286",
   street         : "",
   service_name   : "Garage Door Repair",
-  service_area   : "Sarasota, Manatee & Charlotte County",
+  service_area   : "North Port and the surrounding area",
   phone_number   : "+10000000000",
   phone_display  : "(000) 000-0000",
   whatsapp_number: "10000000000",
   email          : "info@oggaragedoors.com",
-  site_url       : "https://oggaragedoors.com/",
+  site_url       : "https://oggaragedoors.com/garage-door-repair-north-port-fl.html",
   rating         : "5.0",
   review_count   : "127"
 };
