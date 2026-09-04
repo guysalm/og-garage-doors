@@ -559,8 +559,17 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
   .site-nav ul{flex-direction:column;gap:0}
   .site-nav a{display:block;padding:12px 0;border-bottom:1px solid #2a3038}
   .nav-toggle{display:block}
-  .header-inner{min-height:76px}
   .badge-open{display:none}
+  /* the header row was the only thing wider than a phone viewport:
+     brand + toggle + call button came to ~500px. Shrink the brand, drop
+     the rating line, and compact the call button so it fits. */
+  .header-inner{min-height:76px;gap:10px;padding:10px 16px}
+  .brand{flex:0 1 auto;min-width:0}
+  .brand__logo{width:132px}
+  .brand__rating{display:none}
+  .header-cta{gap:8px;flex:0 1 auto;min-width:0}
+  .header-cta .btn--call{padding:10px 16px;font-size:.86rem;gap:7px;white-space:nowrap}
+  .nav-toggle{padding:7px 9px}
   .about__grid,.expertise__grid,.contact__grid{grid-template-columns:1fr;gap:32px}
   .expertise__media{order:-1}
 }
@@ -589,7 +598,13 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
   .ba-card figcaption{font-size:.8rem;padding:10px 12px}
   .contact h2{font-size:1.6rem}
   .about h2{font-size:1.7rem}
-  .brand__logo{width:150px}
+}
+/* small phones (iPhone SE / mini) — trim the header further */
+@media (max-width:400px){
+  .header-inner{gap:8px;padding:10px 12px}
+  .brand__logo{width:108px}
+  .header-cta .btn--call{padding:9px 12px;font-size:.79rem;gap:6px}
+  .header-cta .btn--call svg{width:14px;height:14px;flex-basis:14px}
 }
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
