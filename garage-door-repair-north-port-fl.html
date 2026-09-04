@@ -11,10 +11,10 @@
      fill the defaults). Available tokens:
        OG Garage Doors   North Port, FL        Garage Door Repair
        +10000000000    (000) 000-0000  10000000000
-       info@oggaragedoors.com           
+       info@oggaragedoors.com
        https://oggaragedoors.com/   site root, same on every page (logo, og:image, sharing)
        https://oggaragedoors.com/garage-door-repair-north-port-fl   this page's own URL (canonical, og:url, form field)
-       North Port            FL          34286
+       34286   (form placeholder only - no postal address is published)
        5.0          127   North Port and the surrounding area
      Review cards are not tokenised — they render from the REVIEWS
      array in the script at the bottom of this file.
@@ -50,14 +50,10 @@
   "telephone": "+10000000000",
   "email": "info@oggaragedoors.com",
   "priceRange": "$$",
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "",
-    "addressLocality": "North Port",
-    "addressRegion": "FL",
-    "postalCode": "34286",
-    "addressCountry": "US"
-  },
+  "//": "Service-area business: technicians travel to the customer and there is no
+         address the public visits, so no PostalAddress is declared. Coverage is
+         expressed through areaServed instead. Keep this consistent with the
+         Google Business Profile, which should also have its address hidden.",
   "areaServed": { "@type": "City", "name": "North Port, FL" },
   "openingHoursSpecification": [{
     "@type": "OpeningHoursSpecification",
@@ -1412,10 +1408,7 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
 var SITE = {
   business_name  : "OG Garage Doors",
   location       : "North Port, FL",
-  city           : "North Port",
-  state          : "FL",
   zip            : "34286",
-  street         : "",
   service_name   : "Garage Door Repair",
   service_area   : "North Port and the surrounding area",
   phone_number   : "+10000000000",

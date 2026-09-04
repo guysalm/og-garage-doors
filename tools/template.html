@@ -11,10 +11,10 @@
      fill the defaults). Available tokens:
        {{business_name}}   {{location}}        {{service_name}}
        {{phone_number}}    {{phone_display}}  {{whatsapp_number}}
-       {{email}}           {{street}}
+       {{email}}
        {{site_url}}   site root, same on every page (logo, og:image, sharing)
        {{page_url}}   this page's own URL (canonical, og:url, form field)
-       {{city}}            {{state}}          {{zip}}
+       {{zip}}   (form placeholder only - no postal address is published)
        {{rating}}          {{review_count}}   {{service_area}}
      Review cards are not tokenised — they render from the REVIEWS
      array in the script at the bottom of this file.
@@ -50,14 +50,10 @@
   "telephone": "{{phone_number}}",
   "email": "{{email}}",
   "priceRange": "$$",
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "{{street}}",
-    "addressLocality": "{{city}}",
-    "addressRegion": "{{state}}",
-    "postalCode": "{{zip}}",
-    "addressCountry": "US"
-  },
+  "//": "Service-area business: technicians travel to the customer and there is no
+         address the public visits, so no PostalAddress is declared. Coverage is
+         expressed through areaServed instead. Keep this consistent with the
+         Google Business Profile, which should also have its address hidden.",
   "areaServed": { "@type": "City", "name": "{{location}}" },
   "openingHoursSpecification": [{
     "@type": "OpeningHoursSpecification",
@@ -1373,10 +1369,7 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
 var SITE = {
   business_name  : "OG Garage Doors",
   location       : "Southwest Florida and Tampa Bay",
-  city           : "Sarasota",
-  state          : "FL",
   zip            : "34232",
-  street         : "",
   service_name   : "Garage Door Repair",
   service_area   : "Sarasota, Manatee, Charlotte, Lee, Hillsborough and Pinellas counties",
   phone_number   : "+10000000000",

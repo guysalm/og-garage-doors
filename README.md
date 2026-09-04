@@ -114,8 +114,9 @@ title exceeds 561px or description 985px when measured in the SERP font
 
 ## Before launch
 
-- [ ] Fill real values in `SITE` (phone, WhatsApp, email, domain, address), then
-      re-run the generator.
+- [ ] Fill real values in `SITE` (phone, WhatsApp, email, domain), then
+      re-run the generator. No postal address is published — this is a
+      service-area business, so the schema uses `areaServed` only.
 - [x] Form posts to **Netlify Forms** (`name="contact"`). Deploy to Netlify and
       submissions appear under Forms → contact.
 - [x] `robots.txt` + `sitemap.xml` generated with all 11 URLs.

@@ -192,8 +192,6 @@ foreach ($c in $cities) {
   $vals = @{}
   foreach ($k in $SITE.Keys) { $vals[$k] = $SITE[$k] }
   $vals["location"]     = $loc
-  $vals["city"]         = $c.City
-  $vals["state"]        = "FL"
   $vals["zip"]          = $c.FirstZip
   # page_url is this page; site_url stays the site root, otherwise the logo
   # link, og:image and the share dialog all end up pointing at the city page
@@ -207,7 +205,7 @@ foreach ($c in $cities) {
 
   # 2. keep the runtime SITE object in step (the review cards read it)
   $newSite = $siteBlock
-  foreach ($k in @("location","city","state","zip","page_url","service_area")) {
+  foreach ($k in @("location","zip","page_url","service_area")) {
     $newSite = [regex]::Replace($newSite, "(?m)^(\s*$k\s*:\s*"")(.*?)("")", { param($m) $m.Groups[1].Value + $vals[$k] + $m.Groups[3].Value })
   }
   $page = $page.Replace($siteBlock, $newSite)
@@ -221,11 +219,6 @@ foreach ($c in $cities) {
   # 4. H1
   $page = [regex]::Replace($page, '(?s)(<h1 id="hero-title">).*?(</h1>)', "`${1}$(HtmlEscape $c.H1)`${2}")
 
-  # 5. JSON-LD: postal code, and a single locality for the postal address
-  #    (areaServed keeps the combined name, a PostalAddress cannot)
-  $primaryCity = ($c.City -split ' and ')[0]
-  $page = [regex]::Replace($page, '"postalCode": "[^"]*"', """postalCode"": ""$($c.FirstZip)""")
-  $page = [regex]::Replace($page, '"addressLocality": "[^"]*"', """addressLocality"": ""$primaryCity""")
 
   # 6. local content section, inserted before About
   $sb = New-Object System.Text.StringBuilder
