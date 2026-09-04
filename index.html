@@ -268,18 +268,86 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
   display:flex;flex-direction:column;
   background:#fff;border-radius:var(--radius);box-shadow:var(--shadow-md);overflow:hidden
 }
-.review-card__top{display:flex;align-items:flex-start;gap:11px;padding:14px 16px 12px;border-bottom:1px solid var(--line)}
-.review-card__avatar{width:32px;height:32px;border-radius:50%;flex:0 0 32px;background:var(--bg-alt)}
+.review-card__head{display:flex;align-items:flex-start;gap:11px;padding:16px 16px 0}
+.review-card__avatar{width:40px;height:40px;border-radius:50%;flex:0 0 40px;background:var(--bg-alt)}
 .review-card__who{flex:1;min-width:0}
-.review-card__name{font-weight:700;font-size:.92rem;color:var(--ink);margin:0}
-.review-card__meta{font-size:.74rem;color:var(--muted);margin:0}
-.review-card__g{width:20px;height:20px;flex:0 0 20px}
+.review-card__name{font-weight:500;font-size:.95rem;color:#202124;margin:0 0 1px}
+.review-card__meta{font-size:.78rem;color:#70757a;margin:0;line-height:1.4}
+.review-card__guide{color:#70757a}
+.review-card__g{width:18px;height:18px;flex:0 0 18px;margin-top:2px}
+.review-card__rating{display:flex;align-items:center;gap:8px;margin:10px 16px 0}
+.review-card__rating .stars{font-size:.8rem;letter-spacing:.5px}
+.review-card__date{font-size:.78rem;color:#70757a}
+
+/* heart + share footer, as on a Google review */
+.review-card__actions{
+  display:flex;align-items:center;gap:6px;
+  margin-top:auto;padding:10px 10px 10px 12px
+}
+.review-card__heart,.review-card__share{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:34px;height:34px;padding:0;border:0;border-radius:50%;
+  background:transparent;cursor:pointer;transition:background .18s
+}
+.review-card__heart svg,.review-card__share svg{width:19px;height:19px}
+.review-card__share svg{fill:#5f6368}
+.review-card__heart svg{fill:none;stroke:#5f6368;stroke-width:1.7}
+.review-card__heart:hover,.review-card__share:hover{background:#f1f3f4}
+.review-card__heart:hover svg{stroke:var(--crimson)}
+/* once liked it stays liked — solid red, no un-liking */
+.review-card__heart[aria-pressed="true"]{cursor:default}
+.review-card__heart[aria-pressed="true"] svg{fill:#E01B24;stroke:#E01B24}
+.review-card__heart[aria-pressed="true"]:hover{background:transparent}
 /* clamp so a long review cannot make the row jump on every rotation */
 .review-card__body{
-  padding:14px 16px 20px;font-size:.9rem;color:#3f464f;margin:0;flex:1;
+  padding:12px 16px 4px;font-size:.88rem;color:#3c4043;margin:0;
   display:-webkit-box;-webkit-line-clamp:6;-webkit-box-orient:vertical;
   overflow:hidden;min-height:7.4em
 }
+
+/* ========== Share dialog ========== */
+.share[hidden]{display:none}
+.share{position:fixed;inset:0;z-index:140;display:flex;align-items:center;justify-content:center;padding:20px}
+.share__backdrop{position:absolute;inset:0;background:rgba(20,24,29,.55)}
+.share__panel{
+  position:relative;width:100%;max-width:330px;background:#fff;
+  border-radius:10px;box-shadow:0 18px 48px rgba(20,24,29,.32);
+  padding:20px 0 18px
+}
+.share__head{display:flex;align-items:center;justify-content:space-between;padding:0 20px 14px}
+.share__title{font-size:1.3rem;font-weight:700;margin:0;color:#202124}
+.share__close{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:34px;height:34px;padding:0;border:0;border-radius:50%;
+  background:transparent;cursor:pointer
+}
+.share__close svg{width:20px;height:20px;fill:#5f6368}
+.share__close:hover{background:#f1f3f4}
+.share__list{padding:0 8px}
+.share__item{
+  display:flex;align-items:center;gap:16px;
+  padding:10px 12px;border-radius:6px;color:#202124;font-size:.95rem
+}
+.share__item:hover{background:#f1f3f4;text-decoration:none}
+.share__ico{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:30px;height:30px;border-radius:3px;flex:0 0 30px
+}
+.share__ico svg{width:19px;height:19px;fill:#fff}
+.share__ico--fb{background:#1877F2}
+.share__ico--wa{background:#25D366}
+.share__ico--x{background:#000}
+.share__ico--mail{background:transparent}
+.share__ico--mail svg{fill:#5f6368;width:23px;height:23px}
+.share__hint{margin:12px 20px 6px;font-size:.82rem;color:#70757a}
+.share__link{
+  display:block;width:calc(100% - 40px);margin:0 20px;padding:9px 11px;
+  border:1px solid #dadce0;border-radius:5px;background:#fff;
+  font:400 .86rem/1.3 var(--font);color:#1a73e8;text-align:left;
+  cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap
+}
+.share__link:hover{background:#f8f9fa}
+.share__status{margin:8px 20px 0;font-size:.78rem;color:#188038;min-height:1.1em}
 
 /* ========== Guarantee badges ========== */
 .badges__list{display:flex;flex-wrap:wrap;justify-content:center;gap:34px}
@@ -1181,6 +1249,40 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
   </div>
 </footer>
 
+<!-- ==================== SHARE DIALOG ==================== -->
+<div class="share" id="share" hidden>
+  <div class="share__backdrop" data-share-close></div>
+  <div class="share__panel" role="dialog" aria-modal="true" aria-labelledby="share-title">
+    <div class="share__head">
+      <h2 class="share__title" id="share-title">Share</h2>
+      <button class="share__close" type="button" data-share-close aria-label="Close share dialog">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 6.4 17.6 5 12 10.6 6.4 5 5 6.4 10.6 12 5 17.6 6.4 19 12 13.4 17.6 19 19 17.6 13.4 12z"/></svg>
+      </button>
+    </div>
+
+    <ul class="share__list">
+      <li><a class="share__item" id="share-facebook" href="#" target="_blank" rel="noopener nofollow">
+        <span class="share__ico share__ico--fb"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.25-1.5 1.55-1.5H16.7V3.6c-.29-.04-1.28-.13-2.43-.13-2.4 0-4.05 1.47-4.05 4.16V9.9H7.5V13h2.72v8z"/></svg></span>
+        Facebook</a></li>
+      <li><a class="share__item" id="share-whatsapp" href="#" target="_blank" rel="noopener nofollow">
+        <span class="share__ico share__ico--wa"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5a8.4 8.4 0 0 0-7.2 12.7L3.8 20.5l4.4-1.1A8.4 8.4 0 1 0 12 3.5zm4.3 11.8c-.18.5-1.05 1-1.46 1.03-.4.03-.86.05-1.4-.09-.85-.26-2.2-.86-3.4-2.2-.93-1.03-1.53-2.2-1.7-2.7-.17-.5-.09-1 .09-1.35.18-.35.42-.6.68-.77.17-.1.34-.1.5-.1h.34c.17 0 .26.09.35.35l.5 1.26c.1.17 0 .35-.9.43l-.34.43c-.09.1-.17.26-.09.43.26.5.68 1.1 1.19 1.53.43.34.94.6 1.28.77.17.09.34 0 .43-.09l.43-.5c.09-.17.26-.17.43-.09l1.28.6c.17.09.26.17.26.35 0 .17 0 .43-.9.6z"/></svg></span>
+        WhatsApp</a></li>
+      <li><a class="share__item" id="share-x" href="#" target="_blank" rel="noopener nofollow">
+        <span class="share__ico share__ico--x"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.3 4h2.7l-5.9 6.8L21 20h-5.4l-4.2-5.5L6.6 20H3.9l6.3-7.2L3 4h5.5l3.8 5 4-5zm-.95 14.4h1.5L8.2 5.5H6.6z"/></svg></span>
+        X</a></li>
+      <li><a class="share__item" id="share-email" href="#">
+        <span class="share__ico share__ico--mail"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm9 7.3L20 7.2V6.6l-8 5-8-5v.6z"/></svg></span>
+        Email</a></li>
+    </ul>
+
+    <p class="share__hint" id="share-hint">Click to copy link</p>
+    <button class="share__link" type="button" id="share-copy" aria-describedby="share-hint">
+      <span id="share-url"></span>
+    </button>
+    <p class="share__status" id="share-status" role="status" aria-live="polite"></p>
+  </div>
+</div>
+
 <!-- ==================== STICKY MOBILE CTA BAR ==================== -->
 <nav class="mobile-bar" aria-label="Quick contact">
   <a class="mobile-bar__call" href="tel:{{phone_number}}" data-cta="mobile-call">
@@ -1238,26 +1340,38 @@ var SITE = {
    ========================================================================= */
 var REVIEW_ROTATE_MS = 2000;
 
+/* guide / reviews / photos / date are placeholder profile metadata — replace
+   with the real figures from each reviewer's Google profile before launch. */
 var REVIEWS = [
   { name:"Michael Reynolds", avatar:"review-avatar-1.svg",
+    guide:true,  reviews:14, photos:8,  date:"2 weeks ago",
     text:"Extremely fast service! My garage door spring snapped unexpectedly on a Sunday morning, and they arrived within 45 minutes to fix it. Very professional—they're a bit pricey, but absolutely worth every penny. Great communication throughout!" },
   { name:"Sarah Livingston", avatar:"review-avatar-2.svg",
+    guide:false, reviews:3,  photos:0,  date:"a month ago",
     text:"I ordered white short panel doors from them, and because they keep them in stock, they were able to get everything installed just four days later. The team was super punctual, left the work area spotless, and the new door operates so quietly. Highly recommend!" },
   { name:"David Kensington", avatar:"review-avatar-3.svg",
+    guide:false, reviews:7,  photos:2,  date:"2 months ago",
     text:"Top-notch repair work. Another company told me I needed an entirely new opener system, but these guys came out, diagnosed a minor sensor issue, and fixed it for a fraction of the cost." },
   { name:"Jessica Mercer", avatar:"review-avatar-1.svg",
+    guide:true,  reviews:22, photos:31, date:"2 months ago",
     text:"Fantastic customer service from start to finish. The technician explained every step of the maintenance process and tuned up our heavy wooden doors perfectly." },
   { name:"Robert Patterson", avatar:"review-avatar-2.svg",
+    guide:false, reviews:5,  photos:0,  date:"3 months ago",
     text:"Had an emergency late at night when the door got stuck halfway down. They responded immediately, secured the door, and finished the full repair the next morning. Real professional work, and they charged accordingly for the quick response. True 24/7 reliability!" },
   { name:"Amanda Bradley", avatar:"review-avatar-3.svg",
+    guide:false, reviews:2,  photos:0,  date:"3 months ago",
     text:"Super friendly staff and very fair pricing. They replaced our worn-out cables and rollers in under an hour. The door feels brand new again." },
   { name:"Daniel Sullivan", avatar:"review-avatar-1.svg",
+    guide:true,  reviews:41, photos:12, date:"4 months ago",
     text:"Great experience replacing our old keypad and adding smartphone controls to our garage setup. The technician walked me through the app setup step-by-step." },
   { name:"Emily Vance", avatar:"review-avatar-2.svg",
+    guide:false, reviews:6,  photos:1,  date:"5 months ago",
     text:"Prompt, polite, and very knowledgeable. They gave me a straightforward quote over the phone with no hidden fees or surprise charges afterwards." },
   { name:"James Harrington", avatar:"review-avatar-3.svg",
+    guide:false, reviews:9,  photos:4,  date:"6 months ago",
     text:"Professional craftsmanship on our custom garage door build. It completely elevated our home's curb appeal. Couldn't be happier with the result!" },
   { name:"Lisa Westbrook", avatar:"review-avatar-1.svg",
+    guide:false, reviews:4,  photos:0,  date:"7 months ago",
     text:"Outstanding local service! Called them for routine maintenance and panel alignment. They arrived right on time and provided exceptional work." }
 ];
 
@@ -1328,25 +1442,45 @@ var REVIEWS = [
     });
   }
 
-  function cardHTML(r){
+  var HEART_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.6-4.7-9.7-9A5.3 5.3 0 0 1 12 6.6 5.3 5.3 0 0 1 21.7 12c-2.1 4.3-9.7 9-9.7 9z"/></svg>';
+  var SHARE_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 16.1c-.8 0-1.5.3-2 .8l-7.1-4.2c.1-.2.1-.5.1-.7s0-.5-.1-.7L16 7.1c.5.5 1.2.8 2 .8a3 3 0 1 0-3-3c0 .2 0 .5.1.7L8 9.9a3 3 0 1 0 0 4.2l7.1 4.2c-.1.2-.1.4-.1.6a2.9 2.9 0 1 0 2.9-2.8z"/></svg>';
+
+  function metaLine(r){
+    var bits = [];
+    if (r.guide) bits.push('<span class="review-card__guide">Local Guide</span>');
+    if (r.reviews) bits.push(esc(r.reviews) + (r.reviews === 1 ? " review" : " reviews"));
+    if (r.photos)  bits.push(esc(r.photos)  + (r.photos  === 1 ? " photo"  : " photos"));
+    return bits.join(" &middot; ");
+  }
+
+  function cardHTML(r, ri){
     var where = SITE.location ? " in " + SITE.location : "";
-    var meta = [];
-    if (r.date)  meta.push(esc(r.date));
-    if (r.count) meta.push(esc(r.count) + " reviews");
-    return '<article class="review-card">' +
-        '<div class="review-card__top">' +
+    var meta = metaLine(r);
+    return '<article class="review-card" data-review="' + ri + '">' +
+        '<div class="review-card__head">' +
           '<img class="review-card__avatar" src="assets/img/' + esc(r.avatar) + '" ' +
-               'width="32" height="32" loading="lazy" ' +
+               'width="40" height="40" loading="lazy" ' +
                'alt="Photo of ' + esc(r.name) + ', garage door repair customer' + esc(where) + '">' +
           '<div class="review-card__who">' +
             '<p class="review-card__name">' + esc(r.name) + '</p>' +
-            '<p class="review-card__meta"><span class="stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span>' +
-              '<span class="sr-only">5 out of 5 stars</span></p>' +
-            (meta.length ? '<p class="review-card__meta">' + meta.join(" &middot; ") + '</p>' : "") +
+            (meta ? '<p class="review-card__meta">' + meta + '</p>' : "") +
           '</div>' +
-          '<img class="review-card__g" src="assets/img/icon-google-g.svg" width="20" height="20" loading="lazy" alt="Google review">' +
+          '<img class="review-card__g" src="assets/img/icon-google-g.svg" width="18" height="18" loading="lazy" alt="Google review">' +
         '</div>' +
+        '<p class="review-card__rating">' +
+          '<span class="stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span>' +
+          '<span class="sr-only">5 out of 5 stars</span>' +
+          (r.date ? '<span class="review-card__date">' + esc(r.date) + '</span>' : "") +
+        '</p>' +
         '<p class="review-card__body">' + esc(r.text) + '</p>' +
+        '<div class="review-card__actions">' +
+          '<button type="button" class="review-card__heart" data-heart="' + ri + '" ' +
+                  'aria-pressed="false" aria-label="Like the review by ' + esc(r.name) + '">' +
+            HEART_SVG +
+          '</button>' +
+          '<button type="button" class="review-card__share" data-share ' +
+                  'aria-label="Share this page">' + SHARE_SVG + '</button>' +
+        '</div>' +
       '</article>';
   }
 
@@ -1357,13 +1491,11 @@ var REVIEWS = [
   for (var c = 0; c < PER_VIEW; c++) {
     var slides = "";
     for (var p = 0; p < pages; p++) {
-      slides += '<div class="reviews__slide">' +
-                  cardHTML(REVIEWS[(p * PER_VIEW + c) % REVIEWS.length]) +
-                '</div>';
+      var ri = (p * PER_VIEW + c) % REVIEWS.length;
+      slides += '<div class="reviews__slide">' + cardHTML(REVIEWS[ri], ri) + '</div>';
     }
-    slides += '<div class="reviews__slide" aria-hidden="true">' +
-                cardHTML(REVIEWS[c % REVIEWS.length]) +
-              '</div>';
+    var ci = c % REVIEWS.length;
+    slides += '<div class="reviews__slide" aria-hidden="true">' + cardHTML(REVIEWS[ci], ci) + '</div>';
     rowHTML += '<div class="reviews__seg"><div class="reviews__segtrack">' + slides + '</div></div>';
   }
   row.innerHTML = rowHTML;
@@ -1414,6 +1546,9 @@ var REVIEWS = [
 
   function start(){
     if (reduce || timer) return;
+    /* focus moving into the dialog fires focusout on the section — don't let
+       that restart the carousel behind an open share window */
+    if (shareEl && !shareEl.hidden) return;
     timer = window.setInterval(function(){ slideTo(index + 1); }, REVIEW_ROTATE_MS);
   }
   function stop(){ if (timer) { window.clearInterval(timer); timer = null; } }
@@ -1434,6 +1569,105 @@ var REVIEWS = [
 
     slideTo(Number(b.dataset.page));
   });
+
+  /* ---- hearts: one-way, and applied to every copy of that review ---- */
+  var LIKE_KEY = "og-review-likes";
+  var liked = {};
+  try {
+    var saved = window.localStorage.getItem(LIKE_KEY);
+    if (saved) liked = JSON.parse(saved) || {};
+  } catch (e) { liked = {}; }
+
+  function applyLikes(){
+    Array.prototype.forEach.call(row.querySelectorAll("[data-heart]"), function(btn){
+      if (liked[btn.dataset.heart]) {
+        btn.setAttribute("aria-pressed", "true");
+        btn.setAttribute("aria-label", "You liked this review");
+      }
+    });
+  }
+
+  row.addEventListener("click", function(e){
+    var heart = e.target.closest("[data-heart]");
+    if (heart) {
+      var id = heart.dataset.heart;
+      if (liked[id]) return;               /* already liked — cannot be undone */
+      liked[id] = 1;
+      try { window.localStorage.setItem(LIKE_KEY, JSON.stringify(liked)); } catch (e2) {}
+      applyLikes();
+      return;
+    }
+    if (e.target.closest("[data-share]")) openShare(e.target.closest("[data-share]"));
+  });
+
+  applyLikes();
+
+  /* ---- share dialog ---- */
+  var shareEl = document.getElementById("share");
+  var shareOpener = null;
+
+  function shareUrl(){
+    var u = SITE.site_url || window.location.href;
+    /* always the home page, never a deep link */
+    return u.replace(/#.*$/, "");
+  }
+
+  function openShare(opener){
+    if (!shareEl) return;
+    shareOpener = opener || null;
+    var url = shareUrl();
+    var enc = encodeURIComponent(url);
+    var subject = encodeURIComponent(SITE.business_name + " — " + SITE.service_name + " in " + SITE.location);
+
+    document.getElementById("share-facebook").href = "https://www.facebook.com/sharer/sharer.php?u=" + enc;
+    document.getElementById("share-whatsapp").href = "https://wa.me/?text=" + enc;
+    document.getElementById("share-x").href        = "https://x.com/intent/tweet?url=" + enc;
+    document.getElementById("share-email").href    = "mailto:?subject=" + subject + "&body=" + enc;
+    document.getElementById("share-url").textContent = url;
+    document.getElementById("share-status").textContent = "";
+
+    shareEl.hidden = false;
+    stop();                                 /* hold the carousel while it is open */
+    document.getElementById("share-copy").focus();
+    document.addEventListener("keydown", onShareKey);
+  }
+
+  function closeShare(){
+    if (!shareEl || shareEl.hidden) return;
+    shareEl.hidden = true;
+    document.removeEventListener("keydown", onShareKey);
+    if (shareOpener) { shareOpener.focus(); shareOpener = null; }
+    start();
+  }
+
+  function onShareKey(e){ if (e.key === "Escape") closeShare(); }
+
+  if (shareEl) {
+    shareEl.addEventListener("click", function(e){
+      if (e.target.closest("[data-share-close]")) { closeShare(); return; }
+      var item = e.target.closest(".share__item");
+      if (item && item.id !== "share-email") { closeShare(); }
+    });
+
+    document.getElementById("share-copy").addEventListener("click", function(){
+      var url = shareUrl();
+      var status = document.getElementById("share-status");
+      var done = function(){ status.textContent = "Link copied"; };
+      var fail = function(){ status.textContent = "Press Ctrl+C to copy"; };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(done, fail);
+      } else {
+        try {
+          var ta = document.createElement("textarea");
+          ta.value = url; ta.setAttribute("readonly", "");
+          ta.style.position = "fixed"; ta.style.opacity = "0";
+          document.body.appendChild(ta); ta.select();
+          document.execCommand("copy") ? done() : fail();
+          document.body.removeChild(ta);
+        } catch (e3) { fail(); }
+      }
+    });
+  }
 
   /* don't slide a review away while someone is reading or tabbing through it */
   var section = document.getElementById("reviews");
