@@ -244,17 +244,20 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
 
 /* ========== Reviews ========== */
 .reviews{background:var(--ink);padding:44px 0 48px}
-/* the viewport clips; the track slides one page-width at a time */
-.reviews__viewport{overflow:hidden}
-.reviews__track{
-  display:flex;will-change:transform;
-  transition:transform .6s cubic-bezier(.4,0,.2,1);
-}
-.reviews__track.no-anim{transition:none}
-.reviews__page{
-  flex:0 0 100%;display:grid;align-items:stretch;
+/* three fixed segments; each one clips its own track and slides the card
+   inside it sideways, so the columns themselves never move */
+.reviews__row{
+  display:grid;align-items:stretch;
   grid-template-columns:repeat(3,minmax(0,1fr));gap:26px;
 }
+.reviews__seg{overflow:hidden}
+.reviews__segtrack{
+  display:flex;height:100%;will-change:transform;
+  transition:transform .6s cubic-bezier(.4,0,.2,1);
+}
+.reviews__segtrack.no-anim{transition:none}
+.reviews__slide{flex:0 0 100%;display:flex}
+.reviews__slide .review-card{width:100%}
 .reviews__dots{display:flex;justify-content:center;gap:8px;margin-top:26px}
 .reviews__dots button{
   width:9px;height:9px;padding:0;border:0;border-radius:50%;
@@ -503,7 +506,7 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
   .hero-checks{grid-template-columns:1fr;gap:0;max-width:340px}
   .hero__actions .btn{width:100%}
   .services .grid,.values .grid{grid-template-columns:1fr}
-  .reviews__page{grid-template-columns:1fr;gap:18px}
+  .reviews__row{grid-template-columns:1fr;gap:18px}
   .form-row{grid-template-columns:1fr;gap:0}
   .footer__grid{grid-template-columns:1fr;gap:30px}
   .trust__list{gap:24px}
@@ -625,9 +628,7 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
   <section class="reviews" id="reviews" aria-labelledby="reviews-title">
     <div class="wrap">
       <h2 class="sr-only" id="reviews-title">What {{location}} customers say about our garage door service</h2>
-      <div class="reviews__viewport">
-        <div class="reviews__track" id="reviews-track"></div>
-      </div>
+      <div class="reviews__row" id="reviews-row"></div>
       <div class="reviews__dots" id="reviews-dots" role="group" aria-label="Review pages"></div>
     </div>
   </section>
@@ -1308,9 +1309,9 @@ var REVIEWS = [
    switched off, which keeps the motion travelling one way forever.
    ========================================================================= */
 (function(){
-  var track = document.getElementById("reviews-track");
-  var dots  = document.getElementById("reviews-dots");
-  if (!track || !dots || !REVIEWS.length) return;
+  var row  = document.getElementById("reviews-row");
+  var dots = document.getElementById("reviews-dots");
+  if (!row || !dots || !REVIEWS.length) return;
 
   var PER_VIEW = 3;
   var pages = Math.ceil(REVIEWS.length / PER_VIEW);
@@ -1349,22 +1350,38 @@ var REVIEWS = [
       '</article>';
   }
 
-  function pageHTML(p, isClone){
-    var html = '<div class="reviews__page"' + (isClone ? ' aria-hidden="true"' : '') + '>';
-    for (var i = 0; i < PER_VIEW; i++) {
-      html += cardHTML(REVIEWS[(p * PER_VIEW + i) % REVIEWS.length]);
+  /* One segment per column. Column c cycles through the reviews that land
+     in that position on each page: c, c+3, c+6 ... wrapping at the end.
+     A clone of the first slide is appended so the loop keeps one direction. */
+  var rowHTML = "";
+  for (var c = 0; c < PER_VIEW; c++) {
+    var slides = "";
+    for (var p = 0; p < pages; p++) {
+      slides += '<div class="reviews__slide">' +
+                  cardHTML(REVIEWS[(p * PER_VIEW + c) % REVIEWS.length]) +
+                '</div>';
     }
-    return html + '</div>';
+    slides += '<div class="reviews__slide" aria-hidden="true">' +
+                cardHTML(REVIEWS[c % REVIEWS.length]) +
+              '</div>';
+    rowHTML += '<div class="reviews__seg"><div class="reviews__segtrack">' + slides + '</div></div>';
+  }
+  row.innerHTML = rowHTML;
+
+  var tracks = row.querySelectorAll(".reviews__segtrack");
+  Array.prototype.forEach.call(tracks, function(t){
+    t.style.transitionDuration = SLIDE_MS + "ms";
+  });
+
+  function setTracks(cls, add){
+    Array.prototype.forEach.call(tracks, function(t){
+      if (add) { t.classList.add(cls); } else { t.classList.remove(cls); }
+    });
   }
 
-  var markup = "";
-  for (var p = 0; p < pages; p++) markup += pageHTML(p, false);
-  markup += pageHTML(0, true);              /* trailing clone */
-  track.innerHTML = markup;
-  track.style.transitionDuration = SLIDE_MS + "ms";
-
   function paint(){
-    track.style.transform = "translateX(" + (-index * 100) + "%)";
+    var x = "translateX(" + (-index * 100) + "%)";
+    Array.prototype.forEach.call(tracks, function(t){ t.style.transform = x; });
     var active = index % pages;
     Array.prototype.forEach.call(dots.children, function(b, n){
       if (n === active) { b.setAttribute("aria-current", "true"); }
@@ -1374,8 +1391,8 @@ var REVIEWS = [
 
   function slideTo(n){
     index = n;
-    if (reduce) { index = index % pages; track.classList.add("no-anim"); paint(); return; }
-    track.classList.remove("no-anim");
+    if (reduce) { index = index % pages; setTracks("no-anim", true); paint(); return; }
+    setTracks("no-anim", false);
     paint();
 
     /* landed on the clone: snap back to the real first page with the
@@ -1385,11 +1402,11 @@ var REVIEWS = [
     if (snapTimer) { window.clearTimeout(snapTimer); snapTimer = null; }
     if (index === pages) {
       snapTimer = window.setTimeout(function(){
-        track.classList.add("no-anim");
+        setTracks("no-anim", true);
         index = 0;
         paint();
-        void track.offsetWidth;      /* force reflow so the next slide animates */
-        track.classList.remove("no-anim");
+        void row.offsetWidth;        /* force reflow so the next slide animates */
+        setTracks("no-anim", false);
         snapTimer = null;
       }, SLIDE_MS + 40);
     }
