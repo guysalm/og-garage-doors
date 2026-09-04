@@ -1229,26 +1229,26 @@ var SITE = {
 var REVIEW_ROTATE_MS = 1500;
 
 var REVIEWS = [
-  { name:"Reviewer 1",  date:"2 months ago",  count:"11", avatar:"review-avatar-1.svg",
-    text:"[Review 1 — paste the real Google review text here.]" },
-  { name:"Reviewer 2",  date:"4 months ago",  count:"4",  avatar:"review-avatar-2.svg",
-    text:"[Review 2 — paste the real Google review text here.]" },
-  { name:"Reviewer 3",  date:"a month ago",   count:"7",  avatar:"review-avatar-3.svg",
-    text:"[Review 3 — paste the real Google review text here.]" },
-  { name:"Reviewer 4",  date:"3 weeks ago",   count:"2",  avatar:"review-avatar-1.svg",
-    text:"[Review 4 — paste the real Google review text here.]" },
-  { name:"Reviewer 5",  date:"5 months ago",  count:"18", avatar:"review-avatar-2.svg",
-    text:"[Review 5 — paste the real Google review text here.]" },
-  { name:"Reviewer 6",  date:"2 weeks ago",   count:"3",  avatar:"review-avatar-3.svg",
-    text:"[Review 6 — paste the real Google review text here.]" },
-  { name:"Reviewer 7",  date:"6 months ago",  count:"9",  avatar:"review-avatar-1.svg",
-    text:"[Review 7 — paste the real Google review text here.]" },
-  { name:"Reviewer 8",  date:"a week ago",    count:"5",  avatar:"review-avatar-2.svg",
-    text:"[Review 8 — paste the real Google review text here.]" },
-  { name:"Reviewer 9",  date:"7 months ago",  count:"22", avatar:"review-avatar-3.svg",
-    text:"[Review 9 — paste the real Google review text here.]" },
-  { name:"Reviewer 10", date:"a month ago",   count:"6",  avatar:"review-avatar-1.svg",
-    text:"[Review 10 — paste the real Google review text here.]" }
+  { name:"Michael Reynolds", avatar:"review-avatar-1.svg",
+    text:"Extremely fast service! My garage door spring snapped unexpectedly on a Sunday morning, and they arrived within 45 minutes to fix it. Very professional—they're a bit pricey, but absolutely worth every penny. Great communication throughout!" },
+  { name:"Sarah Livingston", avatar:"review-avatar-2.svg",
+    text:"I ordered white short panel doors from them, and because they keep them in stock, they were able to get everything installed just four days later. The team was super punctual, left the work area spotless, and the new door operates so quietly. Highly recommend!" },
+  { name:"David Kensington", avatar:"review-avatar-3.svg",
+    text:"Top-notch repair work. Another company told me I needed an entirely new opener system, but these guys came out, diagnosed a minor sensor issue, and fixed it for a fraction of the cost." },
+  { name:"Jessica Mercer", avatar:"review-avatar-1.svg",
+    text:"Fantastic customer service from start to finish. The technician explained every step of the maintenance process and tuned up our heavy wooden doors perfectly." },
+  { name:"Robert Patterson", avatar:"review-avatar-2.svg",
+    text:"Had an emergency late at night when the door got stuck halfway down. They responded immediately, secured the door, and finished the full repair the next morning. Real professional work, and they charged accordingly for the quick response. True 24/7 reliability!" },
+  { name:"Amanda Bradley", avatar:"review-avatar-3.svg",
+    text:"Super friendly staff and very fair pricing. They replaced our worn-out cables and rollers in under an hour. The door feels brand new again." },
+  { name:"Daniel Sullivan", avatar:"review-avatar-1.svg",
+    text:"Great experience replacing our old keypad and adding smartphone controls to our garage setup. The technician walked me through the app setup step-by-step." },
+  { name:"Emily Vance", avatar:"review-avatar-2.svg",
+    text:"Prompt, polite, and very knowledgeable. They gave me a straightforward quote over the phone with no hidden fees or surprise charges afterwards." },
+  { name:"James Harrington", avatar:"review-avatar-3.svg",
+    text:"Professional craftsmanship on our custom garage door build. It completely elevated our home's curb appeal. Couldn't be happier with the result!" },
+  { name:"Lisa Westbrook", avatar:"review-avatar-1.svg",
+    text:"Outstanding local service! Called them for routine maintenance and panel alignment. They arrived right on time and provided exceptional work." }
 ];
 
 (function fillPlaceholders(){
@@ -1317,6 +1317,13 @@ var REVIEWS = [
       /* wrap around so the last page is never short */
       var r = REVIEWS[(page * PER_VIEW + i) % REVIEWS.length];
       var where = SITE.location ? " in " + SITE.location : "";
+      /* only render the meta line for values we actually have */
+      var meta = [];
+      if (r.date)  meta.push(esc(r.date));
+      if (r.count) meta.push(esc(r.count) + " reviews");
+      var metaHTML = meta.length
+        ? '<p class="review-card__meta">' + meta.join(" &middot; ") + '</p>'
+        : "";
       html +=
         '<article class="review-card">' +
           '<div class="review-card__top">' +
@@ -1327,7 +1334,7 @@ var REVIEWS = [
               '<p class="review-card__name">' + esc(r.name) + '</p>' +
               '<p class="review-card__meta"><span class="stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span>' +
                 '<span class="sr-only">5 out of 5 stars</span></p>' +
-              '<p class="review-card__meta">' + esc(r.date) + ' &middot; ' + esc(r.count) + ' reviews</p>' +
+              metaHTML +
             '</div>' +
             '<img class="review-card__g" src="assets/img/icon-google-g.svg" width="20" height="20" loading="lazy" alt="Google review">' +
           '</div>' +
