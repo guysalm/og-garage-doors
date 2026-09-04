@@ -1565,9 +1565,11 @@ var REVIEWS = [
   dots.addEventListener("click", function(e){
     var b = e.target.closest("button");
     if (!b) return;
+    /* jump there now, then restart the clock so the rotation always
+       resumes — stopping without restarting froze it permanently */
     stop();
-
     slideTo(Number(b.dataset.page));
+    start();
   });
 
   /* ---- hearts: one-way, and applied to every copy of that review ---- */
@@ -1669,12 +1671,10 @@ var REVIEWS = [
     });
   }
 
-  /* don't slide a review away while someone is reading or tabbing through it */
-  var section = document.getElementById("reviews");
-  section.addEventListener("mouseenter", stop);
-  section.addEventListener("mouseleave", start);
-  section.addEventListener("focusin", stop);
-  section.addEventListener("focusout", start);
+  /* No pause on hover or focus: resting the pointer over the section used to
+     halt it until the pointer left, which read as "it stops after one round".
+     The only pauses left are a hidden tab and an open share dialog, and both
+     resume on their own. */
   document.addEventListener("visibilitychange", function(){
     if (document.hidden) { stop(); } else { start(); }
   });
