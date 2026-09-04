@@ -1148,7 +1148,18 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
 
         <div class="form-card">
           <h3 class="sr-only">Request a free garage door estimate in {{location}}</h3>
-          <form id="lead-form" action="{{form_action}}" method="post" novalidate>
+          <!-- Netlify Forms: detected at deploy time by parsing this markup, so
+               name + data-netlify must be present in the built HTML. Submissions
+               land under "contact" in the Netlify dashboard. -->
+          <form id="lead-form" name="contact" method="POST"
+                data-netlify="true" netlify-honeypot="bot-field" novalidate>
+            <input type="hidden" name="form-name" value="contact">
+
+            <!-- spam trap: hidden from people, tempting to bots -->
+            <p class="sr-only" aria-hidden="true">
+              <label>Leave this field empty <input name="bot-field" tabindex="-1" autocomplete="off"></label>
+            </p>
+
             <!-- hidden routing fields for dynamic landing pages -->
             <input type="hidden" name="page_location" value="{{location}}">
             <input type="hidden" name="page_service" value="{{service_name}}">
@@ -1337,10 +1348,6 @@ var SITE = {
   whatsapp_number: "10000000000",
   email          : "info@oggaragedoors.com",
   site_url       : "https://oggaragedoors.com/",
-  form_action    : "#",
-  rating         : "5.0",
-  review_count   : "127",
-
   rating         : "5.0",
   review_count   : "127"
 };
@@ -1786,19 +1793,49 @@ var REVIEWS = [
   if (!form) return;
   var status = document.getElementById("lead-status");
 
+  var submitBtn = form.querySelector('button[type="submit"]');
+
+  function say(msg, ok){
+    status.textContent = msg;
+    status.style.color = ok ? "#188038" : "";
+  }
+
   form.addEventListener("submit", function(e){
     var invalid = form.querySelector(":invalid");
     if (invalid) {
       e.preventDefault();
       invalid.focus();
-      status.textContent = "Please fill in the required fields so we can call you back.";
+      say("Please fill in the required fields so we can call you back.", false);
       return;
     }
-    /* No endpoint wired yet — keep the lead from being lost silently. */
-    if (!form.getAttribute("action") || form.getAttribute("action") === "#") {
-      e.preventDefault();
-      status.textContent = "Thanks! Your request is ready to send — connect a form endpoint (SITE.form_action) to deliver it.";
-    }
+
+    /* No fetch (very old browser): let the browser POST normally — Netlify
+       still receives it and shows its own success page. */
+    if (!window.fetch || !window.FormData) return;
+
+    /* Otherwise post it in the background so the visitor stays on the page. */
+    e.preventDefault();
+    if (submitBtn) submitBtn.disabled = true;
+    say("Sending…", false);
+
+    var pairs = [];
+    new FormData(form).forEach(function(v, k){
+      pairs.push(encodeURIComponent(k) + "=" + encodeURIComponent(v));
+    });
+
+    fetch(form.getAttribute("action") || window.location.pathname, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: pairs.join("&")
+    }).then(function(res){
+      if (!res.ok) throw new Error(res.status);
+      form.reset();
+      say("Thanks! We’ve got your request — we’ll call you shortly.", true);
+    }).catch(function(){
+      say("Couldn’t send that just now. Please call " + SITE.phone_display + " and we’ll take care of it.", false);
+    }).then(function(){
+      if (submitBtn) submitBtn.disabled = false;
+    });
   });
 })();
 

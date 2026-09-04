@@ -42,7 +42,7 @@ Tokens:
 | `{{phone_number}}` | `+19410000000` (tel: format) |
 | `{{phone_display}}` | (941) 000-0000 |
 | `{{whatsapp_number}}` | 19410000000 (digits only) |
-| `{{email}}` / `{{site_url}}` / `{{form_action}}` | — |
+| `{{email}}` / `{{site_url}}` | — |
 | `{{rating}}` / `{{review_count}}` | 5.0 / 127 |
 | `{{review_1..3_name|date|count|text}}` | — |
 
@@ -62,8 +62,8 @@ Port Charlotte, Fort Myers, Brandon, Ruskin, Tampa, St. Pete/Clearwater) is in
 ## Before launch
 
 - [ ] Fill real values in `SITE` (phone, WhatsApp, email, domain, address).
-- [ ] Point `form_action` at a real endpoint — the form currently blocks submit
-      and says so rather than losing the lead.
+- [x] Form posts to **Netlify Forms** (`name="contact"`). Nothing to configure in
+      code — deploy to Netlify and submissions appear under Forms → contact.
 - [ ] Replace the SVG placeholders in `assets/img/` with real WebP photos.
 - [ ] Replace placeholder reviews with real Google reviews, and make
       `aggregateRating` in the JSON-LD match them.

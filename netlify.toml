@@ -1,0 +1,18 @@
+# Static site — no build step. Netlify serves the repo root and parses
+# index.html at deploy time to register the "contact" form.
+
+[build]
+  publish = "."
+  command = ""
+
+# Long-cache the fingerprint-free assets folder but keep HTML fresh, so a
+# redeploy is picked up immediately.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
