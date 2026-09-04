@@ -1,24 +1,24 @@
 <#
-  Generates the city landing pages from index.html + the city content file.
+  Generates index.html and the city landing pages from tools/template.html.
 
-  index.html is the single source of truth for layout, styling and the SITE
+  tools/template.html is the source of truth for layout, styling and the SITE
   defaults (phone, business name, rating...). This script:
-    1. reads the SITE object out of index.html,
+    1. reads the SITE object out of the template,
     2. overrides the per-city values,
     3. substitutes every {{token}} at build time so the shipped pages contain
        final HTML rather than tokens a crawler has to run JS to resolve,
     4. swaps in the city title / description / canonical / H1 / JSON-LD,
     5. inserts a local content section and city FAQs.
 
-  Re-run it after changing anything in index.html — including the phone
-  number, which is baked into the generated pages.
+  Edit tools/template.html, never the generated pages. Re-run after any change
+  - including the phone number, which is baked into every generated page.
 
     powershell -File tools\build-city-pages.ps1
 #>
 
 $ErrorActionPreference = "Stop"
 $root    = Split-Path -Parent $PSScriptRoot
-$tplPath = Join-Path $root "index.html"
+$tplPath = Join-Path $PSScriptRoot "template.html"
 $srcPath = Join-Path $root "reference\Uniqe Info for Folrida areas gemini-code-1788450139162.txt"
 
 if (-not (Test-Path $srcPath)) { throw "City content file not found: $srcPath" }
@@ -32,7 +32,7 @@ $SITE = @{}
 foreach ($m in [regex]::Matches($siteBlock, '(?m)^\s*([a-z_]+)\s*:\s*"(.*?)"\s*,?\s*$')) {
   $SITE[$m.Groups[1].Value] = $m.Groups[2].Value
 }
-Write-Host "SITE defaults read from index.html ($($SITE.Count) keys)"
+Write-Host "SITE defaults read from tools/template.html ($($SITE.Count) keys)"
 
 function HtmlEscape([string]$s) {
   return $s -replace '&','&amp;' -replace '<','&lt;' -replace '>','&gt;'
@@ -112,12 +112,32 @@ foreach ($bm in [regex]::Matches($raw, $blockRe)) {
 
 Write-Host "Parsed $($cities.Count) cities"
 
+# ----------------------------------------------------------------- home page
+# The template must never ship as-is: Screaming Frog and Googlebot's first pass
+# read raw HTML, and an unrendered <link rel="canonical" href="{{page_url}}">
+# resolves to a different URL, which is exactly the "canonicalised" report.
+$homePage = $tpl
+$homeVals = @{}
+foreach ($k in $SITE.Keys) { $homeVals[$k] = $SITE[$k] }
+$homeVals["page_url"] = $SITE.site_url          # the home page is the site root
+foreach ($k in $homeVals.Keys) { $homePage = $homePage.Replace("{{$k}}", $homeVals[$k]) }
+$homePage = [regex]::Replace($homePage, '(?m)^(\s*page_url\s*:\s*")(.*?)(")', { param($m) $m.Groups[1].Value + $SITE.site_url + $m.Groups[3].Value })
+
+$leftover = [regex]::Matches($homePage, '\{\{\w+\}\}')
+if ($leftover.Count) { throw "Home page still has unresolved tokens: $(($leftover | ForEach-Object { $_.Value } | Select-Object -Unique) -join ', ')" }
+
+[System.IO.File]::WriteAllText((Join-Path $root "index.html"), $homePage, (New-Object System.Text.UTF8Encoding $false))
+Write-Host "index.html                                     $([int]((Get-Item (Join-Path $root 'index.html')).Length/1KB)) KB   (home page, rendered)"
+
 # ---------------------------------------------------------------- build pages
 $built = @()
 
 foreach ($c in $cities) {
   $loc = "$($c.City), FL"
-  $url = $SITE.site_url.TrimEnd('/') + "/" + $c.Slug + ".html"
+  # extensionless: Netlify serves page.html at /page and 301s /page.html -> /page,
+  # so canonicals and internal links must use the extensionless form or every
+  # page reports as "canonicalised to a different URL"
+  $url = $SITE.site_url.TrimEnd("/") + "/" + $c.Slug
 
   # per-city SITE overrides, everything else inherited from index.html
   $vals = @{}
@@ -185,7 +205,7 @@ foreach ($c in $cities) {
   $aboutMarker = '  <!-- ==================== ABOUT ==================== -->'
   $page = $page.Replace($aboutMarker, $sb.ToString() + "`n" + $aboutMarker)
 
-  # 7. FAQ — city questions first, then the shared ones
+  # 7. FAQ - city questions first, then the shared ones
   $fb = New-Object System.Text.StringBuilder
   $first = $true
   foreach ($f in $c.Faqs) {
@@ -218,7 +238,7 @@ foreach ($c in $cities) {
   $page = $page.Replace("Safety Sensor Alignment &amp; Remote Control Programming", "Safety Sensor Alignment &amp; Keypad Programming")
 
   # 9. this city's own footer link should not point at itself
-  $page = $page.Replace("<a href=""$($c.Slug).html"">", "<a href=""$($c.Slug).html"" aria-current=""page"">")
+  $page = $page.Replace("<a href=""/$($c.Slug)"">", "<a href=""/$($c.Slug)"" aria-current=""page"">")
 
   $out = Join-Path $root "$($c.Slug).html"
   [System.IO.File]::WriteAllText($out, $page, (New-Object System.Text.UTF8Encoding $false))
@@ -234,13 +254,38 @@ $sm = New-Object System.Text.StringBuilder
 [void]$sm.Append("<urlset xmlns=""http://www.sitemaps.org/schemas/sitemap/0.9"">`n")
 [void]$sm.Append("  <url>`n    <loc>$base/</loc>`n    <lastmod>$today</lastmod>`n    <priority>1.0</priority>`n  </url>`n")
 foreach ($c in $built) {
-  [void]$sm.Append("  <url>`n    <loc>$base/$($c.Slug).html</loc>`n    <lastmod>$today</lastmod>`n    <priority>0.8</priority>`n  </url>`n")
+  [void]$sm.Append("  <url>`n    <loc>$base/$($c.Slug)</loc>`n    <lastmod>$today</lastmod>`n    <priority>0.8</priority>`n  </url>`n")
 }
 [void]$sm.Append("</urlset>`n")
 [System.IO.File]::WriteAllText((Join-Path $root "sitemap.xml"), $sm.ToString(), (New-Object System.Text.UTF8Encoding $false))
 
-$robots = "User-agent: *`nAllow: /`n`nSitemap: $base/sitemap.xml`n"
+$robots = "User-agent: *`nAllow: /`nDisallow: /tools/`n`nSitemap: $base/sitemap.xml`n"
 [System.IO.File]::WriteAllText((Join-Path $root "robots.txt"), $robots, (New-Object System.Text.UTF8Encoding $false))
 
+# ------------------------------------------------------------------- verify
+# Every deployed page must carry a self-referencing canonical and no leftover
+# tokens, or search engines are told to consolidate it somewhere else.
+$problems = @()
+$checks = @{ (Join-Path $root "index.html") = $base + "/" }
+foreach ($c in $built) { $checks[(Join-Path $root "$($c.Slug).html")] = "$base/$($c.Slug)" }
+
+foreach ($file in $checks.Keys) {
+  $t    = [System.IO.File]::ReadAllText($file)
+  $name = Split-Path $file -Leaf
+  $can  = [regex]::Match($t, '<link rel="canonical" href="([^"]*)"').Groups[1].Value
+  $ogu  = [regex]::Match($t, 'og:url" content="([^"]*)"').Groups[1].Value
+  if ($can -ne $checks[$file]) { $problems += "$name canonical is '$can', expected '$($checks[$file])'" }
+  if ($ogu -ne $checks[$file]) { $problems += "$name og:url is '$ogu', expected '$($checks[$file])'" }
+  if ($t -match '\{\{\w+\}\}')  { $problems += "$name still contains template tokens" }
+  if ($t -match '\.htmlassets') { $problems += "$name has a malformed asset URL" }
+  if ($t -match 'href="/[a-z0-9-]+\.html"') { $problems += "$name links to a .html URL (should be extensionless)" }
+}
+
+if ($problems.Count) {
+  $problems | ForEach-Object { Write-Host "  FAIL  $_" -ForegroundColor Red }
+  throw "$($problems.Count) canonical/link problem(s) - fix before deploying."
+}
+
 Write-Host ""
-Write-Host "Built $($built.Count) city pages + sitemap.xml + robots.txt"
+Write-Host "Built $($built.Count) city pages + index.html + sitemap.xml + robots.txt"
+Write-Host "Verified: $($checks.Count) pages, all self-canonical, no tokens, no .html links" -ForegroundColor Green

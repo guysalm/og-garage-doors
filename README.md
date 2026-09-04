@@ -6,20 +6,23 @@ landing pages.
 
 ```
 og-garage-doors/
-├─ index.html                              # the template — layout, CSS, JS, SITE defaults
+├─ index.html                              # GENERATED home page
 ├─ garage-door-repair-<city>-fl.html       # 10 generated city pages
 ├─ sitemap.xml, robots.txt                 # generated
 ├─ netlify.toml                            # publish root, no build step
-├─ tools/build-city-pages.ps1              # the generator
+├─ tools/template.html                     # the source of truth — edit this
+├─ tools/build-city-pages.ps1              # generates index.html + city pages
+├─ tools/serve.ps1                         # local preview server
 ├─ assets/img/                             # photos + logos — see assets/README.md
 ├─ SPEC.md                                 # build spec (performance + SEO)
 └─ reference/                              # source material, not deployed (gitignored)
 ```
 
-Open it locally:
+Preview locally (the site uses extensionless URLs, so `file://` will not
+resolve the city links — serve it instead):
 
 ```bash
-cmd.exe /c start "" "index.html"
+powershell -File tools/serve.ps1     # then open http://localhost:8080/
 ```
 
 ## Page structure
@@ -48,26 +51,27 @@ localized copy, service list, zip codes and FAQs:
 | Tampa | `garage-door-repair-tampa-fl.html` |
 | St. Pete & Clearwater | `garage-door-repair-st-petersburg-clearwater-fl.html` |
 
-They are **generated, not hand-edited**. Edit `index.html` (or the content file in
+All eleven pages are **generated, not hand-edited**. Edit `tools/template.html`
+(or the content file in
 `reference/`) and re-run:
 
 ```powershell
 powershell -File tools\build-city-pages.ps1
 ```
 
-The generator reads the `SITE` object out of `index.html`, overrides the per-city
+The generator reads the `SITE` object out of the template, overrides the per-city
 values, substitutes every `{{token}}` at build time — so the shipped pages contain
 final HTML rather than tokens a crawler has to execute JS to resolve — then swaps
 in the city head tags, H1 and JSON-LD, inserts the local content section, and puts
 the city's FAQs above the shared ones. It also writes `sitemap.xml` and
 `robots.txt`.
 
-**Re-run it after any change to `index.html`**, including the phone number, since
+**Re-run it after any change to `tools/template.html`**, including the phone number, since
 those values are baked into the generated pages.
 
 ## Dynamic SEO framework
 
-Every SEO-relevant string in `index.html` is a `{{token}}` — meta title, meta
+Every SEO-relevant string in the template is a `{{token}}` — meta title, meta
 description, canonical, Open Graph, JSON-LD, the `<h1>`, body copy, image `alt`
 text, `tel:` links, the WhatsApp link and the form's hidden routing fields.
 
@@ -87,10 +91,23 @@ text, `tel:` links, the WhatsApp link and the form's hidden routing fields.
 | `{{rating}}` / `{{review_count}}` | 5.0 / 127 |
 
 Review cards are **not** tokenised — they render from the `REVIEWS` array in the
-script at the bottom of `index.html`.
+script at the bottom of the template.
 
-`index.html` keeps its tokens and fills them at runtime from `SITE` for local
-preview. The generated city pages have no tokens left.
+**No deployed page contains a token.** The template keeps them and a runtime
+script fills them from `SITE`, but that is a fallback for editing the template
+directly — every page the generator writes has final HTML. This matters: crawlers
+read raw HTML on the first pass, and an unrendered
+`<link rel="canonical" href="{{page_url}}">` resolves to a different URL, which
+reports as *"canonicalised to a different URL"*.
+
+## URL shape
+
+Netlify serves `page.html` at `/page` and redirects `/page.html` → `/page`. So
+canonicals, internal links and `sitemap.xml` all use the **extensionless,
+root-relative** form (`/garage-door-repair-sarasota-fl`). Anything else produces
+a redirect hop and a canonical that disagrees with the crawled URL.
+
+The build asserts every page's canonical is self-referencing.
 
 ## Before launch
 
