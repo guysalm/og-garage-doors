@@ -38,6 +38,39 @@ function HtmlEscape([string]$s) {
   return $s -replace '&','&amp;' -replace '<','&lt;' -replace '>','&gt;'
 }
 
+# ------------------------------------------------------- title pixel measuring
+# Google truncates SERP titles on pixel width, not character count. Arial 20px
+# with GenericTypographic matches a browser canvas measurement exactly, which is
+# the same model the SEO Spider uses.
+Add-Type -AssemblyName System.Drawing
+$TITLE_LIMIT_PX = 561
+$measureFont = New-Object System.Drawing.Font("Arial", 20, [System.Drawing.GraphicsUnit]::Pixel)
+$measureBmp  = New-Object System.Drawing.Bitmap 1, 1
+$measureGfx  = [System.Drawing.Graphics]::FromImage($measureBmp)
+$measureFmt  = [System.Drawing.StringFormat]::GenericTypographic
+
+$DESC_LIMIT_PX = 985
+$descFont = New-Object System.Drawing.Font("Arial", 14, [System.Drawing.GraphicsUnit]::Pixel)
+
+function MeasurePx([string]$s, $font) {
+  $plain = $s -replace '&amp;','&' -replace '&lt;','<' -replace '&gt;','>'
+  return [math]::Round($measureGfx.MeasureString($plain, $font, [int]::MaxValue, $measureFmt).Width)
+}
+function TitlePx([string]$s) { return MeasurePx $s $measureFont }
+function DescPx([string]$s)  { return MeasurePx $s $descFont }
+
+# The supplied meta titles ran 562-621px, past the truncation point. These are
+# trimmed versions; the keyword and city stay at the front either way.
+$titleOverrides = @{
+  "garage-door-repair-englewood-fl"                = "Garage Door Repair Englewood FL | Salt-Air Specialists"
+  "garage-door-repair-fort-myers-fl"               = "Garage Door Repair Fort Myers FL | Hurricane Code Pros"
+  "garage-door-repair-north-port-fl"               = "Garage Door Repair North Port FL | Fast Smart-Home Setup"
+  "garage-door-repair-sarasota-fl"                 = "Garage Door Repair Sarasota FL | Same-Day Emergency"
+  "garage-door-repair-st-petersburg-clearwater-fl" = "Garage Door Repair St. Pete & Clearwater FL | Coastal Pros"
+  "garage-door-repair-tampa-fl"                    = "Garage Door Repair Tampa FL | Custom Doors & Repairs"
+  "garage-door-repair-venice-fl"                   = "Garage Door Repair Venice FL | Quiet & Reliable Service"
+}
+
 # ------------------------------------------------------------- parse the file
 # The "N. CITY, FL" heading sits between two rule lines, so capture the heading
 # and the block that follows it together rather than splitting on the rules.
@@ -96,7 +129,7 @@ foreach ($bm in [regex]::Matches($raw, $blockRe)) {
   $cities += [pscustomobject]@{
     Slug     = $slug
     City     = $cityName
-    Title    = Field '\[META TITLE\]:\s*(.+)'
+    Title    = $(if ($titleOverrides.ContainsKey($slug)) { $titleOverrides[$slug] } else { Field '\[META TITLE\]:\s*(.+)' })
     Desc     = Field '\[META DESCRIPTION\]:\s*(.+)'
     H1       = Field '\[H1\]:\s*(.+)'
     HeroPara = $heroPara
@@ -266,6 +299,7 @@ $robots = "User-agent: *`nAllow: /`nDisallow: /tools/`n`nSitemap: $base/sitemap.
 # Every deployed page must carry a self-referencing canonical and no leftover
 # tokens, or search engines are told to consolidate it somewhere else.
 $problems = @()
+$titleWidths = @()
 $checks = @{ (Join-Path $root "index.html") = $base + "/" }
 foreach ($c in $built) { $checks[(Join-Path $root "$($c.Slug).html")] = "$base/$($c.Slug)" }
 
@@ -277,6 +311,20 @@ foreach ($file in $checks.Keys) {
   if ($can -ne $checks[$file]) { $problems += "$name canonical is '$can', expected '$($checks[$file])'" }
   if ($ogu -ne $checks[$file]) { $problems += "$name og:url is '$ogu', expected '$($checks[$file])'" }
   if ($t -match '\{\{\w+\}\}')  { $problems += "$name still contains template tokens" }
+
+  $title = [regex]::Match($t, '(?s)<title>(.*?)</title>').Groups[1].Value
+  $px = TitlePx $title
+  if ($px -gt $TITLE_LIMIT_PX) {
+    $problems += "$name title is ${px}px, over the ${TITLE_LIMIT_PX}px SERP limit: '$title'"
+  } else {
+    $titleWidths += "  {0,4}px  {1}" -f $px, $title
+  }
+
+  $desc = [regex]::Match($t, '<meta name="description" content="([^"]*)"').Groups[1].Value
+  $dpx = DescPx $desc
+  if ($dpx -gt $DESC_LIMIT_PX) {
+    $problems += "$name description is ${dpx}px, over the ${DESC_LIMIT_PX}px SERP limit"
+  }
   if ($t -match '\.htmlassets') { $problems += "$name has a malformed asset URL" }
   if ($t -match 'href="/[a-z0-9-]+\.html"') { $problems += "$name links to a .html URL (should be extensionless)" }
 }
@@ -289,3 +337,5 @@ if ($problems.Count) {
 Write-Host ""
 Write-Host "Built $($built.Count) city pages + index.html + sitemap.xml + robots.txt"
 Write-Host "Verified: $($checks.Count) pages, all self-canonical, no tokens, no .html links" -ForegroundColor Green
+Write-Host "Title widths (Arial 20px, limit ${TITLE_LIMIT_PX}px):"
+$titleWidths | Sort-Object | ForEach-Object { Write-Host $_ }
