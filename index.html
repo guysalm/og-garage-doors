@@ -14,7 +14,8 @@
        {{email}}           {{site_url}}       {{street}}
        {{city}}            {{state}}          {{zip}}
        {{rating}}          {{review_count}}   {{service_area}}
-       {{review_1_name}} {{review_1_text}} ... {{review_3_text}}
+     Review cards are not tokenised — they render from the REVIEWS
+     array in the script at the bottom of this file.
      ============================================================ -->
 
 <title>{{service_name}} {{location}} | Same-Day Service — Call {{phone_display}}</title>
@@ -242,16 +243,34 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
 .trust__list img{max-height:100%;width:auto;max-width:200px;object-fit:contain}
 
 /* ========== Reviews ========== */
-.reviews{background:var(--ink);padding:44px 0 56px}
-.reviews .grid{grid-template-columns:repeat(3,minmax(0,1fr))}
-.review-card{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow-md);overflow:hidden}
+.reviews{background:var(--ink);padding:44px 0 48px}
+.reviews .grid{
+  grid-template-columns:repeat(3,minmax(0,1fr));align-items:stretch;
+  transition:opacity .22s ease;
+}
+.reviews .grid.is-swapping{opacity:0}
+.reviews__dots{display:flex;justify-content:center;gap:8px;margin-top:26px}
+.reviews__dots button{
+  width:9px;height:9px;padding:0;border:0;border-radius:50%;
+  background:#4a525c;cursor:pointer;transition:background .2s,width .2s
+}
+.reviews__dots button[aria-current="true"]{background:var(--crimson);width:22px;border-radius:5px}
+.review-card{
+  display:flex;flex-direction:column;
+  background:#fff;border-radius:var(--radius);box-shadow:var(--shadow-md);overflow:hidden
+}
 .review-card__top{display:flex;align-items:flex-start;gap:11px;padding:14px 16px 12px;border-bottom:1px solid var(--line)}
 .review-card__avatar{width:32px;height:32px;border-radius:50%;flex:0 0 32px;background:var(--bg-alt)}
 .review-card__who{flex:1;min-width:0}
 .review-card__name{font-weight:700;font-size:.92rem;color:var(--ink);margin:0}
 .review-card__meta{font-size:.74rem;color:var(--muted);margin:0}
 .review-card__g{width:20px;height:20px;flex:0 0 20px}
-.review-card__body{padding:14px 16px 20px;font-size:.9rem;color:#3f464f;margin:0}
+/* clamp so a long review cannot make the row jump on every rotation */
+.review-card__body{
+  padding:14px 16px 20px;font-size:.9rem;color:#3f464f;margin:0;flex:1;
+  display:-webkit-box;-webkit-line-clamp:6;-webkit-box-orient:vertical;
+  overflow:hidden;min-height:7.4em
+}
 
 /* ========== Guarantee badges ========== */
 .badges__list{display:flex;flex-wrap:wrap;justify-content:center;gap:34px}
@@ -592,52 +611,15 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
     </div>
   </section>
 
-  <!-- ==================== GOOGLE REVIEWS ==================== -->
+  <!-- ==================== GOOGLE REVIEWS ====================
+       Cards are rendered from the REVIEWS array at the bottom of this
+       file and rotate three at a time. Edit that array, not this markup.
+       ========================================================= -->
   <section class="reviews" id="reviews" aria-labelledby="reviews-title">
     <div class="wrap">
       <h2 class="sr-only" id="reviews-title">What {{location}} customers say about our garage door service</h2>
-      <div class="grid">
-
-        <article class="review-card">
-          <div class="review-card__top">
-            <img class="review-card__avatar" src="assets/img/review-avatar-1.svg" width="32" height="32" loading="lazy" alt="Photo of {{review_1_name}}, garage door repair customer in {{location}}">
-            <div class="review-card__who">
-              <p class="review-card__name">{{review_1_name}}</p>
-              <p class="review-card__meta"><span class="stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span></p>
-              <p class="review-card__meta">{{review_1_date}} &middot; {{review_1_count}} reviews</p>
-            </div>
-            <img class="review-card__g" src="assets/img/icon-google-g.svg" width="20" height="20" loading="lazy" alt="Google review">
-          </div>
-          <p class="review-card__body">{{review_1_text}}</p>
-        </article>
-
-        <article class="review-card">
-          <div class="review-card__top">
-            <img class="review-card__avatar" src="assets/img/review-avatar-2.svg" width="32" height="32" loading="lazy" alt="Photo of {{review_2_name}}, garage door opener repair customer in {{location}}">
-            <div class="review-card__who">
-              <p class="review-card__name">{{review_2_name}}</p>
-              <p class="review-card__meta"><span class="stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span></p>
-              <p class="review-card__meta">{{review_2_date}} &middot; {{review_2_count}} reviews</p>
-            </div>
-            <img class="review-card__g" src="assets/img/icon-google-g.svg" width="20" height="20" loading="lazy" alt="Google review">
-          </div>
-          <p class="review-card__body">{{review_2_text}}</p>
-        </article>
-
-        <article class="review-card">
-          <div class="review-card__top">
-            <img class="review-card__avatar" src="assets/img/review-avatar-3.svg" width="32" height="32" loading="lazy" alt="Photo of {{review_3_name}}, garage door spring replacement customer in {{location}}">
-            <div class="review-card__who">
-              <p class="review-card__name">{{review_3_name}}</p>
-              <p class="review-card__meta"><span class="stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span></p>
-              <p class="review-card__meta">{{review_3_date}} &middot; {{review_3_count}} reviews</p>
-            </div>
-            <img class="review-card__g" src="assets/img/icon-google-g.svg" width="20" height="20" loading="lazy" alt="Google review">
-          </div>
-          <p class="review-card__body">{{review_3_text}}</p>
-        </article>
-
-      </div>
+      <div class="grid" id="reviews-grid"></div>
+      <div class="reviews__dots" id="reviews-dots" role="group" aria-label="Review pages"></div>
     </div>
   </section>
 
@@ -1232,19 +1214,42 @@ var SITE = {
   rating         : "5.0",
   review_count   : "127",
 
-  review_1_name : "Sample Customer A",
-  review_1_date : "2 months ago",
-  review_1_count: "11",
-  review_1_text : "[Placeholder review — replace with a real Google review before launch.]",
-  review_2_name : "Sample Customer B",
-  review_2_date : "4 months ago",
-  review_2_count: "4",
-  review_2_text : "[Placeholder review — replace with a real Google review before launch.]",
-  review_3_name : "Sample Customer C",
-  review_3_date : "a month ago",
-  review_3_count: "7",
-  review_3_text : "[Placeholder review — replace with a real Google review before launch.]"
+  rating         : "5.0",
+  review_count   : "127"
 };
+
+/* =========================================================================
+   1b. REVIEWS
+   Ten entries, shown three at a time, rotating on REVIEW_ROTATE_MS.
+   Replace every text/name/date below with the real Google reviews —
+   the aggregateRating in the JSON-LD above must match real, verifiable
+   reviews. `avatar` is a file in assets/img/, `count` is that reviewer's
+   total review count as shown on Google.
+   ========================================================================= */
+var REVIEW_ROTATE_MS = 1500;
+
+var REVIEWS = [
+  { name:"Reviewer 1",  date:"2 months ago",  count:"11", avatar:"review-avatar-1.svg",
+    text:"[Review 1 — paste the real Google review text here.]" },
+  { name:"Reviewer 2",  date:"4 months ago",  count:"4",  avatar:"review-avatar-2.svg",
+    text:"[Review 2 — paste the real Google review text here.]" },
+  { name:"Reviewer 3",  date:"a month ago",   count:"7",  avatar:"review-avatar-3.svg",
+    text:"[Review 3 — paste the real Google review text here.]" },
+  { name:"Reviewer 4",  date:"3 weeks ago",   count:"2",  avatar:"review-avatar-1.svg",
+    text:"[Review 4 — paste the real Google review text here.]" },
+  { name:"Reviewer 5",  date:"5 months ago",  count:"18", avatar:"review-avatar-2.svg",
+    text:"[Review 5 — paste the real Google review text here.]" },
+  { name:"Reviewer 6",  date:"2 weeks ago",   count:"3",  avatar:"review-avatar-3.svg",
+    text:"[Review 6 — paste the real Google review text here.]" },
+  { name:"Reviewer 7",  date:"6 months ago",  count:"9",  avatar:"review-avatar-1.svg",
+    text:"[Review 7 — paste the real Google review text here.]" },
+  { name:"Reviewer 8",  date:"a week ago",    count:"5",  avatar:"review-avatar-2.svg",
+    text:"[Review 8 — paste the real Google review text here.]" },
+  { name:"Reviewer 9",  date:"7 months ago",  count:"22", avatar:"review-avatar-3.svg",
+    text:"[Review 9 — paste the real Google review text here.]" },
+  { name:"Reviewer 10", date:"a month ago",   count:"6",  avatar:"review-avatar-1.svg",
+    text:"[Review 10 — paste the real Google review text here.]" }
+];
 
 (function fillPlaceholders(){
   var re = /\{\{(\w+)\}\}/g;
@@ -1284,6 +1289,106 @@ var SITE = {
   });
   var ld = document.querySelector('script[type="application/ld+json"]');
   if (ld && ld.textContent.indexOf("{{") > -1) ld.textContent = sub(ld.textContent);
+})();
+
+/* =========================================================================
+   1c. REVIEW ROTATOR — three cards at a time
+   ========================================================================= */
+(function(){
+  var grid = document.getElementById("reviews-grid");
+  var dots = document.getElementById("reviews-dots");
+  if (!grid || !REVIEWS.length) return;
+
+  var PER_VIEW = 3;
+  var pages = Math.ceil(REVIEWS.length / PER_VIEW);
+  var page = 0;
+  var timer = null;
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function esc(s){
+    return String(s).replace(/[&<>"]/g, function(c){
+      return { "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;" }[c];
+    });
+  }
+
+  function render(){
+    var html = "";
+    for (var i = 0; i < PER_VIEW; i++) {
+      /* wrap around so the last page is never short */
+      var r = REVIEWS[(page * PER_VIEW + i) % REVIEWS.length];
+      var where = SITE.location ? " in " + SITE.location : "";
+      html +=
+        '<article class="review-card">' +
+          '<div class="review-card__top">' +
+            '<img class="review-card__avatar" src="assets/img/' + esc(r.avatar) + '" ' +
+                 'width="32" height="32" loading="lazy" ' +
+                 'alt="Photo of ' + esc(r.name) + ', garage door repair customer' + esc(where) + '">' +
+            '<div class="review-card__who">' +
+              '<p class="review-card__name">' + esc(r.name) + '</p>' +
+              '<p class="review-card__meta"><span class="stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span>' +
+                '<span class="sr-only">5 out of 5 stars</span></p>' +
+              '<p class="review-card__meta">' + esc(r.date) + ' &middot; ' + esc(r.count) + ' reviews</p>' +
+            '</div>' +
+            '<img class="review-card__g" src="assets/img/icon-google-g.svg" width="20" height="20" loading="lazy" alt="Google review">' +
+          '</div>' +
+          '<p class="review-card__body">' + esc(r.text) + '</p>' +
+        '</article>';
+    }
+    grid.innerHTML = html;
+
+    Array.prototype.forEach.call(dots.children, function(b, n){
+      if (n === page) { b.setAttribute("aria-current", "true"); } else { b.removeAttribute("aria-current"); }
+    });
+  }
+
+  function goTo(n){
+    page = (n + pages) % pages;
+    if (reduce) { render(); return; }
+    grid.classList.add("is-swapping");
+    window.setTimeout(function(){
+      render();
+      grid.classList.remove("is-swapping");
+    }, 220);
+  }
+
+  function start(){
+    if (reduce || timer) return;
+    timer = window.setInterval(function(){ goTo(page + 1); }, REVIEW_ROTATE_MS);
+  }
+  function stop(){
+    if (timer) { window.clearInterval(timer); timer = null; }
+  }
+
+  /* dots double as manual paging */
+  for (var p = 0; p < pages; p++) {
+    var b = document.createElement("button");
+    b.type = "button";
+    /* the last page wraps, so name the actual three it shows */
+    var nums = [];
+    for (var k = 0; k < PER_VIEW; k++) nums.push(((p * PER_VIEW + k) % REVIEWS.length) + 1);
+    b.setAttribute("aria-label", "Show reviews " + nums.join(", "));
+    b.dataset.page = String(p);
+    dots.appendChild(b);
+  }
+  dots.addEventListener("click", function(e){
+    var b = e.target.closest("button");
+    if (!b) return;
+    stop();                       /* a deliberate click wins over the timer */
+    goTo(Number(b.dataset.page));
+  });
+
+  /* don't yank a review away while someone is reading or tabbing through it */
+  var section = document.getElementById("reviews");
+  section.addEventListener("mouseenter", stop);
+  section.addEventListener("mouseleave", start);
+  section.addEventListener("focusin", stop);
+  section.addEventListener("focusout", start);
+  document.addEventListener("visibilitychange", function(){
+    if (document.hidden) { stop(); } else { start(); }
+  });
+
+  render();
+  start();
 })();
 
 /* =========================================================================

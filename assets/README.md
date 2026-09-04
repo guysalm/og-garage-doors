@@ -83,6 +83,6 @@ a `<job> before.jpg` / `<job> after.jpg` pair and add one more `.ba-card`.
 - **Confirm you are licensed to display every third-party logo on the page** — and
   that the Google/Facebook/Yelp/HomeAdvisor/Thumbtack badges reflect ratings the
   business actually holds — before launch.
-- Reviewer names and review text are placeholders in `SITE` (in `index.html`).
+- Reviewer names and review text are placeholders in the `REVIEWS` array (in `index.html`).
   Replace them with real Google reviews — the page also carries an
   `aggregateRating` in its JSON-LD, which must match real, verifiable reviews.
