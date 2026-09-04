@@ -24,7 +24,7 @@ Centre-cropped to the exact display aspect ratio, saved as JPEG q82.
 | `service-cable-drum-repair.jpg` | `Cable and Drum.jpg` | Cable drum with the lift cable wound on the shaft |
 | `service-sensor-repair.jpg` | `Sensoe.jpg` | Safety sensor on the track, indicator lit |
 | `service-new-door-installation.jpg` | `Garage door installation.png` | Two techs fitting a windowed top section |
-| `service-tune-up-maintenance.jpg` | `Garage door tuneup.png` | Tech working under the horizontal track |
+| `service-tune-up-maintenance.jpg` | `Garage door tuneup.png` | Tech servicing door hardware with a hand tool |
 | `expertise-residential-opener.jpg` | `Broken Spring 2.jpg` | Torsion spring + opener rail above the door |
 | `expertise-garage-door-interior.jpg` | `chain hoist.jpg` | Chain hoist on a commercial roll-up door |
 | `ba-panel-replacement-before/-after.jpg` | `1 Before.jpg` / `1 After.jpg` | Damaged top panel, then replaced |
