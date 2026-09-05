@@ -5,14 +5,6 @@
   publish = "."
   command = ""
 
-# Long-cache the fingerprint-free assets folder but keep HTML fresh, so a
-# redeploy is picked up immediately.
-[[headers]]
-  for = "/assets/*"
-  [headers.values]
-    Cache-Control = "public, max-age=604800"
+# Security and cache headers are generated into _headers by the build, so the
+# CSP hashes stay in sync with the inline script and style blocks.
 
-[[headers]]
-  for = "/index.html"
-  [headers.values]
-    Cache-Control = "public, max-age=0, must-revalidate"

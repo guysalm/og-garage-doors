@@ -23,6 +23,22 @@ $mime = @{
   ".webp"="image/webp"; ".ico"="image/x-icon"; ".woff2"="font/woff2"
 }
 
+# Apply the generated _headers (the "/*" block) so local preview enforces the
+# same Content-Security-Policy the deployed site will, and a policy that would
+# break the page breaks it here first.
+$extraHeaders = @{}
+$headersFile = Join-Path $root "_headers"
+if (Test-Path $headersFile) {
+  $inGlobal = $false
+  foreach ($line in Get-Content $headersFile) {
+    if ($line -match '^\S') { $inGlobal = ($line.Trim() -eq '/*'); continue }
+    if ($inGlobal -and $line -match '^\s+([A-Za-z-]+):\s*(.+)$') {
+      $extraHeaders[$Matches[1]] = $Matches[2]
+    }
+  }
+  Write-Host "Applying $($extraHeaders.Count) headers from _headers"
+}
+
 $listener = New-Object System.Net.HttpListener
 $listener.Prefixes.Add("http://localhost:$Port/")
 try { $listener.Start() }
@@ -50,6 +66,12 @@ try {
     $full = [System.IO.Path]::GetFullPath($path)
     if (-not $full.StartsWith([System.IO.Path]::GetFullPath($root))) {
       $ctx.Response.StatusCode = 403; $ctx.Response.Close(); continue
+    }
+
+    foreach ($h in $extraHeaders.Keys) {
+      # HSTS over plain http is ignored by browsers anyway; skip it locally
+      if ($h -eq "Strict-Transport-Security") { continue }
+      try { $ctx.Response.Headers[$h] = $extraHeaders[$h] } catch {}
     }
 
     if (Test-Path $full -PathType Leaf) {

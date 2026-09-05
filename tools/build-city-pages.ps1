@@ -301,6 +301,71 @@ foreach ($c in $built) {
 [void]$sm.Append("</urlset>`n")
 [System.IO.File]::WriteAllText((Join-Path $root "sitemap.xml"), $sm.ToString(), (New-Object System.Text.UTF8Encoding $false))
 
+# ------------------------------------------------------------------ _headers
+# Netlify reads _headers from the publish root. The CSP is hash-based: the
+# inline <style> and <script> blocks are hashed here so no 'unsafe-inline' is
+# needed. Every page is generated from one template, so the hashes are
+# identical across all 11 and are recomputed on every build.
+function Sha256B64([string]$s) {
+  $sha = [System.Security.Cryptography.SHA256]::Create()
+  try   { return [Convert]::ToBase64String($sha.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($s))) }
+  finally { $sha.Dispose() }
+}
+
+# Hash every generated page, not just the home page: each city page embeds its
+# own SITE values, so its inline script hashes differently. Missing one blocks
+# all JS on that page.
+$styleHashes  = New-Object System.Collections.Generic.HashSet[string]
+$scriptHashes = New-Object System.Collections.Generic.HashSet[string]
+
+$generated = @(Join-Path $root "index.html") + ($built | ForEach-Object { Join-Path $root "$($_.Slug).html" })
+foreach ($file in $generated) {
+  $html = [System.IO.File]::ReadAllText($file)
+  foreach ($m in [regex]::Matches($html, '(?s)<style>(.*?)</style>')) {
+    [void]$styleHashes.Add("'sha256-$(Sha256B64 $m.Groups[1].Value)'")
+  }
+  # only executable scripts - application/ld+json is data and is never run
+  foreach ($m in [regex]::Matches($html, '(?s)<script(?![^>]*type=)[^>]*>(.*?)</script>')) {
+    [void]$scriptHashes.Add("'sha256-$(Sha256B64 $m.Groups[1].Value)'")
+  }
+}
+if (-not $scriptHashes.Count) { throw "No inline scripts hashed - the CSP would block the page." }
+if (-not $styleHashes.Count)  { throw "No inline styles hashed - the CSP would block all styling." }
+
+$inlineHashes = @{ style = @($styleHashes); script = @($scriptHashes) }
+
+$csp = @(
+  "default-src 'self'"
+  "base-uri 'self'"
+  "object-src 'none'"
+  "frame-ancestors 'none'"
+  "form-action 'self'"
+  "connect-src 'self'"
+  "img-src 'self' data:"                                    # data: covers the CSS check-mark mask
+  "script-src 'self' $($inlineHashes.script -join ' ')"
+  "style-src 'self' $($inlineHashes.style -join ' ') https://fonts.googleapis.com"
+  "font-src 'self' https://fonts.gstatic.com"
+  "upgrade-insecure-requests"
+) -join '; '
+
+$headers = @"
+/*
+  Content-Security-Policy: $csp
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), camera=(), microphone=(), payment=(), interest-cohort=()
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  X-Frame-Options: DENY
+
+/assets/*
+  Cache-Control: public, max-age=604800
+
+/index.html
+  Cache-Control: public, max-age=0, must-revalidate
+"@
+[System.IO.File]::WriteAllText((Join-Path $root "_headers"), $headers, (New-Object System.Text.UTF8Encoding $false))
+Write-Host "_headers written (CSP with $($inlineHashes.script.Count) script + $($inlineHashes.style.Count) style hash)"
+
 $robots = "User-agent: *`nAllow: /`nDisallow: /tools/`n`nSitemap: $base/sitemap.xml`n"
 [System.IO.File]::WriteAllText((Join-Path $root "robots.txt"), $robots, (New-Object System.Text.UTF8Encoding $false))
 
