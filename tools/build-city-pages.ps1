@@ -34,6 +34,11 @@ foreach ($m in [regex]::Matches($siteBlock, '(?m)^\s*([a-z_]+)\s*:\s*"(.*?)"\s*,
 }
 Write-Host "SITE defaults read from tools/template.html ($($SITE.Count) keys)"
 
+# The share dialog's links ship with a real share endpoint in href, not "#".
+# A crawler reads raw HTML: href="#" resolves to the page itself, so those
+# rel="nofollow" anchors counted as internal nofollow links to our own URLs.
+$SITE["site_url_enc"] = [uri]::EscapeDataString($SITE.site_url)
+
 function HtmlEscape([string]$s) {
   return $s -replace '&','&amp;' -replace '<','&lt;' -replace '>','&gt;'
 }
@@ -401,6 +406,18 @@ foreach ($file in $checks.Keys) {
   }
   if ($t -match '\.htmlassets') { $problems += "$name has a malformed asset URL" }
   if ($t -match 'href="/[a-z0-9-]+\.html"') { $problems += "$name links to a .html URL (should be extensionless)" }
+
+  # rel="nofollow" belongs on outbound links only. On an internal link it tells
+  # search engines not to follow a URL of ours - and href="#" is internal, it
+  # resolves to the page itself, which is what put the share links in Screaming
+  # Frog's "Internal Nofollow Outlinks" report.
+  foreach ($a in [regex]::Matches($t, '<a\s[^>]*>')) {
+    if ($a.Value -notmatch 'rel="[^"]*nofollow') { continue }
+    $href = [regex]::Match($a.Value, 'href="([^"]*)"').Groups[1].Value
+    if ($href -match '^(mailto:|tel:)') { continue }
+    $isExternal = ($href -match '^(https?:)?//') -and ($href -notlike "$base/*")
+    if (-not $isExternal) { $problems += "$name has an internal nofollow link: href=""$href""" }
+  }
 }
 
 # Screaming Frog flags served images over 100KB; keep every one under it.
