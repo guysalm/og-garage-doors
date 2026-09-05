@@ -425,6 +425,17 @@ foreach ($file in $checks.Keys) {
   # ships as a broken internal link on every page. Fill mail links in from JS,
   # or turn the feature off in Cloudflare first.
   if ($t -match 'href="mailto:') { $problems += "$name has a mailto: link - Cloudflare rewrites it to a 404 /cdn-cgi/l/email-protection URL" }
+
+  # Screaming Frog flags any alt over 100 characters. Long alt text is nearly
+  # always the location or the business name appended to a description that
+  # already reads fine without it, which is what "keyword stuffing" looks like.
+  $ALT_LIMIT = 100
+  foreach ($a in [regex]::Matches($t, 'alt="([^"]*)"')) {
+    $alt = $a.Groups[1].Value
+    if ($alt.Length -gt $ALT_LIMIT) {
+      $problems += "$name has a $($alt.Length)-char alt (limit $ALT_LIMIT): '$alt'"
+    }
+  }
 }
 
 # Screaming Frog flags served images over 100KB; keep every one under it.
