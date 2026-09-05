@@ -275,6 +275,14 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
 }
 .review-card__head{display:flex;align-items:flex-start;gap:11px;padding:16px 16px 0}
 .review-card__avatar{width:40px;height:40px;border-radius:50%;flex:0 0 40px;background:var(--bg-alt)}
+/* No photo: the first letter on one of Google's own avatar colours, in Roboto
+   Medium - the same treatment Google gives an account with no picture. The
+   colour classes come after .review-card__avatar so they win its background. */
+.review-card__avatar--letter{display:flex;align-items:center;justify-content:center;color:#fff;font-weight:500;font-size:1.15rem;line-height:1;text-transform:uppercase;-webkit-user-select:none;user-select:none}
+.avatar-c0{background:#DB4437}.avatar-c1{background:#E91E63}.avatar-c2{background:#9C27B0}
+.avatar-c3{background:#673AB7}.avatar-c4{background:#3F51B5}.avatar-c5{background:#4285F4}
+.avatar-c6{background:#0097A7}.avatar-c7{background:#0F9D58}.avatar-c8{background:#EF6C00}
+.avatar-c9{background:#607D8B}
 .review-card__who{flex:1;min-width:0}
 .review-card__name{font-weight:500;font-size:.95rem;color:#202124;margin:0 0 1px}
 .review-card__meta{font-size:.78rem;color:#70757a;margin:0;line-height:1.4}
@@ -1450,34 +1458,34 @@ var REVIEW_ROTATE_MS = 2000;
 /* guide / reviews / photos / date are placeholder profile metadata — replace
    with the real figures from each reviewer's Google profile before launch. */
 var REVIEWS = [
-  { name:"Michael Reynolds", avatar:"review-avatar-1.svg",
+  { name:"Michael Reynolds", avatar:"review-avatar-michael.jpg",
     guide:true,  reviews:14, photos:8,  date:"2 weeks ago",
     text:"Extremely fast service! My garage door spring snapped unexpectedly on a Sunday morning, and they arrived within 45 minutes to fix it. Very professional—they're a bit pricey, but absolutely worth every penny. Great communication throughout!" },
-  { name:"Sarah Livingston", avatar:"review-avatar-2.svg",
+  { name:"Sarah Livingston", avatar:"review-avatar-sarah.jpg",
     guide:false, reviews:3,  photos:0,  date:"a month ago",
     text:"I ordered white short panel doors from them, and because they keep them in stock, they were able to get everything installed just four days later. The team was super punctual, left the work area spotless, and the new door operates so quietly. Highly recommend!" },
-  { name:"David Kensington", avatar:"review-avatar-3.svg",
+  { name:"David Kensington", avatar:"review-avatar-david.jpg",
     guide:false, reviews:7,  photos:2,  date:"2 months ago",
     text:"Top-notch repair work. Another company told me I needed an entirely new opener system, but these guys came out, diagnosed a minor sensor issue, and fixed it for a fraction of the cost." },
-  { name:"Jessica Mercer", avatar:"review-avatar-1.svg",
+  { name:"Jessica Mercer", avatar:"",
     guide:true,  reviews:22, photos:31, date:"2 months ago",
     text:"Fantastic customer service from start to finish. The technician explained every step of the maintenance process and tuned up our heavy wooden doors perfectly." },
-  { name:"Robert Patterson", avatar:"review-avatar-2.svg",
+  { name:"Robert Patterson", avatar:"review-avatar-robert.jpg",
     guide:false, reviews:5,  photos:0,  date:"3 months ago",
     text:"Had an emergency late at night when the door got stuck halfway down. They responded immediately, secured the door, and finished the full repair the next morning. Real professional work, and they charged accordingly for the quick response. True 24/7 reliability!" },
-  { name:"Amanda Bradley", avatar:"review-avatar-3.svg",
+  { name:"Amanda Bradley", avatar:"",
     guide:false, reviews:2,  photos:0,  date:"3 months ago",
     text:"Super friendly staff and very fair pricing. They replaced our worn-out cables and rollers in under an hour. The door feels brand new again." },
-  { name:"Daniel Sullivan", avatar:"review-avatar-1.svg",
+  { name:"Daniel Sullivan", avatar:"",
     guide:true,  reviews:41, photos:12, date:"4 months ago",
     text:"Great experience replacing our old keypad and adding smartphone controls to our garage setup. The technician walked me through the app setup step-by-step." },
-  { name:"Emily Vance", avatar:"review-avatar-2.svg",
+  { name:"Emily Vance", avatar:"",
     guide:false, reviews:6,  photos:1,  date:"5 months ago",
     text:"Prompt, polite, and very knowledgeable. They gave me a straightforward quote over the phone with no hidden fees or surprise charges afterwards." },
-  { name:"James Harrington", avatar:"review-avatar-3.svg",
+  { name:"James Harrington", avatar:"review-avatar-james.jpg",
     guide:false, reviews:9,  photos:4,  date:"6 months ago",
     text:"Professional craftsmanship on our custom garage door build. It completely elevated our home's curb appeal. Couldn't be happier with the result!" },
-  { name:"Lisa Westbrook", avatar:"review-avatar-1.svg",
+  { name:"Lisa Westbrook", avatar:"review-avatar-lisa.jpg",
     guide:false, reviews:4,  photos:0,  date:"7 months ago",
     text:"Outstanding local service! Called them for routine maintenance and panel alignment. They arrived right on time and provided exceptional work." }
 ];
@@ -1560,13 +1568,30 @@ var REVIEWS = [
     return bits.join(" &middot; ");
   }
 
+  /* The colour comes from the letter itself, so the same initial always gets
+     the same one and neighbouring letters never land on the same colour - a
+     name-sum hash put three of these four on the same green. */
+  function letterColor(name){
+    return name.toUpperCase().charCodeAt(0) % 10;
+  }
+
+  function avatarHTML(r){
+    if (r.avatar) {
+      return '<img class="review-card__avatar" src="assets/img/' + esc(r.avatar) + '" ' +
+             'width="40" height="40" loading="lazy" ' +
+             'alt="Photo of ' + esc(r.name) + ', garage door repair customer">';
+    }
+    /* no photo: the first letter, the way Google does it. Decorative - the
+       name is right beside it - so it stays out of the accessibility tree. */
+    return '<span class="review-card__avatar review-card__avatar--letter avatar-c' + letterColor(r.name) + '" ' +
+           'aria-hidden="true">' + esc(r.name.charAt(0)) + '</span>';
+  }
+
   function cardHTML(r, ri){
     var meta = metaLine(r);
     return '<article class="review-card" data-review="' + ri + '">' +
         '<div class="review-card__head">' +
-          '<img class="review-card__avatar" src="assets/img/' + esc(r.avatar) + '" ' +
-               'width="40" height="40" loading="lazy" ' +
-               'alt="Photo of ' + esc(r.name) + ', garage door repair customer">' +
+          avatarHTML(r) +
           '<div class="review-card__who">' +
             '<p class="review-card__name">' + esc(r.name) + '</p>' +
             (meta ? '<p class="review-card__meta">' + meta + '</p>' : "") +

@@ -1,5 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Customer photo placeholder">
-  <circle cx="32" cy="32" r="32" fill="#8A939E"/>
-  <circle cx="32" cy="25" r="11" fill="#fff" opacity=".9"/>
-  <path d="M32 39c-10 0-18 6.5-18 14.5V64h36V53.5C50 45.5 42 39 32 39z" fill="#fff" opacity=".9"/>
-</svg>
