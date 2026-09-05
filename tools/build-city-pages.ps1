@@ -92,6 +92,24 @@ $h1Overrides = @{
   "garage-door-repair-st-petersburg-clearwater-fl" = "Coastal Garage Door & Impact Door Repair in St. Pete & Clearwater, FL"
 }
 
+# The hero H2 sits directly under the H1, so repeating the H1 with a question
+# mark wastes it. Each one leads with what that page's own copy says is
+# different about the market - salt air, wind code, HOA rules, quiet motors -
+# and names the place, which is what keeps all eleven distinct.
+$heroH2Overrides = @{
+  "garage-door-repair-brandon-fl"                  = "60-Minute Response Across Brandon, Parts Already on the Truck"
+  "garage-door-repair-englewood-fl"                = "Rust-Resistant Hardware Built for Englewood&rsquo;s Salt Air"
+  "garage-door-repair-fort-myers-fl"               = "Wind-Code Doors for Fort Myers and Lee County Homes"
+  "garage-door-repair-north-port-fl"               = "Smartphone Openers and Same-Day Fixes in North Port"
+  "garage-door-repair-port-charlotte-fl"           = "Straight Prices and Free On-Site Estimates in Port Charlotte"
+  "garage-door-repair-ruskin-fl"                   = "HOA-Approved Doors Across Ruskin and SouthShore"
+  "garage-door-repair-sarasota-fl"                 = "Broken Springs to Custom Doors, All Over Sarasota"
+  "garage-door-repair-st-petersburg-clearwater-fl" = "Salt-Proof Hardware for St. Pete and Clearwater Beaches"
+  "garage-door-repair-tampa-fl"                    = "Carriage House to Modern Glass, Built for Tampa Homes"
+  "garage-door-repair-venice-fl"                   = "Ultra-Quiet Openers and Senior Discounts in Venice"
+}
+$HOME_HERO_H2 = "Serving Southwest Florida and Tampa Bay, Day and Night"
+
 # ------------------------------------------------------------- parse the file
 # The "N. CITY, FL" heading sits between two rule lines, so capture the heading
 # and the block that follows it together rather than splitting on the rules.
@@ -174,6 +192,7 @@ $homePage = $tpl
 $homeVals = @{}
 foreach ($k in $SITE.Keys) { $homeVals[$k] = $SITE[$k] }
 $homeVals["page_url"] = $SITE.site_url          # the home page is the site root
+$homeVals["hero_h2"] = $HOME_HERO_H2
 foreach ($k in $homeVals.Keys) { $homePage = $homePage.Replace("{{$k}}", $homeVals[$k]) }
 $homePage = [regex]::Replace($homePage, '(?m)^(\s*page_url\s*:\s*")(.*?)(")', { param($m) $m.Groups[1].Value + $SITE.site_url + $m.Groups[3].Value })
 
@@ -218,6 +237,8 @@ foreach ($c in $cities) {
   # link, og:image and the share dialog all end up pointing at the city page
   $vals["page_url"]     = $url
   $vals["service_area"] = "$($c.City) and the surrounding area"
+  # falls back to the old wording if a city is added without an angle written
+  $vals["hero_h2"]      = $(if ($heroH2Overrides.ContainsKey($c.Slug)) { $heroH2Overrides[$c.Slug] } else { "Need $($SITE.service_name) in $loc?" })
 
   $page = $tpl
 

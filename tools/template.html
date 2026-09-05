@@ -15,6 +15,7 @@
        {{site_url}}   site root, same on every page (logo, og:image, sharing)
        {{page_url}}   this page's own URL (canonical, og:url, form field)
        {{site_url_enc}}   site_url percent-encoded, for the share hrefs
+       {{hero_h2}}   the hero H2, one angle per city (see the build script)
        {{zip}}   (form placeholder only - no postal address is published)
        {{rating}}          {{review_count}}   {{service_area}}
      Review cards are not tokenised — they render from the REVIEWS
@@ -706,7 +707,7 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
         <li>No Extra Charge On Weekend &amp; Holiday</li>
       </ul>
 
-      <h2>Need {{service_name}} in {{location}}?</h2>
+      <h2>{{hero_h2}}</h2>
       <p class="hero__ask">Garage Door Stuck or Not Responding?</p>
 
       <p class="hero__lead">Don&rsquo;t Wait &ndash; <strong>Call Today For Fast, Same-Day Service &amp; a Free Estimate!</strong> OPEN 24/7</p>
