@@ -298,7 +298,42 @@ foreach ($c in $cities) {
   $page = [regex]::Replace($page, '(?s)<h3 id="footer-areas">.*?</ul>', { param($m) $areasBlock })
 
 
-  # 6. local content section, inserted before About
+
+  # 6. schema: a city page describes the service in that city and points at the
+  # single business entity, which lives on the home page. Eleven copies of the
+  # same LocalBusiness - one @id, eleven urls, the same phone, email and rating
+  # in each - is one business described eleven contradictory ways. The NAP is
+  # declared once, on the home page; here provider just references it by @id.
+  $catalog = [regex]::Match($page, '(?s)"hasOfferCatalog":\s*\{.*?\n  \}').Value
+  if (-not $catalog) { throw "Could not read hasOfferCatalog out of $($c.Slug)" }
+  $serviceLd = @"
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "@id": "$url#service",
+  "name": "$($SITE.service_name) in $loc",
+  "serviceType": "$($SITE.service_name)",
+  "url": "$url",
+  "areaServed": { "@type": "City", "name": "$loc" },
+  "provider": {
+    "@type": "LocalBusiness",
+    "@id": "$($SITE.site_url)#localbusiness",
+    "name": "$($SITE.business_name)",
+    "url": "$($SITE.site_url)"
+  },
+  $catalog
+}
+</script>
+"@
+  $page = [regex]::Replace($page, '(?s)<script type="application/ld\+json">.*?</script>', { param($m) $serviceLd })
+
+  # 7. no way out: these pages exist to produce a call or a form, so the logo
+  # stops being a link home. The home page still links to every city, and the
+  # sitemap lists them, so nothing becomes uncrawlable.
+  $page = [regex]::Replace($page, '(?s)<a class="brand" href="/"[^>]*>(.*?)</a>',
+    { param($m) '<span class="brand">' + $m.Groups[1].Value + '</span>' })
+  # 8. local content section, inserted before About
   $sb = New-Object System.Text.StringBuilder
   [void]$sb.Append("`n  <!-- ==================== LOCAL: $($c.City.ToUpper()) ==================== -->`n")
   [void]$sb.Append("  <section class=""section local"" id=""local"" aria-labelledby=""local-title"">`n")

@@ -48,32 +48,17 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "LocalBusiness",
-  "@id": "https://oggaragedoors.com/#localbusiness",
-  "name": "OG Garage Doors",
-  "image": "https://oggaragedoors.com/assets/img/hero-garage-door-repair.webp",
-  "logo": "https://oggaragedoors.com/assets/img/og-garage-doors-logo.svg",
+  "@type": "Service",
+  "@id": "https://oggaragedoors.com/garage-door-repair-st-petersburg-clearwater-fl#service",
+  "name": "Garage Door Repair in St. Petersburg and Clearwater, FL",
+  "serviceType": "Garage Door Repair",
   "url": "https://oggaragedoors.com/garage-door-repair-st-petersburg-clearwater-fl",
-  "telephone": "+10000000000",
-  "email": "info@oggaragedoors.com",
-  "priceRange": "$$",
-  "//": "Service-area business: technicians travel to the customer and there is no
-         address the public visits, so no PostalAddress is declared. Coverage is
-         expressed through areaServed instead. Keep this consistent with the
-         Google Business Profile, which should also have its address hidden.",
   "areaServed": { "@type": "City", "name": "St. Petersburg and Clearwater, FL" },
-  "openingHoursSpecification": [{
-    "@type": "OpeningHoursSpecification",
-    "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
-    "opens": "00:00",
-    "closes": "23:59"
-  }],
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "5.0",
-    "reviewCount": "127",
-    "bestRating": "5",
-    "worstRating": "1"
+  "provider": {
+    "@type": "LocalBusiness",
+    "@id": "https://oggaragedoors.com/#localbusiness",
+    "name": "OG Garage Doors",
+    "url": "https://oggaragedoors.com/"
   },
   "hasOfferCatalog": {
     "@type": "OfferCatalog",
@@ -651,14 +636,14 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
 <!-- ==================== STICKY HEADER ==================== -->
 <header class="site-header">
   <div class="header-inner">
-    <a class="brand" href="/" aria-label="OG Garage Doors — Garage Door Repair in St. Petersburg and Clearwater, FL, home">
+    <span class="brand">
       <img class="brand__logo" src="assets/img/og-garage-doors-logo.svg" width="196" height="52"
            alt="OG Garage Doors logo — garage door repair and installation">
       <span class="brand__rating">
         <span class="stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
         <span>5.0 from 127 Google reviews</span>
       </span>
-    </a>
+    </span>
 
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="Open menu">
       <span></span><span></span><span></span>
