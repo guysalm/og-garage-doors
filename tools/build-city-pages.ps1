@@ -476,7 +476,8 @@ $headers = @"
 /index.html
   Cache-Control: public, max-age=0, must-revalidate
 "@
-[System.IO.File]::WriteAllText((Join-Path $root "_headers"), $headers, (New-Object System.Text.UTF8Encoding $false))
+# a here-string drops the final newline; text files should end with one
+[System.IO.File]::WriteAllText((Join-Path $root "_headers"), $headers + "`n", (New-Object System.Text.UTF8Encoding $false))
 Write-Host "_headers written (CSP with $($inlineHashes.script.Count) script + $($inlineHashes.style.Count) style hash)"
 
 $robots = "User-agent: *`nAllow: /`nDisallow: /tools/`n`nSitemap: $base/sitemap.xml`n"
