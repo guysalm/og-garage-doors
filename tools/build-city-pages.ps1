@@ -378,6 +378,7 @@ $robots = "User-agent: *`nAllow: /`nDisallow: /tools/`n`nSitemap: $base/sitemap.
 # Every deployed page must carry a self-referencing canonical and no leftover
 # tokens, or search engines are told to consolidate it somewhere else.
 $problems = @()
+$firstH2 = @{}
 $titleWidths = @()
 $checks = @{ (Join-Path $root "index.html") = $base + "/" }
 foreach ($c in $built) { $checks[(Join-Path $root "$($c.Slug).html")] = "$base/$($c.Slug)" }
@@ -436,6 +437,18 @@ foreach ($file in $checks.Keys) {
       $problems += "$name has a $($alt.Length)-char alt (limit $ALT_LIMIT): '$alt'"
     }
   }
+
+  # Screaming Frog compares the first H2 across pages. Eleven pages built from
+  # one template share every structural heading; the first one has to say what
+  # this page is about, or all eleven report as duplicates of each other.
+  $h2 = [regex]::Match($t, '(?s)<h2[^>]*>(.*?)</h2>').Groups[1].Value -replace '<[^>]*>',' '
+  $firstH2[$name] = ($h2 -replace '\s+',' ').Trim()
+}
+
+# The first H2 has to differ page to page, the same way the title and H1 do.
+foreach ($g in $firstH2.GetEnumerator() | Group-Object -Property Value | Where-Object { $_.Count -gt 1 }) {
+  $pages = ($g.Group | ForEach-Object { $_.Key }) -join ', '
+  $problems += "$($g.Count) pages share the first H2 '$($g.Name)': $pages"
 }
 
 # Screaming Frog flags served images over 100KB; keep every one under it.
