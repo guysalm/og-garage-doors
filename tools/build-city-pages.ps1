@@ -447,6 +447,8 @@ foreach ($file in $checks.Keys) {
   # Multiple H2s are fine - HTML allows them - but the outline has to hold up:
   # one H1, no jump from H2 straight to H4, and no heading text repeated on the
   # page (two "Our Services" H2s is what put the footer nav at content rank).
+  # Screaming Frog flags an H2 over 70 characters as too long to be useful.
+  $H2_LIMIT = 70
   $levels = [regex]::Matches($t, '<h([1-6])[^>]*>(.*?)</h[1-6]>', 'Singleline')
   $h1Count = @($levels | Where-Object { $_.Groups[1].Value -eq '1' }).Count
   if ($h1Count -ne 1) { $problems += "$name has $h1Count H1s, expected exactly 1" }
@@ -456,6 +458,9 @@ foreach ($file in $checks.Keys) {
     $lvl  = [int]$h.Groups[1].Value
     $text = (($h.Groups[2].Value -replace '<[^>]*>',' ') -replace '\s+',' ').Trim()
     if ($prev -and $lvl -gt $prev + 1) { $problems += "$name skips from H$prev to H${lvl} at '$text'" }
+    if ($lvl -eq 2 -and $text.Length -gt $H2_LIMIT) {
+      $problems += "$name has a $($text.Length)-char H2 (limit $H2_LIMIT): '$text'"
+    }
     if ($texts.ContainsKey($text)) { $problems += "$name repeats the heading '$text' (H$($texts[$text]) and H$lvl)" }
     else { $texts[$text] = $lvl }
     $prev = $lvl
