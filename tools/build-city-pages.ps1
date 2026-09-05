@@ -43,6 +43,13 @@ function HtmlEscape([string]$s) {
   return $s -replace '&','&amp;' -replace '<','&lt;' -replace '>','&gt;'
 }
 
+# The checks below measure what a reader sees, the way Screaming Frog does, so
+# entities have to come back to single characters first - "&amp;" is one "&",
+# not five characters of heading.
+function HtmlPlain([string]$s) {
+  return $s -replace '&amp;','&' -replace '&rsquo;',"'" -replace '&lsquo;',"'" -replace '&ndash;','-' -replace '&mdash;','-' -replace '&nbsp;',' ' -replace '&lt;','<' -replace '&gt;','>'
+}
+
 # ------------------------------------------------------- title pixel measuring
 # Google truncates SERP titles on pixel width, not character count. Arial 20px
 # with GenericTypographic matches a browser canvas measurement exactly, which is
@@ -74,6 +81,15 @@ $titleOverrides = @{
   "garage-door-repair-st-petersburg-clearwater-fl" = "Garage Door Repair St. Pete & Clearwater FL | Coastal Pros"
   "garage-door-repair-tampa-fl"                    = "Garage Door Repair Tampa FL | Custom Doors & Repairs"
   "garage-door-repair-venice-fl"                   = "Garage Door Repair Venice FL | Quiet & Reliable Service"
+}
+
+# Three supplied H1s ran 71-81 characters, past the point where a heading stops
+# being scannable. Trimmed to one idea plus the city; the city and the service
+# stay, the second service claim goes - the page body already makes it.
+$h1Overrides = @{
+  "garage-door-repair-fort-myers-fl"               = "Storm-Ready Garage Door Repair & Impact Doors in Fort Myers, FL"
+  "garage-door-repair-north-port-fl"               = "Modern Garage Door Repair & Smart Openers in North Port, FL"
+  "garage-door-repair-st-petersburg-clearwater-fl" = "Coastal Garage Door & Impact Door Repair in St. Pete & Clearwater, FL"
 }
 
 # ------------------------------------------------------------- parse the file
@@ -136,7 +152,7 @@ foreach ($bm in [regex]::Matches($raw, $blockRe)) {
     City     = $cityName
     Title    = $(if ($titleOverrides.ContainsKey($slug)) { $titleOverrides[$slug] } else { Field '\[META TITLE\]:\s*(.+)' })
     Desc     = Field '\[META DESCRIPTION\]:\s*(.+)'
-    H1       = Field '\[H1\]:\s*(.+)'
+    H1       = $(if ($h1Overrides.ContainsKey($slug)) { $h1Overrides[$slug] } else { Field '\[H1\]:\s*(.+)' })
     HeroPara = $heroPara
     HeroBul  = $heroBul
     LocalP   = $localPara
@@ -432,7 +448,7 @@ foreach ($file in $checks.Keys) {
   # already reads fine without it, which is what "keyword stuffing" looks like.
   $ALT_LIMIT = 100
   foreach ($a in [regex]::Matches($t, 'alt="([^"]*)"')) {
-    $alt = $a.Groups[1].Value
+    $alt = HtmlPlain $a.Groups[1].Value
     if ($alt.Length -gt $ALT_LIMIT) {
       $problems += "$name has a $($alt.Length)-char alt (limit $ALT_LIMIT): '$alt'"
     }
@@ -442,12 +458,13 @@ foreach ($file in $checks.Keys) {
   # one template share every structural heading; the first one has to say what
   # this page is about, or all eleven report as duplicates of each other.
   $h2 = [regex]::Match($t, '(?s)<h2[^>]*>(.*?)</h2>').Groups[1].Value -replace '<[^>]*>',' '
-  $firstH2[$name] = ($h2 -replace '\s+',' ').Trim()
+  $firstH2[$name] = (HtmlPlain ($h2 -replace '\s+',' ')).Trim()
 
   # Multiple H2s are fine - HTML allows them - but the outline has to hold up:
   # one H1, no jump from H2 straight to H4, and no heading text repeated on the
   # page (two "Our Services" H2s is what put the footer nav at content rank).
-  # Screaming Frog flags an H2 over 70 characters as too long to be useful.
+  # Screaming Frog flags an H1 or H2 over 70 characters as too long to be useful.
+  $H1_LIMIT = 70
   $H2_LIMIT = 70
   $levels = [regex]::Matches($t, '<h([1-6])[^>]*>(.*?)</h[1-6]>', 'Singleline')
   $h1Count = @($levels | Where-Object { $_.Groups[1].Value -eq '1' }).Count
@@ -456,8 +473,11 @@ foreach ($file in $checks.Keys) {
   $texts = @{}
   foreach ($h in $levels) {
     $lvl  = [int]$h.Groups[1].Value
-    $text = (($h.Groups[2].Value -replace '<[^>]*>',' ') -replace '\s+',' ').Trim()
+    $text = (HtmlPlain (($h.Groups[2].Value -replace '<[^>]*>',' ') -replace '\s+',' ')).Trim()
     if ($prev -and $lvl -gt $prev + 1) { $problems += "$name skips from H$prev to H${lvl} at '$text'" }
+    if ($lvl -eq 1 -and $text.Length -gt $H1_LIMIT) {
+      $problems += "$name has a $($text.Length)-char H1 (limit $H1_LIMIT): '$text'"
+    }
     if ($lvl -eq 2 -and $text.Length -gt $H2_LIMIT) {
       $problems += "$name has a $($text.Length)-char H2 (limit $H2_LIMIT): '$text'"
     }
