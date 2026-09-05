@@ -110,6 +110,31 @@ $heroH2Overrides = @{
 }
 $HOME_HERO_H2 = "Serving Southwest Florida and Tampa Bay, Day and Night"
 
+# Which cities each page points at. Two clusters that do not overlap: the
+# Sarasota-to-Fort-Myers coast, and Tampa Bay. Linking a Venice customer to
+# Brandon, 60 miles away, helps nobody - the footer should read like a local
+# map. The home page keeps all ten, so every city page is still one click from
+# the crawl entry point and the sitemap lists them all either way.
+$neighbours = @{
+  "garage-door-repair-sarasota-fl"                 = @("garage-door-repair-venice-fl","garage-door-repair-north-port-fl","garage-door-repair-englewood-fl")
+  "garage-door-repair-venice-fl"                   = @("garage-door-repair-sarasota-fl","garage-door-repair-englewood-fl","garage-door-repair-north-port-fl")
+  "garage-door-repair-englewood-fl"                = @("garage-door-repair-venice-fl","garage-door-repair-north-port-fl","garage-door-repair-port-charlotte-fl")
+  "garage-door-repair-north-port-fl"               = @("garage-door-repair-port-charlotte-fl","garage-door-repair-venice-fl","garage-door-repair-sarasota-fl")
+  "garage-door-repair-port-charlotte-fl"           = @("garage-door-repair-north-port-fl","garage-door-repair-englewood-fl","garage-door-repair-fort-myers-fl")
+  "garage-door-repair-fort-myers-fl"               = @("garage-door-repair-port-charlotte-fl","garage-door-repair-north-port-fl")
+  "garage-door-repair-tampa-fl"                    = @("garage-door-repair-brandon-fl","garage-door-repair-st-petersburg-clearwater-fl","garage-door-repair-ruskin-fl")
+  "garage-door-repair-brandon-fl"                  = @("garage-door-repair-tampa-fl","garage-door-repair-ruskin-fl","garage-door-repair-st-petersburg-clearwater-fl")
+  "garage-door-repair-ruskin-fl"                   = @("garage-door-repair-brandon-fl","garage-door-repair-tampa-fl","garage-door-repair-st-petersburg-clearwater-fl")
+  "garage-door-repair-st-petersburg-clearwater-fl" = @("garage-door-repair-tampa-fl","garage-door-repair-brandon-fl","garage-door-repair-ruskin-fl")
+}
+
+# slug -> footer label, read out of the template's own list so the labels are
+# written in one place only
+$areaLabels = @{}
+foreach ($m in [regex]::Matches($tpl, '<li><a href="/([a-z0-9-]+)">([^<]+)</a></li>')) {
+  $areaLabels[$m.Groups[1].Value] = $m.Groups[2].Value
+}
+
 # ------------------------------------------------------------- parse the file
 # The "N. CITY, FL" heading sits between two rule lines, so capture the heading
 # and the block that follows it together rather than splitting on the rules.
@@ -260,6 +285,17 @@ foreach ($c in $cities) {
 
   # 4. H1
   $page = [regex]::Replace($page, '(?s)(<h1 id="hero-title">).*?(</h1>)', "`${1}$(HtmlEscape $c.H1)`${2}")
+
+  # 5. footer service areas: the neighbouring cities, not all ten
+  $near = $neighbours[$c.Slug]
+  if (-not $near) { throw "No neighbouring cities listed for $($c.Slug)" }
+  $items = ($near | ForEach-Object {
+    if (-not $areaLabels.ContainsKey($_)) { throw "No footer label for $_" }
+    "          <li><a href=""/$_"">$($areaLabels[$_])</a></li>"
+  }) -join "`n"
+  $areasBlock = "<h3 id=""footer-areas"">Nearby Service Areas</h3>`n" +
+                "        <ul class=""footer-links"">`n$items`n        </ul>"
+  $page = [regex]::Replace($page, '(?s)<h3 id="footer-areas">.*?</ul>', { param($m) $areasBlock })
 
 
   # 6. local content section, inserted before About
