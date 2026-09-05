@@ -121,6 +121,22 @@ Also set: `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`,
 `tools/serve.ps1` applies the same headers locally, so a policy that would break
 the live site breaks it in preview first.
 
+`_headers` being right is not the same as the crawler seeing the headers. The
+domain is proxied through **Cloudflare** and `/assets/*` is cached for 7 days,
+so images cached before a header change keep being served without it — which
+Screaming Frog reports as every image missing `X-Content-Type-Options` while
+the origin is set up correctly. **After any header change, purge the Cloudflare
+cache** (Caching → Configuration → Purge Everything).
+
+`tools/check-live-headers.ps1` checks the deployed site rather than the config
+— every URL a crawler reaches, images included — and separates the two causes:
+a header still absent on a cache-busted request is a config fault, one that
+appears only on the cache-busted request is a stale edge copy. It also checks
+each `Content-Type` matches the file, since `nosniff` only helps if the stated
+type is the right one.
+
+    powershell -File tools\check-live-headers.ps1
+
 The build asserts every page has a self-referencing canonical, that no served
 image exceeds 100KB, and that no
 title exceeds 561px or description 985px when measured in the SERP font
