@@ -418,6 +418,13 @@ foreach ($file in $checks.Keys) {
     $isExternal = ($href -match '^(https?:)?//') -and ($href -notlike "$base/*")
     if (-not $isExternal) { $problems += "$name has an internal nofollow link: href=""$href""" }
   }
+
+  # Cloudflare's Email Address Obfuscation (Scrape Shield) rewrites every
+  # mailto: in the served HTML to /cdn-cgi/l/email-protection#<hex>. That URL
+  # 404s for anything that does not run the decoder script, so a mailto: link
+  # ships as a broken internal link on every page. Fill mail links in from JS,
+  # or turn the feature off in Cloudflare first.
+  if ($t -match 'href="mailto:') { $problems += "$name has a mailto: link - Cloudflare rewrites it to a 404 /cdn-cgi/l/email-protection URL" }
 }
 
 # Screaming Frog flags served images over 100KB; keep every one under it.
