@@ -392,6 +392,17 @@ foreach ($c in $cities) {
   # 8. one-off copy fix: we do not do remote programming
   $page = $page.Replace("Safety Sensor Alignment &amp; Remote Control Programming", "Safety Sensor Alignment &amp; Keypad Programming")
 
+  # 8b. NAP on the home page only: the street address belongs to one business
+  # at one location, and eleven pages each claiming it is eleven chances for the
+  # citation to drift. The home page carries it in the footer and in the
+  # LocalBusiness schema; these pages point at that entity by @id. The markup
+  # goes, and so do the copies left in the token comment and the runtime SITE
+  # object - "home page only" has to mean the source too, not just the render.
+  $page = [regex]::Replace($page, '(?s)\s*<!-- NAP:start.*?NAP:end -->', '')
+  $napDoc = [regex]::Escape("$($SITE.street_address)  $($SITE.address_city)  $($SITE.address_region)  $($SITE.address_zip)")
+  $page = [regex]::Replace($page, "(?m)^\s*$napDoc\r?\n\s*the NAP - rendered on the home page only.*?\r?\n", "")
+  $page = [regex]::Replace($page, '(?m)^\s*(street_address|address_city|address_region|address_zip)\s*:\s*"[^"]*",\r?\n', '')
+
   # 9. this city's own footer link should not point at itself
   $page = $page.Replace("<a href=""/$($c.Slug)"">", "<a href=""/$($c.Slug)"" aria-current=""page"">")
 
