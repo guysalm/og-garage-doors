@@ -10,7 +10,7 @@
      Replace at build time (or let the preview script at the bottom
      fill the defaults). Available tokens:
        OG Garage Doors   Tampa, FL        Garage Door Repair
-       +10000000000    (000) 000-0000  10000000000
+       +18889722144    (888) 972-2144
        info@oggaragedoors.com
        https://oggaragedoors.com/   site root, same on every page (logo, og:image, sharing)
        https://oggaragedoors.com/garage-door-repair-tampa-fl   this page's own URL (canonical, og:url, form field)
@@ -349,6 +349,29 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
 .share__link:hover{background:#f8f9fa}
 .share__status{margin:8px 20px 0;font-size:.78rem;color:#188038;min-height:1.1em}
 
+/* ========== Free quote dialog ========== */
+.qd[hidden]{display:none}
+.qd{position:fixed;inset:0;z-index:150;display:flex;align-items:center;justify-content:center;padding:20px}
+.qd__backdrop{position:absolute;inset:0;background:rgba(20,24,29,.55)}
+.qd__panel{
+  position:relative;width:100%;max-width:340px;background:#fff;
+  border-radius:10px;box-shadow:0 18px 48px rgba(20,24,29,.32);padding:20px
+}
+.qd__head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.qd__title{font-size:1.25rem;font-weight:700;margin:0;color:var(--ink)}
+.qd__close{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:34px;height:34px;padding:0;border:0;border-radius:50%;
+  background:transparent;cursor:pointer;flex:none
+}
+.qd__close svg{width:20px;height:20px;fill:#5f6368}
+.qd__close:hover{background:#f1f3f4}
+.qd__lead{margin:8px 0 18px;font-size:.9rem;line-height:1.5;color:var(--muted)}
+.qd__actions{display:grid;gap:10px}
+.qd__btn{width:100%}
+.qd__btn--alt{background:#fff;color:var(--ink);border:2px solid var(--ink);padding:11px 24px}
+.qd__btn--alt:hover{background:var(--ink);color:#fff}
+
 /* ========== Guarantee badges ========== */
 .badges__list{display:flex;flex-wrap:wrap;justify-content:center;gap:34px}
 .badges__list img{width:130px;height:130px}
@@ -553,7 +576,7 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
 /* ========== Sticky mobile CTA bar ========== */
 .mobile-bar{
   position:fixed;left:0;right:0;bottom:0;z-index:120;display:none;
-  grid-template-columns:repeat(3,1fr);gap:1px;
+  grid-template-columns:repeat(2,1fr);gap:1px;
   background:#2a3038;box-shadow:0 -3px 16px rgba(0,0,0,.28)
 }
 .mobile-bar a{
@@ -563,7 +586,6 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
 .mobile-bar a:hover{text-decoration:none}
 .mobile-bar svg{width:19px;height:19px;fill:#fff}
 .mobile-bar__call{background:var(--crimson)}
-.mobile-bar__wa{background:#25D366}
 .mobile-bar__quote{background:var(--ink)}
 
 /* ========== Responsive ========== */
@@ -667,9 +689,9 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
 
     <div class="header-cta">
       <span class="badge-open">Open Now</span>
-      <a class="btn btn--call" href="tel:+10000000000" data-cta="header-call">
+      <a class="btn btn--call" href="tel:+18889722144" data-cta="header-call">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
-        (000) 000-0000
+        (888) 972-2144
       </a>
     </div>
   </div>
@@ -703,9 +725,9 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
       <p class="hero__lead">Don&rsquo;t Wait &ndash; <strong>Call Today For Fast, Same-Day Service &amp; a Free Estimate!</strong> OPEN 24/7</p>
 
       <div class="hero__actions">
-        <a class="btn btn--call" href="tel:+10000000000" data-cta="hero-call">
+        <a class="btn btn--call" href="tel:+18889722144" data-cta="hero-call">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
-          Call Now (000) 000-0000
+          Call Now (888) 972-2144
         </a>
         <a class="btn btn--ghost" href="#contact" data-cta="hero-contact">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4.2-8 5-8-5V6l8 5 8-5v2.2z"/></svg>
@@ -769,7 +791,7 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
             <li>Spring Adjustment</li>
             <li>Spring Lubrication</li>
           </ul>
-          <a class="btn btn--est" href="tel:+10000000000" data-cta="service-spring">
+          <a class="btn btn--est" href="tel:+18889722144" data-cta="service-spring">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
             Free Estimate
           </a>
@@ -785,7 +807,7 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
             <li>Opener Repair &amp; Replacement</li>
             <li>Sensor Replacement &amp; Repair</li>
           </ul>
-          <a class="btn btn--est" href="tel:+10000000000" data-cta="service-opener">
+          <a class="btn btn--est" href="tel:+18889722144" data-cta="service-opener">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
             Free Estimate
           </a>
@@ -801,7 +823,7 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
             <li>Door Balance &amp; Adjustment</li>
             <li>Bottom Seal Replacement</li>
           </ul>
-          <a class="btn btn--est" href="tel:+10000000000" data-cta="service-offtrack">
+          <a class="btn btn--est" href="tel:+18889722144" data-cta="service-offtrack">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
             Free Estimate
           </a>
@@ -817,7 +839,7 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
             <li>Cable Drums</li>
             <li>Cable Maintenance</li>
           </ul>
-          <a class="btn btn--est" href="tel:+10000000000" data-cta="service-cable">
+          <a class="btn btn--est" href="tel:+18889722144" data-cta="service-cable">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
             Free Estimate
           </a>
@@ -834,7 +856,7 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
             <li>Low-Ceiling Garage Solutions</li>
             <li>Battery Backup &amp; Smart Control</li>
           </ul>
-          <a class="btn btn--est" href="tel:+10000000000" data-cta="service-jackshaft">
+          <a class="btn btn--est" href="tel:+18889722144" data-cta="service-jackshaft">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
             Free Estimate
           </a>
@@ -850,7 +872,7 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
             <li>Roller Alignment</li>
             <li>Roller Replacement</li>
           </ul>
-          <a class="btn btn--est" href="tel:+10000000000" data-cta="service-roller">
+          <a class="btn btn--est" href="tel:+18889722144" data-cta="service-roller">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
             Free Estimate
           </a>
@@ -865,7 +887,7 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
             <li>Panel Repair &amp; Replace</li>
             <li>Panels Adjustment</li>
           </ul>
-          <a class="btn btn--est" href="tel:+10000000000" data-cta="service-panels">
+          <a class="btn btn--est" href="tel:+18889722144" data-cta="service-panels">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
             Free Estimate
           </a>
@@ -880,7 +902,7 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
             <li>Commercial Opener Repair</li>
             <li>Commercial Rollers Repair</li>
           </ul>
-          <a class="btn btn--est" href="tel:+10000000000" data-cta="service-commercial">
+          <a class="btn btn--est" href="tel:+18889722144" data-cta="service-commercial">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
             Free Estimate
           </a>
@@ -895,7 +917,7 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
             <li>Automatic Gate Repair &amp; Replace</li>
             <li>Wheel Repair / Replace</li>
           </ul>
-          <a class="btn btn--est" href="tel:+10000000000" data-cta="service-gate">
+          <a class="btn btn--est" href="tel:+18889722144" data-cta="service-gate">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
             Free Estimate
           </a>
@@ -911,7 +933,7 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
             <li>Check Door Balance</li>
             <li>Lubricate Belt And Chain</li>
           </ul>
-          <a class="btn btn--est" href="tel:+10000000000" data-cta="service-tuneup">
+          <a class="btn btn--est" href="tel:+18889722144" data-cta="service-tuneup">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
             Free Estimate
           </a>
@@ -927,7 +949,7 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
             <li>New Rail &amp; Track Installment</li>
             <li>Panels Bent Repair &amp; Replace</li>
           </ul>
-          <a class="btn btn--est" href="tel:+10000000000" data-cta="service-newdoor">
+          <a class="btn btn--est" href="tel:+18889722144" data-cta="service-newdoor">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
             Free Estimate
           </a>
@@ -943,7 +965,7 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
             <li>Sensor Adjustment</li>
             <li>Sensor Alignment</li>
           </ul>
-          <a class="btn btn--est" href="tel:+10000000000" data-cta="service-sensor">
+          <a class="btn btn--est" href="tel:+18889722144" data-cta="service-sensor">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
             Free Estimate
           </a>
@@ -1005,7 +1027,7 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
           <h3>Local Service Area</h3>
           <p>Serving South Tampa, Hyde Park, Westchase, Carrollwood, Ybor City, and New Tampa.</p>
           <p class="local__zips"><strong>Zip codes served:</strong> 33602, 33606, 33607, 33609, 33611, 33618, 33626, 33647</p>
-          <p><a class="btn btn--call" href="tel:+10000000000" data-cta="local-call">Call (000) 000-0000</a></p>
+          <p><a class="btn btn--call" href="tel:+18889722144" data-cta="local-call">Call (888) 972-2144</a></p>
         </aside>
       </div>
     </div>
@@ -1202,9 +1224,9 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
             <li>Expert garage door technicians</li>
           </ul>
           <p class="contact__call">
-            <a class="btn btn--call" href="tel:+10000000000" data-cta="contact-call">
+            <a class="btn btn--call" href="tel:+18889722144" data-cta="contact-call">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
-              Call 24/7 &mdash; (000) 000-0000
+              Call 24/7 &mdash; (888) 972-2144
             </a>
           </p>
         </div>
@@ -1277,7 +1299,7 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
 
             <button class="btn btn--dark" type="submit">Submit</button>
             <p class="form-status" id="lead-status" role="status" aria-live="polite"></p>
-            <p class="form-note">Or call us now &mdash; <a href="tel:+10000000000">(000) 000-0000</a> &middot; Free estimate, 24/7</p>
+            <p class="form-note">Or call us now &mdash; <a href="tel:+18889722144">(888) 972-2144</a> &middot; Free estimate, 24/7</p>
           </form>
         </div>
       </div>
@@ -1294,9 +1316,9 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
         <img class="brand__logo" src="assets/img/og-garage-doors-logo.svg" width="180" height="48" loading="lazy"
              alt="OG Garage Doors — garage door repair company">
         <p>Family owned and operated, OG Garage Doors brings more than 20 years of experience to garage door repair. We offer a wide range of garage door services for a fraction of the cost quoted by many other companies.</p>
-        <a class="footer__phone" href="tel:+10000000000" data-cta="footer-call">
+        <a class="footer__phone" href="tel:+18889722144" data-cta="footer-call">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
-          Call now (000) 000-0000
+          Call now (888) 972-2144
         </a>
         <a class="footer__mail" href="#contact" data-cta="footer-contact">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
@@ -1390,20 +1412,39 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
 
 <!-- ==================== STICKY MOBILE CTA BAR ==================== -->
 <nav class="mobile-bar" aria-label="Quick contact">
-  <a class="mobile-bar__call" href="tel:+10000000000" data-cta="mobile-call">
+  <a class="mobile-bar__call" href="tel:+18889722144" data-cta="mobile-call">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
     Call Now
   </a>
-  <a class="mobile-bar__wa" href="https://wa.me/10000000000?text=Hi%2C%20I%20need%20garage%20door%20service%20in%20Tampa, FL"
-     target="_blank" rel="noopener nofollow" data-cta="mobile-whatsapp">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.5 15.2L2 22l4.9-1.4A10 10 0 1 0 12 2zm5.1 14.1c-.2.6-1.2 1.2-1.7 1.2-.5.1-1 .1-1.7-.1-1-.3-2.6-1-4-2.6-1.1-1.2-1.8-2.6-2-3.2-.2-.6-.1-1.2.1-1.6.2-.4.5-.7.8-.9.2-.1.4-.1.6-.1h.4c.2 0 .3.1.4.4l.6 1.5c.1.2 0 .4-.1.5l-.4.5c-.1.1-.2.3-.1.5.3.6.8 1.3 1.4 1.8.5.4 1.1.7 1.5.9.2.1.4 0 .5-.1l.5-.6c.1-.2.3-.2.5-.1l1.5.7c.2.1.3.2.3.4 0 .2 0 .5-.1.6z"/></svg>
-    WhatsApp
-  </a>
-  <a class="mobile-bar__quote" href="#contact" data-cta="mobile-quote">
+  <a class="mobile-bar__quote" href="#contact" data-quote-open data-cta="mobile-quote">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 3H5a2 2 0 0 0-2 2v16l4-3h12a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm-2 9H7v-2h10v2zm0-4H7V6h10v2z"/></svg>
     Free Quote
   </a>
 </nav>
+
+<!-- ==================== FREE QUOTE DIALOG ==================== -->
+<div class="qd" id="quote" hidden>
+  <div class="qd__backdrop" data-quote-close></div>
+  <div class="qd__panel" role="dialog" aria-modal="true" aria-labelledby="quote-title">
+    <div class="qd__head">
+      <h2 class="qd__title" id="quote-title">Get a free quote</h2>
+      <button class="qd__close" type="button" data-quote-close aria-label="Close">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 6.4 17.6 5 12 10.6 6.4 5 5 6.4 10.6 12 5 17.6 6.4 19 12 13.4 17.6 19 19 17.6 13.4 12z"/></svg>
+      </button>
+    </div>
+    <p class="qd__lead">Talk to a technician right now, or send your details and we&rsquo;ll come back to you.</p>
+    <div class="qd__actions">
+      <a class="btn btn--call qd__btn" href="tel:+18889722144" data-cta="quote-call">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
+        Call Us Now
+      </a>
+      <button class="btn qd__btn qd__btn--alt" type="button" data-quote-form data-cta="quote-form">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        Contact Us
+      </button>
+    </div>
+  </div>
+</div>
 
 <script>
 /* =========================================================================
@@ -1420,9 +1461,8 @@ var SITE = {
   zip            : "33602",
   service_name   : "Garage Door Repair",
   service_area   : "Tampa and the surrounding area",
-  phone_number   : "+10000000000",
-  phone_display  : "(000) 000-0000",
-  whatsapp_number: "10000000000",
+  phone_number   : "+18889722144",
+  phone_display  : "(888) 972-2144",
   email          : "info@oggaragedoors.com",
   site_url       : "https://oggaragedoors.com/",
   page_url       : "https://oggaragedoors.com/garage-door-repair-tampa-fl",
@@ -1951,6 +1991,59 @@ var REVIEWS = [
   var y = document.getElementById("year");
   if (y) y.textContent = String(new Date().getFullYear());
 })();
+
+/* =========================================================================
+   7. FREE QUOTE DIALOG
+   The sticky bar's Free Quote used to drop the reader straight into the form.
+   On a phone, at the moment someone taps it, a call is usually the faster
+   route to a price - so ask which they want. The anchor still points at
+   #contact, so with JS off the tap does exactly what it did before.
+   ========================================================================= */
+(function(){
+  var dlg = document.getElementById("quote");
+  if (!dlg) return;
+  var opener = null;
+
+  function openQuote(from){
+    opener = from || null;
+    dlg.hidden = false;
+    var first = dlg.querySelector(".qd__btn");
+    if (first) first.focus();
+    document.addEventListener("keydown", onQuoteKey);
+  }
+
+  function closeQuote(){
+    if (dlg.hidden) return;
+    dlg.hidden = true;
+    document.removeEventListener("keydown", onQuoteKey);
+    if (opener) { opener.focus(); opener = null; }
+  }
+
+  function onQuoteKey(e){ if (e.key === "Escape") closeQuote(); }
+
+  document.addEventListener("click", function(e){
+    var trigger = e.target.closest && e.target.closest("[data-quote-open]");
+    if (trigger) { e.preventDefault(); openQuote(trigger); }
+  });
+
+  dlg.addEventListener("click", function(e){
+    if (e.target.closest("[data-quote-close]")) { closeQuote(); return; }
+
+    if (e.target.closest("[data-quote-form]")) {
+      closeQuote();
+      var section = document.getElementById("contact");
+      if (section) section.scrollIntoView({ behavior: "smooth", block: "start" });
+      /* the scroll is smooth, so the focus has to wait for it - taking it
+         straight away would yank the page back to the top of the form */
+      var name = document.getElementById("lead-name");
+      if (name) setTimeout(function(){ name.focus({ preventScroll: true }); }, 500);
+      return;
+    }
+
+    if (e.target.closest("a")) closeQuote();   /* the call link */
+  });
+})();
+
 </script>
 </body>
 </html>

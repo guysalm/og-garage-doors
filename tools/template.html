@@ -10,7 +10,7 @@
      Replace at build time (or let the preview script at the bottom
      fill the defaults). Available tokens:
        {{business_name}}   {{location}}        {{service_name}}
-       {{phone_number}}    {{phone_display}}  {{whatsapp_number}}
+       {{phone_number}}    {{phone_display}}
        {{email}}
        {{site_url}}   site root, same on every page (logo, og:image, sharing)
        {{page_url}}   this page's own URL (canonical, og:url, form field)
@@ -375,6 +375,29 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
 .share__link:hover{background:#f8f9fa}
 .share__status{margin:8px 20px 0;font-size:.78rem;color:#188038;min-height:1.1em}
 
+/* ========== Free quote dialog ========== */
+.qd[hidden]{display:none}
+.qd{position:fixed;inset:0;z-index:150;display:flex;align-items:center;justify-content:center;padding:20px}
+.qd__backdrop{position:absolute;inset:0;background:rgba(20,24,29,.55)}
+.qd__panel{
+  position:relative;width:100%;max-width:340px;background:#fff;
+  border-radius:10px;box-shadow:0 18px 48px rgba(20,24,29,.32);padding:20px
+}
+.qd__head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.qd__title{font-size:1.25rem;font-weight:700;margin:0;color:var(--ink)}
+.qd__close{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:34px;height:34px;padding:0;border:0;border-radius:50%;
+  background:transparent;cursor:pointer;flex:none
+}
+.qd__close svg{width:20px;height:20px;fill:#5f6368}
+.qd__close:hover{background:#f1f3f4}
+.qd__lead{margin:8px 0 18px;font-size:.9rem;line-height:1.5;color:var(--muted)}
+.qd__actions{display:grid;gap:10px}
+.qd__btn{width:100%}
+.qd__btn--alt{background:#fff;color:var(--ink);border:2px solid var(--ink);padding:11px 24px}
+.qd__btn--alt:hover{background:var(--ink);color:#fff}
+
 /* ========== Guarantee badges ========== */
 .badges__list{display:flex;flex-wrap:wrap;justify-content:center;gap:34px}
 .badges__list img{width:130px;height:130px}
@@ -579,7 +602,7 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
 /* ========== Sticky mobile CTA bar ========== */
 .mobile-bar{
   position:fixed;left:0;right:0;bottom:0;z-index:120;display:none;
-  grid-template-columns:repeat(3,1fr);gap:1px;
+  grid-template-columns:repeat(2,1fr);gap:1px;
   background:#2a3038;box-shadow:0 -3px 16px rgba(0,0,0,.28)
 }
 .mobile-bar a{
@@ -589,7 +612,6 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
 .mobile-bar a:hover{text-decoration:none}
 .mobile-bar svg{width:19px;height:19px;fill:#fff}
 .mobile-bar__call{background:var(--crimson)}
-.mobile-bar__wa{background:#25D366}
 .mobile-bar__quote{background:var(--ink)}
 
 /* ========== Responsive ========== */
@@ -1396,16 +1418,35 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
     Call Now
   </a>
-  <a class="mobile-bar__wa" href="https://wa.me/{{whatsapp_number}}?text=Hi%2C%20I%20need%20garage%20door%20service%20in%20{{location}}"
-     target="_blank" rel="noopener nofollow" data-cta="mobile-whatsapp">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.5 15.2L2 22l4.9-1.4A10 10 0 1 0 12 2zm5.1 14.1c-.2.6-1.2 1.2-1.7 1.2-.5.1-1 .1-1.7-.1-1-.3-2.6-1-4-2.6-1.1-1.2-1.8-2.6-2-3.2-.2-.6-.1-1.2.1-1.6.2-.4.5-.7.8-.9.2-.1.4-.1.6-.1h.4c.2 0 .3.1.4.4l.6 1.5c.1.2 0 .4-.1.5l-.4.5c-.1.1-.2.3-.1.5.3.6.8 1.3 1.4 1.8.5.4 1.1.7 1.5.9.2.1.4 0 .5-.1l.5-.6c.1-.2.3-.2.5-.1l1.5.7c.2.1.3.2.3.4 0 .2 0 .5-.1.6z"/></svg>
-    WhatsApp
-  </a>
-  <a class="mobile-bar__quote" href="#contact" data-cta="mobile-quote">
+  <a class="mobile-bar__quote" href="#contact" data-quote-open data-cta="mobile-quote">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 3H5a2 2 0 0 0-2 2v16l4-3h12a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm-2 9H7v-2h10v2zm0-4H7V6h10v2z"/></svg>
     Free Quote
   </a>
 </nav>
+
+<!-- ==================== FREE QUOTE DIALOG ==================== -->
+<div class="qd" id="quote" hidden>
+  <div class="qd__backdrop" data-quote-close></div>
+  <div class="qd__panel" role="dialog" aria-modal="true" aria-labelledby="quote-title">
+    <div class="qd__head">
+      <h2 class="qd__title" id="quote-title">Get a free quote</h2>
+      <button class="qd__close" type="button" data-quote-close aria-label="Close">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 6.4 17.6 5 12 10.6 6.4 5 5 6.4 10.6 12 5 17.6 6.4 19 12 13.4 17.6 19 19 17.6 13.4 12z"/></svg>
+      </button>
+    </div>
+    <p class="qd__lead">Talk to a technician right now, or send your details and we&rsquo;ll come back to you.</p>
+    <div class="qd__actions">
+      <a class="btn btn--call qd__btn" href="tel:{{phone_number}}" data-cta="quote-call">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
+        Call Us Now
+      </a>
+      <button class="btn qd__btn qd__btn--alt" type="button" data-quote-form data-cta="quote-form">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        Contact Us
+      </button>
+    </div>
+  </div>
+</div>
 
 <script>
 /* =========================================================================
@@ -1426,9 +1467,8 @@ var SITE = {
   address_zip    : "34285",
   service_name   : "Garage Door Repair",
   service_area   : "Sarasota, Manatee, Charlotte, Lee, Hillsborough and Pinellas counties",
-  phone_number   : "+10000000000",
-  phone_display  : "(000) 000-0000",
-  whatsapp_number: "10000000000",
+  phone_number   : "+18889722144",
+  phone_display  : "(888) 972-2144",
   email          : "info@oggaragedoors.com",
   site_url       : "https://oggaragedoors.com/",
   page_url       : "https://oggaragedoors.com/",
@@ -1957,6 +1997,59 @@ var REVIEWS = [
   var y = document.getElementById("year");
   if (y) y.textContent = String(new Date().getFullYear());
 })();
+
+/* =========================================================================
+   7. FREE QUOTE DIALOG
+   The sticky bar's Free Quote used to drop the reader straight into the form.
+   On a phone, at the moment someone taps it, a call is usually the faster
+   route to a price - so ask which they want. The anchor still points at
+   #contact, so with JS off the tap does exactly what it did before.
+   ========================================================================= */
+(function(){
+  var dlg = document.getElementById("quote");
+  if (!dlg) return;
+  var opener = null;
+
+  function openQuote(from){
+    opener = from || null;
+    dlg.hidden = false;
+    var first = dlg.querySelector(".qd__btn");
+    if (first) first.focus();
+    document.addEventListener("keydown", onQuoteKey);
+  }
+
+  function closeQuote(){
+    if (dlg.hidden) return;
+    dlg.hidden = true;
+    document.removeEventListener("keydown", onQuoteKey);
+    if (opener) { opener.focus(); opener = null; }
+  }
+
+  function onQuoteKey(e){ if (e.key === "Escape") closeQuote(); }
+
+  document.addEventListener("click", function(e){
+    var trigger = e.target.closest && e.target.closest("[data-quote-open]");
+    if (trigger) { e.preventDefault(); openQuote(trigger); }
+  });
+
+  dlg.addEventListener("click", function(e){
+    if (e.target.closest("[data-quote-close]")) { closeQuote(); return; }
+
+    if (e.target.closest("[data-quote-form]")) {
+      closeQuote();
+      var section = document.getElementById("contact");
+      if (section) section.scrollIntoView({ behavior: "smooth", block: "start" });
+      /* the scroll is smooth, so the focus has to wait for it - taking it
+         straight away would yank the page back to the top of the form */
+      var name = document.getElementById("lead-name");
+      if (name) setTimeout(function(){ name.focus({ preventScroll: true }); }, 500);
+      return;
+    }
+
+    if (e.target.closest("a")) closeQuote();   /* the call link */
+  });
+})();
+
 </script>
 </body>
 </html>
