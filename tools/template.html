@@ -599,9 +599,13 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
   text-align:center;font-size:.82rem;color:#8A939E
 }
 
-/* ========== Sticky mobile CTA bar ========== */
+/* ========== Sticky CTA bar ========== */
+/* Full width along the bottom edge on a phone; a centred pill on anything
+   wider, because two buttons stretched across 1900px read as a banner
+   rather than a control. Visible at every size - the class name predates
+   that. */
 .mobile-bar{
-  position:fixed;left:0;right:0;bottom:0;z-index:120;display:none;
+  position:fixed;left:0;right:0;bottom:0;z-index:120;display:grid;
   grid-template-columns:repeat(2,1fr);gap:1px;
   background:#2a3038;box-shadow:0 -3px 16px rgba(0,0,0,.28)
 }
@@ -663,13 +667,24 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
   .badges__list img{width:104px;height:104px}
   .brands__list{gap:28px}
   .brands__list li{width:112px;height:40px}
-  .mobile-bar{display:grid}
   .ba-shot img{height:190px}
   .ba-shot__tag{padding:4px 9px;font-size:.64rem;letter-spacing:.4px}
   .ba-card figcaption{font-size:.8rem;padding:10px 12px}
   .contact h2{font-size:1.6rem}
   .about h2{font-size:1.7rem}
 }
+@media (min-width:641px){
+  /* the bar floats, so the footer needs room to clear it */
+  body{padding-bottom:92px}
+  .mobile-bar{
+    left:50%;right:auto;transform:translateX(-50%);bottom:18px;
+    width:min(520px,calc(100% - 32px));
+    border-radius:var(--radius-pill);overflow:hidden;
+    box-shadow:0 10px 30px rgba(0,0,0,.30)
+  }
+  .mobile-bar a{padding:12px 6px;font-size:.76rem}
+}
+
 /* small phones (iPhone SE / mini) — trim the header further */
 @media (max-width:400px){
   .header-inner{gap:8px;padding:10px 12px}
