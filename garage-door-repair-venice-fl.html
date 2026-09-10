@@ -127,6 +127,11 @@ button{font:inherit}
 /* keep anchored targets clear of the sticky header */
 section[id],.service-card[id],#main{scroll-margin-top:112px}
 @media (max-width:900px){section[id],.service-card[id],#main{scroll-margin-top:92px}}
+/* the form is the point of the contact section: the heading and the three
+   checks fill a phone screen on their own, so the CTAs that mean "fill this
+   in" land on the card, with the call button still showing just above it */
+.form-card[id]{scroll-margin-top:172px}
+@media (max-width:900px){.form-card[id]{scroll-margin-top:160px}}
 .wrap{width:100%;max-width:var(--maxw);margin:0 auto;padding:0 20px}
 .section{padding:70px 0}
 .section--alt{background:var(--bg-alt)}
@@ -755,7 +760,7 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
           Call Now (888) 972-2144
         </a>
-        <a class="btn btn--ghost" href="#contact" data-cta="hero-contact">
+        <a class="btn btn--ghost" href="#quote-form" data-cta="hero-contact">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4.2-8 5-8-5V6l8 5 8-5v2.2z"/></svg>
           Contact Us
         </a>
@@ -1075,7 +1080,7 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
           <blockquote class="quote">
             At OG Garage Doors, we understand the frustration of not being able to get your car out in the morning or coming home to a jammed door after work.
           </blockquote>
-          <p class="about__actions"><a class="btn btn--square" href="#contact" data-cta="about-book">Book Now</a></p>
+          <p class="about__actions"><a class="btn btn--square" href="#quote-form" data-cta="about-book">Book Now</a></p>
           <p>We&rsquo;ve been repairing garage doors for the residents of Venice and the surrounding area and our results are second to none. From broken door rollers to spring replacements, our team of professionals can handle all types of garage door problems, at an affordable price.</p>
           <ul class="checks">
             <li>Weekend Service Available</li>
@@ -1261,7 +1266,7 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
           </p>
         </div>
 
-        <div class="form-card">
+        <div class="form-card" id="quote-form">
           <h3 class="sr-only">Request a free garage door estimate in Venice, FL</h3>
           <!-- Netlify Forms: detected at deploy time by parsing this markup, so
                name + data-netlify must be present in the built HTML. Submissions
@@ -1350,7 +1355,7 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
           Call now (888) 972-2144
         </a>
-        <a class="footer__mail" href="#contact" data-cta="footer-contact">
+        <a class="footer__mail" href="#quote-form" data-cta="footer-contact">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
           Contact us
         </a>
@@ -1447,7 +1452,7 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
     Call Now
   </a>
   <span class="mobile-bar__open">Open Now</span>
-  <a class="mobile-bar__quote" href="#contact" data-quote-open data-cta="mobile-quote">
+  <a class="mobile-bar__quote" href="#quote-form" data-quote-open data-cta="mobile-quote">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 3H5a2 2 0 0 0-2 2v16l4-3h12a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm-2 9H7v-2h10v2zm0-4H7V6h10v2z"/></svg>
     Free Quote
   </a>
@@ -2062,8 +2067,8 @@ var REVIEWS = [
 
     if (e.target.closest("[data-quote-form]")) {
       closeQuote();
-      var section = document.getElementById("contact");
-      if (section) section.scrollIntoView({ behavior: "smooth", block: "start" });
+      var card = document.getElementById("quote-form");
+      if (card) card.scrollIntoView({ behavior: "smooth", block: "start" });
       /* the scroll is smooth, so the focus has to wait for it - taking it
          straight away would yank the page back to the top of the form */
       var name = document.getElementById("lead-name");
