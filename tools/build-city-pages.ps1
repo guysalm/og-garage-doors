@@ -384,8 +384,11 @@ foreach ($c in $cities) {
   $asksSpeed = $false
   foreach ($f in $c.Faqs) { if ($f[0] -match '(?i)how (quickly|fast|soon)|reach my home') { $asksSpeed = $true } }
   if ($asksSpeed) {
-    $page = [regex]::Replace($page,
-      '(?s)\s*<details>\s*<summary>How fast can a technician reach my home.*?</details>', '', 1)
+    # matched on the template's exact wording, so fail loudly if that wording
+    # changes - otherwise the duplicate question silently comes back
+    $speedRe = '(?s)\s*<details>\s*<summary>How fast can a technician get to my home\?</summary>.*?</details>'
+    if (-not [regex]::IsMatch($page, $speedRe)) { throw "$($c.Slug): shared 'how fast' FAQ not found to de-duplicate - its template wording changed" }
+    $page = [regex]::Replace($page, $speedRe, '')
   }
 
   # 8. one-off copy fix: we do not do remote programming
