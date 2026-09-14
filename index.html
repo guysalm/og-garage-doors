@@ -602,6 +602,8 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
 .footer__phone svg{width:16px;height:16px;fill:var(--crimson-2)}
 .footer__mail{display:flex;width:max-content;max-width:100%;align-items:center;gap:9px;color:#fff;font-weight:700;font-size:1.12rem;margin-top:10px}
 .footer__mail svg{width:17px;height:17px;fill:var(--crimson-2);flex:none}
+.footer__hours{margin:14px 0 0;line-height:1.55}
+.footer__hours svg{width:15px;height:15px;fill:var(--crimson-2);vertical-align:-2px;margin-right:7px}
 .footer__addr{font-style:normal;margin-top:14px;line-height:1.55}
 .footer__addr svg{width:15px;height:15px;fill:var(--crimson-2);vertical-align:-2px;margin-right:7px}
 .footer__pay{display:flex;flex-direction:column;gap:9px;margin:24px 0 0}
@@ -1353,6 +1355,11 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
           Contact us
         </a>
+        <!-- outside the NAP block on purpose: availability applies to every page -->
+        <p class="footer__hours">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 10.4 3.2 1.9-.8 1.3L11 13V7h2v5.4z"/></svg>
+          Available 24/7 for emergency repairs
+        </p>
         <!-- NAP:start - home page only. The build script strips this block
              from the city pages: one business has one address, and repeating it
              on eleven URLs is eleven inconsistent copies waiting to happen. -->
