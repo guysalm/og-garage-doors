@@ -222,8 +222,7 @@ foreach ($k in $homeVals.Keys) { $homePage = $homePage.Replace("{{$k}}", $homeVa
 $homePage = [regex]::Replace($homePage, '(?m)^(\s*page_url\s*:\s*")(.*?)(")', { param($m) $m.Groups[1].Value + $SITE.site_url + $m.Groups[3].Value })
 
 # The home page must not compete with the Sarasota page for "garage door repair
-# Sarasota". It targets the region; each city page owns its own city. The
-# postal address stays Sarasota because that is where the business actually is.
+# Sarasota". It targets the region; each city page owns its own city.
 $homeTitle = "Garage Door Repair SW Florida &amp; Tampa Bay | 24/7 Service"
 $homeDesc  = "Same-day garage door repair across Southwest Florida and Tampa Bay. Licensed &amp; insured, 24/7 emergency service, free estimates. Call $($SITE.phone_display)."
 $homePage = [regex]::Replace($homePage, '(?s)<title>.*?</title>', "<title>$homeTitle</title>")
@@ -302,8 +301,8 @@ foreach ($c in $cities) {
   # 6. schema: a city page describes the service in that city and points at the
   # single business entity, which lives on the home page. Eleven copies of the
   # same LocalBusiness - one @id, eleven urls, the same phone, email and rating
-  # in each - is one business described eleven contradictory ways. The NAP is
-  # declared once, on the home page; here provider just references it by @id.
+  # in each - is one business described eleven contradictory ways. The
+  # business entity lives on the home page; provider references it by @id.
   $catalog = [regex]::Match($page, '(?s)"hasOfferCatalog":\s*\{.*?\n  \}').Value
   if (-not $catalog) { throw "Could not read hasOfferCatalog out of $($c.Slug)" }
   $serviceLd = @"
@@ -391,17 +390,6 @@ foreach ($c in $cities) {
 
   # 8. one-off copy fix: we do not do remote programming
   $page = $page.Replace("Safety Sensor Alignment &amp; Remote Control Programming", "Safety Sensor Alignment &amp; Keypad Programming")
-
-  # 8b. NAP on the home page only: the street address belongs to one business
-  # at one location, and eleven pages each claiming it is eleven chances for the
-  # citation to drift. The home page carries it in the footer and in the
-  # LocalBusiness schema; these pages point at that entity by @id. The markup
-  # goes, and so do the copies left in the token comment and the runtime SITE
-  # object - "home page only" has to mean the source too, not just the render.
-  $page = [regex]::Replace($page, '(?s)\s*<!-- NAP:start.*?NAP:end -->', '')
-  $napDoc = [regex]::Escape("$($SITE.street_address)  $($SITE.address_city)  $($SITE.address_region)  $($SITE.address_zip)")
-  $page = [regex]::Replace($page, "(?m)^\s*$napDoc\r?\n\s*the NAP - rendered on the home page only.*?\r?\n", "")
-  $page = [regex]::Replace($page, '(?m)^\s*(street_address|address_city|address_region|address_zip)\s*:\s*"[^"]*",\r?\n', '')
 
   # 9. this city's own footer link should not point at itself
   $page = $page.Replace("<a href=""/$($c.Slug)"">", "<a href=""/$($c.Slug)"" aria-current=""page"">")
@@ -497,6 +485,20 @@ $robots = "User-agent: *`nAllow: /`nDisallow: /tools/`n`nSitemap: $base/sitemap.
 # ------------------------------------------------------------------- verify
 # Every deployed page must carry a self-referencing canonical and no leftover
 # tokens, or search engines are told to consolidate it somewhere else.
+# PowerShell's ConvertFrom-Json accepts JSON-LD with a raw line break inside a
+# string; Google does not, and drops the whole block. Scan for it directly.
+function Test-JsonControlChars([string]$json) {
+  $inStr = $false; $esc = $false
+  foreach ($ch in $json.ToCharArray()) {
+    if ($inStr) {
+      if ($esc) { $esc = $false; continue }
+      if ($ch -eq [char]92) { $esc = $true; continue }
+      if ($ch -eq [char]34) { $inStr = $false; continue }
+      if ([int]$ch -lt 32) { return ('a raw 0x{0:X2} character' -f [int]$ch) }
+    } elseif ($ch -eq [char]34) { $inStr = $true }
+  }
+  return $null
+}
 $problems = @()
 $firstH2 = @{}
 $titleWidths = @()
@@ -511,6 +513,13 @@ foreach ($file in $checks.Keys) {
   if ($can -ne $checks[$file]) { $problems += "$name canonical is '$can', expected '$($checks[$file])'" }
   if ($ogu -ne $checks[$file]) { $problems += "$name og:url is '$ogu', expected '$($checks[$file])'" }
   if ($t -match '\{\{\w+\}\}')  { $problems += "$name still contains template tokens" }
+  # service-area business: no postal address may be published, in markup or schema
+  if ($t -match 'PostalAddress|streetAddress|<address[\s>]') { $problems += "$name publishes a postal address - this is a service-area business" }
+
+  foreach ($ldm in [regex]::Matches($t, '(?s)<script type="application/ld\+json">(.*?)</script>')) {
+    $bad = Test-JsonControlChars $ldm.Groups[1].Value
+    if ($bad) { $problems += "$name JSON-LD has $bad inside a string - invalid JSON" }
+  }
 
   $title = [regex]::Match($t, '(?s)<title>(.*?)</title>').Groups[1].Value
   $px = TitlePx $title
