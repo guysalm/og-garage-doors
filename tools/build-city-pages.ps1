@@ -110,6 +110,22 @@ $heroH2Overrides = @{
 }
 $HOME_HERO_H2 = "Serving Southwest Florida and Tampa Bay, Day and Night"
 
+# ---------------------------------------------------------------- what ships
+# TEMPORARY Venice-first setup. Restore the full site with:
+#     $HOME_CITY = ""   and   $ACTIVE_CITIES = $null   and   $SERVED_CITIES = $null
+# then re-run. Nothing is lost by switching: the city copy, FAQs and zip codes
+# are read from reference/, and every page not built here is in git history.
+$HOME_CITY     = "garage-door-repair-venice-fl"   # "" = region-level home page
+$ACTIVE_CITIES = @(                               # $null = build all ten
+  "garage-door-repair-englewood-fl",
+  "garage-door-repair-north-port-fl"
+)
+$SERVED_CITIES = @(                               # footer + areaServed; $null = all ten
+  "garage-door-repair-venice-fl",
+  "garage-door-repair-englewood-fl",
+  "garage-door-repair-north-port-fl"
+)
+
 # Which cities each page points at. Two clusters that do not overlap: the
 # Sarasota-to-Fort-Myers coast, and Tampa Bay. Linking a Venice customer to
 # Brandon, 60 miles away, helps nobody - the footer should read like a local
@@ -209,32 +225,154 @@ foreach ($bm in [regex]::Matches($raw, $blockRe)) {
 
 Write-Host "Parsed $($cities.Count) cities"
 
+# ---------------------------------------------------------- page-part builders
+# Shared by the home page and the city pages, so the two cannot drift apart.
+function Build-LocalSection($c, $vals) {
+  $sb = New-Object System.Text.StringBuilder
+  [void]$sb.Append("`n  <!-- ==================== LOCAL: $($c.City.ToUpper()) ==================== -->`n")
+  [void]$sb.Append("  <section class=""section local"" id=""local"" aria-labelledby=""local-title"">`n")
+  [void]$sb.Append("    <div class=""wrap"">`n")
+  [void]$sb.Append("      <h2 class=""section-title section-title--rule"" id=""local-title"">Garage Door Repair in $(HtmlEscape $c.City), FL</h2>`n")
+  [void]$sb.Append("      <div class=""local__grid"">`n        <div>`n")
+  [void]$sb.Append("          <p class=""local__lead"">$(HtmlEscape $c.HeroPara)</p>`n")
+  if ($c.HeroBul.Count) {
+    [void]$sb.Append("          <ul class=""checks local__highlights"">`n")
+    foreach ($h in $c.HeroBul) { [void]$sb.Append("            <li>$(HtmlEscape $h)</li>`n") }
+    [void]$sb.Append("          </ul>`n")
+  }
+  foreach ($p in $c.LocalP) { [void]$sb.Append("          <p>$(HtmlEscape $p)</p>`n") }
+  [void]$sb.Append("        </div>`n`n        <aside class=""local__aside"">`n")
+  [void]$sb.Append("          <h3>Services We Provide in $(HtmlEscape $c.City)</h3>`n          <ul class=""checks"">`n")
+  foreach ($s in $c.Services) {
+    # the supplied copy still lists remote programming, which we do not offer
+    $s = $s -replace 'Remote Control Programming', 'Keypad Programming'
+    [void]$sb.Append("            <li>$(HtmlEscape $s)</li>`n")
+  }
+  [void]$sb.Append("          </ul>`n")
+  [void]$sb.Append("          <h3>Local Service Area</h3>`n")
+  [void]$sb.Append("          <p>$(HtmlEscape $c.AreaText)</p>`n")
+  if ($c.Zips) { [void]$sb.Append("          <p class=""local__zips""><strong>Zip codes served:</strong> $(HtmlEscape $c.Zips)</p>`n") }
+  [void]$sb.Append("          <p><a class=""btn btn--call"" href=""tel:$($vals.phone_number)"" data-cta=""local-call"">Call $(HtmlEscape $vals.phone_display)</a></p>`n")
+  [void]$sb.Append("        </aside>`n      </div>`n    </div>`n  </section>`n")
+  return $sb.ToString()
+}
+
+function Add-CityFaqs([string]$page, $c) {
+  $fb = New-Object System.Text.StringBuilder
+  $first = $true
+  foreach ($f in $c.Faqs) {
+    $open = if ($first) { " open" } else { "" }
+    $first = $false
+    [void]$fb.Append("        <details$open>`n")
+    [void]$fb.Append("          <summary>$(HtmlEscape $f[0])</summary>`n")
+    [void]$fb.Append("          <p>$(HtmlEscape $f[1])</p>`n")
+    [void]$fb.Append("        </details>`n")
+  }
+  $faqStart = '      <div class="faq">'
+  $idx = $page.IndexOf($faqStart)
+  if ($idx -ge 0) {
+    $after = $page.Substring($idx + $faqStart.Length)
+    # drop the "open" on the first shared question so only the city one starts open
+    $after = [regex]::Replace($after, '^\s*\r?\n\s*<details open>', "`n        <details>", 1)
+    $page = $page.Substring(0, $idx + $faqStart.Length) + "`n" + $fb.ToString() + $after
+  }
+
+  # if the city already answers "how fast can you get here", drop the generic
+  # version rather than asking near-identical questions twice
+  $asksSpeed = $false
+  foreach ($f in $c.Faqs) { if ($f[0] -match '(?i)how (quickly|fast|soon)|reach my home') { $asksSpeed = $true } }
+  if ($asksSpeed) {
+    # matched on the template's exact wording, so fail loudly if that wording
+    # changes - otherwise the duplicate question silently comes back
+    $speedRe = '(?s)\s*<details>\s*<summary>How fast can a technician get to my home\?</summary>.*?</details>'
+    if (-not [regex]::IsMatch($page, $speedRe)) { throw "$($c.Slug): shared 'how fast' FAQ not found to de-duplicate - its template wording changed" }
+    $page = [regex]::Replace($page, $speedRe, '')
+  }
+  return $page
+}
+function Build-AreaLinks($list, $currentSlug) {
+  # only link to pages that are actually generated: the current page is not a
+  # link to itself, and an area with no page of its own is named in plain text
+  $items = ($list | ForEach-Object {
+    $slug  = $_.Slug
+    $label = if ($areaLabels.ContainsKey($slug)) { $areaLabels[$slug] } else { $_.City }
+    if ($slug -eq $currentSlug) { "          <li class=""area-plain"" aria-current=""page"">$label</li>" }
+    elseif ($slug -eq $HOME_CITY) { "          <li><a href=""/"">$label</a></li>" }
+    elseif ($null -eq $ACTIVE_CITIES -or $ACTIVE_CITIES -contains $slug) { "          <li><a href=""/$slug"">$label</a></li>" }
+    else { "          <li class=""area-plain"">$label</li>" }
+  }) -join "`n"
+  return "<h3 id=""footer-areas"">Service Areas</h3>`n        <ul class=""footer-links"">`n$items`n        </ul>"
+}
 # ----------------------------------------------------------------- home page
 # The template must never ship as-is: Screaming Frog and Googlebot's first pass
 # read raw HTML, and an unrendered <link rel="canonical" href="{{page_url}}">
 # resolves to a different URL, which is exactly the "canonicalised" report.
+$homeCity = $null
+if ($HOME_CITY) {
+  $homeCity = $cities | Where-Object { $_.Slug -eq $HOME_CITY } | Select-Object -First 1
+  if (-not $homeCity) { throw "HOME_CITY '$HOME_CITY' is not in the city content file" }
+}
+
+# the areas named in the footer and in areaServed
+$servedCities = if ($null -eq $SERVED_CITIES) { $cities } else {
+  $SERVED_CITIES | ForEach-Object {
+    $sl  = $_
+    $hit = $cities | Where-Object { $_.Slug -eq $sl } | Select-Object -First 1
+    if (-not $hit) { throw "SERVED_CITIES lists '$sl', which is not in the city content file" }
+    $hit
+  }
+}
+
 $homePage = $tpl
 $homeVals = @{}
 foreach ($k in $SITE.Keys) { $homeVals[$k] = $SITE[$k] }
 $homeVals["page_url"] = $SITE.site_url          # the home page is the site root
-$homeVals["hero_h2"] = $HOME_HERO_H2
+$homeVals["hero_h2"]  = $HOME_HERO_H2
+if ($homeCity) {
+  # the home page IS this city's page, so no separate city page competes with it
+  $homeVals["location"]     = "$($homeCity.City), FL"
+  $homeVals["zip"]          = $homeCity.FirstZip
+  $homeVals["service_area"] = (($servedCities | ForEach-Object { $_.City }) -join ", ")
+  if ($heroH2Overrides.ContainsKey($homeCity.Slug)) { $homeVals["hero_h2"] = $heroH2Overrides[$homeCity.Slug] }
+}
 foreach ($k in $homeVals.Keys) { $homePage = $homePage.Replace("{{$k}}", $homeVals[$k]) }
 $homePage = [regex]::Replace($homePage, '(?m)^(\s*page_url\s*:\s*")(.*?)(")', { param($m) $m.Groups[1].Value + $SITE.site_url + $m.Groups[3].Value })
 
-# The home page must not compete with the Sarasota page for "garage door repair
-# Sarasota". It targets the region; each city page owns its own city.
-$homeTitle = "Garage Door Repair SW Florida &amp; Tampa Bay | 24/7 Service"
-$homeDesc  = "Same-day garage door repair across Southwest Florida and Tampa Bay. Licensed &amp; insured, 24/7 emergency service, free estimates. Call $($SITE.phone_display)."
+# keep the runtime SITE object in step with the tokens
+$newHomeSite = $siteBlock
+foreach ($k in @("location","zip","page_url","service_area")) {
+  $newHomeSite = [regex]::Replace($newHomeSite, "(?m)^(\s*$k\s*:\s*"")(.*?)("")", { param($m) $m.Groups[1].Value + $homeVals[$k] + $m.Groups[3].Value })
+}
+$homePage = $homePage.Replace($siteBlock, $newHomeSite)
+
+if ($homeCity) {
+  $homeTitle = HtmlEscape $homeCity.Title
+  $homeDesc  = HtmlEscape $homeCity.Desc
+} else {
+  # a region-level home page must not compete with any single city page
+  $homeTitle = "Garage Door Repair SW Florida &amp; Tampa Bay | 24/7 Service"
+  $homeDesc  = "Same-day garage door repair across Southwest Florida and Tampa Bay. Licensed &amp; insured, 24/7 emergency service, free estimates. Call $($SITE.phone_display)."
+}
 $homePage = [regex]::Replace($homePage, '(?s)<title>.*?</title>', "<title>$homeTitle</title>")
 $homePage = [regex]::Replace($homePage, '<meta name="description" content=".*?">', "<meta name=""description"" content=""$homeDesc"">")
 $homePage = [regex]::Replace($homePage, '<meta property="og:title" content=".*?">', "<meta property=""og:title"" content=""$homeTitle"">")
 $homePage = [regex]::Replace($homePage, '<meta property="og:description" content=".*?">', "<meta property=""og:description"" content=""$homeDesc"">")
 
+if ($homeCity) {
+  $homePage = [regex]::Replace($homePage, '(?s)(<h1 id="hero-title">).*?(</h1>)', "`${1}$(HtmlEscape $homeCity.H1)`${2}")
+  $homeAbout = '  <!-- ==================== ABOUT ==================== -->'
+  $homePage  = $homePage.Replace($homeAbout, (Build-LocalSection $homeCity $homeVals) + "`n" + $homeAbout)
+  $homePage  = Add-CityFaqs $homePage $homeCity
+}
+
 # a region is not a schema.org City, so list the markets actually served
-$areaList = ($cities | ForEach-Object { "      { ""@type"": ""City"", ""name"": ""$($_.City), FL"" }" }) -join ",`n"
+$areaList = ($servedCities | ForEach-Object { "      { ""@type"": ""City"", ""name"": ""$($_.City), FL"" }" }) -join ",`n"
 $homePage = [regex]::Replace($homePage,
   '"areaServed": \{ "@type": "City", "name": "[^"]*" \},',
   """areaServed"": [`n$areaList`n  ],")
+
+$homeAreas = Build-AreaLinks $servedCities $HOME_CITY
+$homePage  = [regex]::Replace($homePage, '(?s)<h3 id="footer-areas">.*?</ul>', { param($m) $homeAreas })
 
 $leftover = [regex]::Matches($homePage, '\{\{\w+\}\}')
 if ($leftover.Count) { throw "Home page still has unresolved tokens: $(($leftover | ForEach-Object { $_.Value } | Select-Object -Unique) -join ', ')" }
@@ -246,6 +384,7 @@ Write-Host "index.html                                     $([int]((Get-Item (Jo
 $built = @()
 
 foreach ($c in $cities) {
+  if ($null -ne $ACTIVE_CITIES -and $ACTIVE_CITIES -notcontains $c.Slug) { continue }
   $loc = "$($c.City), FL"
   # extensionless: Netlify serves page.html at /page and 301s /page.html -> /page,
   # so canonicals and internal links must use the extensionless form or every
@@ -285,15 +424,19 @@ foreach ($c in $cities) {
   # 4. H1
   $page = [regex]::Replace($page, '(?s)(<h1 id="hero-title">).*?(</h1>)', "`${1}$(HtmlEscape $c.H1)`${2}")
 
-  # 5. footer service areas: the neighbouring cities, not all ten
-  $near = $neighbours[$c.Slug]
-  if (-not $near) { throw "No neighbouring cities listed for $($c.Slug)" }
-  $items = ($near | ForEach-Object {
-    if (-not $areaLabels.ContainsKey($_)) { throw "No footer label for $_" }
-    "          <li><a href=""/$_"">$($areaLabels[$_])</a></li>"
-  }) -join "`n"
-  $areasBlock = "<h3 id=""footer-areas"">Nearby Service Areas</h3>`n" +
-                "        <ul class=""footer-links"">`n$items`n        </ul>"
+  # 5. footer service areas
+  if ($null -ne $SERVED_CITIES) {
+    $areasBlock = Build-AreaLinks $servedCities $c.Slug
+  } else {
+    $near = $neighbours[$c.Slug]
+    if (-not $near) { throw "No neighbouring cities listed for $($c.Slug)" }
+    $items = ($near | ForEach-Object {
+      if (-not $areaLabels.ContainsKey($_)) { throw "No footer label for $_" }
+      "          <li><a href=""/$_"">$($areaLabels[$_])</a></li>"
+    }) -join "`n"
+    $areasBlock = "<h3 id=""footer-areas"">Nearby Service Areas</h3>`n" +
+                  "        <ul class=""footer-links"">`n$items`n        </ul>"
+  }
   $page = [regex]::Replace($page, '(?s)<h3 id="footer-areas">.*?</ul>', { param($m) $areasBlock })
 
 
@@ -333,66 +476,12 @@ foreach ($c in $cities) {
   $page = [regex]::Replace($page, '(?s)<a class="brand" href="/"[^>]*>(.*?)</a>',
     { param($m) '<span class="brand">' + $m.Groups[1].Value + '</span>' })
   # 8. local content section, inserted before About
-  $sb = New-Object System.Text.StringBuilder
-  [void]$sb.Append("`n  <!-- ==================== LOCAL: $($c.City.ToUpper()) ==================== -->`n")
-  [void]$sb.Append("  <section class=""section local"" id=""local"" aria-labelledby=""local-title"">`n")
-  [void]$sb.Append("    <div class=""wrap"">`n")
-  [void]$sb.Append("      <h2 class=""section-title section-title--rule"" id=""local-title"">Garage Door Repair in $(HtmlEscape $c.City), FL</h2>`n")
-  [void]$sb.Append("      <div class=""local__grid"">`n        <div>`n")
-  [void]$sb.Append("          <p class=""local__lead"">$(HtmlEscape $c.HeroPara)</p>`n")
-  if ($c.HeroBul.Count) {
-    [void]$sb.Append("          <ul class=""checks local__highlights"">`n")
-    foreach ($h in $c.HeroBul) { [void]$sb.Append("            <li>$(HtmlEscape $h)</li>`n") }
-    [void]$sb.Append("          </ul>`n")
-  }
-  foreach ($p in $c.LocalP) { [void]$sb.Append("          <p>$(HtmlEscape $p)</p>`n") }
-  [void]$sb.Append("        </div>`n`n        <aside class=""local__aside"">`n")
-  [void]$sb.Append("          <h3>Services We Provide in $(HtmlEscape $c.City)</h3>`n          <ul class=""checks"">`n")
-  foreach ($s in $c.Services) { [void]$sb.Append("            <li>$(HtmlEscape $s)</li>`n") }
-  [void]$sb.Append("          </ul>`n")
-  [void]$sb.Append("          <h3>Local Service Area</h3>`n")
-  [void]$sb.Append("          <p>$(HtmlEscape $c.AreaText)</p>`n")
-  if ($c.Zips) { [void]$sb.Append("          <p class=""local__zips""><strong>Zip codes served:</strong> $(HtmlEscape $c.Zips)</p>`n") }
-  [void]$sb.Append("          <p><a class=""btn btn--call"" href=""tel:$($vals.phone_number)"" data-cta=""local-call"">Call $(HtmlEscape $vals.phone_display)</a></p>`n")
-  [void]$sb.Append("        </aside>`n      </div>`n    </div>`n  </section>`n")
-
   $aboutMarker = '  <!-- ==================== ABOUT ==================== -->'
-  $page = $page.Replace($aboutMarker, $sb.ToString() + "`n" + $aboutMarker)
+  $page = $page.Replace($aboutMarker, (Build-LocalSection $c $vals) + "`n" + $aboutMarker)
 
-  # 7. FAQ - city questions first, then the shared ones
-  $fb = New-Object System.Text.StringBuilder
-  $first = $true
-  foreach ($f in $c.Faqs) {
-    $open = if ($first) { " open" } else { "" }
-    $first = $false
-    [void]$fb.Append("        <details$open>`n")
-    [void]$fb.Append("          <summary>$(HtmlEscape $f[0])</summary>`n")
-    [void]$fb.Append("          <p>$(HtmlEscape $f[1])</p>`n")
-    [void]$fb.Append("        </details>`n")
-  }
-  $faqStart = '      <div class="faq">'
-  $idx = $page.IndexOf($faqStart)
-  if ($idx -ge 0) {
-    $after = $page.Substring($idx + $faqStart.Length)
-    # drop the "open" on the first shared question so only the city one starts open
-    $after = [regex]::Replace($after, '^\s*\r?\n\s*<details open>', "`n        <details>", 1)
-    $page = $page.Substring(0, $idx + $faqStart.Length) + "`n" + $fb.ToString() + $after
-  }
+  # 7. FAQ - city questions first, then the shared ones, de-duplicated
+  $page = Add-CityFaqs $page $c
 
-  # 7b. if the city already answers "how fast can you get here", drop the
-  #     generic version rather than asking near-identical questions twice
-  $asksSpeed = $false
-  foreach ($f in $c.Faqs) { if ($f[0] -match '(?i)how (quickly|fast|soon)|reach my home') { $asksSpeed = $true } }
-  if ($asksSpeed) {
-    # matched on the template's exact wording, so fail loudly if that wording
-    # changes - otherwise the duplicate question silently comes back
-    $speedRe = '(?s)\s*<details>\s*<summary>How fast can a technician get to my home\?</summary>.*?</details>'
-    if (-not [regex]::IsMatch($page, $speedRe)) { throw "$($c.Slug): shared 'how fast' FAQ not found to de-duplicate - its template wording changed" }
-    $page = [regex]::Replace($page, $speedRe, '')
-  }
-
-  # 8. one-off copy fix: we do not do remote programming
-  $page = $page.Replace("Safety Sensor Alignment &amp; Remote Control Programming", "Safety Sensor Alignment &amp; Keypad Programming")
 
   # 9. this city's own footer link should not point at itself
   $page = $page.Replace("<a href=""/$($c.Slug)"">", "<a href=""/$($c.Slug)"" aria-current=""page"">")
@@ -518,6 +607,7 @@ foreach ($file in $checks.Keys) {
   if ($t -match '\{\{\w+\}\}')  { $problems += "$name still contains template tokens" }
   # service-area business: no postal address may be published, in markup or schema
   if ($t -match 'PostalAddress|streetAddress|<address[\s>]') { $problems += "$name publishes a postal address - this is a service-area business" }
+  if ($t -match 'Remote Control Programming') { $problems += "$name lists remote programming, a service we do not offer" }
 
   foreach ($ldm in [regex]::Matches($t, '(?s)<script type="application/ld\+json">(.*?)</script>')) {
     $bad = Test-JsonControlChars $ldm.Groups[1].Value
@@ -539,6 +629,14 @@ foreach ($file in $checks.Keys) {
   }
   if ($t -match '\.htmlassets') { $problems += "$name has a malformed asset URL" }
   if ($t -match 'href="/[a-z0-9-]+\.html"') { $problems += "$name links to a .html URL (should be extensionless)" }
+  # a link to a page we no longer build is a 404 in the footer of every page
+  foreach ($lnk in [regex]::Matches($t, 'href="(/[^"#?]*)"')) {
+    $target = $lnk.Groups[1].Value
+    if ($target -eq "/") { continue }
+    if (-not (Test-Path (Join-Path $root (($target.TrimStart('/') -replace '/','\') + ".html")))) {
+      $problems += "$name links to $target, which is not generated"
+    }
+  }
 
   # rel="nofollow" belongs on outbound links only. On an internal link it tells
   # search engines not to follow a URL of ours - and href="#" is internal, it

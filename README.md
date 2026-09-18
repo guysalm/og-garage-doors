@@ -1,13 +1,13 @@
 # OG Garage Doors
 
 Garage door service website for Florida. Hand-written HTML5 + CSS3 + vanilla ES6,
-no dependencies and no bundler. One template page, plus ten generated city
-landing pages.
+no dependencies and no bundler. One template generates the home page and the
+city landing pages. Currently in **Venice-first mode** - see the last section.
 
 ```
 og-garage-doors/
 ├─ index.html                              # GENERATED home page
-├─ garage-door-repair-<city>-fl.html       # 10 generated city pages
+├─ garage-door-repair-<city>-fl.html       # generated city pages (2 in Venice-first mode)
 ├─ sitemap.xml, robots.txt                 # generated
 ├─ netlify.toml                            # publish root, no build step
 ├─ tools/template.html                     # the source of truth — edit this
@@ -51,7 +51,7 @@ localized copy, service list, zip codes and FAQs:
 | Tampa | `garage-door-repair-tampa-fl.html` |
 | St. Pete & Clearwater | `garage-door-repair-st-petersburg-clearwater-fl.html` |
 
-All eleven pages are **generated, not hand-edited**. Edit `tools/template.html`
+All pages are **generated, not hand-edited**. Which cities are built is set by `$ACTIVE_CITIES` (see Venice-first mode). Edit `tools/template.html`
 (or the content file in
 `reference/`) and re-run:
 
@@ -149,9 +149,38 @@ title exceeds 561px or description 985px when measured in the SERP font
       service-area business, so the schema uses `areaServed` only.
 - [x] Form posts to **Netlify Forms** (`name="contact"`). Deploy to Netlify and
       submissions appear under Forms → contact.
-- [x] `robots.txt` + `sitemap.xml` generated with all 11 URLs.
+- [x] `robots.txt` + `sitemap.xml` generated for every page that ships.
 - [ ] Replace the remaining SVG placeholders in `assets/img/` (avatars, guarantee
       badges, the OG logo) — see `assets/README.md`.
 - [ ] Confirm the ten reviews are genuine, then add `Review` + a corrected
       `AggregateRating` to the JSON-LD. The current `5.0 / 127` is placeholder.
 - [ ] Confirm you are licensed to display every third-party logo on the page.
+
+## Temporary: Venice-first mode
+
+Three pages ship: the **home page is the Venice page**, plus Englewood and North
+Port. The service area is Venice, Englewood and North Port, in the footer and in
+the schema's `areaServed`.
+
+Set at the top of `tools/build-city-pages.ps1`:
+
+```powershell
+$HOME_CITY     = "garage-door-repair-venice-fl"   # the home page IS this city's page
+$ACTIVE_CITIES = @("garage-door-repair-englewood-fl", "garage-door-repair-north-port-fl")
+$SERVED_CITIES = @("garage-door-repair-venice-fl", "garage-door-repair-englewood-fl", "garage-door-repair-north-port-fl")
+```
+
+There is no separate Venice page: the home page targets Venice, so a second
+Venice URL would compete with it for the same searches.
+
+**To restore all eleven pages**, set those three to:
+
+```powershell
+$HOME_CITY     = ""
+$ACTIVE_CITIES = $null
+$SERVED_CITIES = $null
+```
+
+then re-run the generator. Nothing is lost in the meantime — every city's copy,
+FAQs and zip codes are read from `reference/`, and the pages removed here stay
+in git history.
