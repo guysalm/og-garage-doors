@@ -74,13 +74,13 @@ function DescPx([string]$s)  { return MeasurePx $s $descFont }
 # The supplied meta titles ran 562-621px, past the truncation point. These are
 # trimmed versions; the keyword and city stay at the front either way.
 $titleOverrides = @{
-  "garage-door-repair-englewood-fl"                = "Garage Door Repair Englewood FL | Salt-Air Specialists"
+  "garage-door-repair-englewood-fl"                = "Garage Door Repair Englewood FL | Same-Day Service 24/7"
   "garage-door-repair-fort-myers-fl"               = "Garage Door Repair Fort Myers FL | Hurricane Code Pros"
-  "garage-door-repair-north-port-fl"               = "Garage Door Repair North Port FL | Fast Smart-Home Setup"
+  "garage-door-repair-north-port-fl"               = "Garage Door Repair North Port FL | Same-Day Service 24/7"
   "garage-door-repair-sarasota-fl"                 = "Garage Door Repair Sarasota FL | Same-Day Emergency"
   "garage-door-repair-st-petersburg-clearwater-fl" = "Garage Door Repair St. Pete & Clearwater FL | Coastal Pros"
   "garage-door-repair-tampa-fl"                    = "Garage Door Repair Tampa FL | Custom Doors & Repairs"
-  "garage-door-repair-venice-fl"                   = "Garage Door Repair Venice FL | Same-Day Service"
+  "garage-door-repair-venice-fl"                   = "Garage Door Repair Venice FL | Same-Day Service 24/7"
 }
 
 # H1s lead with the exact query - "Garage Door Repair in <City>, FL" - not with
