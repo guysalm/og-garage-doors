@@ -95,6 +95,15 @@ $h1Overrides = @{
   "garage-door-repair-fort-myers-fl"               = "Garage Door Repair in Fort Myers, FL - Wind-Code Doors"
   "garage-door-repair-st-petersburg-clearwater-fl" = "Garage Door Repair in St. Pete & Clearwater, FL"
 }
+# The supplied descriptions sold one niche each and two had no call to action
+# at all, which the spec asks for. These lead with the query and the city, name
+# what we actually fix, and end on a reason to call. Phone comes from SITE so it
+# cannot drift; the build fails if any of these pass 985px in the SERP font.
+$descOverrides = @{
+  "garage-door-repair-venice-fl"     = "Garage door repair in Venice, FL - springs, cables, openers and new doors. Licensed, insured, 24/7 emergency service. Free estimates, call $($SITE.phone_display)."
+  "garage-door-repair-englewood-fl"  = "Garage door repair in Englewood, FL. Rust-resistant springs, cables and hardware built for salt air. Same-day service, free estimates, call $($SITE.phone_display)."
+  "garage-door-repair-north-port-fl" = "Garage door repair in North Port, FL. Spring and cable fixes, smart opener installs, insulated doors. Same-day service, call $($SITE.phone_display)."
+}
 
 # The hero H2 sits directly under the H1, so repeating the H1 with a question
 # mark wastes it. Each one leads with what that page's own copy says is
@@ -214,7 +223,7 @@ foreach ($bm in [regex]::Matches($raw, $blockRe)) {
     Slug     = $slug
     City     = $cityName
     Title    = $(if ($titleOverrides.ContainsKey($slug)) { $titleOverrides[$slug] } else { Field '\[META TITLE\]:\s*(.+)' })
-    Desc     = Field '\[META DESCRIPTION\]:\s*(.+)'
+    Desc     = $(if ($descOverrides.ContainsKey($slug)) { $descOverrides[$slug] } else { Field '\[META DESCRIPTION\]:\s*(.+)' })
     H1       = $(if ($h1Overrides.ContainsKey($slug)) { $h1Overrides[$slug] } else { Field '\[H1\]:\s*(.+)' })
     HeroPara = $heroPara
     HeroBul  = $heroBul
