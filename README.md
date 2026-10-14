@@ -140,13 +140,20 @@ type is the right one.
 The build asserts every page has a self-referencing canonical, that no served
 image exceeds 100KB, and that no
 title exceeds 561px or description 985px when measured in the SERP font
-(Arial 20px / 14px) — Google truncates on pixel width, not character count.
+(Arial 20px / 14px) — Google truncates on pixel width, $1
+It also asserts the address: a footer `<address>` carrying the street, city,
+state and zip from `SITE` on every page, `PostalAddress` in the home page's
+JSON-LD, and **no** `PostalAddress` on a city page - those carry a `Service`
+that points at the business by @id, so repeating the entity would describe one
+business three contradictory ways.
 
 ## Before launch
 
-- [ ] Fill real values in `SITE` (phone, WhatsApp, email, domain), then
-      re-run the generator. No postal address is published — this is a
-      service-area business, so the schema uses `areaServed` only.
+- [x] Real values filled in `SITE` (phone, email, domain, address), generator
+      re-run. The Venice unit is a staffed location, so the NAP is published:
+      the footer `<address>` on every page, and `PostalAddress` in the home
+      page's `LocalBusiness`. The site NAP and the Google Business Profile must
+      stay identical, character for character.
 - [x] Form posts to **Netlify Forms** (`name="contact"`). Deploy to Netlify and
       submissions appear under Forms → contact.
 - [x] `robots.txt` + `sitemap.xml` generated for every page that ships.

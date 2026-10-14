@@ -618,8 +618,22 @@ foreach ($file in $checks.Keys) {
   if ($can -ne $checks[$file]) { $problems += "$name canonical is '$can', expected '$($checks[$file])'" }
   if ($ogu -ne $checks[$file]) { $problems += "$name og:url is '$ogu', expected '$($checks[$file])'" }
   if ($t -match '\{\{\w+\}\}')  { $problems += "$name still contains template tokens" }
-  # service-area business: no postal address may be published, in markup or schema
-  if ($t -match 'PostalAddress|streetAddress|<address[\s>]') { $problems += "$name publishes a postal address - this is a service-area business" }
+  # the Venice unit is a real, staffed location, so every page publishes the same
+  # NAP: once in the footer for people, once as PostalAddress for crawlers. The
+  # street must match SITE exactly - a footer and a schema that disagree is worse
+  # than either alone, and Google reads the pair as two different businesses.
+  if ($t -notmatch '<address[\s>]') { $problems += "$name has no <address> block in the footer" }
+  # the LocalBusiness entity is defined once, on the home page; city pages carry a
+  # Service that references it by @id, so only the home page states the address in
+  # schema. Both kinds state it in the footer.
+  if ($name -eq 'index.html') {
+    if ($t -notmatch '"@type":\s*"PostalAddress"') { $problems += "$name has no PostalAddress in the JSON-LD" }
+  } elseif ($t -match '"@type":\s*"PostalAddress"') {
+    $problems += "$name repeats the PostalAddress - the business entity belongs on the home page only"
+  }
+  foreach ($bit in @($SITE.address_locality, $SITE.address_region, $SITE.postal_code)) {
+    if ($t -notmatch [regex]::Escape($bit)) { $problems += "$name is missing '$bit' from the published address" }
+  }
   if ($t -match 'Remote Control Programming') { $problems += "$name lists remote programming, a service we do not offer" }
 
   foreach ($ldm in [regex]::Matches($t, '(?s)<script type="application/ld\+json">(.*?)</script>')) {

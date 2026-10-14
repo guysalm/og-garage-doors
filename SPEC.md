@@ -25,7 +25,6 @@ Garage door service website, Florida. Single-file / no-build, vanilla HTML5 + CS
 
 ## Open items (awaiting instructions)
 - Services list, service areas / cities
-- Phone number, business address, hours
 - Branding: colors, logo, fonts
 - Page set (single landing page vs. multi-page)
 - Photos / assets
@@ -58,7 +57,7 @@ template. City landing pages come next, from `reference/` city copy.
 - Semantic HTML5: `header` / `nav` / `main` / `section` / `article` / `footer`
 - One `<h1>` in the hero; h2 sections; h3 subsections (no skipped levels)
 - Meta title, description, canonical, Open Graph, `robots: index, follow`
-- `LocalBusiness` JSON-LD with `areaServed` and no postal address (service-area business), 24/7 hours,
+- `LocalBusiness` JSON-LD with `areaServed` and a `PostalAddress` (325 W Venice Ave Unit B, Venice FL 34285), 24/7 hours,
   `aggregateRating` and an `OfferCatalog` of services
 - Every `<img>` has descriptive keyword + location `alt` and `loading="lazy"`
 - Outbound WhatsApp link: `target="_blank" rel="noopener nofollow"`
