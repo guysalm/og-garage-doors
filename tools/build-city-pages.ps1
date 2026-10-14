@@ -80,16 +80,20 @@ $titleOverrides = @{
   "garage-door-repair-sarasota-fl"                 = "Garage Door Repair Sarasota FL | Same-Day Emergency"
   "garage-door-repair-st-petersburg-clearwater-fl" = "Garage Door Repair St. Pete & Clearwater FL | Coastal Pros"
   "garage-door-repair-tampa-fl"                    = "Garage Door Repair Tampa FL | Custom Doors & Repairs"
-  "garage-door-repair-venice-fl"                   = "Garage Door Repair Venice FL | Quiet & Reliable Service"
+  "garage-door-repair-venice-fl"                   = "Garage Door Repair Venice FL | Same-Day Service"
 }
 
-# Three supplied H1s ran 71-81 characters, past the point where a heading stops
-# being scannable. Trimmed to one idea plus the city; the city and the service
-# stay, the second service claim goes - the page body already makes it.
+# H1s lead with the exact query - "Garage Door Repair in <City>, FL" - not with
+# an adjective. The supplied copy opened with Dependable / Coastal / Modern,
+# which pushes the keyword and the city back and, on the home page, narrowed a
+# page selling twelve services down to opener replacement. The angle moves to
+# the end of the H1 and stays in the hero H2 under it.
 $h1Overrides = @{
-  "garage-door-repair-fort-myers-fl"               = "Storm-Ready Garage Door Repair & Impact Doors in Fort Myers, FL"
-  "garage-door-repair-north-port-fl"               = "Modern Garage Door Repair & Smart Openers in North Port, FL"
-  "garage-door-repair-st-petersburg-clearwater-fl" = "Coastal Garage Door & Impact Door Repair in St. Pete & Clearwater, FL"
+  "garage-door-repair-venice-fl"                   = "Garage Door Repair in Venice, FL - Same-Day Service"
+  "garage-door-repair-englewood-fl"                = "Garage Door Repair in Englewood, FL - Coastal Rust Protection"
+  "garage-door-repair-north-port-fl"               = "Garage Door Repair in North Port, FL - Smart Opener Installs"
+  "garage-door-repair-fort-myers-fl"               = "Garage Door Repair in Fort Myers, FL - Wind-Code Doors"
+  "garage-door-repair-st-petersburg-clearwater-fl" = "Garage Door Repair in St. Pete & Clearwater, FL"
 }
 
 # The hero H2 sits directly under the H1, so repeating the H1 with a question
