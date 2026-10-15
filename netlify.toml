@@ -8,3 +8,13 @@
 # Security and cache headers are generated into _headers by the build, so the
 # CSP hashes stay in sync with the inline script and style blocks.
 
+# tools/ is build tooling, not site content, but publish = "." ships it, so
+# /tools/build-city-pages.ps1 and /tools/template.html were both answering 200.
+# robots.txt asks crawlers to skip the directory; that is not the same as the
+# files being unreachable, and template.html is a near-duplicate of the home
+# page with unresolved {{tokens}} in it.
+[[redirects]]
+  from = "/tools/*"
+  to = "/"
+  status = 301
+  force = true
