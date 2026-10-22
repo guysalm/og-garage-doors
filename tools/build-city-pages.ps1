@@ -123,11 +123,243 @@ $heroH2Overrides = @{
 }
 $HOME_HERO_H2 = "Serving Southwest Florida and Tampa Bay, Day and Night"
 
+# ------------------------------------------------------------- per-city copy
+# Pages built from one template used to share 13 of their 14 H2s and every word
+# of the Value Props, About and Expertise sections, with only the city name
+# swapped. Google indexes the strongest page of a set like that and files the
+# rest as "Crawled - currently not indexed", which is what Search Console
+# reported on 2026-10-22: two of three pages indexed.
+#
+# So those sections are written per city. What differs is what is actually
+# different about the market - salt air off Lemon Bay, 55+ communities on
+# Venice Island, doors in North Port that cycle ten times a day - and the facts
+# come from reference/, not from invention.
+#
+# A city with no entry here falls back to Get-CityCopy's defaults, which at
+# least name the city in every heading. The build fails if two pages still
+# share a content heading, so re-enabling a city means writing it an entry.
+$COPY_KEYS = @(
+  "h2_values","h2_badges","h2_services","h2_about","h2_expertise","h2_gallery","h2_brands",
+  "vp1_h3","vp1_p","vp2_h3","vp2_p","vp3_h3","vp3_p",
+  "about_kicker","about_quote1","about_quote2","about_closing","about_checks",
+  "exp1_h3","exp1_p","exp2_h3","exp2_p"
+)
+
+$cityCopy = @{
+
+# ----------------------------------------------------------------- Venice
+# Angle from reference/: quiet motors, 55+ communities, senior and veteran
+# discounts, pricing agreed before the work starts.
+"garage-door-repair-venice-fl" = @{
+  h2_values    = "Why Venice homeowners keep our number"
+  h2_badges    = "Venice guarantees, discounts and American-made parts"
+  h2_services  = "Garage Door Services Across Venice"
+  h2_about     = "Looking for garage door repair near Venice Island?"
+  h2_expertise = "Quiet Openers and Springs Rated for Daily Use"
+  h2_gallery   = "Venice Repairs, Before and After"
+  h2_brands    = "Door and opener brands we fit in Venice"
+
+  vp1_h3 = "Quiet by Default"
+  vp1_p  = "Belt-drive and direct-drive motors, so an early start does not wake the house."
+  vp2_h3 = "Unhurried, Explained Work"
+  vp2_p  = "We show you the worn part, price it, and only then pick up a tool."
+  vp3_h3 = "Senior &amp; Veteran Pricing"
+  vp3_p  = "Family owned, more than $($SITE.years_experience) years in the trade, with a standing discount for seniors and veterans in Venice."
+
+  about_kicker = "Snapped cable, grinding motor, or a door that will not clear the opening? Tell us what it is doing and we will tell you what it costs to fix."
+  about_quote1 = "$($SITE.business_name) is a family owned, full-service garage door company based in Venice. We bring more than $($SITE.years_experience) years of experience to every call, and on Venice Island that usually means a quieter motor, a spring rated for daily use, and a price agreed before anything is opened up."
+  about_quote2 = "Most of our Venice customers would rather not wrestle a dead door open by hand. Call it in and we will lift it, secure it, and tell you honestly whether it needs a part or an adjustment."
+  about_closing = "We have repaired garage doors from Venice Island and South Venice out along Jacaranda Blvd, Venice Ave and the Tamiami Trail. Rollers, cables, springs, weather seal, safety sensors and full opener replacements, all quoted up front."
+  about_checks = @(
+    "Ultra-Quiet Belt and Direct Drive Motors"
+    "Battery Backup and Easy Wireless Keypads"
+    "Senior and Veteran Discounts"
+    "55+ Community Access Rules Respected"
+  )
+
+  exp1_h3 = "Ultra-Quiet Opener Upgrades"
+  exp1_p  = "Old chain drives send noise and vibration straight through the house. We fit belt-drive and direct-drive motors with battery backup and a wireless keypad, which takes out most of the noise and all of the heavy lifting. Swapping steel rollers for sealed nylon removes the rest."
+  exp2_h3 = "High-Cycle Spring Replacement"
+  exp2_p  = "A standard spring is rated for roughly 10,000 cycles, which on a door used several times a day is only a few years. We fit high-cycle springs instead, replace both sides so the door stays balanced, and test it by hand before we leave."
+}
+
+# -------------------------------------------------------------- Englewood
+# Angle from reference/: salt air off the Gulf, Manasota Key and Lemon Bay,
+# galvanized springs, stainless cable, impact-rated doors and wind load.
+"garage-door-repair-englewood-fl" = @{
+  h2_values    = "Why Englewood homeowners call a coastal specialist"
+  h2_badges    = "Englewood guarantees, discounts and coastal-grade parts"
+  h2_services  = "Garage Door Services Across Englewood"
+  h2_about     = "Looking for garage door repair near Manasota Key?"
+  h2_expertise = "Rust Protection and Wind-Load Work"
+  h2_gallery   = "Englewood Repairs, Before and After"
+  h2_brands    = "Door and opener brands we fit in Englewood"
+
+  vp1_h3 = "Corrosion-Rated Parts On Board"
+  vp1_p  = "Galvanized springs and stainless cable ride on the truck, so a rusted-out door is fixed on the first visit."
+  vp2_h3 = "Technicians Who Know Salt Air"
+  vp2_p  = "We can tell pitted hardware from a bad adjustment, which is the difference between a repair and a repeat call."
+  vp3_h3 = "Local and Family Run"
+  vp3_p  = "Family owned, more than $($SITE.years_experience) years in the trade, working Manasota Key and the Lemon Bay area all year."
+
+  about_kicker = "Springs pitted, cable fraying, bottom seal gone hard? Coastal hardware fails early and it rarely gives notice. Tell us what you are seeing and we will quote the fix."
+  about_quote1 = "$($SITE.business_name) is a family owned, full-service garage door company serving Englewood. Salt-driven wind off the Gulf is what we build around here: high-grade galvanized springs, stainless steel cable, and weather seals meant for coastal exposure rather than whatever shipped with the door."
+  about_quote2 = "Hardware on the coast fails suddenly. A cable that looked sound in April lets go in September, usually on the one morning you are already late. That is why we answer out of hours."
+  about_closing = "We have worked on doors from Manasota Key and the Lemon Bay waterfront back to the ranch homes off McCall Rd and Dearborn St. Rust-resistant spring replacement, stainless cable and track restoration, coastal bottom weather-stripping, and impact-rated upgrades with a wind-load inspection."
+  about_checks = @(
+    "Galvanized and Coated Spring Options"
+    "Stainless Steel Cable and Track Restoration"
+    "Coastal Bottom Weather-Stripping"
+    "Emergency Service 24/7"
+  )
+
+  exp1_h3 = "Corrosion-Resistant Hardware"
+  exp1_p  = "Standard steel hinges, cable and springs pit in Englewood air and then let go without warning. We replace them with high-grade galvanized springs and stainless cable, re-grease the bearings, and seal the bottom of the door so wind-driven moisture stops getting underneath it."
+  exp2_h3 = "Impact-Rated Door Upgrades"
+  exp2_p  = "The garage door is the largest opening in the wall and the first thing a storm tests. We fit impact-rated doors, add wind-load struts and reinforce the track on existing doors, and inspect what you already have so you know where it stands before a storm rather than during one."
+}
+
+# ------------------------------------------------------------- North Port
+# Angle from reference/: fast-growing city, doors under heavy daily use,
+# smart openers, insulated doors, same-day spring work.
+"garage-door-repair-north-port-fl" = @{
+  h2_values    = "Why North Port families book us for the same day"
+  h2_badges    = "North Port guarantees, discounts and parts we back"
+  h2_services  = "Garage Door Services Across North Port"
+  h2_about     = "Looking for same-day garage door repair in North Port?"
+  h2_expertise = "Smart Openers and High-Cycle Hardware"
+  h2_gallery   = "North Port Repairs, Before and After"
+  h2_brands    = "Door and opener brands we fit in North Port"
+
+  vp1_h3 = "Same-Day Slots Held Back"
+  vp1_p  = "A spring that goes at 7am should not cost you the whole day, so we keep room in the schedule for it."
+  vp2_h3 = "Smart Opener Installers"
+  vp2_p  = "WiFi and app-controlled motors fitted and paired properly, camera and alert setup included."
+  vp3_h3 = "Family Owned, Local Trucks"
+  vp3_p  = "Family owned, more than $($SITE.years_experience) years in the trade, stocked for the doors going into North Port now."
+
+  about_kicker = "Door dead on the school run? Spring snapped overnight? Tell us what happened and we will give you a time and a price on the call."
+  about_quote1 = "$($SITE.business_name) is a family owned, full-service garage door company serving North Port. In one of the fastest-growing cities in Florida the doors here cycle far more than average, so our trucks carry heavy-duty high-cycle springs rather than a like-for-like builder-grade part."
+  about_quote2 = "A door that will not open is not a minor inconvenience when there is a school run and a commute down Price Blvd waiting on it. That is the call we try hardest to clear the same day."
+  about_closing = "We cover the neighborhoods off Price Blvd, Sumter Blvd, Toledo Blade Blvd and the Tamiami Trail. High-cycle spring replacement, cable, roller and track tune-ups, smart opener installation, and insulated doors that take some of the load off the air conditioning."
+  about_checks = @(
+    "High-Cycle Springs for Heavy Daily Use"
+    "WiFi and App-Controlled Opener Installs"
+    "Insulated, Energy-Efficient Doors"
+    "Same Day Service"
+  )
+
+  exp1_h3 = "Smart Opener Installation"
+  exp1_p  = "We fit openers with built-in WiFi so you can open, close and get an alert from your phone wherever you are. Camera models are set up and tested with you, app pairing and alert rules included, so it is working before we leave the driveway."
+  exp2_h3 = "Insulated Door Replacement"
+  exp2_p  = "An uninsulated door on a west-facing garage turns the room into a heat store and leaves the air conditioning to fight it. An insulated replacement holds the heat out, runs quieter on the track, and seals the opening better than the builder-grade panel it replaces."
+}
+
+# ----------------------------------------------------- region-level home page
+# Used when HOME_CITY is "" and the home page sells the whole footprint rather
+# than one city. It must not read like any single city page.
+"_region" = @{
+  h2_values    = "Why Southwest Florida homeowners choose us"
+  h2_badges    = "Our guarantees, discounts and American-made parts"
+  h2_services  = "Our Garage Door Services"
+  h2_about     = "Looking for a garage door company near you?"
+  h2_expertise = "Our Expertise"
+  h2_gallery   = "Before and After, Across Our Service Area"
+  h2_brands    = "Door and opener brands we install and service"
+
+  vp1_h3 = "Fast Response"
+  vp1_p  = "Same-day appointments across Southwest Florida and Tampa Bay, and someone on the phone out of hours."
+  vp2_h3 = "Experienced Technicians"
+  vp2_p  = "Licensed and insured crews who carry parts for every major door and opener brand."
+  vp3_h3 = "Family Owned and Local"
+  vp3_p  = "A family owned company with more than $($SITE.years_experience) years of experience on every job."
+
+  about_kicker = "Need to replace a broken garage door spring? Tell us what the door is doing and we will quote the repair before we start."
+  about_quote1 = "$($SITE.business_name) is a family owned, full-service garage door repair company serving Southwest Florida and Tampa Bay. We bring more than $($SITE.years_experience) years of experience to every call, and we price the work before we start it."
+  about_quote2 = "We understand the frustration of not being able to get your car out in the morning, or coming home to a jammed door after work."
+  about_closing = "From broken rollers to full spring and opener replacements, our technicians handle every kind of garage door fault, on residential and commercial doors alike, at a price agreed up front."
+  about_checks = @(
+    "Weekend Service Available"
+    "Friendly Professional Service"
+    "Emergency Service 24/7"
+    "Same Day Service"
+  )
+
+  exp1_h3 = "Residential Garage Door Repair"
+  exp1_p  = "Opener installation and repair, inspections and tune-ups. Whatever your residential door needs, $($SITE.business_name) delivers it quickly and at a fair price, and we do not leave until the door runs properly by hand as well as on the motor."
+  exp2_h3 = "Commercial and Emergency Work"
+  exp2_p  = "Roll-up doors, chain hoist operators and loading-bay doors, repaired out of hours when a closed door means a closed business. Call for a free estimate or just to talk through what the door is doing."
+}
+
+}
+
+# Fills every copy token for one city: the hand-written entry above where there
+# is one, otherwise a default that at least carries the city name into each
+# heading. $c may be the synthetic "_region" object for a region-level home.
+function Get-CityCopy($c) {
+  $city = $c.City
+  $copy = @{
+    h2_values    = "Why $city homeowners choose us"
+    h2_badges    = "$city guarantees and discounts"
+    h2_services  = "Garage Door Services Across $city"
+    # braced: PowerShell counts "?" as a variable-name character, so "$city?"
+    # interpolates a variable called "city?" and silently drops both
+    h2_about     = "Looking for garage door repair in ${city}?"
+    h2_expertise = "Our Expertise in $city"
+    h2_gallery   = "$city Repairs, Before and After"
+    h2_brands    = "Door and opener brands we fit in $city"
+
+    vp1_h3 = "Fast Response"
+    vp1_p  = "Same-day appointments across $city, and someone on the phone out of hours."
+    vp2_h3 = "Experienced Technicians"
+    vp2_p  = "Licensed and insured crews who carry parts for every major door and opener brand."
+    vp3_h3 = "Family Owned and Local"
+    vp3_p  = "A family owned company serving $city, with more than $($SITE.years_experience) years of experience on every job."
+
+    about_kicker = "Tell us what the door is doing and we will quote the repair before we start."
+    about_quote1 = "$($SITE.business_name) is a family owned, full-service garage door company serving $city. We bring more than $($SITE.years_experience) years of experience to every call, and we price the work before we start it."
+    about_quote2 = "We understand the frustration of not being able to get your car out in the morning, or coming home to a jammed door after work."
+    about_closing = "From broken rollers to full spring and opener replacements, our technicians handle every kind of garage door fault in $city, at a price agreed up front."
+    about_checks = @(
+      "Weekend Service Available"
+      "Friendly Professional Service"
+      "Emergency Service 24/7"
+      "Same Day Service"
+    )
+
+    exp1_h3 = "Residential Garage Door Repair"
+    exp1_p  = "Opener installation and repair, inspections and tune-ups for homes across $city. We do not leave until the door runs properly by hand as well as on the motor."
+    exp2_h3 = "Commercial and Emergency Work"
+    exp2_p  = "Roll-up doors, chain hoist operators and loading-bay doors, repaired out of hours when a closed door means a closed business."
+  }
+
+  if ($cityCopy.ContainsKey($c.Slug)) {
+    foreach ($k in $cityCopy[$c.Slug].Keys) { $copy[$k] = $cityCopy[$c.Slug][$k] }
+  } else {
+    Write-Host "  note: $($c.Slug) is on default copy - write it a `$cityCopy entry" -ForegroundColor Yellow
+  }
+
+  # the check list is written as an array for readability and ships as <li>s
+  if ($copy["about_checks"] -is [array]) {
+    $copy["about_checks"] = ($copy["about_checks"] | ForEach-Object { "            <li>$_</li>" }) -join "`n"
+  }
+
+  foreach ($k in $COPY_KEYS) {
+    if (-not $copy.ContainsKey($k) -or -not $copy[$k]) { throw "$($c.Slug): nothing written for {{$k}}" }
+  }
+  foreach ($k in $copy.Keys) {
+    if ($COPY_KEYS -notcontains $k) { throw "$($c.Slug): '$k' is not a copy token - typo, or add it to `$COPY_KEYS" }
+  }
+  return $copy
+}
+
 # ---------------------------------------------------------------- what ships
 # TEMPORARY Venice-first setup. Restore the full site with:
 #     $HOME_CITY = ""   and   $ACTIVE_CITIES = $null   and   $SERVED_CITIES = $null
 # then re-run. Nothing is lost by switching: the city copy, FAQs and zip codes
 # are read from reference/, and every page not built here is in git history.
+# Write each re-enabled city a $cityCopy entry first, though: the build fails
+# if two pages share a content heading, and the defaults only swap the name.
 $HOME_CITY     = "garage-door-repair-venice-fl"   # "" = region-level home page
 $ACTIVE_CITIES = @(                               # $null = build all ten
   "garage-door-repair-englewood-fl",
@@ -348,6 +580,15 @@ if ($homeCity) {
   $homeVals["service_area"] = (($servedCities | ForEach-Object { $_.City }) -join ", ")
   if ($heroH2Overrides.ContainsKey($homeCity.Slug)) { $homeVals["hero_h2"] = $heroH2Overrides[$homeCity.Slug] }
 }
+
+# section headings and body prose: this city's own, or the region set when the
+# home page is not a city page
+$homeCopyFor = if ($homeCity) { $homeCity } else {
+  [pscustomobject]@{ Slug = "_region"; City = $SITE.location }
+}
+$homeCopy = Get-CityCopy $homeCopyFor
+foreach ($k in $homeCopy.Keys) { $homeVals[$k] = $homeCopy[$k] }
+
 foreach ($k in $homeVals.Keys) { $homePage = $homePage.Replace("{{$k}}", $homeVals[$k]) }
 $homePage = [regex]::Replace($homePage, '(?m)^(\s*page_url\s*:\s*")(.*?)(")', { param($m) $m.Groups[1].Value + $SITE.site_url + $m.Groups[3].Value })
 
@@ -415,6 +656,11 @@ foreach ($c in $cities) {
   $vals["service_area"] = "$($c.City) and the surrounding area"
   # falls back to the old wording if a city is added without an angle written
   $vals["hero_h2"]      = $(if ($heroH2Overrides.ContainsKey($c.Slug)) { $heroH2Overrides[$c.Slug] } else { "Need $($SITE.service_name) in $loc?" })
+
+  # section headings and body prose written for this city, so no two pages ship
+  # the same Value Props, About or Expertise text with a swapped city name
+  $copy = Get-CityCopy $c
+  foreach ($k in $copy.Keys) { $vals[$k] = $copy[$k] }
 
   $page = $tpl
 
@@ -584,6 +830,24 @@ $headers = @"
 [System.IO.File]::WriteAllText((Join-Path $root "_headers"), $headers + "`n", (New-Object System.Text.UTF8Encoding $false))
 Write-Host "_headers written (CSP with $($inlineHashes.script.Count) script + $($inlineHashes.style.Count) style hash)"
 
+# ---------------------------------------------------------------- _redirects
+# Netlify resolves /page from page.html, but it also keeps serving page.html
+# itself at 200, so every page answers on two URLs. The canonical tag points
+# the right way and Google honours it, but it still has to crawl and compare
+# both. A 301 removes the duplicate instead of explaining it. Forced (301!)
+# because a static file at that path would otherwise win.
+#
+# No loop: the rules match the requested path, and a request for /page never
+# matches /page.html - Netlify's extensionless resolution happens after this.
+$redir = New-Object System.Text.StringBuilder
+[void]$redir.Append("# generated by tools/build-city-pages.ps1 - do not edit`n")
+[void]$redir.Append("/index.html    /    301!`n")
+foreach ($c in $built) {
+  [void]$redir.Append("/$($c.Slug).html    /$($c.Slug)    301!`n")
+}
+[System.IO.File]::WriteAllText((Join-Path $root "_redirects"), $redir.ToString(), (New-Object System.Text.UTF8Encoding $false))
+Write-Host "_redirects written ($($built.Count + 1) .html -> extensionless 301s)"
+
 $robots = "User-agent: *`nAllow: /`nDisallow: /tools/`n`nSitemap: $base/sitemap.xml`n"
 [System.IO.File]::WriteAllText((Join-Path $root "robots.txt"), $robots, (New-Object System.Text.UTF8Encoding $false))
 
@@ -606,6 +870,7 @@ function Test-JsonControlChars([string]$json) {
 }
 $problems = @()
 $firstH2 = @{}
+$h2sByPage = @{}
 $titleWidths = @()
 $checks = @{ (Join-Path $root "index.html") = $base + "/" }
 foreach ($c in $built) { $checks[(Join-Path $root "$($c.Slug).html")] = "$base/$($c.Slug)" }
@@ -712,9 +977,11 @@ foreach ($file in $checks.Keys) {
   if ($h1Count -ne 1) { $problems += "$name has $h1Count H1s, expected exactly 1" }
   $prev = 0
   $texts = @{}
+  $h2sByPage[$name] = @()
   foreach ($h in $levels) {
     $lvl  = [int]$h.Groups[1].Value
     $text = (HtmlPlain (($h.Groups[2].Value -replace '<[^>]*>',' ') -replace '\s+',' ')).Trim()
+    if ($lvl -eq 2) { $h2sByPage[$name] += $text }
     if ($prev -and $lvl -gt $prev + 1) { $problems += "$name skips from H$prev to H${lvl} at '$text'" }
     if ($lvl -eq 1 -and $text.Length -gt $H1_LIMIT) {
       $problems += "$name has a $($text.Length)-char H1 (limit $H1_LIMIT): '$text'"
@@ -732,6 +999,30 @@ foreach ($file in $checks.Keys) {
 foreach ($g in $firstH2.GetEnumerator() | Group-Object -Property Value | Where-Object { $_.Count -gt 1 }) {
   $pages = ($g.Group | ForEach-Object { $_.Key }) -join ', '
   $problems += "$($g.Count) pages share the first H2 '$($g.Name)': $pages"
+}
+
+# ...and so does every other content H2. These pages shared 13 of their 14 and
+# Google indexed two of three, filing the rest as "Crawled - currently not
+# indexed": it reads a set like that as one page restated with the city swapped.
+# The four below are chrome - the FAQ wrapper, the lead form, the share dialog -
+# and say nothing about the subject, so they are allowed to repeat.
+$CHROME_H2 = @(
+  "Frequently Asked Questions"
+  "Don't Hesitate To Contact Us For More Information And Services"
+  "Share"
+  "Get a free quote"
+)
+$h2Pages = @{}
+foreach ($pg in $h2sByPage.GetEnumerator()) {
+  foreach ($text in ($pg.Value | Select-Object -Unique)) {
+    if ($CHROME_H2 -contains $text) { continue }
+    if (-not $h2Pages.ContainsKey($text)) { $h2Pages[$text] = @() }
+    $h2Pages[$text] += $pg.Key
+  }
+}
+foreach ($e in $h2Pages.GetEnumerator()) {
+  if ($e.Value.Count -le 1) { continue }
+  $problems += "$($e.Value.Count) pages share the content H2 '$($e.Key)': $(($e.Value | Sort-Object) -join ', ') - write it per city in `$cityCopy"
 }
 
 # Screaming Frog flags served images over 100KB; keep every one under it.

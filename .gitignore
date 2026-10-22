@@ -7,7 +7,9 @@ Desktop.ini
 .DS_Store
 *.tmp
 
-# Full-size originals for the review avatars. The repo root is the publish
-# root, so anything tracked here is downloadable from the live site - only the
-# 96px crops in assets/img belong in it. Regenerate with tools/make-avatars.ps1.
-assets/img/Real Photos/People/
+# Full-size camera originals. The repo root is the publish root, so anything
+# tracked here is downloadable from the live site - only the optimised crops in
+# assets/img belong in it, and the build fails on any served image over 100KB.
+# This directory is ~23MB of untouched originals. Avatars regenerate with
+# tools/make-avatars.ps1.
+assets/img/Real Photos/

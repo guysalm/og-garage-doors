@@ -69,6 +69,34 @@ the city's FAQs above the shared ones. It also writes `sitemap.xml` and
 **Re-run it after any change to `tools/template.html`**, including the phone number, since
 those values are baked into the generated pages.
 
+## Per-city copy
+
+One template plus a swapped city name is not three pages — it is one page
+restated three times, and Google treats it that way. On 2026-10-22 Search
+Console had two of the three live pages indexed; the pages shared 13 of their 14
+H2s and every word of the Value Props, About and Expertise sections, and prose
+vocabulary overlap between any two was 72–74%.
+
+So those sections are written **per city**, in `$cityCopy` in the generator, and
+reach the template through tokens (`{{h2_about}}`, `{{exp1_p}}`,
+`{{about_checks}}`…). What differs is what is actually different about the
+market — salt air off Lemon Bay, 55+ communities on Venice Island, doors in
+North Port that cycle ten times a day. Facts come from `reference/`, not from
+invention. Overlap is now 55–56%, and 10 of 14 H2s are unique to their page.
+
+Two guards hold it there:
+
+- **`$COPY_KEYS`** — every token must be written for every city, and a key that
+  is not in the list is a typo rather than a new field. Either throws.
+- **the content-H2 assertion** — the build fails if two pages ship the same H2.
+  Four chrome headings are exempt (`Frequently Asked Questions`, the contact
+  heading, `Share`, `Get a free quote`); they say nothing about the subject.
+
+A city with no `$cityCopy` entry falls back to defaults that at least carry its
+name into each heading, and the build prints a note naming it. That is enough to
+pass the H2 assertion but not enough to earn an index slot, so **write the entry
+before re-enabling a city.**
+
 ## Dynamic SEO framework
 
 Every SEO-relevant string in the template is a `{{token}}` — meta title, meta
@@ -102,10 +130,24 @@ reports as *"canonicalised to a different URL"*.
 
 ## URL shape
 
-Netlify serves `page.html` at `/page` and redirects `/page.html` → `/page`. So
-canonicals, internal links and `sitemap.xml` all use the **extensionless,
-root-relative** form (`/garage-door-repair-sarasota-fl`). Anything else produces
-a redirect hop and a canonical that disagrees with the crawled URL.
+Netlify serves `page.html` at `/page`. So canonicals, internal links and
+`sitemap.xml` all use the **extensionless, root-relative** form
+(`/garage-door-repair-sarasota-fl`). Anything else produces a redirect hop and a
+canonical that disagrees with the crawled URL.
+
+Netlify keeps serving `page.html` at 200 as well, so without help every page
+answers on two URLs. The canonical tag points the right way and Google honours
+it, but it still has to crawl and compare both. The build therefore generates
+`_redirects` with a forced 301 from each `.html` path to its extensionless
+form — one line per page it built, so the file cannot fall behind the site:
+
+    /garage-door-repair-englewood-fl.html    /garage-door-repair-englewood-fl    301!
+
+This does not loop. The rules match the **requested** path, and a request for
+`/page` never matches `/page.html`; Netlify's extensionless resolution happens
+after the redirect table. `netlify.toml` separately 301s `/tools/*` to `/`,
+because the publish root is the repo root and the build tooling would otherwise
+be downloadable.
 
 ## Security headers
 
@@ -140,7 +182,9 @@ type is the right one.
 The build asserts every page has a self-referencing canonical, that no served
 image exceeds 100KB, and that no
 title exceeds 561px or description 985px when measured in the SERP font
-(Arial 20px / 14px) — Google truncates on pixel width, $1
+(Arial 20px / 14px) — Google truncates on pixel width, not character count.
+It also asserts that **no two pages share a content H2** (see *Per-city copy*
+below); only four chrome headings are allowed to repeat.
 It also asserts the address: a footer `<address>` carrying the street, city,
 state and zip from `SITE` on every page, `PostalAddress` in the home page's
 JSON-LD, and **no** `PostalAddress` on a city page - those carry a `Service`
@@ -191,3 +235,8 @@ $SERVED_CITIES = $null
 then re-run the generator. Nothing is lost in the meantime — every city's copy,
 FAQs and zip codes are read from `reference/`, and the pages removed here stay
 in git history.
+
+Write each restored city a `$cityCopy` entry first (see *Per-city copy*). Only
+Venice, Englewood and North Port have one; the other seven would fall back to
+default copy, which is the duplication that cost an index slot in the first
+place. The build prints a note for every city still on defaults.
