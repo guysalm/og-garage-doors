@@ -77,7 +77,7 @@ $titleOverrides = @{
   "garage-door-repair-englewood-fl"                = "Garage Door Repair Englewood FL | Same-Day Service 24/7"
   "garage-door-repair-fort-myers-fl"               = "Garage Door Repair Fort Myers FL | Hurricane Code Pros"
   "garage-door-repair-north-port-fl"               = "Garage Door Repair North Port FL | Same-Day Service 24/7"
-  "garage-door-repair-sarasota-fl"                 = "Garage Door Repair Sarasota FL | Same-Day Emergency"
+  "garage-door-repair-sarasota-fl"                 = "Garage Door Repair Sarasota FL | Same-Day Service 24/7"
   "garage-door-repair-st-petersburg-clearwater-fl" = "Garage Door Repair St. Pete & Clearwater FL | Coastal Pros"
   "garage-door-repair-tampa-fl"                    = "Garage Door Repair Tampa FL | Custom Doors & Repairs"
   "garage-door-repair-venice-fl"                   = "Garage Door Repair Venice FL | Same-Day Service 24/7"
@@ -92,6 +92,7 @@ $h1Overrides = @{
   "garage-door-repair-venice-fl"                   = "Garage Door Repair in Venice, FL - Same-Day Service"
   "garage-door-repair-englewood-fl"                = "Garage Door Repair in Englewood, FL - Coastal Rust Protection"
   "garage-door-repair-north-port-fl"               = "Garage Door Repair in North Port, FL - Smart Opener Installs"
+  "garage-door-repair-sarasota-fl"                 = "Garage Door Repair in Sarasota, FL - HOA-Approved Doors"
   "garage-door-repair-fort-myers-fl"               = "Garage Door Repair in Fort Myers, FL - Wind-Code Doors"
   "garage-door-repair-st-petersburg-clearwater-fl" = "Garage Door Repair in St. Pete & Clearwater, FL"
 }
@@ -103,6 +104,7 @@ $descOverrides = @{
   "garage-door-repair-venice-fl"     = "Garage door repair in Venice, FL - springs, cables, openers and new doors. Licensed, insured, 24/7 emergency service. Free estimates, call $($SITE.phone_display)."
   "garage-door-repair-englewood-fl"  = "Garage door repair in Englewood, FL. Rust-resistant springs, cables and hardware built for salt air. Same-day service, free estimates, call $($SITE.phone_display)."
   "garage-door-repair-north-port-fl" = "Garage door repair in North Port, FL. Spring and cable fixes, smart opener installs, insulated doors. Same-day service, call $($SITE.phone_display)."
+  "garage-door-repair-sarasota-fl"   = "Garage door repair in Sarasota, FL. Springs, cables and openers, plus HOA-approved doors for Lakewood Ranch and Palmer Ranch. Call $($SITE.phone_display)."
 }
 
 # The hero H2 sits directly under the H1, so repeating the H1 with a question
@@ -116,7 +118,7 @@ $heroH2Overrides = @{
   "garage-door-repair-north-port-fl"               = "Smartphone Openers and Same-Day Fixes in North Port"
   "garage-door-repair-port-charlotte-fl"           = "Straight Prices and Free On-Site Estimates in Port Charlotte"
   "garage-door-repair-ruskin-fl"                   = "HOA-Approved Doors Across Ruskin and SouthShore"
-  "garage-door-repair-sarasota-fl"                 = "Broken Springs to Custom Doors, All Over Sarasota"
+  "garage-door-repair-sarasota-fl"                 = "Carriage House and Modern Glass, Approved by Your ARC"
   "garage-door-repair-st-petersburg-clearwater-fl" = "Salt-Proof Hardware for St. Pete and Clearwater Beaches"
   "garage-door-repair-tampa-fl"                    = "Carriage House to Modern Glass, Built for Tampa Homes"
   "garage-door-repair-venice-fl"                   = "Ultra-Quiet Openers and Senior Discounts in Venice"
@@ -255,6 +257,45 @@ $cityCopy = @{
   exp2_p  = "An uninsulated door on a west-facing garage turns the room into a heat store and leaves the air conditioning to fight it. An insulated replacement holds the heat out, runs quieter on the track, and seals the opening better than the builder-grade panel it replaces."
 }
 
+# ---------------------------------------------------------------- Sarasota
+# Angle from reference/: Architectural Review Committees in Lakewood Ranch and
+# Palmer Ranch, trucks staged on the I-75 corridor, and Gulf humidity on the
+# hardware. The coastal note is deliberately secondary - Englewood owns salt air
+# on this site, and two pages arguing the same thing is how one of them stops
+# being indexed.
+"garage-door-repair-sarasota-fl" = @{
+  h2_values    = "Why Sarasota homeowners get past their ARC"
+  h2_badges    = "Sarasota guarantees, discounts and approved styles"
+  h2_services  = "Garage Door Services Across Sarasota"
+  h2_about     = "Looking for garage door repair near Lakewood Ranch?"
+  h2_expertise = "ARC Approvals and Coastal-Grade Hardware"
+  h2_gallery   = "Sarasota Doors, Before and After"
+  h2_brands    = "Door and opener brands we fit in Sarasota"
+
+  vp1_h3 = "Staged Near I-75"
+  vp1_p  = "Our trucks run the Fruitville and Bee Ridge corridors, so same-day across Sarasota is routine rather than a favour."
+  vp2_h3 = "We Know the Committee"
+  vp2_p  = "Lakewood Ranch and Palmer Ranch have design rules. We quote from what they already approve."
+  vp3_h3 = "Built for Gulf Air"
+  vp3_p  = "Galvanized springs and sealed nylon rollers as standard, because Sarasota humidity is hard on plain steel."
+
+  about_kicker = "Door stuck, spring gone, or a board that will not approve the replacement you actually want? Tell us which it is and we will quote it."
+  about_quote1 = "$($SITE.business_name) is a family owned, full-service garage door company serving Sarasota. Two things decide most jobs here: what the Gulf air has done to the hardware, and what the Architectural Review Committee will sign off on. We work to both, with more than $($SITE.years_experience) years behind it."
+  about_quote2 = "A failed door in a gated community is not only a repair, it is a form. We bring the approved styles and the spec sheet to the estimate so the submission goes in once instead of twice."
+  about_closing = "We cover Sarasota from the Fruitville Rd and Bee Ridge Rd neighborhoods out to University Pkwy and the I-75 corridor, and on to Palmer Ranch, Lakewood Ranch and the Siesta Key waterfront. Springs, cables, off-track doors, ultra-quiet belt drives with MyQ, and impact-rated replacements."
+  about_checks = @(
+    "Torsion and Extension Spring Replacement"
+    "Ultra-Quiet Belt Drive Openers with MyQ"
+    "Off-Track Realignment and Cable Repair"
+    "Hurricane-Impact Rated Upgrades"
+  )
+
+  exp1_h3 = "HOA and ARC-Approved Doors"
+  exp1_p  = "Carriage House, Modern Glass and traditional raised panel, in the finishes Sarasota committees already pass. We bring samples and the spec sheet to the estimate, so you submit once rather than twice and the door is not held up by paperwork."
+  exp2_h3 = "Coastal Spring and Roller Work"
+  exp2_p  = "Gulf humidity and salt pit plain steel springs and rollers years early, and a pitted spring lets go without warning. We fit galvanized springs and sealed nylon rollers, balance the door by hand afterwards, and leave it running quieter than it was."
+}
+
 # ----------------------------------------------------- region-level home page
 # Used when HOME_CITY is "" and the home page sells the whole footprint rather
 # than one city. It must not read like any single city page.
@@ -363,12 +404,14 @@ function Get-CityCopy($c) {
 $HOME_CITY     = "garage-door-repair-venice-fl"   # "" = region-level home page
 $ACTIVE_CITIES = @(                               # $null = build all ten
   "garage-door-repair-englewood-fl",
-  "garage-door-repair-north-port-fl"
+  "garage-door-repair-north-port-fl",
+  "garage-door-repair-sarasota-fl"
 )
 $SERVED_CITIES = @(                               # footer + areaServed; $null = all ten
   "garage-door-repair-venice-fl",
   "garage-door-repair-englewood-fl",
-  "garage-door-repair-north-port-fl"
+  "garage-door-repair-north-port-fl",
+  "garage-door-repair-sarasota-fl"
 )
 
 # Which cities each page points at. Two clusters that do not overlap: the

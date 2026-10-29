@@ -209,16 +209,16 @@ business three contradictory ways.
 
 ## Temporary: Venice-first mode
 
-Three pages ship: the **home page is the Venice page**, plus Englewood and North
-Port. The service area is Venice, Englewood and North Port, in the footer and in
-the schema's `areaServed`.
+Four pages ship: the **home page is the Venice page**, plus Englewood, North Port
+and Sarasota. The service area is those four, in the footer and in the schema's
+`areaServed`.
 
 Set at the top of `tools/build-city-pages.ps1`:
 
 ```powershell
 $HOME_CITY     = "garage-door-repair-venice-fl"   # the home page IS this city's page
-$ACTIVE_CITIES = @("garage-door-repair-englewood-fl", "garage-door-repair-north-port-fl")
-$SERVED_CITIES = @("garage-door-repair-venice-fl", "garage-door-repair-englewood-fl", "garage-door-repair-north-port-fl")
+$ACTIVE_CITIES = @("garage-door-repair-englewood-fl", "garage-door-repair-north-port-fl", "garage-door-repair-sarasota-fl")
+$SERVED_CITIES = @("garage-door-repair-venice-fl", "garage-door-repair-englewood-fl", "garage-door-repair-north-port-fl", "garage-door-repair-sarasota-fl")
 ```
 
 There is no separate Venice page: the home page targets Venice, so a second
@@ -237,6 +237,6 @@ FAQs and zip codes are read from `reference/`, and the pages removed here stay
 in git history.
 
 Write each restored city a `$cityCopy` entry first (see *Per-city copy*). Only
-Venice, Englewood and North Port have one; the other seven would fall back to
-default copy, which is the duplication that cost an index slot in the first
-place. The build prints a note for every city still on defaults.
+Venice, Englewood, North Port and Sarasota have one; the other six would fall
+back to default copy, which is the duplication that cost an index slot in the
+first place. The build prints a note for every city still on defaults.
