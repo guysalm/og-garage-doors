@@ -82,7 +82,35 @@ reach the template through tokens (`{{h2_about}}`, `{{exp1_p}}`,
 `{{about_checks}}`…). What differs is what is actually different about the
 market — salt air off Lemon Bay, 55+ communities on Venice Island, doors in
 North Port that cycle ten times a day. Facts come from `reference/`, not from
-invention. Overlap is now 55–56%, and 10 of 14 H2s are unique to their page.
+invention.
+
+That first pass left two blocks still identical everywhere, and measured by
+shared six-word sequences they were most of what remained: the **twelve
+service-card descriptions** (333 words of body copy, the single largest
+duplicate block on the site) and the **FAQ**, where `reference/` gives one
+question per city against the template's seven shared ones.
+
+Both are now per city as well. The card descriptions are twelve more
+`$cityCopy` tokens (`{{svc_spring_p}}` … `{{svc_sensor_p}}`); the card
+*headings* stay shared, because they are the service names and renaming
+"Broken Spring Repair" per city would cost the keyword. FAQs come from
+`$cityFaqs`, where an entry replaces that city's reference question outright.
+
+| pair | before | after cards + FAQs |
+|---|---|---|
+| North Port vs Englewood | 60.4% | **46.3%** |
+| home (Venice) vs North Port | 60.4% | **46.5%** |
+| Englewood vs Sarasota | 59.6% | **47.1%** |
+
+What is left is the shared FAQ answers (~220 words) and the lead form's labels
+and dropdown (~180 words, which Google discounts as chrome).
+
+North Port got the FAQ work first because it was the page Search Console would
+not index, and its one "local" question never named the city — it asked about
+phone control of an opener, which is true everywhere we work. It now has three
+questions that only make sense in North Port. Asking a speed question there
+also drops the shared *"How fast can a technician get to my home?"* from that
+page, which `Add-CityFaqs` has always done for Venice and Sarasota.
 
 Two guards hold it there:
 
@@ -93,9 +121,12 @@ Two guards hold it there:
   heading, `Share`, `Get a free quote`); they say nothing about the subject.
 
 A city with no `$cityCopy` entry falls back to defaults that at least carry its
-name into each heading, and the build prints a note naming it. That is enough to
-pass the H2 assertion but not enough to earn an index slot, so **write the entry
-before re-enabling a city.**
+name into each heading, and the build prints a note naming it. The service-card
+defaults are the original shared template sentences, so a city on defaults is
+carrying the duplicate block the per-city versions exist to break up. That is
+enough to pass the H2 assertion but not enough to earn an index slot, so
+**write the entry before re-enabling a city** — `$cityFaqs` too, since a city
+with no entry there ships one reference question against seven shared ones.
 
 ## Dynamic SEO framework
 

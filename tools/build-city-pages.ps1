@@ -144,7 +144,15 @@ $COPY_KEYS = @(
   "h2_values","h2_badges","h2_services","h2_about","h2_expertise","h2_gallery","h2_brands",
   "vp1_h3","vp1_p","vp2_h3","vp2_p","vp3_h3","vp3_p",
   "about_kicker","about_quote1","about_quote2","about_closing","about_checks",
-  "exp1_h3","exp1_p","exp2_h3","exp2_p"
+  "exp1_h3","exp1_p","exp2_h3","exp2_p",
+  # the twelve service-card descriptions. Shared, they were the largest
+  # duplicate block on the site: 333 words of body copy, byte-identical on
+  # every page, more than the Value Props, About and Expertise sections put
+  # together. The card headings stay shared - they are the service names, and
+  # renaming "Broken Spring Repair" per city would cost the keyword.
+  "svc_spring_p","svc_opener_p","svc_offtrack_p","svc_cable_p",
+  "svc_jackshaft_p","svc_roller_p","svc_panels_p","svc_commercial_p",
+  "svc_gate_p","svc_tuneup_p","svc_newdoor_p","svc_sensor_p"
 )
 
 $cityCopy = @{
@@ -183,6 +191,20 @@ $cityCopy = @{
   exp1_p  = "Old chain drives send noise and vibration straight through the house. We fit belt-drive and direct-drive motors with battery backup and a wireless keypad, which takes out most of the noise and all of the heavy lifting. Swapping steel rollers for sealed nylon removes the rest."
   exp2_h3 = "High-Cycle Spring Replacement"
   exp2_p  = "A standard spring is rated for roughly 10,000 cycles, which on a door used several times a day is only a few years. We fit high-cycle springs instead, replace both sides so the door stays balanced, and test it by hand before we leave."
+
+  # Angle: quiet motors in 55+ streets, the price agreed before work starts.
+  svc_spring_p     = "Spring let go overnight? We stock the sizes Venice doors use and fit it the same day."
+  svc_opener_p     = "Motor loud enough to wake the neighbors? We fit quiet belt-drive openers."
+  svc_offtrack_p   = "Door jumped the rail? We straighten the track and reset it safely, not forcefully."
+  svc_cable_p      = "Frayed or slack cable? We replace both sides and rebalance the door before we leave."
+  svc_jackshaft_p  = "Golf cart lift or storage overhead? A wall-mounted jackshaft opener clears the ceiling."
+  svc_roller_p     = "Rattling door on a quiet street? Nylon rollers run close to silent on the track."
+  svc_panels_p     = "One dented section does not mean a new door. We match the panel and replace it."
+  svc_commercial_p = "Storefronts and units off Jacaranda Blvd &ndash; roll-ups, operators and loading doors."
+  svc_gate_p       = "Community or driveway gate stuck? We repair the operator and reset the limits."
+  svc_tuneup_p     = "A 25-point tune-up finds the spring and cable wear before it strands you."
+  svc_newdoor_p    = "Hurricane and wind-code rated doors, old door hauled away, price agreed up front."
+  svc_sensor_p     = "Door reversing halfway? Photo-eye alignment or replacement, tested while you watch."
 }
 
 # -------------------------------------------------------------- Englewood
@@ -219,6 +241,20 @@ $cityCopy = @{
   exp1_p  = "Standard steel hinges, cable and springs pit in Englewood air and then let go without warning. We replace them with high-grade galvanized springs and stainless cable, re-grease the bearings, and seal the bottom of the door so wind-driven moisture stops getting underneath it."
   exp2_h3 = "Impact-Rated Door Upgrades"
   exp2_p  = "The garage door is the largest opening in the wall and the first thing a storm tests. We fit impact-rated doors, add wind-load struts and reinforce the track on existing doors, and inspect what you already have so you know where it stands before a storm rather than during one."
+
+  # Angle: salt air off Lemon Bay, so every answer is about corrosion.
+  svc_spring_p     = "Salt air pits springs years early here. We fit galvanized replacements same-day."
+  svc_opener_p     = "Corroded board or a motor straining? We repair it or fit a sealed replacement."
+  svc_offtrack_p   = "Seized roller pulled the door off the rail? We realign it and replace what bound up."
+  svc_cable_p      = "Cables rust from the bottom strand up near the water. We replace both and rebalance."
+  svc_jackshaft_p  = "Low ceiling in an older coastal garage? A wall-mounted opener frees the whole span."
+  svc_roller_p     = "Salt-bitten rollers grind and shake the door. Sealed nylon runs quiet and resists it."
+  svc_panels_p     = "Bottom section rusting through? We replace that panel rather than the whole door."
+  svc_commercial_p = "Commercial roll-ups close to the water, where hardware corrodes first. Fully insured."
+  svc_gate_p       = "Gate operator seized in the salt? We service the motor and reset the safety limits."
+  svc_tuneup_p     = "On Manasota Key a tune-up is corrosion control: lubricate, re-torque, check fixings."
+  svc_newdoor_p    = "Impact and wind-rated doors specified with galvanized hardware for coastal air."
+  svc_sensor_p     = "Sensors fail early in damp salt air. We realign or replace them and test the reverse."
 }
 
 # ------------------------------------------------------------- North Port
@@ -255,6 +291,20 @@ $cityCopy = @{
   exp1_p  = "We fit openers with built-in WiFi so you can open, close and get an alert from your phone wherever you are. Camera models are set up and tested with you, app pairing and alert rules included, so it is working before we leave the driveway."
   exp2_h3 = "Insulated Door Replacement"
   exp2_p  = "An uninsulated door on a west-facing garage turns the room into a heat store and leaves the air conditioning to fight it. An insulated replacement holds the heat out, runs quieter on the track, and seals the opening better than the builder-grade panel it replaces."
+
+  # Angle: doors that cycle far more than average, so wear is the theme.
+  svc_spring_p     = "Doors here cycle far more than average. We fit heavy-duty high-cycle springs."
+  svc_opener_p     = "Opener worn out from ten cycles a day? We repair it or fit a WiFi model."
+  svc_offtrack_p   = "Off the rail before the school run? We reset it and find what pulled it over."
+  svc_cable_p      = "High-cycle doors shed a cable first. We replace both sides and rebalance the door."
+  svc_jackshaft_p  = "Shelving or a lift overhead? A side-mount jackshaft opener clears the ceiling."
+  svc_roller_p     = "Ten cycles a day finishes cheap rollers. Sealed bearings last on a busy door."
+  svc_panels_p     = "Builder-grade panel dented? We replace the section and match the existing finish."
+  svc_commercial_p = "Commercial doors off Toledo Blade and Sumter Blvd, repaired and fully insured."
+  svc_gate_p       = "Gate motor failing under daily traffic? We repair or replace the operator."
+  svc_tuneup_p     = "On a high-use door a tune-up is maintenance, not an upsell. Twenty-five points."
+  svc_newdoor_p    = "Insulated, wind-rated doors that take some of the load off the air conditioning."
+  svc_sensor_p     = "Sensor knocked out of line by a bike or a bin? Realigned and tested the same visit."
 }
 
 # ---------------------------------------------------------------- Sarasota
@@ -294,6 +344,20 @@ $cityCopy = @{
   exp1_p  = "Carriage House, Modern Glass and traditional raised panel, in the finishes Sarasota committees already pass. We bring samples and the spec sheet to the estimate, so you submit once rather than twice and the door is not held up by paperwork."
   exp2_h3 = "Coastal Spring and Roller Work"
   exp2_p  = "Gulf humidity and salt pit plain steel springs and rollers years early, and a pitted spring lets go without warning. We fit galvanized springs and sealed nylon rollers, balance the door by hand afterwards, and leave it running quieter than it was."
+
+  # Angle: ARC approvals, the I-75 corridor, and Gulf humidity on hardware.
+  svc_spring_p     = "Trucks stage on the I-75 corridor, so a snapped spring is still a same-day call."
+  svc_opener_p     = "Opener dead or the app offline? We repair, replace and pair it before we leave."
+  svc_offtrack_p   = "Door off the rail in a Palmer Ranch garage? Realigned and re-tensioned safely."
+  svc_cable_p      = "Humidity frays cable strands early. We replace both sides and rebalance the door."
+  svc_jackshaft_p  = "Keeping the ceiling clear for a modern glass door? Side-mount openers do that."
+  svc_roller_p     = "Noisy door on a close-built Bee Ridge street? Nylon rollers quiet it right down."
+  svc_panels_p     = "One damaged section on an approved door? We match the panel and swap it out."
+  svc_commercial_p = "Commercial and storefront doors along the I-75 corridor, fully insured."
+  svc_gate_p       = "Community gate at a standstill? We repair operators, loops and safety edges."
+  svc_tuneup_p     = "Gulf humidity works on hardware year-round. A tune-up catches it before it binds."
+  svc_newdoor_p    = "Carriage house and modern glass doors in finishes your ARC will sign off on."
+  svc_sensor_p     = "Door refusing to close? Photo-eye realignment or replacement, tested with you."
 }
 
 # ----------------------------------------------------- region-level home page
@@ -331,6 +395,33 @@ $cityCopy = @{
   exp2_h3 = "Commercial and Emergency Work"
   exp2_p  = "Roll-up doors, chain hoist operators and loading-bay doors, repaired out of hours when a closed door means a closed business. Call for a free estimate or just to talk through what the door is doing."
 }
+
+}
+
+# ------------------------------------------------------------- per-city FAQs
+# reference/ supplies one question per city, and the template supplies seven
+# shared ones, so a city page's FAQ block is six-sevenths boilerplate. Worse,
+# North Port's single question never said "North Port" - it asked about phone
+# control of an opener, which is true of every city we serve, so the one block
+# meant to be local read as generic.
+#
+# An entry here REPLACES the reference questions for that slug. Anything not
+# listed keeps whatever reference/ holds, so this stays opt-in.
+#
+# Asking a speed question here also removes the shared "How fast can a
+# technician get to my home?" from that page - see Add-CityFaqs. That is the
+# point: a city-specific answer in place of a shared one is a net gain, where
+# adding one beside it would just repeat the question.
+$cityFaqs = @{
+
+"garage-door-repair-north-port-fl" = @(
+  ,@("How quickly can you reach my home in North Port?",
+     "We hold same-day slots back for broken springs and doors that will not open at all. Calls from the neighborhoods off Price Blvd, Sumter Blvd and Toledo Blade Blvd normally get a technician the same day, and someone answers the phone out of hours.")
+  ,@("Why did my garage door spring break after only a few years?",
+     "A builder-grade torsion spring is rated for roughly 10,000 cycles. A North Port door that opens and closes ten times a day works through that in under three years, which is why so many doors here fail early. We fit heavy-duty high-cycle springs instead, so the replacement outlasts the one that broke.")
+  ,@("Can I open my North Port garage door from my phone?",
+     "Yes. We install smart openers with built-in WiFi, so you can open, close and get an alert from anywhere. We pair the app, set up the alerts and test them with you before we leave the driveway, and camera models are configured the same way.")
+)
 
 }
 
@@ -372,6 +463,21 @@ function Get-CityCopy($c) {
     exp1_p  = "Opener installation and repair, inspections and tune-ups for homes across $city. We do not leave until the door runs properly by hand as well as on the motor."
     exp2_h3 = "Commercial and Emergency Work"
     exp2_p  = "Roll-up doors, chain hoist operators and loading-bay doors, repaired out of hours when a closed door means a closed business."
+
+    # the original template wording, kept as the fallback. A city on these is
+    # carrying the duplicate block the per-city versions exist to break up.
+    svc_spring_p     = "Door won&rsquo;t open or slams shut? We replace broken springs safely and same-day."
+    svc_opener_p     = "Opener won&rsquo;t work or makes noise? We repair or replace it fast and affordably."
+    svc_offtrack_p   = "Door came off the track? We realign it safely and get it back on track today."
+    svc_cable_p      = "Snapped or frayed cables? We replace them quickly to restore safe door movement."
+    svc_jackshaft_p  = "Low ceiling or storage overhead? We install wall-mounted jackshaft openers that free up the whole ceiling."
+    svc_roller_p     = "Door shaking or noisy? We replace damaged rollers and realign the track properly."
+    svc_panels_p     = "Dents or damaged panels? We repair or replace panels for a clean door look."
+    svc_commercial_p = "We service all commercial garage doors &ndash; fast, reliable and fully insured."
+    svc_gate_p       = "Gate won&rsquo;t open or wheels stuck? We repair or install automatic gates."
+    svc_tuneup_p     = "Door too loud or uneven? We lubricate, adjust and balance for smooth operation."
+    svc_newdoor_p    = "We install all garage door types &ndash; including hurricane-rated doors. Old door removal included."
+    svc_sensor_p     = "Door won&rsquo;t close or sensors blink? We adjust or replace garage door sensors."
   }
 
   if ($cityCopy.ContainsKey($c.Slug)) {
@@ -477,6 +583,8 @@ foreach ($bm in [regex]::Matches($raw, $blockRe)) {
   foreach ($fm in [regex]::Matches($faqRaw, '(?s)Q:\s*(.*?)\r?\nA:\s*(.*?)(?=\r?\n\s*\r?\nQ:|\s*$)')) {
     $faqs += ,@( ($fm.Groups[1].Value -replace '\s+',' ').Trim(), ($fm.Groups[2].Value -replace '\s+',' ').Trim() )
   }
+  # a hand-written set replaces the reference question entirely
+  if ($cityFaqs.ContainsKey($slug)) { $faqs = $cityFaqs[$slug] }
 
   # zips out of the service-area line
   $zips = ""
