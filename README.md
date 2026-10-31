@@ -170,6 +170,18 @@ text, `tel:` links, the WhatsApp link and the form's hidden routing fields.
 | `{{site_url}}` | site root — logo link, og:image, sharing |
 | `{{page_url}}` | this page — canonical, og:url, form field |
 | `{{rating}}` / `{{review_count}}` | 5.0 / 127 |
+| `{{facebook_url}}` / `{{bbb_url}}` | the business profiles |
+
+The two profile URLs are used twice each and must stay in step: the footer's
+*Find us* links on every page, and the `sameAs` array in the home page's
+`LocalBusiness`. `sameAs` is what tells Google the Facebook page, the BBB
+listing and this site are one business, and it only works if the URL in the
+schema is the URL in the link. Both are followed links, not `nofollow` —
+they are our own profiles, which is the whole point. City pages carry no
+`sameAs`, because they carry no `LocalBusiness`.
+
+The Facebook URL is the canonical `/people/…` form the `profile.php?id=…`
+link redirects to, so neither use costs a redirect hop.
 
 Review cards are **not** tokenised — they render from the `REVIEWS` array in the
 script at the bottom of the template.

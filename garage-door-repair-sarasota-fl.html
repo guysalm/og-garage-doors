@@ -560,6 +560,20 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
   text-transform:uppercase;color:#8A939E
 }
 .footer__pay img{height:34px;width:auto}
+.footer__find{margin:24px 0 0}
+.footer__find>span{
+  display:block;margin-bottom:9px;
+  font-size:.72rem;font-weight:700;letter-spacing:1.2px;
+  text-transform:uppercase;color:#8A939E
+}
+.footer__find ul{display:flex;flex-wrap:wrap;gap:10px}
+.footer__find a{
+  display:inline-flex;align-items:center;gap:8px;
+  border:1px solid #2a3038;border-radius:4px;padding:8px 13px;
+  color:#B9C0C9;font-size:.86rem;font-weight:700
+}
+.footer__find a:hover{color:#fff;border-color:var(--crimson-2);text-decoration:none}
+.footer__find svg{width:16px;height:16px;fill:var(--crimson-2);flex:none}
 .footer__bottom{
   border-top:1px solid #2a3038;margin-top:44px;padding:20px 0;
   text-align:center;font-size:.82rem;color:#8A939E
@@ -1358,6 +1372,21 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
           <img src="assets/img/payments-credit-cards.png" width="468" height="72" loading="lazy"
                alt="We accept Visa, MasterCard, American Express and Discover">
         </p>
+        <!-- Our own profiles, so these are followed links, not nofollow: they
+             are half of what tells Google the Facebook page, the BBB listing
+             and this site are one business. The other half is the sameAs
+             array in the JSON-LD above, which must list the same URLs. -->
+        <div class="footer__find">
+          <span>Find us</span>
+          <ul>
+            <li><a href="https://www.facebook.com/people/OG-Garage-Doors-Service/61595490601279/" target="_blank" rel="noopener" data-cta="footer-facebook">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.25-1.5 1.55-1.5H16.7V3.6c-.29-.04-1.28-.13-2.43-.13-2.4 0-4.05 1.47-4.05 4.16V9.9H7.5V13h2.72v8z"/></svg>
+              Facebook</a></li>
+            <li><a href="https://www.bbb.org/us/fl/venice/profile/garage-door-repair/og-garage-doors-service-0653-90466720" target="_blank" rel="noopener" data-cta="footer-bbb">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 4 5.2v5.9c0 4.6 3.2 8.9 8 10.9 4.8-2 8-6.3 8-10.9V5.2L12 2zm-1.2 13.6-3-3 1.4-1.4 1.6 1.6 4.2-4.2 1.4 1.4-5.6 5.6z"/></svg>
+              BBB Profile</a></li>
+          </ul>
+        </div>
       </div>
 
       <nav aria-labelledby="footer-services-1">
@@ -1502,7 +1531,9 @@ var SITE = {
   site_url       : "https://oggaragedoors.com/",
   page_url       : "https://oggaragedoors.com/garage-door-repair-sarasota-fl",
   rating         : "5.0",
-  review_count   : "127"
+  review_count   : "127",
+  facebook_url   : "https://www.facebook.com/people/OG-Garage-Doors-Service/61595490601279/",
+  bbb_url        : "https://www.bbb.org/us/fl/venice/profile/garage-door-repair/og-garage-doors-service-0653-90466720"
 };
 
 /* =========================================================================
