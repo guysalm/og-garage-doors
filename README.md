@@ -225,6 +225,28 @@ template has no inline `on*` handlers or `style=""` attributes.
 Also set: `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`,
 `Strict-Transport-Security`, `X-Frame-Options`.
 
+## Google Analytics
+
+GA4, measurement ID in the `ga_id` key of `SITE`, so the tag and the config
+call both read from one place. The loader comes from `googletagmanager.com`
+and the bootstrap is inline — the build hashes it like any other inline
+script, so no `unsafe-inline` is needed and the ID is not duplicated.
+
+The CSP needs three hosts, and they are not interchangeable: `gtag.js` is
+served from `googletagmanager.com` while the beacons go to
+`google-analytics.com`, so a tag allowed in `script-src` but unreachable in
+`connect-src` loads and then silently sends nothing. GA4 beacons by `fetch`
+and falls back to an image, which is why the analytics hosts are in `img-src`
+too.
+
+Only inline scripts are hashed. A `src=` script is covered by its host in
+`script-src`, so hashing its empty body would just add a hash that permits
+an empty inline script.
+
+`tools/serve.ps1` reads the generated `_headers`, so a CSP that would block
+the tag live blocks it in local preview first — which also means local
+preview sends real page views to the property.
+
 `tools/serve.ps1` applies the same headers locally, so a policy that would break
 the live site breaks it in preview first.
 

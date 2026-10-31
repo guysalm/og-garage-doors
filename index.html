@@ -5,6 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 
+<!-- Google tag (gtag.js). The measurement ID is the ga_id key in SITE, so it
+     lives in one place; the bootstrap below is inline, which the CSP allows
+     because the build hashes every inline script it finds. googletagmanager
+     is in script-src and google-analytics in connect-src for the same reason
+     - see the _headers section of tools/build-city-pages.ps1.
+     Opening tools/template.html directly leaves G-57CDJPDSFF unresolved, which
+     is deliberate: a raw template preview sends nothing to the property. -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-57CDJPDSFF"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-57CDJPDSFF');
+</script>
+
 
 <title>Garage Door Repair Venice FL | Same-Day Service 24/7</title>
 <meta name="description" content="Garage door repair in Venice, FL - springs, cables, openers and new doors. Licensed, insured, 24/7 emergency service. Free estimates, call (941) 949-6507.">
@@ -1560,6 +1576,7 @@ var SITE = {
   page_url       : "https://oggaragedoors.com/",
   rating         : "5.0",
   review_count   : "127",
+  ga_id          : "G-57CDJPDSFF",
   facebook_url   : "https://www.facebook.com/people/OG-Garage-Doors-Service/61595490601279/",
   bbb_url        : "https://www.bbb.org/us/fl/venice/profile/garage-door-repair/og-garage-doors-service-0653-90466720"
 };

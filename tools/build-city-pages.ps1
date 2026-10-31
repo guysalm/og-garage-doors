@@ -1001,8 +1001,10 @@ foreach ($file in $generated) {
   foreach ($m in [regex]::Matches($html, '(?s)<style>(.*?)</style>')) {
     [void]$styleHashes.Add("'sha256-$(Sha256B64 $m.Groups[1].Value)'")
   }
-  # only executable scripts - application/ld+json is data and is never run
-  foreach ($m in [regex]::Matches($html, '(?s)<script(?![^>]*type=)[^>]*>(.*?)</script>')) {
+  # Only executable inline scripts: application/ld+json is data and is never
+  # run, and a src= script is covered by its host in script-src, not by a
+  # hash - hashing its empty body just adds a hash that allows "".
+  foreach ($m in [regex]::Matches($html, '(?s)<script(?![^>]*type=)(?![^>]*\ssrc=)[^>]*>(.*?)</script>')) {
     [void]$scriptHashes.Add("'sha256-$(Sha256B64 $m.Groups[1].Value)'")
   }
 }
@@ -1017,9 +1019,13 @@ $csp = @(
   "object-src 'none'"
   "frame-ancestors 'none'"
   "form-action 'self'"
-  "connect-src 'self'"
-  "img-src 'self' data:"                                    # data: covers the CSS check-mark mask
-  "script-src 'self' $($inlineHashes.script -join ' ')"
+  # gtag.js is served from googletagmanager and beacons to google-analytics,
+  # which are different hosts: a tag allowed in script-src but not reachable
+  # in connect-src loads and then silently sends nothing. GA4 beacons by
+  # fetch, falling back to an image, so both need the analytics hosts.
+  "connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com"
+  "img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com"   # data: covers the CSS check-mark mask
+  "script-src 'self' https://www.googletagmanager.com $($inlineHashes.script -join ' ')"
   "style-src 'self' $($inlineHashes.style -join ' ') https://fonts.googleapis.com"
   "font-src 'self' https://fonts.gstatic.com"
   "upgrade-insecure-requests"
