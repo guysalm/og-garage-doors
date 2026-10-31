@@ -284,6 +284,38 @@ Opening `tools/template.html` directly leaves `{{site_host}}` unresolved, so
 the comparison never matches — a raw template preview is silent rather than
 broken.
 
+### Conversion tracking
+
+Every CTA on the page already carries a `data-cta` attribute, so section
+**1d** of the inline script tracks all of them with one delegated listener
+and no markup changes. It listens in the capture phase, so a handler that
+stops propagation cannot silently cost a conversion.
+
+| event | fires on | count |
+|---|---|---|
+| `phone_call` | any `tel:` CTA | 19 per page |
+| `quote_form_open` | a CTA that opens or scrolls to the lead form | 5 |
+| `generate_lead` | the form **posted successfully** | 1 |
+| `outbound_click` | the Facebook or BBB profile link | 2 |
+
+Mark **`phone_call`** and **`generate_lead`** as key events in GA4. On a trade
+site the phone is the conversion — most leads never touch the form.
+`quote_form_open` is intent, not a lead, so leave it unmarked.
+
+`generate_lead` fires from the form's success path in section 4, not from the
+click listener and not on `submit`: a post that failed is not a lead. The
+no-`fetch` fallback path lets the browser POST normally and navigates away,
+so that (very old) case is not tracked.
+
+Every event carries `cta`, the `data-cta` value, so one event name covers
+fourteen placements and the placement stays a breakdown rather than fourteen
+separate event names. **Register `cta` as a custom dimension in GA4** or it
+will not appear in reports.
+
+`window.ogTrack(name, params)` is the single entry point and no-ops when
+`gtag` is undefined, which is every host except the live one — so clicks in
+local preview do not throw.
+
 `tools/serve.ps1` applies the same headers locally, so a policy that would break
 the live site breaks it in preview first.
 

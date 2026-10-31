@@ -1966,6 +1966,54 @@ var REVIEWS = [
 })();
 
 /* =========================================================================
+   1d. CONVERSION TRACKING
+   Every CTA already carries a data-cta attribute, so one delegated listener
+   covers all of them and no markup changes. Capture phase, so a handler that
+   stops propagation cannot silently cost us a conversion.
+
+   gtag exists only on the live host (see the guarded tag in <head>), so
+   ogTrack is a no-op everywhere else rather than a ReferenceError on every
+   click in local preview.
+
+   Events:
+     phone_call       a tel: CTA was clicked. On a trade site this is the
+                      conversion that matters - most leads never touch a form
+     quote_form_open  a CTA that opens or scrolls to the lead form. Intent,
+                      not a lead, so do not mark it a key event
+     generate_lead    the form actually posted. Fired from section 4 on the
+                      success path, not from here, because a submit that
+                      fails is not a lead. GA4's own recommended event name
+     outbound_click   the Facebook or BBB profile link
+
+   Each carries cta: the data-cta value, so one event name covers fourteen
+   placements and the placement stays a breakdown rather than fourteen event
+   names GA4 would have to be told about separately. Register cta as a custom
+   dimension in GA4 or it will not appear in reports.
+   ========================================================================= */
+(function(){
+  window.ogTrack = function(name, params){
+    if (typeof window.gtag !== "function") return;
+    window.gtag("event", name, params || {});
+  };
+
+  document.addEventListener("click", function(e){
+    var el = e.target && e.target.closest ? e.target.closest("[data-cta]") : null;
+    if (!el) return;
+
+    var cta  = el.getAttribute("data-cta");
+    var href = el.getAttribute("href") || "";
+
+    if (href.indexOf("tel:") === 0) {
+      window.ogTrack("phone_call", { cta: cta, phone: href.slice(4) });
+    } else if (href.indexOf("#quote-form") === 0 || el.hasAttribute("data-quote-form")) {
+      window.ogTrack("quote_form_open", { cta: cta });
+    } else if (/^https?:/i.test(href)) {
+      window.ogTrack("outbound_click", { cta: cta, link_url: href });
+    }
+  }, true);
+})();
+
+/* =========================================================================
    2. MOBILE NAV
    ========================================================================= */
 (function(){
@@ -2089,6 +2137,8 @@ var REVIEWS = [
       body: pairs.join("&")
     }).then(function(res){
       if (!res.ok) throw new Error(res.status);
+      /* Here, not on submit: a post that failed is not a lead. */
+      if (window.ogTrack) window.ogTrack("generate_lead", { cta: "contact-form" });
       form.reset();
       say("Thanks! We’ve got your request — we’ll call you shortly.", true);
     }).catch(function(){
