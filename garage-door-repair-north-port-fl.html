@@ -572,7 +572,9 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
   border:1px solid #2a3038;border-radius:4px;padding:8px 13px;
   color:#B9C0C9;font-size:.86rem;font-weight:700
 }
-.footer__find a:hover{color:#fff;border-color:var(--crimson-2);text-decoration:none}
+/* no hover state wanted on these. text-decoration:none stays, otherwise the
+   global a:hover underline applies and that is a hover effect too. */
+.footer__find a:hover{text-decoration:none}
 .footer__find svg{width:16px;height:16px;fill:var(--crimson-2);flex:none}
 .footer__bottom{
   border-top:1px solid #2a3038;margin-top:44px;padding:20px 0;
