@@ -90,20 +90,34 @@ service-card descriptions** (333 words of body copy, the single largest
 duplicate block on the site) and the **FAQ**, where `reference/` gives one
 question per city against the template's seven shared ones.
 
-Both are now per city as well. The card descriptions are twelve more
-`$cityCopy` tokens (`{{svc_spring_p}}` … `{{svc_sensor_p}}`); the card
-*headings* stay shared, because they are the service names and renaming
-"Broken Spring Repair" per city would cost the keyword. FAQs come from
-`$cityFaqs`, where an entry replaces that city's reference question outright.
+Both are now per city as well:
 
-| pair | before | after cards + FAQs |
-|---|---|---|
-| North Port vs Englewood | 60.4% | **46.3%** |
-| home (Venice) vs North Port | 60.4% | **46.5%** |
-| Englewood vs Sarasota | 59.6% | **47.1%** |
+- **Card descriptions** are twelve more `$cityCopy` tokens
+  (`{{svc_spring_p}}` … `{{svc_sensor_p}}`). The card *headings* stay shared,
+  because they are the service names and renaming "Broken Spring Repair" per
+  city would cost the keyword.
+- **City questions** come from `$cityFaqs`, where an entry replaces that
+  city's reference question outright.
+- **The six shared answers** are six more `$cityCopy` tokens
+  (`{{faq_speed_a}}` … `{{faq_hoa_a}}`). The shared *questions* stay shared,
+  and deliberately: `Add-CityFaqs` matches the exact wording of "How fast can
+  a technician get to my home?" to drop it from a page that already asks its
+  own speed question, and throws if that text moves. Keep the local detail in
+  the answers.
 
-What is left is the shared FAQ answers (~220 words) and the lead form's labels
-and dropdown (~180 words, which Google discounts as chrome).
+| pair | at the start | cards + city FAQs | + shared answers |
+|---|---|---|---|
+| North Port vs Englewood | 60.4% | 46.3% | **34.3%** |
+| home (Venice) vs North Port | 60.4% | 46.5% | **34.3%** |
+| Englewood vs Sarasota | 59.6% | 47.1% | **35.2%** |
+
+What is left is the lead form's labels and dropdown (~180 words, which Google
+discounts as chrome) and the service cards' four-item check lists, which are
+service names again.
+
+Two answers on the same page must not restate each other either: Sarasota
+asks its own ARC question, so that page's shared HOA answer covers styles,
+panel profiles and colour matching instead of approval.
 
 North Port got the FAQ work first because it was the page Search Console would
 not index, and its one "local" question never named the city — it asked about
@@ -122,11 +136,19 @@ Two guards hold it there:
 
 A city with no `$cityCopy` entry falls back to defaults that at least carry its
 name into each heading, and the build prints a note naming it. The service-card
-defaults are the original shared template sentences, so a city on defaults is
-carrying the duplicate block the per-city versions exist to break up. That is
-enough to pass the H2 assertion but not enough to earn an index slot, so
-**write the entry before re-enabling a city** — `$cityFaqs` too, since a city
-with no entry there ships one reference question against seven shared ones.
+and FAQ-answer defaults are the original shared template sentences, so a city
+on defaults is carrying the duplicate blocks the per-city versions exist to
+break up. That is enough to pass the H2 assertion but not enough to earn an
+index slot, so **write the entry before re-enabling a city** — `$cityFaqs`
+too, since a city with no entry there ships one reference question against
+seven shared ones.
+
+The token legend at the top of `tools/template.html` lists every `{{token}}`
+by name, so substitution used to fill it in like any other occurrence and
+every page shipped a second copy of its own prose inside an HTML comment.
+The build strips the legend before substituting anything, and throws if it
+cannot find it — about 3KB a page by the time the cards and answers were
+tokenised.
 
 ## Dynamic SEO framework
 

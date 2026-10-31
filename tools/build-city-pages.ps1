@@ -26,6 +26,18 @@ if (-not (Test-Path $srcPath)) { throw "City content file not found: $srcPath" }
 $tpl = Get-Content $tplPath -Raw -Encoding UTF8
 $raw = Get-Content $srcPath -Raw -Encoding UTF8
 
+# The token legend is a comment listing every {{token}} by name, which means
+# substitution fills it in like any other occurrence: every shipped page was
+# carrying a second copy of its own headings and body prose inside an HTML
+# comment. Harmless to a crawler, but it is dead weight, and with the service
+# cards and FAQ answers tokenised it had grown to about 3KB a page. Strip the
+# legend before anything is substituted, so the built pages never see it.
+$legendRe = '(?s)\n<!-- ={20,}\s*\r?\n\s+DYNAMIC SEO PLACEHOLDERS.*?={20,} -->\n'
+if (-not [regex]::IsMatch($tpl, $legendRe)) {
+  throw "token legend comment not found in template.html - its opening or closing rule changed"
+}
+$tpl = [regex]::Replace($tpl, $legendRe, "`n")
+
 # ---------------------------------------------------------------- SITE values
 $siteBlock = [regex]::Match($tpl, '(?s)var SITE = \{(.*?)\n\};').Groups[1].Value
 $SITE = @{}
@@ -152,7 +164,13 @@ $COPY_KEYS = @(
   # renaming "Broken Spring Repair" per city would cost the keyword.
   "svc_spring_p","svc_opener_p","svc_offtrack_p","svc_cable_p",
   "svc_jackshaft_p","svc_roller_p","svc_panels_p","svc_commercial_p",
-  "svc_gate_p","svc_tuneup_p","svc_newdoor_p","svc_sensor_p"
+  "svc_gate_p","svc_tuneup_p","svc_newdoor_p","svc_sensor_p",
+  # the six shared FAQ answers, ~220 words and the largest block left after
+  # the service cards. The questions stay shared: Add-CityFaqs matches the
+  # "How fast can a technician get to my home?" wording to drop it from a
+  # page that asks its own speed question, and it throws if that text moves.
+  "faq_speed_a","faq_weekend_a","faq_springcost_a",
+  "faq_estimate_a","faq_windcode_a","faq_hoa_a"
 )
 
 $cityCopy = @{
@@ -205,6 +223,14 @@ $cityCopy = @{
   svc_tuneup_p     = "A 25-point tune-up finds the spring and cable wear before it strands you."
   svc_newdoor_p    = "Hurricane and wind-code rated doors, old door hauled away, price agreed up front."
   svc_sensor_p     = "Door reversing halfway? Photo-eye alignment or replacement, tested while you watch."
+
+  # The speed question survives here: Venice's own FAQs do not ask it.
+  faq_speed_a      = "We keep trucks working both the island and the mainland side of Venice, so a dead door is normally a same-day visit &mdash; most calls see a technician inside 60 to 90 minutes, and someone answers the phone out of hours."
+  faq_weekend_a    = "No. The rate is the same seven days a week, holidays included, and the senior and veteran discount applies on a Sunday exactly as it does on a Tuesday. Emergency cover runs 24/7."
+  faq_springcost_a = "The spring is sized to the door it lifts, so the door sets the price, not the spring. Width and height, what the panels are made of, whether it is insulated, whether it carries window sections, and whether it is standard wind-load or impact-rated all change what the door weighs and how much spring capacity it needs. A single-car residential door in Venice usually lands in the few-hundred range; a commercial door can reach the thousands. So we measure the door and read the spring already on it before quoting &mdash; that is the only way to give a real number instead of a guess. The visit and the estimate are free, and the full price is agreed before anyone starts work."
+  faq_estimate_a   = "Yes. We price the job before anyone picks up a tool, and the figure we give you is the figure you pay &mdash; no hidden fees and nothing added at the end. Decide against it and the visit has cost you nothing."
+  faq_windcode_a   = "Yes. We fit impact-rated, wind-code approved doors that meet Florida building requirements, including HVHZ standards where they apply, and we leave you the product approval paperwork an inspector will ask for. Hardware is corrosion-resistant, which matters this close to the Gulf."
+  faq_hoa_a        = "We do. Carriage House, Modern Glass and traditional raised-panel, in the panel profiles and factory colors Venice associations tend to specify &mdash; including the 55+ communities on the island, where a matching finish usually matters more than the style itself."
 }
 
 # -------------------------------------------------------------- Englewood
@@ -255,6 +281,14 @@ $cityCopy = @{
   svc_tuneup_p     = "On Manasota Key a tune-up is corrosion control: lubricate, re-torque, check fixings."
   svc_newdoor_p    = "Impact and wind-rated doors specified with galvanized hardware for coastal air."
   svc_sensor_p     = "Sensors fail early in damp salt air. We realign or replace them and test the reverse."
+
+  # The speed question survives here: Englewood's own FAQ is about rust.
+  faq_speed_a      = "We run trucks through Englewood daily, so most calls here are same-day and emergency dispatch normally arrives inside 60 to 90 minutes. Manasota Key included &mdash; crossing the bridge does not change the appointment."
+  faq_weekend_a    = "No. Same rate seven days a week, holidays included. A cable that lets go on a Saturday costs what it would have cost on a Monday, and emergency cover runs 24/7."
+  faq_springcost_a = "A spring is matched to the weight of the door it has to lift, so what the door is decides the cost: how wide and tall it is, the material, whether it is insulated, whether it has window sections, and whether it is standard wind-load or impact-rated. Coastal doors add one more factor &mdash; a galvanized spring costs more than plain steel and lasts far longer in Englewood air, so we quote the one that will actually survive here rather than the cheapest one that fits. A single-car residential door is usually a few hundred dollars; a commercial door can run into the thousands. We measure the door and read the existing spring before giving a price. The visit and the estimate are free, and you get the full figure before any work starts."
+  faq_estimate_a   = "Yes. The technician looks at the door, tells you the price, and that is the price. No call-out fee, and no charge at all if you decide not to go ahead."
+  faq_windcode_a   = "Yes. Impact-rated and wind-code approved doors to Florida building requirements, including HVHZ standards where they apply. We specify galvanized and corrosion-resistant hardware as a matter of course here, because Englewood air finds plain steel inside a couple of seasons."
+  faq_hoa_a        = "We do. Carriage House, Modern Glass and traditional raised-panel styles that pass the review guidelines used by the Englewood and Manasota Key associations, in factory finishes that hold their color in full coastal sun."
 }
 
 # ------------------------------------------------------------- North Port
@@ -305,6 +339,14 @@ $cityCopy = @{
   svc_tuneup_p     = "On a high-use door a tune-up is maintenance, not an upsell. Twenty-five points."
   svc_newdoor_p    = "Insulated, wind-rated doors that take some of the load off the air conditioning."
   svc_sensor_p     = "Sensor knocked out of line by a bike or a bin? Realigned and tested the same visit."
+
+  # No faq_speed_a: North Port asks its own speed question, so Add-CityFaqs
+  # drops the shared one and the default value never reaches a page.
+  faq_weekend_a    = "No. The rate does not move for a weekend or a holiday. A spring that goes on a Saturday morning is quoted at the weekday price, and there is someone on the phone 24/7."
+  faq_springcost_a = "A spring is sized to the door it has to lift, so the door sets the price rather than the spring: how wide and tall it is, what it is made of, whether it is insulated, whether it has window sections, and whether it is standard wind-load or impact-rated. On a North Port door there is a second decision &mdash; a builder-grade spring is rated for about 10,000 cycles, and a heavy-duty high-cycle spring costs more up front but lasts years longer on a door opening ten times a day. A single-car residential door is usually a few hundred dollars; a commercial door can run into the thousands. That is why we measure the door and read the spring on it before quoting. The visit and the estimate are free, and the full price comes before any work."
+  faq_estimate_a   = "Yes. You get a clear price before work starts and it holds &mdash; no fees appearing at the end. If you would rather think it over, the visit costs you nothing."
+  faq_windcode_a   = "Yes. Impact-rated, wind-code approved doors that meet Florida building requirements, including HVHZ standards where they apply. On a door you already have we can often add wind-load struts and reinforce the track instead of replacing the whole thing."
+  faq_hoa_a        = "We do. Carriage House, Modern Glass and traditional raised-panel, in the colors and panel profiles North Port associations ask for. On newer streets where every door matches, we can match an existing one rather than replace a whole row."
 }
 
 # ---------------------------------------------------------------- Sarasota
@@ -358,6 +400,16 @@ $cityCopy = @{
   svc_tuneup_p     = "Gulf humidity works on hardware year-round. A tune-up catches it before it binds."
   svc_newdoor_p    = "Carriage house and modern glass doors in finishes your ARC will sign off on."
   svc_sensor_p     = "Door refusing to close? Photo-eye realignment or replacement, tested with you."
+
+  # No faq_speed_a: Sarasota asks its own speed question. The shared HOA
+  # answer deliberately covers styles and finishes, because Sarasota's own
+  # FAQ already covers ARC approval in Lakewood Ranch - two near-identical
+  # answers on one page is the duplication this whole exercise is about.
+  faq_weekend_a    = "No. One rate, seven days a week, holidays included &mdash; no weekend surcharge and no after-hours premium. Emergency cover runs 24/7."
+  faq_springcost_a = "A spring is sized to the door it lifts, so the door decides the price, not the spring: width and height, the material, whether it is insulated, whether it carries window sections, and whether it is standard wind-load or impact-rated. That matters more than usual on the doors going into Sarasota, because an impact-rated door with glass sections weighs considerably more than a plain single-skin panel and needs the spring capacity to match. A single-car residential door is usually a few hundred dollars; a commercial door can run into the thousands. We measure the door and read the spring already on it before quoting, because that is the only way to give a real number. The visit and the estimate are free, and the price is agreed before work starts."
+  faq_estimate_a   = "Yes. A free on-site estimate, the price agreed before work starts, and nothing added afterwards. Decline it and you owe us nothing."
+  faq_windcode_a   = "Yes. Impact-rated, wind-code approved doors meeting Florida building requirements, including HVHZ standards where they apply. We keep the product approval paperwork with the job, so your permit and your ARC submission both have the documents they need."
+  faq_hoa_a        = "We do &mdash; Carriage House, Modern Glass and traditional raised-panel, in the panel profiles and factory colors review committees usually specify. If your community publishes an approved palette, bring it to the estimate and we will quote from it. We can also match the profile and color of an existing door when only one section needs replacing."
 }
 
 # ----------------------------------------------------- region-level home page
@@ -478,6 +530,17 @@ function Get-CityCopy($c) {
     svc_tuneup_p     = "Door too loud or uneven? We lubricate, adjust and balance for smooth operation."
     svc_newdoor_p    = "We install all garage door types &ndash; including hurricane-rated doors. Old door removal included."
     svc_sensor_p     = "Door won&rsquo;t close or sensors blink? We adjust or replace garage door sensors."
+
+    # the original shared answers, kept as the fallback. {{location}} is gone
+    # from them on purpose: token substitution walks an unordered hashtable,
+    # so a {{location}} planted by another token may or may not still be
+    # waiting its turn - and the leftover-token assertion would catch it.
+    faq_speed_a      = "Our service trucks are staged throughout $city, so we offer same-day appointments and emergency dispatch, typically within 60&ndash;90 minutes of your call."
+    faq_weekend_a    = "No. We charge the same rate seven days a week &mdash; there is no extra charge on weekends or holidays, and emergency service is available 24/7."
+    faq_springcost_a = "A spring is sized to the door it has to lift, so the price depends on the door rather than on the spring itself: how wide and tall it is, what it is made of, whether it is insulated, whether it has window sections, and whether it is standard wind-load or impact-rated. All of that changes what the door weighs and how much spring capacity it needs. A single-car residential door is usually a few hundred dollars; a commercial door can run into the thousands. That is why we look at the door before we quote &mdash; measuring it and reading the spring already on it is the only way to give you a real price instead of a guess. The visit and the estimate are free, and you get the full price before any work starts."
+    faq_estimate_a   = "Yes. We give you a clear, upfront price before any work begins, with no hidden fees. If you decide not to proceed, the estimate costs you nothing."
+    faq_windcode_a   = "Yes. We install impact-rated, wind-code approved garage doors that meet Florida building requirements, including HVHZ standards where they apply, plus corrosion-resistant hardware built for coastal salt air."
+    faq_hoa_a        = "We do. We carry Carriage House, Modern Glass and traditional raised-panel styles that meet the Architectural Review Committee guidelines of most HOA communities across $city."
   }
 
   if ($cityCopy.ContainsKey($c.Slug)) {
