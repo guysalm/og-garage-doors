@@ -13,3 +13,8 @@ Desktop.ini
 # This directory is ~23MB of untouched originals. Avatars regenerate with
 # tools/make-avatars.ps1.
 assets/img/Real Photos/
+
+# A screenshot of the DKIM DNS records, kept locally for reference. Same
+# reason as above: the repo root is the publish root, so committing it would
+# publish our DNS configuration at a guessable URL.
+assets/Capture.PNG
