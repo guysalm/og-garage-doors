@@ -257,8 +257,32 @@ headers rather than `_headers`:
     powershell -File tools\check-live-headers.ps1
 
 `tools/serve.ps1` reads the generated `_headers`, so a CSP that would block
-the tag live blocks it in local preview first — which also means local
-preview sends real page views to the property.
+the tag live blocks it in local preview first.
+
+The tag is **guarded on the live host**:
+
+```js
+if (location.hostname === "oggaragedoors.com") { … }
+```
+
+`serve.ps1` serves these same generated pages, so without the guard every
+local page view would land in the property as real traffic, and so would a
+Netlify deploy preview. The guard wraps the **loader** as well as the
+`config` call — withholding `gtag('config')` alone would be enough to send
+nothing, but it would still pull half a megabyte of `gtag.js` on every local
+page view. `gtag.js` is injected by that block rather than sitting in the
+markup, which `script-src https://www.googletagmanager.com` covers either
+way.
+
+The host comes from `site_host` in `SITE`, and the build **fails** if it does
+not match the host in `site_url`. That check exists because this is the one
+SITE value the page compares rather than prints: if it drifted, the tag would
+go quiet on the live site and nothing else would break, so nobody would
+notice until the property flatlined.
+
+Opening `tools/template.html` directly leaves `{{site_host}}` unresolved, so
+the comparison never matches — a raw template preview is silent rather than
+broken.
 
 `tools/serve.ps1` applies the same headers locally, so a policy that would break
 the live site breaks it in preview first.

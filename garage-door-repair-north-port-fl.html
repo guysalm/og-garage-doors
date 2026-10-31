@@ -5,20 +5,34 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 
-<!-- Google tag (gtag.js). The measurement ID is the ga_id key in SITE, so it
-     lives in one place; the bootstrap below is inline, which the CSP allows
-     because the build hashes every inline script it finds. googletagmanager
-     is in script-src and google-analytics in connect-src for the same reason
-     - see the _headers section of tools/build-city-pages.ps1.
-     Opening tools/template.html directly leaves G-57CDJPDSFF unresolved, which
-     is deliberate: a raw template preview sends nothing to the property. -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-57CDJPDSFF"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+<!-- Google tag (gtag.js), measurement ID from the ga_id key in SITE so it
+     lives in one place. The bootstrap is inline, which the hash-based CSP
+     allows because the build hashes every inline script it finds;
+     googletagmanager is in script-src and google-analytics in connect-src -
+     see the _headers section of tools/build-city-pages.ps1.
 
-  gtag('config', 'G-57CDJPDSFF');
+     Guarded on the live host, and the guard wraps the loader as well as the
+     config call: tools/serve.ps1 serves these same generated pages, so
+     without it a local preview would count as real traffic in the property,
+     and a Netlify deploy preview would too. Loading gtag.js and withholding
+     only gtag('config') would be enough to send nothing, but it would still
+     pull half a megabyte on every local page view.
+
+     Opening tools/template.html directly leaves oggaragedoors.com unresolved, so
+     the comparison simply never matches. That is the intended fallback: a
+     raw template preview is silent rather than broken. -->
+<script>
+  if (location.hostname === "oggaragedoors.com") {
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function(){ dataLayer.push(arguments); };
+    gtag('js', new Date());
+    gtag('config', 'G-57CDJPDSFF');
+
+    var gaTag = document.createElement('script');
+    gaTag.async = true;
+    gaTag.src = "https://www.googletagmanager.com/gtag/js?id=G-57CDJPDSFF";
+    document.head.appendChild(gaTag);
+  }
 </script>
 
 
@@ -1544,6 +1558,7 @@ var SITE = {
   address_region : "FL",
   postal_code    : "34285",
   site_url       : "https://oggaragedoors.com/",
+  site_host      : "oggaragedoors.com",
   page_url       : "https://oggaragedoors.com/garage-door-repair-north-port-fl",
   rating         : "5.0",
   review_count   : "127",

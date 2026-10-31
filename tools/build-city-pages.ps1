@@ -46,6 +46,15 @@ foreach ($m in [regex]::Matches($siteBlock, '(?m)^\s*([a-z_]+)\s*:\s*"(.*?)"\s*,
 }
 Write-Host "SITE defaults read from tools/template.html ($($SITE.Count) keys)"
 
+# site_host gates the analytics tag, and it is the one SITE value the tag
+# compares against location.hostname rather than printing. If it drifts from
+# site_url the tag goes quiet on the live site and nothing else breaks, so
+# nobody notices until the property flatlines. Derive and compare instead.
+$siteHostExpected = ([Uri]$SITE.site_url).Host
+if ($SITE.site_host -ne $siteHostExpected) {
+  throw "SITE.site_host is '$($SITE.site_host)' but site_url resolves to '$siteHostExpected' - the analytics guard would never match"
+}
+
 # The share dialog's links ship with a real share endpoint in href, not "#".
 # A crawler reads raw HTML: href="#" resolves to the page itself, so those
 # rel="nofollow" anchors counted as internal nofollow links to our own URLs.
