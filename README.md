@@ -243,6 +243,19 @@ Only inline scripts are hashed. A `src=` script is covered by its host in
 `script-src`, so hashing its empty body would just add a hash that permits
 an empty inline script.
 
+**Cloudflare Web Analytics** needs the same two-host treatment:
+`beacon.min.js` from `static.cloudflareinsights.com` in `script-src`, and
+`cloudflareinsights.com` in `connect-src` for the RUM beacon. That tag is
+injected **at the edge**, so it is in no file in this repo and `curl` only
+sees it with a browser `User-Agent` — the first sign it is being blocked is
+a console error on a page that looks fine in the source. If you ever turn
+Web Analytics off in the Cloudflare dashboard, these two entries can go.
+
+After any CSP change, purge the Cloudflare cache, then check the live
+headers rather than `_headers`:
+
+    powershell -File tools\check-live-headers.ps1
+
 `tools/serve.ps1` reads the generated `_headers`, so a CSP that would block
 the tag live blocks it in local preview first — which also means local
 preview sends real page views to the property.

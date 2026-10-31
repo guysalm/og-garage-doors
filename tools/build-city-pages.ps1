@@ -1019,13 +1019,18 @@ $csp = @(
   "object-src 'none'"
   "frame-ancestors 'none'"
   "form-action 'self'"
-  # gtag.js is served from googletagmanager and beacons to google-analytics,
-  # which are different hosts: a tag allowed in script-src but not reachable
-  # in connect-src loads and then silently sends nothing. GA4 beacons by
-  # fetch, falling back to an image, so both need the analytics hosts.
-  "connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com"
+  # Both analytics tags split their script host from their beacon host, and a
+  # tag allowed in script-src but unreachable in connect-src loads and then
+  # silently sends nothing:
+  #   GA4        gtag.js from googletagmanager -> beacons to google-analytics
+  #   Cloudflare beacon.min.js from static.cloudflareinsights.com
+  #              -> beacons to cloudflareinsights.com/cdn-cgi/rum
+  # The Cloudflare beacon is injected at the edge by Web Analytics, so it is
+  # in no file here and only ever shows up as a console error. GA4 beacons by
+  # fetch and falls back to an image, hence the analytics hosts in img-src.
+  "connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://cloudflareinsights.com"
   "img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com"   # data: covers the CSS check-mark mask
-  "script-src 'self' https://www.googletagmanager.com $($inlineHashes.script -join ' ')"
+  "script-src 'self' https://www.googletagmanager.com https://static.cloudflareinsights.com $($inlineHashes.script -join ' ')"
   "style-src 'self' $($inlineHashes.style -join ' ') https://fonts.googleapis.com"
   "font-src 'self' https://fonts.gstatic.com"
   "upgrade-insecure-requests"
