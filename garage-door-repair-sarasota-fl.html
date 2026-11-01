@@ -50,6 +50,17 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#14181D">
 
+<!-- Both files sit at the site root under the names a browser guesses, and
+     are declared anyway. The guess is what matters: Chrome asks for
+     /favicon.ico before it has parsed a single tag, and logs a 404 in the
+     console when it is missing - which is what these links were added for.
+     Safari does the same with /apple-touch-icon.png. Declaring them too
+     lets the icon be found on the first pass instead of the fallback, and
+     means the paths can move later without reintroducing the 404.
+     Regenerate both with tools/make-favicon.ps1. -->
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <!-- loaded non-blocking: media="print" until the script at the end flips it.
