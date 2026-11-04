@@ -87,21 +87,21 @@ North Port that cycle ten times a day. Facts come from `reference/`, not from
 invention.
 
 That first pass left two blocks still identical everywhere, and measured by
-shared six-word sequences they were most of what remained: the **twelve
-service-card descriptions** (333 words of body copy, the single largest
-duplicate block on the site) and the **FAQ**, where `reference/` gives one
-question per city against the template's seven shared ones.
+shared six-word sequences they were most of what remained: the **service-card
+descriptions** (333 words of body copy, the single largest duplicate block on
+the site) and the **FAQ**, where `reference/` gives one question per city
+against the template's shared ones.
 
 Both are now per city as well:
 
-- **Card descriptions** are twelve more `$cityCopy` tokens
+- **Card descriptions** are eleven more `$cityCopy` tokens
   (`{{svc_spring_p}}` … `{{svc_sensor_p}}`). The card *headings* stay shared,
   because they are the service names and renaming "Broken Spring Repair" per
   city would cost the keyword.
 - **City questions** come from `$cityFaqs`, where an entry replaces that
   city's reference question outright.
-- **The six shared answers** are six more `$cityCopy` tokens
-  (`{{faq_speed_a}}` … `{{faq_hoa_a}}`). The shared *questions* stay shared,
+- **The shared answers** are four more `$cityCopy` tokens
+  (`{{faq_speed_a}}` … `{{faq_estimate_a}}`). The shared *questions* stay shared,
   and deliberately: `Add-CityFaqs` matches the exact wording of "How fast can
   a technician get to my home?" to drop it from a page that already asks its
   own speed question, and throws if that text moves. Keep the local detail in
@@ -151,6 +151,58 @@ every page shipped a second copy of its own prose inside an HTML comment.
 The build strips the legend before substituting anything, and throws if it
 cannot find it — about 3KB a page by the time the cards and answers were
 tokenised.
+
+## No door installation
+
+**The site must not offer, imply or illustrate garage door installation or
+supply.** The BBB asked for a contractor licence to back the claim on
+2026-11-04 and we do not hold one. Repair, parts replacement, panel and
+section work, and opener, gate and hardware work are all unaffected and stay.
+
+Naming a door is still fine, and has to be: the spring-price answer has to be
+able to say an impact-rated door weighs more than a single-skin one, because
+that is *why* the spring costs what it does. What may not appear is us
+installing, fitting, supplying, selling, carrying or stocking one.
+
+What came out, because it was never just the one service card:
+
+| Where | What |
+|---|---|
+| Services grid | the `#svc-new-door` card — 11 cards now, not 12 |
+| JSON-LD | the `New Garage Door Installation` offer in `hasOfferCatalog` |
+| FAQ | the hurricane/wind-code and HOA-styles questions, and their `faq_windcode_a` / `faq_hoa_a` answers |
+| Gallery | the commercial roll-up before/after — it shows a door being replaced |
+| Reviews | one review describing a door ordered and installed |
+| Nav + form | the footer link and the service dropdown option |
+| Per-city copy | `svc_newdoor_p`, two Expertise sections, three `about_closing` lines, four hero H2s, two meta descriptions, the brand-strip headings |
+
+The review was **removed, not reworded** — it is a named customer's own
+words, and editing those to say something they did not say is fabricating a
+testimonial. Restore it from git history if the licence comes through.
+
+### The guard
+
+`$BANNED_CLAIMS` in the build fails the build on any rendered page that makes
+the claim again. The patterns are claim-shaped — a verb we do, next to a door
+— and the `we (install|fit|supply|sell|carry|stock|order) … doors?` one
+carries a negative lookahead for the parts we *do* fit, so "we stock the
+spring sizes Venice doors use" reads as a spring claim rather than a door one.
+
+It checks the **rendered page**, which matters because half the door-sales
+copy was never ours:
+
+### reference/ rewrites
+
+`reference/` is source material we do not edit, and it sells doors in the
+Local lead, the highlight bullets, the paragraphs, the "Services We Provide"
+list and the city FAQs. `$refSwaps` holds literal before/after text per slug,
+applied to all five. Fort Myers and St. Pete are swapped too although neither
+is currently built — otherwise the restore to eleven pages fails for whoever
+runs it next.
+
+A reference file that gets reworded makes its swap stop matching, and the
+guard then fails the build. That is the intended failure: it surfaces the new
+wording instead of quietly shipping it.
 
 ## Dynamic SEO framework
 

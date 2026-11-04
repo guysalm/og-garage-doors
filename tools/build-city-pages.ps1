@@ -114,7 +114,7 @@ $h1Overrides = @{
   "garage-door-repair-englewood-fl"                = "Garage Door Repair in Englewood, FL - Coastal Rust Protection"
   "garage-door-repair-north-port-fl"               = "Garage Door Repair in North Port, FL - Smart Opener Installs"
   "garage-door-repair-sarasota-fl"                 = "Garage Door Repair in Sarasota, FL - HOA-Approved Doors"
-  "garage-door-repair-fort-myers-fl"               = "Garage Door Repair in Fort Myers, FL - Wind-Code Doors"
+  "garage-door-repair-fort-myers-fl"               = "Garage Door Repair in Fort Myers, FL - Wind-Load Hardware"
   "garage-door-repair-st-petersburg-clearwater-fl" = "Garage Door Repair in St. Pete & Clearwater, FL"
 }
 # The supplied descriptions sold one niche each and two had no call to action
@@ -122,9 +122,9 @@ $h1Overrides = @{
 # what we actually fix, and end on a reason to call. Phone comes from SITE so it
 # cannot drift; the build fails if any of these pass 985px in the SERP font.
 $descOverrides = @{
-  "garage-door-repair-venice-fl"     = "Garage door repair in Venice, FL - springs, cables, openers and new doors. Licensed, insured, 24/7 emergency service. Free estimates, call $($SITE.phone_display)."
+  "garage-door-repair-venice-fl"     = "Garage door repair in Venice, FL - springs, cables, openers and panels. Licensed, insured, 24/7 emergency service. Free estimates, call $($SITE.phone_display)."
   "garage-door-repair-englewood-fl"  = "Garage door repair in Englewood, FL. Rust-resistant springs, cables and hardware built for salt air. Same-day service, free estimates, call $($SITE.phone_display)."
-  "garage-door-repair-north-port-fl" = "Garage door repair in North Port, FL. Spring and cable fixes, smart opener installs, insulated doors. Same-day service, call $($SITE.phone_display)."
+  "garage-door-repair-north-port-fl" = "Garage door repair in North Port, FL. Spring and cable fixes, smart opener installs, roller and track tune-ups. Same-day service, call $($SITE.phone_display)."
   "garage-door-repair-sarasota-fl"   = "Garage door repair in Sarasota, FL. Springs, cables and openers, plus HOA-approved doors for Lakewood Ranch and Palmer Ranch. Call $($SITE.phone_display)."
 }
 
@@ -135,13 +135,13 @@ $descOverrides = @{
 $heroH2Overrides = @{
   "garage-door-repair-brandon-fl"                  = "60-Minute Response Across Brandon, Parts Already on the Truck"
   "garage-door-repair-englewood-fl"                = "Rust-Resistant Hardware Built for Englewood&rsquo;s Salt Air"
-  "garage-door-repair-fort-myers-fl"               = "Wind-Code Doors for Fort Myers and Lee County Homes"
+  "garage-door-repair-fort-myers-fl"               = "Wind-Load Hardware and Storm-Ready Repairs in Fort Myers"
   "garage-door-repair-north-port-fl"               = "Smartphone Openers and Same-Day Fixes in North Port"
   "garage-door-repair-port-charlotte-fl"           = "Straight Prices and Free On-Site Estimates in Port Charlotte"
-  "garage-door-repair-ruskin-fl"                   = "HOA-Approved Doors Across Ruskin and SouthShore"
-  "garage-door-repair-sarasota-fl"                 = "Carriage House and Modern Glass, Approved by Your ARC"
+  "garage-door-repair-ruskin-fl"                   = "Straight Answers and Same-Day Repairs Across Ruskin"
+  "garage-door-repair-sarasota-fl"                 = "Trucks on the I-75 Corridor, Same-Day Across Sarasota"
   "garage-door-repair-st-petersburg-clearwater-fl" = "Salt-Proof Hardware for St. Pete and Clearwater Beaches"
-  "garage-door-repair-tampa-fl"                    = "Carriage House to Modern Glass, Built for Tampa Homes"
+  "garage-door-repair-tampa-fl"                    = "Spring, Cable and Opener Repairs Across Tampa"
   "garage-door-repair-venice-fl"                   = "Ultra-Quiet Openers and Senior Discounts in Venice"
 }
 $HOME_HERO_H2 = "Serving Southwest Florida and Tampa Bay, Day and Night"
@@ -166,20 +166,57 @@ $COPY_KEYS = @(
   "vp1_h3","vp1_p","vp2_h3","vp2_p","vp3_h3","vp3_p",
   "about_kicker","about_quote1","about_quote2","about_closing","about_checks",
   "exp1_h3","exp1_p","exp2_h3","exp2_p",
-  # the twelve service-card descriptions. Shared, they were the largest
+  # the eleven service-card descriptions. Shared, they were the largest
   # duplicate block on the site: 333 words of body copy, byte-identical on
   # every page, more than the Value Props, About and Expertise sections put
   # together. The card headings stay shared - they are the service names, and
   # renaming "Broken Spring Repair" per city would cost the keyword.
   "svc_spring_p","svc_opener_p","svc_offtrack_p","svc_cable_p",
   "svc_jackshaft_p","svc_roller_p","svc_panels_p","svc_commercial_p",
-  "svc_gate_p","svc_tuneup_p","svc_newdoor_p","svc_sensor_p",
-  # the six shared FAQ answers, ~220 words and the largest block left after
-  # the service cards. The questions stay shared: Add-CityFaqs matches the
-  # "How fast can a technician get to my home?" wording to drop it from a
-  # page that asks its own speed question, and it throws if that text moves.
-  "faq_speed_a","faq_weekend_a","faq_springcost_a",
-  "faq_estimate_a","faq_windcode_a","faq_hoa_a"
+  "svc_gate_p","svc_tuneup_p","svc_sensor_p",
+  # the four shared FAQ answers. The questions stay shared: Add-CityFaqs
+  # matches the "How fast can a technician get to my home?" wording to drop
+  # it from a page that asks its own speed question, and throws if it moves.
+  #
+  # svc_newdoor_p, faq_windcode_a and faq_hoa_a are gone with the new-door
+  # card and the two door-selling FAQs - see the note on door installation
+  # below. Removed from the keys rather than left unused, because the
+  # completeness check throws on a key no page fills.
+  "faq_speed_a","faq_weekend_a","faq_springcost_a","faq_estimate_a"
+)
+
+# -------------------------------------------------- NO DOOR INSTALLATION
+# The site must not offer, imply or illustrate garage door installation or
+# supply. The BBB asked for a contractor licence to back the claim on
+# 2026-11-04 and we do not hold one; repair, parts replacement and opener,
+# gate and hardware work are all unaffected and stay.
+#
+# That is wider than deleting one service card. Door SALES copy had reached
+# the page titles, the meta descriptions, the Expertise sections, the
+# per-city service lists that come from reference/, the brand strip, the
+# before/after gallery and a customer review. $BANNED_CLAIMS fails the build
+# if any of it comes back - including from reference/, which is not ours to
+# edit and still lists doors for sale.
+#
+# If the licence is granted, this is one revert: git log for the commit
+# that removed it.
+#
+# The patterns are claim-shaped on purpose - a verb we do, next to a door.
+# Naming a door is fine and has to stay fine: the spring-price answer has to
+# be able to say an impact-rated door weighs more than a single-skin one,
+# because that is why the spring costs what it does. What may not appear is
+# us installing, fitting, supplying, selling, carrying or stocking one.
+$BANNED_CLAIMS = @(
+  '(?i)\bnew (garage )?doors? install'
+  '(?i)\bgarage doors? install\b'
+  # the noun exclusion keeps the parts we DO fit out of it - "we stock the
+  # spring sizes Venice doors use" is a spring claim that happens to end in
+  # the word doors
+  '(?i)\bwe (install|fit|supply|sell|carry|stock|order)\b(?:(?!spring|opener|roller|cable|panel|seal|strut|track|hinge|gasket|motor|operator|keypad)[^.<]){0,60}?\b(garage )?doors?\b'
+  '(?i)\bdoors? (installed|fitted|supplied)\b'
+  '(?i)\breplacement garage doors?\b'
+  '(?i)\bgarage doors? dealer\b'
+  '(?i)\bdoor upgrades?\b'
 )
 
 $cityCopy = @{
@@ -194,7 +231,7 @@ $cityCopy = @{
   h2_about     = "Looking for garage door repair near Venice Island?"
   h2_expertise = "Quiet Openers and Springs Rated for Daily Use"
   h2_gallery   = "Venice Repairs, Before and After"
-  h2_brands    = "Door and opener brands we fit in Venice"
+  h2_brands    = "Door and opener brands we service in Venice"
 
   vp1_h3 = "Quiet by Default"
   vp1_p  = "Belt-drive and direct-drive motors, so an early start does not wake the house."
@@ -220,7 +257,7 @@ $cityCopy = @{
   exp2_p  = "A standard spring is rated for roughly 10,000 cycles, which on a door used several times a day is only a few years. We fit high-cycle springs instead, replace both sides so the door stays balanced, and test it by hand before we leave."
 
   # Angle: quiet motors in 55+ streets, the price agreed before work starts.
-  svc_spring_p     = "Spring let go overnight? We stock the sizes Venice doors use and fit it the same day."
+  svc_spring_p     = "Spring let go overnight? We stock the spring sizes Venice doors use and fit it same day."
   svc_opener_p     = "Motor loud enough to wake the neighbors? We fit quiet belt-drive openers."
   svc_offtrack_p   = "Door jumped the rail? We straighten the track and reset it safely, not forcefully."
   svc_cable_p      = "Frayed or slack cable? We replace both sides and rebalance the door before we leave."
@@ -230,7 +267,6 @@ $cityCopy = @{
   svc_commercial_p = "Storefronts and units off Jacaranda Blvd &ndash; roll-ups, operators and loading doors."
   svc_gate_p       = "Community or driveway gate stuck? We repair the operator and reset the limits."
   svc_tuneup_p     = "A 25-point tune-up finds the spring and cable wear before it strands you."
-  svc_newdoor_p    = "Hurricane and wind-code rated doors, old door hauled away, price agreed up front."
   svc_sensor_p     = "Door reversing halfway? Photo-eye alignment or replacement, tested while you watch."
 
   # The speed question survives here: Venice's own FAQs do not ask it.
@@ -238,8 +274,6 @@ $cityCopy = @{
   faq_weekend_a    = "No. The rate is the same seven days a week, holidays included, and the senior and veteran discount applies on a Sunday exactly as it does on a Tuesday. Emergency cover runs 24/7."
   faq_springcost_a = "The spring is sized to the door it lifts, so the door sets the price, not the spring. Width and height, what the panels are made of, whether it is insulated, whether it carries window sections, and whether it is standard wind-load or impact-rated all change what the door weighs and how much spring capacity it needs. A single-car residential door in Venice usually lands in the few-hundred range; a commercial door can reach the thousands. So we measure the door and read the spring already on it before quoting &mdash; that is the only way to give a real number instead of a guess. The visit and the estimate are free, and the full price is agreed before anyone starts work."
   faq_estimate_a   = "Yes. We price the job before anyone picks up a tool, and the figure we give you is the figure you pay &mdash; no hidden fees and nothing added at the end. Decide against it and the visit has cost you nothing."
-  faq_windcode_a   = "Yes. We fit impact-rated, wind-code approved doors that meet Florida building requirements, including HVHZ standards where they apply, and we leave you the product approval paperwork an inspector will ask for. Hardware is corrosion-resistant, which matters this close to the Gulf."
-  faq_hoa_a        = "We do. Carriage House, Modern Glass and traditional raised-panel, in the panel profiles and factory colors Venice associations tend to specify &mdash; including the 55+ communities on the island, where a matching finish usually matters more than the style itself."
 }
 
 # -------------------------------------------------------------- Englewood
@@ -252,7 +286,7 @@ $cityCopy = @{
   h2_about     = "Looking for garage door repair near Manasota Key?"
   h2_expertise = "Rust Protection and Wind-Load Work"
   h2_gallery   = "Englewood Repairs, Before and After"
-  h2_brands    = "Door and opener brands we fit in Englewood"
+  h2_brands    = "Door and opener brands we service in Englewood"
 
   vp1_h3 = "Corrosion-Rated Parts On Board"
   vp1_p  = "Galvanized springs and stainless cable ride on the truck, so a rusted-out door is fixed on the first visit."
@@ -264,7 +298,7 @@ $cityCopy = @{
   about_kicker = "Springs pitted, cable fraying, bottom seal gone hard? Coastal hardware fails early and it rarely gives notice. Tell us what you are seeing and we will quote the fix."
   about_quote1 = "$($SITE.business_name) is a family owned, full-service garage door company serving Englewood. Salt-driven wind off the Gulf is what we build around here: high-grade galvanized springs, stainless steel cable, and weather seals meant for coastal exposure rather than whatever shipped with the door."
   about_quote2 = "Hardware on the coast fails suddenly. A cable that looked sound in April lets go in September, usually on the one morning you are already late. That is why we answer out of hours."
-  about_closing = "We have worked on doors from Manasota Key and the Lemon Bay waterfront back to the ranch homes off McCall Rd and Dearborn St. Rust-resistant spring replacement, stainless cable and track restoration, coastal bottom weather-stripping, and impact-rated upgrades with a wind-load inspection."
+  about_closing = "We have worked on doors from Manasota Key and the Lemon Bay waterfront back to the ranch homes off McCall Rd and Dearborn St. Rust-resistant spring replacement, stainless cable and track restoration, coastal bottom weather-stripping, and wind-load struts with a storm-readiness inspection."
   about_checks = @(
     "Galvanized and Coated Spring Options"
     "Stainless Steel Cable and Track Restoration"
@@ -274,8 +308,8 @@ $cityCopy = @{
 
   exp1_h3 = "Corrosion-Resistant Hardware"
   exp1_p  = "Standard steel hinges, cable and springs pit in Englewood air and then let go without warning. We replace them with high-grade galvanized springs and stainless cable, re-grease the bearings, and seal the bottom of the door so wind-driven moisture stops getting underneath it."
-  exp2_h3 = "Impact-Rated Door Upgrades"
-  exp2_p  = "The garage door is the largest opening in the wall and the first thing a storm tests. We fit impact-rated doors, add wind-load struts and reinforce the track on existing doors, and inspect what you already have so you know where it stands before a storm rather than during one."
+  exp2_h3 = "Wind-Load Reinforcement"
+  exp2_p  = "The garage door is the largest opening in the wall and the first thing a storm tests. We add wind-load struts, reinforce the track and replace hardware that has started to pit, and we inspect the door you already have so you know where it stands before a storm rather than during one."
 
   # Angle: salt air off Lemon Bay, so every answer is about corrosion.
   svc_spring_p     = "Salt air pits springs years early here. We fit galvanized replacements same-day."
@@ -288,7 +322,6 @@ $cityCopy = @{
   svc_commercial_p = "Commercial roll-ups close to the water, where hardware corrodes first. Fully insured."
   svc_gate_p       = "Gate operator seized in the salt? We service the motor and reset the safety limits."
   svc_tuneup_p     = "On Manasota Key a tune-up is corrosion control: lubricate, re-torque, check fixings."
-  svc_newdoor_p    = "Impact and wind-rated doors specified with galvanized hardware for coastal air."
   svc_sensor_p     = "Sensors fail early in damp salt air. We realign or replace them and test the reverse."
 
   # The speed question survives here: Englewood's own FAQ is about rust.
@@ -296,8 +329,6 @@ $cityCopy = @{
   faq_weekend_a    = "No. Same rate seven days a week, holidays included. A cable that lets go on a Saturday costs what it would have cost on a Monday, and emergency cover runs 24/7."
   faq_springcost_a = "A spring is matched to the weight of the door it has to lift, so what the door is decides the cost: how wide and tall it is, the material, whether it is insulated, whether it has window sections, and whether it is standard wind-load or impact-rated. Coastal doors add one more factor &mdash; a galvanized spring costs more than plain steel and lasts far longer in Englewood air, so we quote the one that will actually survive here rather than the cheapest one that fits. A single-car residential door is usually a few hundred dollars; a commercial door can run into the thousands. We measure the door and read the existing spring before giving a price. The visit and the estimate are free, and you get the full figure before any work starts."
   faq_estimate_a   = "Yes. The technician looks at the door, tells you the price, and that is the price. No call-out fee, and no charge at all if you decide not to go ahead."
-  faq_windcode_a   = "Yes. Impact-rated and wind-code approved doors to Florida building requirements, including HVHZ standards where they apply. We specify galvanized and corrosion-resistant hardware as a matter of course here, because Englewood air finds plain steel inside a couple of seasons."
-  faq_hoa_a        = "We do. Carriage House, Modern Glass and traditional raised-panel styles that pass the review guidelines used by the Englewood and Manasota Key associations, in factory finishes that hold their color in full coastal sun."
 }
 
 # ------------------------------------------------------------- North Port
@@ -310,19 +341,19 @@ $cityCopy = @{
   h2_about     = "Looking for same-day garage door repair in North Port?"
   h2_expertise = "Smart Openers and High-Cycle Hardware"
   h2_gallery   = "North Port Repairs, Before and After"
-  h2_brands    = "Door and opener brands we fit in North Port"
+  h2_brands    = "Door and opener brands we service in North Port"
 
   vp1_h3 = "Same-Day Slots Held Back"
   vp1_p  = "A spring that goes at 7am should not cost you the whole day, so we keep room in the schedule for it."
   vp2_h3 = "Smart Opener Installers"
   vp2_p  = "WiFi and app-controlled motors fitted and paired properly, camera and alert setup included."
   vp3_h3 = "Family Owned, Local Trucks"
-  vp3_p  = "Family owned, more than $($SITE.years_experience) years in the trade, stocked for the doors going into North Port now."
+  vp3_p  = "Family owned, more than $($SITE.years_experience) years in the trade, stocked for the doors already on the street here."
 
   about_kicker = "Door dead on the school run? Spring snapped overnight? Tell us what happened and we will give you a time and a price on the call."
   about_quote1 = "$($SITE.business_name) is a family owned, full-service garage door company serving North Port. In one of the fastest-growing cities in Florida the doors here cycle far more than average, so our trucks carry heavy-duty high-cycle springs rather than a like-for-like builder-grade part."
   about_quote2 = "A door that will not open is not a minor inconvenience when there is a school run and a commute down Price Blvd waiting on it. That is the call we try hardest to clear the same day."
-  about_closing = "We cover the neighborhoods off Price Blvd, Sumter Blvd, Toledo Blade Blvd and the Tamiami Trail. High-cycle spring replacement, cable, roller and track tune-ups, smart opener installation, and insulated doors that take some of the load off the air conditioning."
+  about_closing = "We cover the neighborhoods off Price Blvd, Sumter Blvd, Toledo Blade Blvd and the Tamiami Trail. High-cycle spring replacement, cable, roller and track tune-ups, smart opener installation, and weather seals that keep the heat and the driving rain out."
   about_checks = @(
     "High-Cycle Springs for Heavy Daily Use"
     "WiFi and App-Controlled Opener Installs"
@@ -332,8 +363,8 @@ $cityCopy = @{
 
   exp1_h3 = "Smart Opener Installation"
   exp1_p  = "We fit openers with built-in WiFi so you can open, close and get an alert from your phone wherever you are. Camera models are set up and tested with you, app pairing and alert rules included, so it is working before we leave the driveway."
-  exp2_h3 = "Insulated Door Replacement"
-  exp2_p  = "An uninsulated door on a west-facing garage turns the room into a heat store and leaves the air conditioning to fight it. An insulated replacement holds the heat out, runs quieter on the track, and seals the opening better than the builder-grade panel it replaces."
+  exp2_h3 = "Track and Roller Wear"
+  exp2_p  = "A door opening ten times a day wears its track, rollers and hinges far faster than the average. We re-seat bent track, swap cheap steel rollers for sealed nylon and reset the hinges, which is what takes the rattle out and stops the next part failing early."
 
   # Angle: doors that cycle far more than average, so wear is the theme.
   svc_spring_p     = "Doors here cycle far more than average. We fit heavy-duty high-cycle springs."
@@ -346,7 +377,6 @@ $cityCopy = @{
   svc_commercial_p = "Commercial doors off Toledo Blade and Sumter Blvd, repaired and fully insured."
   svc_gate_p       = "Gate motor failing under daily traffic? We repair or replace the operator."
   svc_tuneup_p     = "On a high-use door a tune-up is maintenance, not an upsell. Twenty-five points."
-  svc_newdoor_p    = "Insulated, wind-rated doors that take some of the load off the air conditioning."
   svc_sensor_p     = "Sensor knocked out of line by a bike or a bin? Realigned and tested the same visit."
 
   # No faq_speed_a: North Port asks its own speed question, so Add-CityFaqs
@@ -354,8 +384,6 @@ $cityCopy = @{
   faq_weekend_a    = "No. The rate does not move for a weekend or a holiday. A spring that goes on a Saturday morning is quoted at the weekday price, and there is someone on the phone 24/7."
   faq_springcost_a = "A spring is sized to the door it has to lift, so the door sets the price rather than the spring: how wide and tall it is, what it is made of, whether it is insulated, whether it has window sections, and whether it is standard wind-load or impact-rated. On a North Port door there is a second decision &mdash; a builder-grade spring is rated for about 10,000 cycles, and a heavy-duty high-cycle spring costs more up front but lasts years longer on a door opening ten times a day. A single-car residential door is usually a few hundred dollars; a commercial door can run into the thousands. That is why we measure the door and read the spring on it before quoting. The visit and the estimate are free, and the full price comes before any work."
   faq_estimate_a   = "Yes. You get a clear price before work starts and it holds &mdash; no fees appearing at the end. If you would rather think it over, the visit costs you nothing."
-  faq_windcode_a   = "Yes. Impact-rated, wind-code approved doors that meet Florida building requirements, including HVHZ standards where they apply. On a door you already have we can often add wind-load struts and reinforce the track instead of replacing the whole thing."
-  faq_hoa_a        = "We do. Carriage House, Modern Glass and traditional raised-panel, in the colors and panel profiles North Port associations ask for. On newer streets where every door matches, we can match an existing one rather than replace a whole row."
 }
 
 # ---------------------------------------------------------------- Sarasota
@@ -369,9 +397,9 @@ $cityCopy = @{
   h2_badges    = "Sarasota guarantees, discounts and approved styles"
   h2_services  = "Garage Door Services Across Sarasota"
   h2_about     = "Looking for garage door repair near Lakewood Ranch?"
-  h2_expertise = "ARC Approvals and Coastal-Grade Hardware"
+  h2_expertise = "Panel Matching and Coastal-Grade Hardware"
   h2_gallery   = "Sarasota Doors, Before and After"
-  h2_brands    = "Door and opener brands we fit in Sarasota"
+  h2_brands    = "Door and opener brands we service in Sarasota"
 
   vp1_h3 = "Staged Near I-75"
   vp1_p  = "Our trucks run the Fruitville and Bee Ridge corridors, so same-day across Sarasota is routine rather than a favour."
@@ -383,7 +411,7 @@ $cityCopy = @{
   about_kicker = "Door stuck, spring gone, or a board that will not approve the replacement you actually want? Tell us which it is and we will quote it."
   about_quote1 = "$($SITE.business_name) is a family owned, full-service garage door company serving Sarasota. Two things decide most jobs here: what the Gulf air has done to the hardware, and what the Architectural Review Committee will sign off on. We work to both, with more than $($SITE.years_experience) years behind it."
   about_quote2 = "A failed door in a gated community is not only a repair, it is a form. We bring the approved styles and the spec sheet to the estimate so the submission goes in once instead of twice."
-  about_closing = "We cover Sarasota from the Fruitville Rd and Bee Ridge Rd neighborhoods out to University Pkwy and the I-75 corridor, and on to Palmer Ranch, Lakewood Ranch and the Siesta Key waterfront. Springs, cables, off-track doors, ultra-quiet belt drives with MyQ, and impact-rated replacements."
+  about_closing = "We cover Sarasota from the Fruitville Rd and Bee Ridge Rd neighborhoods out to University Pkwy and the I-75 corridor, and on to Palmer Ranch, Lakewood Ranch and the Siesta Key waterfront. Springs, cables, off-track doors, ultra-quiet belt drives with MyQ, and panel matching on review-committee streets."
   about_checks = @(
     "Torsion and Extension Spring Replacement"
     "Ultra-Quiet Belt Drive Openers with MyQ"
@@ -391,8 +419,8 @@ $cityCopy = @{
     "Hurricane-Impact Rated Upgrades"
   )
 
-  exp1_h3 = "HOA and ARC-Approved Doors"
-  exp1_p  = "Carriage House, Modern Glass and traditional raised panel, in the finishes Sarasota committees already pass. We bring samples and the spec sheet to the estimate, so you submit once rather than twice and the door is not held up by paperwork."
+  exp1_h3 = "Panel Matching for ARC Streets"
+  exp1_p  = "When one section is damaged we match the panel profile and the factory color to the rest of the door, so a repair on an ARC street does not turn into a fresh submission. We bring the spec sheet to the estimate, so if your committee does want paperwork you submit once rather than twice."
   exp2_h3 = "Coastal Spring and Roller Work"
   exp2_p  = "Gulf humidity and salt pit plain steel springs and rollers years early, and a pitted spring lets go without warning. We fit galvanized springs and sealed nylon rollers, balance the door by hand afterwards, and leave it running quieter than it was."
 
@@ -401,24 +429,19 @@ $cityCopy = @{
   svc_opener_p     = "Opener dead or the app offline? We repair, replace and pair it before we leave."
   svc_offtrack_p   = "Door off the rail in a Palmer Ranch garage? Realigned and re-tensioned safely."
   svc_cable_p      = "Humidity frays cable strands early. We replace both sides and rebalance the door."
-  svc_jackshaft_p  = "Keeping the ceiling clear for a modern glass door? Side-mount openers do that."
+  svc_jackshaft_p  = "Ceiling needed clear for storage or a lift? Side-mount openers do that."
   svc_roller_p     = "Noisy door on a close-built Bee Ridge street? Nylon rollers quiet it right down."
   svc_panels_p     = "One damaged section on an approved door? We match the panel and swap it out."
   svc_commercial_p = "Commercial and storefront doors along the I-75 corridor, fully insured."
   svc_gate_p       = "Community gate at a standstill? We repair operators, loops and safety edges."
   svc_tuneup_p     = "Gulf humidity works on hardware year-round. A tune-up catches it before it binds."
-  svc_newdoor_p    = "Carriage house and modern glass doors in finishes your ARC will sign off on."
   svc_sensor_p     = "Door refusing to close? Photo-eye realignment or replacement, tested with you."
 
-  # No faq_speed_a: Sarasota asks its own speed question. The shared HOA
-  # answer deliberately covers styles and finishes, because Sarasota's own
-  # FAQ already covers ARC approval in Lakewood Ranch - two near-identical
-  # answers on one page is the duplication this whole exercise is about.
+  # No faq_speed_a: Sarasota asks its own speed question, so Add-CityFaqs
+  # drops the shared one and the default never reaches the page.
   faq_weekend_a    = "No. One rate, seven days a week, holidays included &mdash; no weekend surcharge and no after-hours premium. Emergency cover runs 24/7."
-  faq_springcost_a = "A spring is sized to the door it lifts, so the door decides the price, not the spring: width and height, the material, whether it is insulated, whether it carries window sections, and whether it is standard wind-load or impact-rated. That matters more than usual on the doors going into Sarasota, because an impact-rated door with glass sections weighs considerably more than a plain single-skin panel and needs the spring capacity to match. A single-car residential door is usually a few hundred dollars; a commercial door can run into the thousands. We measure the door and read the spring already on it before quoting, because that is the only way to give a real number. The visit and the estimate are free, and the price is agreed before work starts."
+  faq_springcost_a = "A spring is sized to the door it lifts, so the door decides the price, not the spring: width and height, the material, whether it is insulated, whether it carries window sections, and whether it is standard wind-load or impact-rated. That matters more than usual in Sarasota, because an impact-rated door with glass sections weighs considerably more than a plain single-skin panel and needs the spring capacity to match. A single-car residential door is usually a few hundred dollars; a commercial door can run into the thousands. We measure the door and read the spring already on it before quoting, because that is the only way to give a real number. The visit and the estimate are free, and the price is agreed before work starts."
   faq_estimate_a   = "Yes. A free on-site estimate, the price agreed before work starts, and nothing added afterwards. Decline it and you owe us nothing."
-  faq_windcode_a   = "Yes. Impact-rated, wind-code approved doors meeting Florida building requirements, including HVHZ standards where they apply. We keep the product approval paperwork with the job, so your permit and your ARC submission both have the documents they need."
-  faq_hoa_a        = "We do &mdash; Carriage House, Modern Glass and traditional raised-panel, in the panel profiles and factory colors review committees usually specify. If your community publishes an approved palette, bring it to the estimate and we will quote from it. We can also match the profile and color of an existing door when only one section needs replacing."
 }
 
 # ----------------------------------------------------- region-level home page
@@ -431,7 +454,7 @@ $cityCopy = @{
   h2_about     = "Looking for a garage door company near you?"
   h2_expertise = "Our Expertise"
   h2_gallery   = "Before and After, Across Our Service Area"
-  h2_brands    = "Door and opener brands we install and service"
+  h2_brands    = "Door and opener brands we service"
 
   vp1_h3 = "Fast Response"
   vp1_p  = "Same-day appointments across Southwest Florida and Tampa Bay, and someone on the phone out of hours."
@@ -473,6 +496,65 @@ $cityCopy = @{
 # technician get to my home?" from that page - see Add-CityFaqs. That is the
 # point: a city-specific answer in place of a shared one is a net gain, where
 # adding one beside it would just repeat the question.
+# ----------------------------------------------------- reference/ rewrites
+# The Local section - its lead, its highlight bullets, its paragraphs and the
+# "Services We Provide in <city>" list - is read verbatim from reference/,
+# which sells doors in all four of them. reference/ is source material we do
+# not edit, so the swaps live here, keyed by slug, as literal before/after
+# text. If a reference file is reworded the swap stops matching and
+# $BANNED_CLAIMS fails the build, which is the intended failure: it surfaces
+# the new wording instead of quietly shipping it.
+$refSwaps = @{
+  "garage-door-repair-englewood-fl" = @(
+    ,@("Hurricane Impact Door Specialists",
+       "Storm-Season Hardware Checks")
+    ,@("Impact-Rated Door Upgrades & Wind-Load Inspections",
+       "Wind-Load Struts & Storm-Readiness Inspections")
+  )
+  "garage-door-repair-north-port-fl" = @(
+    ,@("Energy-Efficient Insulated Doors",
+       "Energy-Efficient Weather Sealing")
+    ,@("Insulated Replacement Garage Doors",
+       "Weather Seal & Bottom Gasket Replacement")
+    ,@("Additionally, we install insulated, energy-efficient garage doors that help lower cooling costs in large modern homes",
+       "Additionally, we fit energy-efficient weather seals and insulation kits that help cut cooling losses in large modern homes")
+  )
+  # Fort Myers and St. Pete are not built in Venice-first mode, but their
+  # reference copy is the most door-sales-heavy of the ten and the guard
+  # fails on it the moment they are re-enabled. Swapped now so the restore
+  # path stays clean rather than breaking for whoever runs it next.
+  "garage-door-repair-fort-myers-fl" = @(
+    ,@("We offer emergency garage door repairs and wind-code compliant door installations throughout Fort Myers and Lee County.",
+       "We offer emergency garage door repairs, wind-load struts and track reinforcement throughout Fort Myers and Lee County.")
+    ,@("We specialize in retrofitting and installing hurricane-impact garage doors that meet or exceed Lee County wind-load specifications.",
+       "We specialize in retrofitting the door you already have with wind-load struts and reinforced track, to the standards Lee County sets.")
+    ,@("Impact-Rated Garage Door Upgrades & Retrofitting",
+       "Storm-Season Door Inspections & Retrofitting")
+    ,@("Are all new garage doors installed in Fort Myers required to be hurricane-rated?",
+       "Does my Fort Myers garage door have to meet the hurricane code?")
+    ,@("Yes, Lee County building codes mandate that replacement garage doors meet specific wind-borne debris and structural load standards. We handle all permits and code compliance for you.",
+       "Lee County sets wind-borne debris and structural load standards for garage doors. We inspect yours against them and reinforce the track and add struts where that closes the gap - and where a door cannot be brought up to standard, we say so plainly rather than sell you around it.")
+  )
+  "garage-door-repair-st-petersburg-clearwater-fl" = @(
+    ,@("Pinellas County Impact-Rated Door Upgrades",
+       "Pinellas County Wind-Load Inspections")
+  )
+  "garage-door-repair-sarasota-fl" = @(
+    ,@("From broken springs to complete custom door installations",
+       "From broken springs to off-track doors and worn cables")
+    ,@("we ensure all replacement doors meet your local HOA design standards and wind-code requirements",
+       "we match repaired sections to your local HOA design standards, so the door still reads as the one your committee approved")
+    ,@("Hurricane-Impact Rated Garage Door Upgrades",
+       "Panel Matching & Section Replacement")
+  )
+}
+
+function Apply-RefSwaps([string]$slug, [string]$text) {
+  if (-not $refSwaps.ContainsKey($slug)) { return $text }
+  foreach ($pair in $refSwaps[$slug]) { $text = $text.Replace($pair[0], $pair[1]) }
+  return $text
+}
+
 $cityFaqs = @{
 
 "garage-door-repair-north-port-fl" = @(
@@ -482,6 +564,18 @@ $cityFaqs = @{
      "A builder-grade torsion spring is rated for roughly 10,000 cycles. A North Port door that opens and closes ten times a day works through that in under three years, which is why so many doors here fail early. We fit heavy-duty high-cycle springs instead, so the replacement outlasts the one that broke.")
   ,@("Can I open my North Port garage door from my phone?",
      "Yes. We install smart openers with built-in WiFi, so you can open, close and get an alert from anywhere. We pair the app, set up the alerts and test them with you before we leave the driveway, and camera models are configured the same way.")
+)
+
+# Sarasota's reference question was "Do you offer garage doors approved by
+# local HOAs in Lakewood Ranch?", answered "we carry a wide range of Carriage
+# House and Modern Glass garage doors" - a door-supply claim, so it is
+# replaced rather than reworded. The speed question is the reference wording,
+# kept so Add-CityFaqs still drops the shared one.
+"garage-door-repair-sarasota-fl" = @(
+  ,@("How quickly can a technician reach my home in Sarasota?",
+     "Our local service trucks are staged near I-75 and Fruitville Rd, allowing us to offer same-day appointments and emergency dispatch within 45-60 minutes.")
+  ,@("My door is on an ARC street and one section is damaged. Can you match it?",
+     "Usually, yes. We match the panel profile and the factory color to the sections already on the door, so the repair reads as the door you had rather than a patch, and the committee has nothing new to review. We bring the spec sheet to the estimate in case yours wants the paperwork anyway.")
 )
 
 }
@@ -500,7 +594,7 @@ function Get-CityCopy($c) {
     h2_about     = "Looking for garage door repair in ${city}?"
     h2_expertise = "Our Expertise in $city"
     h2_gallery   = "$city Repairs, Before and After"
-    h2_brands    = "Door and opener brands we fit in $city"
+    h2_brands    = "Door and opener brands we service in $city"
 
     vp1_h3 = "Fast Response"
     vp1_p  = "Same-day appointments across $city, and someone on the phone out of hours."
@@ -537,7 +631,6 @@ function Get-CityCopy($c) {
     svc_commercial_p = "We service all commercial garage doors &ndash; fast, reliable and fully insured."
     svc_gate_p       = "Gate won&rsquo;t open or wheels stuck? We repair or install automatic gates."
     svc_tuneup_p     = "Door too loud or uneven? We lubricate, adjust and balance for smooth operation."
-    svc_newdoor_p    = "We install all garage door types &ndash; including hurricane-rated doors. Old door removal included."
     svc_sensor_p     = "Door won&rsquo;t close or sensors blink? We adjust or replace garage door sensors."
 
     # the original shared answers, kept as the fallback. {{location}} is gone
@@ -548,8 +641,6 @@ function Get-CityCopy($c) {
     faq_weekend_a    = "No. We charge the same rate seven days a week &mdash; there is no extra charge on weekends or holidays, and emergency service is available 24/7."
     faq_springcost_a = "A spring is sized to the door it has to lift, so the price depends on the door rather than on the spring itself: how wide and tall it is, what it is made of, whether it is insulated, whether it has window sections, and whether it is standard wind-load or impact-rated. All of that changes what the door weighs and how much spring capacity it needs. A single-car residential door is usually a few hundred dollars; a commercial door can run into the thousands. That is why we look at the door before we quote &mdash; measuring it and reading the spring already on it is the only way to give you a real price instead of a guess. The visit and the estimate are free, and you get the full price before any work starts."
     faq_estimate_a   = "Yes. We give you a clear, upfront price before any work begins, with no hidden fees. If you decide not to proceed, the estimate costs you nothing."
-    faq_windcode_a   = "Yes. We install impact-rated, wind-code approved garage doors that meet Florida building requirements, including HVHZ standards where they apply, plus corrosion-resistant hardware built for coastal salt air."
-    faq_hoa_a        = "We do. We carry Carriage House, Modern Glass and traditional raised-panel styles that meet the Architectural Review Committee guidelines of most HOA communities across $city."
   }
 
   if ($cityCopy.ContainsKey($c.Slug)) {
@@ -702,19 +793,19 @@ function Build-LocalSection($c, $vals) {
   [void]$sb.Append("    <div class=""wrap"">`n")
   [void]$sb.Append("      <h2 class=""section-title section-title--rule"" id=""local-title"">Garage Door Repair in $(HtmlEscape $c.City), FL</h2>`n")
   [void]$sb.Append("      <div class=""local__grid"">`n        <div>`n")
-  [void]$sb.Append("          <p class=""local__lead"">$(HtmlEscape $c.HeroPara)</p>`n")
+  [void]$sb.Append("          <p class=""local__lead"">$(HtmlEscape (Apply-RefSwaps $c.Slug $c.HeroPara))</p>`n")
   if ($c.HeroBul.Count) {
     [void]$sb.Append("          <ul class=""checks local__highlights"">`n")
-    foreach ($h in $c.HeroBul) { [void]$sb.Append("            <li>$(HtmlEscape $h)</li>`n") }
+    foreach ($h in $c.HeroBul) { [void]$sb.Append("            <li>$(HtmlEscape (Apply-RefSwaps $c.Slug $h))</li>`n") }
     [void]$sb.Append("          </ul>`n")
   }
-  foreach ($p in $c.LocalP) { [void]$sb.Append("          <p>$(HtmlEscape $p)</p>`n") }
+  foreach ($p in $c.LocalP) { [void]$sb.Append("          <p>$(HtmlEscape (Apply-RefSwaps $c.Slug $p))</p>`n") }
   [void]$sb.Append("        </div>`n`n        <aside class=""local__aside"">`n")
   [void]$sb.Append("          <h3>Services We Provide in $(HtmlEscape $c.City)</h3>`n          <ul class=""checks"">`n")
   foreach ($s in $c.Services) {
     # the supplied copy still lists remote programming, which we do not offer
     $s = $s -replace 'Remote Control Programming', 'Keypad Programming'
-    [void]$sb.Append("            <li>$(HtmlEscape $s)</li>`n")
+    [void]$sb.Append("            <li>$(HtmlEscape (Apply-RefSwaps $c.Slug $s))</li>`n")
   }
   [void]$sb.Append("          </ul>`n")
   [void]$sb.Append("          <h3>Local Service Area</h3>`n")
@@ -732,8 +823,10 @@ function Add-CityFaqs([string]$page, $c) {
     $open = if ($first) { " open" } else { "" }
     $first = $false
     [void]$fb.Append("        <details$open>`n")
-    [void]$fb.Append("          <summary>$(HtmlEscape $f[0])</summary>`n")
-    [void]$fb.Append("          <p>$(HtmlEscape $f[1])</p>`n")
+    # swapped here too: the reference FAQs sell doors as readily as the rest
+    # of the file, and a hand-written $cityFaqs entry simply matches nothing
+    [void]$fb.Append("          <summary>$(HtmlEscape (Apply-RefSwaps $c.Slug $f[0]))</summary>`n")
+    [void]$fb.Append("          <p>$(HtmlEscape (Apply-RefSwaps $c.Slug $f[1]))</p>`n")
     [void]$fb.Append("        </details>`n")
   }
   $faqStart = '      <div class="faq">'
@@ -1151,6 +1244,15 @@ foreach ($file in $checks.Keys) {
     if ($t -notmatch [regex]::Escape($bit)) { $problems += "$name is missing '$bit' from the published address" }
   }
   if ($t -match 'Remote Control Programming') { $problems += "$name lists remote programming, a service we do not offer" }
+
+  # Door installation is a licensing matter, not a wording preference - see
+  # the NO DOOR INSTALLATION note above. Checked on the rendered page so it
+  # catches copy from reference/ as well as copy written here.
+  foreach ($bc in $BANNED_CLAIMS) {
+    foreach ($hit in [regex]::Matches($t, $bc)) {
+      $problems += "$name offers door installation: '$(($hit.Value -replace '\s+',' ').Trim())' - we are not licensed for it"
+    }
+  }
 
   foreach ($ldm in [regex]::Matches($t, '(?s)<script type="application/ld\+json">(.*?)</script>')) {
     $bad = Test-JsonControlChars $ldm.Groups[1].Value
