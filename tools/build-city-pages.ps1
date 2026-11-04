@@ -166,14 +166,14 @@ $COPY_KEYS = @(
   "vp1_h3","vp1_p","vp2_h3","vp2_p","vp3_h3","vp3_p",
   "about_kicker","about_quote1","about_quote2","about_closing","about_checks",
   "exp1_h3","exp1_p","exp2_h3","exp2_p",
-  # the eleven service-card descriptions. Shared, they were the largest
+  # the twelve service-card descriptions. Shared, they were the largest
   # duplicate block on the site: 333 words of body copy, byte-identical on
   # every page, more than the Value Props, About and Expertise sections put
   # together. The card headings stay shared - they are the service names, and
   # renaming "Broken Spring Repair" per city would cost the keyword.
   "svc_spring_p","svc_opener_p","svc_offtrack_p","svc_cable_p",
   "svc_jackshaft_p","svc_roller_p","svc_panels_p","svc_commercial_p",
-  "svc_gate_p","svc_tuneup_p","svc_sensor_p",
+  "svc_gate_p","svc_tuneup_p","svc_sensor_p","svc_smart_p",
   # the four shared FAQ answers. The questions stay shared: Add-CityFaqs
   # matches the "How fast can a technician get to my home?" wording to drop
   # it from a page that asks its own speed question, and throws if it moves.
@@ -268,6 +268,7 @@ $cityCopy = @{
   svc_gate_p       = "Community or driveway gate stuck? We repair the operator and reset the limits."
   svc_tuneup_p     = "A 25-point tune-up finds the spring and cable wear before it strands you."
   svc_sensor_p     = "Door reversing halfway? Photo-eye alignment or replacement, tested while you watch."
+  svc_smart_p      = "Phone control fitted and shown to you properly, keypad code set before we go."
 
   # The speed question survives here: Venice's own FAQs do not ask it.
   faq_speed_a      = "We keep trucks working both the island and the mainland side of Venice, so a dead door is normally a same-day visit &mdash; most calls see a technician inside 60 to 90 minutes, and someone answers the phone out of hours."
@@ -323,6 +324,7 @@ $cityCopy = @{
   svc_gate_p       = "Gate operator seized in the salt? We service the motor and reset the safety limits."
   svc_tuneup_p     = "On Manasota Key a tune-up is corrosion control: lubricate, re-torque, check fixings."
   svc_sensor_p     = "Sensors fail early in damp salt air. We realign or replace them and test the reverse."
+  svc_smart_p      = "WiFi openers and weather-sealed keypads that survive a Gulf-facing wall."
 
   # The speed question survives here: Englewood's own FAQ is about rust.
   faq_speed_a      = "We run trucks through Englewood daily, so most calls here are same-day and emergency dispatch normally arrives inside 60 to 90 minutes. Manasota Key included &mdash; crossing the bridge does not change the appointment."
@@ -378,6 +380,7 @@ $cityCopy = @{
   svc_gate_p       = "Gate motor failing under daily traffic? We repair or replace the operator."
   svc_tuneup_p     = "On a high-use door a tune-up is maintenance, not an upsell. Twenty-five points."
   svc_sensor_p     = "Sensor knocked out of line by a bike or a bin? Realigned and tested the same visit."
+  svc_smart_p      = "Keypad for the kids, phone alert for you, on a door that runs all day."
 
   # No faq_speed_a: North Port asks its own speed question, so Add-CityFaqs
   # drops the shared one and the default value never reaches a page.
@@ -436,6 +439,7 @@ $cityCopy = @{
   svc_gate_p       = "Community gate at a standstill? We repair operators, loops and safety edges."
   svc_tuneup_p     = "Gulf humidity works on hardware year-round. A tune-up catches it before it binds."
   svc_sensor_p     = "Door refusing to close? Photo-eye realignment or replacement, tested with you."
+  svc_smart_p      = "MyQ paired, camera models configured, keypad mounted where the car stops."
 
   # No faq_speed_a: Sarasota asks its own speed question, so Add-CityFaqs
   # drops the shared one and the default never reaches the page.
@@ -555,6 +559,21 @@ function Apply-RefSwaps([string]$slug, [string]$text) {
   return $text
 }
 
+# ------------------------------------------- smart opener card photo
+# The card that replaced the new-door one wants its own picture. Until that
+# file exists the opener photo stands in, so the card ships either way and
+# nobody has to remember to rebuild: drop the picture at $SMART_IMG and the
+# next build picks it up. The 100KB image limit applies to it like any other.
+$SMART_IMG = "assets/img/service-smart-opener-keypad.webp"
+if (Test-Path (Join-Path $root ($SMART_IMG -replace '/','\'))) {
+  $smartImg = $SMART_IMG
+  $smartAlt = "Smart garage door opener and wireless keypad installed and paired to a phone"
+} else {
+  $smartImg = "assets/img/service-opener-repair-installation.webp"
+  $smartAlt = "Garage door opener and rail on the ceiling of a garage, ready for a smart upgrade"
+  Write-Host "note: no $SMART_IMG yet - smart opener card is using the opener photo" -ForegroundColor Yellow
+}
+
 $cityFaqs = @{
 
 "garage-door-repair-north-port-fl" = @(
@@ -632,6 +651,7 @@ function Get-CityCopy($c) {
     svc_gate_p       = "Gate won&rsquo;t open or wheels stuck? We repair or install automatic gates."
     svc_tuneup_p     = "Door too loud or uneven? We lubricate, adjust and balance for smooth operation."
     svc_sensor_p     = "Door won&rsquo;t close or sensors blink? We adjust or replace garage door sensors."
+    svc_smart_p      = "Smart openers and keypads installed, paired to your phone and tested with you."
 
     # the original shared answers, kept as the fallback. {{location}} is gone
     # from them on purpose: token substitution walks an unordered hashtable,
@@ -889,6 +909,8 @@ $homeVals = @{}
 foreach ($k in $SITE.Keys) { $homeVals[$k] = $SITE[$k] }
 $homeVals["page_url"] = $SITE.site_url          # the home page is the site root
 $homeVals["hero_h2"]  = $HOME_HERO_H2
+$homeVals["svc_smart_img"] = $smartImg
+$homeVals["svc_smart_alt"] = $smartAlt
 if ($homeCity) {
   # the home page IS this city's page, so no separate city page competes with it
   $homeVals["location"]     = "$($homeCity.City), FL"
@@ -970,6 +992,8 @@ foreach ($c in $cities) {
   # link, og:image and the share dialog all end up pointing at the city page
   $vals["page_url"]     = $url
   $vals["service_area"] = "$($c.City) and the surrounding area"
+  $vals["svc_smart_img"] = $smartImg
+  $vals["svc_smart_alt"] = $smartAlt
   # falls back to the old wording if a city is added without an angle written
   $vals["hero_h2"]      = $(if ($heroH2Overrides.ContainsKey($c.Slug)) { $heroH2Overrides[$c.Slug] } else { "Need $($SITE.service_name) in $loc?" })
 

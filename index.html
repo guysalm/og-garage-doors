@@ -122,7 +122,8 @@
       { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Off-Track Door Repair" } },
       { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Cable & Drum Repair" } },
       { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Jackshaft & Side-Mount Opener Installation" } },
-      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Garage Door Roller Replacement" } }
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Garage Door Roller Replacement" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Smart Opener & Keypad Installation" } }
     ]
   }
 }
@@ -811,6 +812,7 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
         <li>Panel Dent Repair</li>
         <li>Off Track Repair</li>
         <li>Commercial Service</li>
+        <li>Smart Opener Installs</li>
         <li>No Extra Charge On Weekend &amp; Holiday</li>
       </ul>
 
@@ -1029,6 +1031,27 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
             <li>Lubricate Belt And Chain</li>
           </ul>
           <a class="btn btn--est" href="tel:+19419496507" data-cta="service-tuneup">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
+            Free Estimate
+          </a>
+        </article>
+
+        <!-- Took the twelfth slot from the new-door card. Openers and keypads
+             are ours to install; the door itself is not - see the NO DOOR
+             INSTALLATION note in the build script.
+             assets/img/service-opener-repair-installation.webp is the opener photo until a picture of a smart
+             opener or keypad is dropped at the path the build prints. -->
+        <article class="service-card" id="svc-smart">
+          <img src="assets/img/service-opener-repair-installation.webp" width="660" height="300" loading="lazy" alt="Garage door opener and rail on the ceiling of a garage, ready for a smart upgrade">
+          <h3>Smart Openers &amp; Keypads</h3>
+          <p class="service-card__desc">Phone control fitted and shown to you properly, keypad code set before we go.</p>
+          <ul class="checks">
+            <li>WiFi &amp; App-Controlled Openers</li>
+            <li>Keypad Installation &amp; Programming</li>
+            <li>Camera Opener Setup</li>
+            <li>MyQ &amp; Smart Home Pairing</li>
+          </ul>
+          <a class="btn btn--est" href="tel:+19419496507" data-cta="service-smart">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
             Free Estimate
           </a>
@@ -1349,6 +1372,7 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
                 <option>Commercial Garage Door</option>
                 <option>Gate Repair &amp; Installation</option>
                 <option>Garage Tune-up &amp; Maintenance</option>
+                <option>Smart Openers &amp; Keypads</option>
                 <option>Garage Door Sensor Repair</option>
                 <option>Emergency &mdash; Not Sure / Other</option>
               </select>
@@ -1423,6 +1447,7 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
           <li><a href="#svc-jackshaft">Jackshaft &amp; Side-Mount Openers</a></li>
           <li><a href="#svc-spring">Broken Spring Repair</a></li>
           <li><a href="#svc-cable">Cable &amp; Drum Repair</a></li>
+          <li><a href="#svc-smart">Smart Openers &amp; Keypads</a></li>
           <li><a href="#svc-gate">Gate Repair &amp; Installation</a></li>
         </ul>
       </nav>

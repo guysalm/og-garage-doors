@@ -1,4 +1,4 @@
-# OG Garage Doors
+| Services grid | the `#svc-new-door` card, replaced by a smart opener and keypad card |# OG Garage Doors
 
 Garage door service website for Florida. Hand-written HTML5 + CSS3 + vanilla ES6,
 no dependencies and no bundler. One template generates the home page and the
@@ -179,6 +179,23 @@ What came out, because it was never just the one service card:
 The review was **removed, not reworded** — it is a named customer's own
 words, and editing those to say something they did not say is fabricating a
 testimonial. Restore it from git history if the licence comes through.
+
+### What took its place
+
+A **Smart Openers & Keypads** card (`#svc-smart`), which is work we are
+licensed to do. It carries the twelfth `svc_*_p` token, an `Offer` in the
+JSON-LD, a footer link, a hero chip and an option in the form's dropdown —
+the same slots the new-door card held.
+
+Its photo is pending. Until `assets/img/service-smart-opener-keypad.webp`
+exists the build falls back to the opener photo, prints
+
+    note: no assets/img/service-smart-opener-keypad.webp yet - smart opener card is using the opener photo
+
+and sets a matching `alt`. Drop the picture at that exact path and the next
+build picks it up, image and `alt` together — nothing else to edit. The 100KB
+image limit applies to it like any other, so the build will say so if the
+file is too big.
 
 ### The guard
 
