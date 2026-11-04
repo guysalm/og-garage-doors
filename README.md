@@ -187,15 +187,16 @@ licensed to do. It carries the twelfth `svc_*_p` token, an `Offer` in the
 JSON-LD, a footer link, a hero chip and an option in the form's dropdown —
 the same slots the new-door card held.
 
-Its photo is pending. Until `assets/img/service-smart-opener-keypad.webp`
-exists the build falls back to the opener photo, prints
+Its photo is `assets/img/service-smart-opener-keypad.jpg`, cropped to the
+660x300 the other cards use from a photo of a Chamberlain myQ keypad. It is a
+`.jpg` rather than a `.webp` because this machine has no WebP encoder - no
+cwebp, no ImageMagick, and GDI+ never had one - and 39KB is well inside the
+100KB limit.
 
-    note: no assets/img/service-smart-opener-keypad.webp yet - smart opener card is using the opener photo
-
-and sets a matching `alt`. Drop the picture at that exact path and the next
-build picks it up, image and `alt` together — nothing else to edit. The 100KB
-image limit applies to it like any other, so the build will say so if the
-file is too big.
+If that file is ever missing the build falls back to the opener photo, sets an
+`alt` written for *that* photo, and prints a note each run, so the card ships
+either way. Replace the file and the next build picks up the image and the
+`alt` together.
 
 ### The guard
 

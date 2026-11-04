@@ -564,10 +564,14 @@ function Apply-RefSwaps([string]$slug, [string]$text) {
 # file exists the opener photo stands in, so the card ships either way and
 # nobody has to remember to rebuild: drop the picture at $SMART_IMG and the
 # next build picks it up. The 100KB image limit applies to it like any other.
-$SMART_IMG = "assets/img/service-smart-opener-keypad.webp"
+# .jpg, not .webp like its neighbours: there is no WebP encoder on this
+# machine (no cwebp, no ImageMagick, and GDI+ has never had one), and a
+# 39KB JPEG is well inside the 100KB limit. Worth re-encoding to WebP if a
+# converter ever turns up - the file name is the only thing to change.
+$SMART_IMG = "assets/img/service-smart-opener-keypad.jpg"
 if (Test-Path (Join-Path $root ($SMART_IMG -replace '/','\'))) {
   $smartImg = $SMART_IMG
-  $smartAlt = "Smart garage door opener and wireless keypad installed and paired to a phone"
+  $smartAlt = "Chamberlain myQ wireless keypad mounted on the wall beside a garage door"
 } else {
   $smartImg = "assets/img/service-opener-repair-installation.webp"
   $smartAlt = "Garage door opener and rail on the ceiling of a garage, ready for a smart upgrade"
