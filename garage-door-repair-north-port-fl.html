@@ -5,11 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 
-<!-- Google tag (gtag.js), measurement ID from the ga_id key in SITE so it
-     lives in one place. The bootstrap is inline, which the hash-based CSP
-     allows because the build hashes every inline script it finds;
-     googletagmanager is in script-src and google-analytics in connect-src -
-     see the _headers section of tools/build-city-pages.ps1.
+<!-- Google tag (gtag.js). Two properties on one tag: the GA4 measurement
+     ID in ga_id and the Google Ads conversion ID in ads_id, both from SITE
+     so neither is pasted twice. One loader, two config calls - loading
+     gtag.js again for the Ads ID would fetch the same library a second time
+     and double every pageview GA4 records.
+
+     The bootstrap is inline, which the hash-based CSP allows because the
+     build hashes every inline script it finds. gtag.js then pulls the Ads
+     half of itself from googleadservices and pings doubleclick and google
+     - see the _headers section of tools/build-city-pages.ps1, where all of
+     those hosts are listed.
 
      Guarded on the live host, and the guard wraps the loader as well as the
      config call: tools/serve.ps1 serves these same generated pages, so
@@ -27,6 +33,7 @@
     window.gtag = function(){ dataLayer.push(arguments); };
     gtag('js', new Date());
     gtag('config', 'G-57CDJPDSFF');
+    gtag('config', 'AW-18453880924');
 
     var gaTag = document.createElement('script');
     gaTag.async = true;
@@ -1555,6 +1562,7 @@ var SITE = {
   rating         : "5.0",
   review_count   : "127",
   ga_id          : "G-57CDJPDSFF",
+  ads_id         : "AW-18453880924",
   facebook_url   : "https://www.facebook.com/people/OG-Garage-Doors-Service/61595490601279/",
   bbb_url        : "https://www.bbb.org/us/fl/venice/profile/garage-door-repair/og-garage-doors-service-0653-90466720"
 };

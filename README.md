@@ -355,6 +355,19 @@ Only inline scripts are hashed. A `src=` script is covered by its host in
 `script-src`, so hashing its empty body would just add a hash that permits
 an empty inline script.
 
+**Google Ads** rides the same tag. The conversion ID is `ads_id` in `SITE`
+and gets a second `gtag('config', …)` inside the same guard — *one* loader,
+two config calls. Loading `gtag.js` a second time for the Ads ID would fetch
+the same library again and double every pageview GA4 records.
+
+It is the widest of the three in CSP terms, because `gtag.js` pulls the
+conversion half of itself from `googleadservices.com` and then records the
+conversion as a **pixel** on `google.com` and `doubleclick.net` rather than
+as a beacon — hence those hosts in `img-src`. `frame-src` is there for the
+conversion iframe gtag still falls back to when the pixel is blocked: with
+`default-src 'self'` and no `frame-src`, that frame is blocked and the
+conversion is never recorded, with nothing in the console to say so.
+
 **Cloudflare Web Analytics** needs the same two-host treatment:
 `beacon.min.js` from `static.cloudflareinsights.com` in `script-src`, and
 `cloudflareinsights.com` in `connect-src` for the RUM beacon. That tag is

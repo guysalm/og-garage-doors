@@ -1158,9 +1158,18 @@ $csp = @(
   # The Cloudflare beacon is injected at the edge by Web Analytics, so it is
   # in no file here and only ever shows up as a console error. GA4 beacons by
   # fetch and falls back to an image, hence the analytics hosts in img-src.
-  "connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://cloudflareinsights.com"
-  "img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com"   # data: covers the CSS check-mark mask
-  "script-src 'self' https://www.googletagmanager.com https://static.cloudflareinsights.com $($inlineHashes.script -join ' ')"
+  #
+  # Google Ads is a third set again, and the widest: gtag.js fetches the
+  # conversion half of itself from googleadservices, then records the
+  # conversion as a pixel on google.com and doubleclick rather than as a
+  # beacon, so those two belong in img-src. The frame-src entry is for the
+  # conversion iframe gtag still falls back to when the pixel is blocked -
+  # without it default-src 'self' blocks the frame and the conversion is
+  # simply never recorded, with nothing in the console to say so.
+  "connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://cloudflareinsights.com https://*.google.com https://www.googleadservices.com"
+  "img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com https://*.google.com https://www.googleadservices.com https://*.doubleclick.net"   # data: covers the CSS check-mark mask
+  "script-src 'self' https://www.googletagmanager.com https://static.cloudflareinsights.com https://www.googleadservices.com https://*.doubleclick.net $($inlineHashes.script -join ' ')"
+  "frame-src 'self' https://*.doubleclick.net https://www.googleadservices.com"
   "style-src 'self' $($inlineHashes.style -join ' ') https://fonts.googleapis.com"
   "font-src 'self' https://fonts.gstatic.com"
   "upgrade-insecure-requests"
