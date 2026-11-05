@@ -360,7 +360,15 @@ and gets a second `gtag('config', …)` inside the same guard — *one* loader,
 two config calls. Loading `gtag.js` a second time for the Ads ID would fetch
 the same library again and double every pageview GA4 records.
 
-It is the widest of the three in CSP terms, because `gtag.js` pulls the
+**Call reporting** is the third `config` call: `ads_call_conv` carries the
+conversion action, and `phone_conversion_number` is `{{phone_display}}` rather
+than a literal, because gtag matches it against the *rendered* text to find
+the number to swap. A number that does not match what is on the page is
+simply not swapped - no call is attributed and nothing reports an error, so
+never hardcode it. The swap only applies to visitors who arrived on an Ads
+click, so the NAP a crawler or an organic visitor sees is untouched.
+
+Ads is the widest of the three in CSP terms, because `gtag.js` pulls the
 conversion half of itself from `googleadservices.com` and then records the
 conversion as a **pixel** on `google.com` and `doubleclick.net` rather than
 as a beacon — hence those hosts in `img-src`. `frame-src` is there for the
