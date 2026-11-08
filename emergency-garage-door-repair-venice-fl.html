@@ -63,7 +63,7 @@
 <meta property="og:title" content="Emergency Garage Door Repair Venice FL | 24/7 Response">
 <meta property="og:description" content="Emergency garage door repair in Venice, FL. Door stuck open, off track or a snapped cable? 24/7 response, no weekend surcharge. Call (941) 949-6507.">
 <meta property="og:url" content="https://oggaragedoors.com/emergency-garage-door-repair-venice-fl">
-<meta property="og:image" content="https://oggaragedoors.com/assets/img/service-off-track-repair.webp">
+<meta property="og:image" content="https://oggaragedoors.com/assets/img/photo-door-off-track.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#14181D">
 
@@ -480,8 +480,22 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
 .local__zips strong{color:var(--ink)}
 
 /* ========== Service x city pages (built by tools/service-pages.ps1) ========== */
-.svc-prose{max-width:860px}
-.svc-prose h2{font-size:1.85rem;margin-bottom:16px}
+.hero--svc{text-align:left;padding:52px 0 60px;background:linear-gradient(135deg,#14181D 0%,#1C222A 62%,#3a1418 100%)}
+.hero--svc::before{display:none}
+.svc-hero{display:grid;grid-template-columns:1.12fr .88fr;gap:46px;align-items:center}
+.svc-hero__eyebrow{color:#F0B429;font-weight:700;text-transform:uppercase;letter-spacing:.7px;font-size:.88rem;margin-bottom:10px}
+.hero--svc h1{font-size:2.45rem;text-transform:none;letter-spacing:0;margin-bottom:14px}
+.svc-hero__lead{font-size:1.08rem;color:#E7EAEE;margin-bottom:20px}
+.hero--svc .hero-checks{margin:0 0 22px;max-width:none;gap:2px 26px}
+.hero--svc .hero-checks li{font-size:.95rem}
+.hero--svc h2{font-size:1.22rem;margin-bottom:22px}
+.hero--svc .hero__actions{justify-content:flex-start}
+.svc-hero__img{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:var(--radius);border:3px solid rgba(255,255,255,.12);box-shadow:0 12px 32px rgba(0,0,0,.5)}
+.svc-sec{padding:60px 0}
+.svc-split{gap:48px}
+.svc-split .about__img{aspect-ratio:3/2;max-height:none}
+.svc-split h2{font-size:1.8rem;margin-bottom:14px}
+.svc-split--flip > img{order:2}
 .svc-list{margin:4px 0 18px}
 .svc-list li{margin-bottom:11px}
 .svc-related{margin-top:30px;padding:20px 22px;border:1px solid #dde1e6;border-radius:var(--radius);background:var(--bg)}
@@ -701,6 +715,10 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
   .header-cta .btn--call{padding:10px 16px;font-size:.86rem;gap:7px;white-space:nowrap}
   .nav-toggle{padding:7px 9px}
   .about__grid,.expertise__grid,.contact__grid,.local__grid{grid-template-columns:1fr;gap:32px}
+  .svc-hero{grid-template-columns:1fr;gap:28px}
+  .hero--svc h1{font-size:1.85rem}
+  .svc-split--flip > img{order:0}
+  .svc-split h2{font-size:1.5rem}
   .expertise__media{order:-1}
 }
 @media (max-width:640px){
@@ -795,31 +813,22 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
 <main id="main">
 
   <!-- ==================== HERO ==================== -->
-  <section class="hero" aria-labelledby="hero-title">
-    <div class="wrap">
-      <h1 id="hero-title">Emergency Garage Door Repair in Venice, FL</h1>
-
-      <ul class="hero-checks checks">
-        <li>Emergency 24/7</li>
-        <li>Springs Repair</li>
-        <li>Same Day Service</li>
-        <li>Opener Repair</li>
-        <li>Free Estimates</li>
-        <li>Cable Repair</li>
-        <li>Licensed, Insured &amp; Bonded</li>
-        <li>Panel Dent Repair</li>
-        <li>Off Track Repair</li>
-        <li>Commercial Service</li>
-        <li>Smart Opener Installs</li>
-        <li>No Extra Charge On Weekend &amp; Holiday</li>
-      </ul>
-
-      <h2>Someone Answering at Night, Weekends and Holidays in Venice</h2>
-      <p class="hero__ask">Garage Door Stuck or Not Responding?</p>
-
-      <p class="hero__lead">Don&rsquo;t Wait &ndash; <strong>Call Today For Fast, Same-Day Service &amp; a Free Estimate!</strong> OPEN 24/7</p>
-
-      <div class="hero__actions">
+  <section class="hero hero--svc" aria-labelledby="hero-title">
+    <div class="wrap svc-hero">
+      <div>
+        <p class="svc-hero__eyebrow">Emergency Garage Door Repair &middot; Venice, FL</p>
+        <h1 id="hero-title">Emergency Garage Door Repair in Venice, FL</h1>
+        <p class="svc-hero__lead">Garage door stuck open, off its track or hanging on one cable in Venice? We answer 24/7, and most emergency calls see a technician within 60 to 90 minutes, at the same rate on nights, weekends and holidays.</p>
+        <ul class="hero-checks checks">
+          <li>24/7, a person answers</li>
+          <li>60-90 minute arrivals</li>
+          <li>Open doors secured overnight</li>
+          <li>Cables, tracks &amp; openers</li>
+          <li>No after-hours premium</li>
+          <li>Senior &amp; veteran discount</li>
+        </ul>
+        <h2>Someone Answering at Night, Weekends and Holidays in Venice</h2>
+        <div class="hero__actions">
         <a class="btn btn--call" href="tel:+19419496507" data-cta="hero-call">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
           Call Now (941) 949-6507
@@ -829,8 +838,98 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
           Contact Us
         </a>
       </div>
+      </div>
+      <img class="svc-hero__img" src="assets/img/photo-door-off-track.jpg" width="900" height="600" fetchpriority="high" alt="Garage door hanging crooked out of its tracks above the driveway">
     </div>
   </section>
+
+  <!-- ==================== EMERGENCY GARAGE DOOR REPAIR: VENICE ==================== -->
+  <section class="section svc-sec" id="overview" aria-labelledby="svc-intro-title">
+    <div class="wrap">
+      <div class="about__grid svc-split">
+        <img class="about__img" src="assets/img/photo-broken-spring-outside.jpg" width="900" height="600" loading="lazy" alt="Garage door with a broken torsion spring hanging across the top section">
+        <div>
+          <h2 id="svc-intro-title">Garage door stuck open in Venice? What to do until we arrive</h2>
+          <p>A door that will not close is a security problem as well as a nuisance, and it rarely picks a convenient moment. We answer the phone around the clock, give you an honest arrival time, and most Venice emergency calls see a technician within 60 to 90 minutes.</p>
+          <p>While you wait: keep cars and people out from under the door, do not pull the red emergency release if a spring or cable has broken, and unplug the opener if it keeps trying to run. Then let us do the lifting.</p>
+          <p class="about__actions"><a class="btn btn--call" href="tel:+19419496507" data-cta="svc-intro-call">Call (941) 949-6507</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt svc-sec" aria-labelledby="svc-b1-title">
+    <div class="wrap">
+      <div class="about__grid svc-split svc-split--flip">
+        <img class="about__img" src="assets/img/photo-cable-drum.jpg" width="900" height="600" loading="lazy" alt="Lift cable wound on the drum at the end of the torsion shaft">
+        <div>
+          <h2 id="svc-b1-title">Emergency repairs we handle on the first visit in Venice</h2>
+          <p>Our trucks are stocked so that the first visit is usually the only one:</p>
+          <ul class="checks svc-list">
+            <li><strong>Door off its track</strong>: rollers reseated, bent track straightened or replaced, and the reason it came off found rather than guessed at.</li>
+            <li><strong>Snapped or slack cables</strong>: both sides replaced and the drums reset, so the door hangs level again.</li>
+            <li><strong>Opener failure</strong>: logic boards, gears, drive belts and limit switches repaired, or the motor replaced when the repair is not worth it.</li>
+            <li><strong>Door hit by a car</strong>: damaged sections secured, track and hinges straightened, and a matching panel ordered if one is beyond repair.</li>
+            <li><strong>Sensors that stop it closing</strong>: photo eyes cleaned, realigned or replaced, and the safety reverse tested.</li>
+            <li><strong>Broken springs</strong>: replaced the same day &ndash; see our <a href="/garage-door-spring-repair-venice-fl">garage door spring repair in Venice</a> page for how we do it.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section svc-sec" aria-labelledby="svc-b2-title">
+    <div class="wrap">
+      <div class="about__grid svc-split">
+        <img class="about__img" src="assets/img/photo-door-after-repair.jpg" width="900" height="600" loading="lazy" alt="The same two-car garage door closed and level after the spring repair">
+        <div>
+          <h2 id="svc-b2-title">No after-hours premium on Venice emergency calls</h2>
+          <p>We charge the same rate on a Sunday night as on a Tuesday afternoon, and the senior and veteran discount applies to emergency work too. The technician prices the repair on the driveway, before any tool comes out, and that figure is the figure you pay.</p>
+          <p>If a full repair cannot be finished that night &ndash; a panel that has to be ordered, for instance &ndash; we make the door safe, secure and closable before we leave, so the house is never left open.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt svc-sec" aria-labelledby="svc-b3-title">
+    <div class="wrap">
+      <div class="about__grid svc-split svc-split--flip">
+        <img class="about__img" src="assets/img/photo-safety-sensor.jpg" width="900" height="600" loading="lazy" alt="Garage door safety photo eye mounted on its bracket beside the track">
+        <div>
+          <h2 id="svc-b3-title">Covering Venice Island, South Venice and the Tamiami Trail</h2>
+          <p>We keep trucks working the island and the mainland side of the bridges, from the streets around Venice Ave and the beach down through South Venice and out along Jacaranda Blvd and Laurel Rd. Gated and 55+ communities are part of the daily route, and we follow their access rules.</p>
+          <p>Call and describe what the door is doing. We will tell you on the phone whether it sounds like a same-night fix.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section svc-sec" aria-labelledby="svc-b4-title">
+    <div class="wrap">
+      <div class="about__grid svc-split">
+        <img class="about__img" src="assets/img/photo-matching-sections.jpg" width="900" height="600" loading="lazy" alt="Matching garage door sections with arched windows, ready to fit">
+        <div>
+          <h2 id="svc-b4-title">Emergency or can it wait? A quick guide for Venice homeowners</h2>
+          <p>If you are not sure which, describe it on the phone and we will tell you honestly:</p>
+          <ul class="checks svc-list">
+            <li><strong>Call now</strong>: the door is stuck open overnight, hanging crooked, off its track, or a car is trapped inside.</li>
+            <li><strong>Also call now</strong>: a spring or cable has visibly broken. Do not use the opener.</li>
+            <li><strong>Book for tomorrow</strong>: the door works but is noisy, slow, or reverses now and then.</li>
+            <li><strong>Book a tune-up</strong>: the door feels heavier by hand than it used to, or rattles a little more each month.</li>
+          </ul>
+      <nav class="svc-related" aria-label="More garage door services in Venice">
+        <p class="svc-related__title">More from OG Garage Doors in Venice, FL</p>
+        <ul>
+          <li><a href="/">Garage door repair in Venice</a></li>
+          <li><a href="/garage-door-spring-repair-venice-fl">Garage door spring repair in Venice</a></li>
+          <li><a href="/garage-door-maintenance-venice-fl">Garage door maintenance in Venice</a></li>
+        </ul>
+      </nav>
+        </div>
+      </div>
+    </div>
+  </section>
+
 
   <!-- ==================== REVIEW PLATFORMS ==================== -->
   <section class="trust" aria-label="Review platforms where OG Garage Doors is rated 5 stars">
@@ -855,62 +954,6 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
       <div class="reviews__dots" id="reviews-dots" role="group" aria-label="Review pages"></div>
     </div>
   </section>
-
-  <!-- ==================== EMERGENCY GARAGE DOOR REPAIR: VENICE ==================== -->
-  <section class="section" id="overview" aria-labelledby="svc-intro-title">
-    <div class="wrap">
-      <div class="about__grid">
-        <img class="about__img" src="assets/img/service-off-track-repair.webp" width="660" height="300" loading="lazy" alt="Residential garage door hanging off its track, waiting for emergency repair">
-        <div>
-          <p class="eyebrow">Emergency Garage Door Repair &middot; Venice, FL</p>
-          <h2 id="svc-intro-title">Garage door stuck open in Venice? What to do until we arrive</h2>
-          <p>A door that will not close is a security problem as well as a nuisance, and it rarely picks a convenient moment. We answer the phone around the clock, give you an honest arrival time, and most Venice emergency calls see a technician within 60 to 90 minutes.</p>
-          <p>While you wait: keep cars and people out from under the door, do not pull the red emergency release if a spring or cable has broken, and unplug the opener if it keeps trying to run. Then let us do the lifting.</p>
-          <p class="about__actions"><a class="btn btn--call" href="tel:+19419496507" data-cta="svc-intro-call">Call (941) 949-6507</a></p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section section--alt" aria-labelledby="svc-b1-title">
-    <div class="wrap svc-prose">
-      <h2 id="svc-b1-title">Emergency repairs we handle on the first visit in Venice</h2>
-      <p>Our trucks are stocked so that the first visit is usually the only one:</p>
-      <ul class="checks svc-list">
-        <li><strong>Door off its track</strong>: rollers reseated, bent track straightened or replaced, and the reason it came off found rather than guessed at.</li>
-        <li><strong>Snapped or slack cables</strong>: both sides replaced and the drums reset, so the door hangs level again.</li>
-        <li><strong>Opener failure</strong>: logic boards, gears, drive belts and limit switches repaired, or the motor replaced when the repair is not worth it.</li>
-        <li><strong>Door hit by a car</strong>: damaged sections secured, track and hinges straightened, and a matching panel ordered if one is beyond repair.</li>
-        <li><strong>Sensors that stop it closing</strong>: photo eyes cleaned, realigned or replaced, and the safety reverse tested.</li>
-        <li><strong>Broken springs</strong>: replaced the same day &ndash; see our <a href="/garage-door-spring-repair-venice-fl">garage door spring repair in Venice</a> page for how we do it.</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="section" aria-labelledby="svc-b2-title">
-    <div class="wrap svc-prose">
-      <h2 id="svc-b2-title">No after-hours premium on Venice emergency calls</h2>
-      <p>We charge the same rate on a Sunday night as on a Tuesday afternoon, and the senior and veteran discount applies to emergency work too. The technician prices the repair on the driveway, before any tool comes out, and that figure is the figure you pay.</p>
-      <p>If a full repair cannot be finished that night &ndash; a panel that has to be ordered, for instance &ndash; we make the door safe, secure and closable before we leave, so the house is never left open.</p>
-    </div>
-  </section>
-
-  <section class="section" aria-labelledby="svc-b3-title">
-    <div class="wrap svc-prose">
-      <h2 id="svc-b3-title">Covering Venice Island, South Venice and the Tamiami Trail</h2>
-      <p>We keep trucks working the island and the mainland side of the bridges, from the streets around Venice Ave and the beach down through South Venice and out along Jacaranda Blvd and Laurel Rd. Gated and 55+ communities are part of the daily route, and we follow their access rules.</p>
-      <p>Call and describe what the door is doing. We will tell you on the phone whether it sounds like a same-night fix.</p>
-      <nav class="svc-related" aria-label="More garage door services in Venice">
-        <p class="svc-related__title">More from OG Garage Doors in Venice, FL</p>
-        <ul>
-          <li><a href="/">Garage door repair in Venice</a></li>
-          <li><a href="/garage-door-spring-repair-venice-fl">Garage door spring repair in Venice</a></li>
-          <li><a href="/garage-door-maintenance-venice-fl">Garage door maintenance in Venice</a></li>
-        </ul>
-      </nav>
-    </div>
-  </section>
-
 
   <!-- ==================== FAQ ==================== -->
   <section class="section section--alt" id="faq" aria-labelledby="faq-title">

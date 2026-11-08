@@ -63,7 +63,7 @@
 <meta property="og:title" content="Garage Door Maintenance Englewood FL | Salt-Air Tune-Ups">
 <meta property="og:description" content="Garage door maintenance in Englewood, FL: corrosion checks, lubrication and hardware re-torque for salt-air homes near Lemon Bay. Call (941) 949-6507.">
 <meta property="og:url" content="https://oggaragedoors.com/garage-door-maintenance-englewood-fl">
-<meta property="og:image" content="https://oggaragedoors.com/assets/img/service-tune-up-maintenance.webp">
+<meta property="og:image" content="https://oggaragedoors.com/assets/img/photo-galvanized-spring-below.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#14181D">
 
@@ -480,8 +480,22 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
 .local__zips strong{color:var(--ink)}
 
 /* ========== Service x city pages (built by tools/service-pages.ps1) ========== */
-.svc-prose{max-width:860px}
-.svc-prose h2{font-size:1.85rem;margin-bottom:16px}
+.hero--svc{text-align:left;padding:52px 0 60px;background:linear-gradient(135deg,#14181D 0%,#1C222A 62%,#3a1418 100%)}
+.hero--svc::before{display:none}
+.svc-hero{display:grid;grid-template-columns:1.12fr .88fr;gap:46px;align-items:center}
+.svc-hero__eyebrow{color:#F0B429;font-weight:700;text-transform:uppercase;letter-spacing:.7px;font-size:.88rem;margin-bottom:10px}
+.hero--svc h1{font-size:2.45rem;text-transform:none;letter-spacing:0;margin-bottom:14px}
+.svc-hero__lead{font-size:1.08rem;color:#E7EAEE;margin-bottom:20px}
+.hero--svc .hero-checks{margin:0 0 22px;max-width:none;gap:2px 26px}
+.hero--svc .hero-checks li{font-size:.95rem}
+.hero--svc h2{font-size:1.22rem;margin-bottom:22px}
+.hero--svc .hero__actions{justify-content:flex-start}
+.svc-hero__img{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:var(--radius);border:3px solid rgba(255,255,255,.12);box-shadow:0 12px 32px rgba(0,0,0,.5)}
+.svc-sec{padding:60px 0}
+.svc-split{gap:48px}
+.svc-split .about__img{aspect-ratio:3/2;max-height:none}
+.svc-split h2{font-size:1.8rem;margin-bottom:14px}
+.svc-split--flip > img{order:2}
 .svc-list{margin:4px 0 18px}
 .svc-list li{margin-bottom:11px}
 .svc-related{margin-top:30px;padding:20px 22px;border:1px solid #dde1e6;border-radius:var(--radius);background:var(--bg)}
@@ -701,6 +715,10 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
   .header-cta .btn--call{padding:10px 16px;font-size:.86rem;gap:7px;white-space:nowrap}
   .nav-toggle{padding:7px 9px}
   .about__grid,.expertise__grid,.contact__grid,.local__grid{grid-template-columns:1fr;gap:32px}
+  .svc-hero{grid-template-columns:1fr;gap:28px}
+  .hero--svc h1{font-size:1.85rem}
+  .svc-split--flip > img{order:0}
+  .svc-split h2{font-size:1.5rem}
   .expertise__media{order:-1}
 }
 @media (max-width:640px){
@@ -795,31 +813,22 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
 <main id="main">
 
   <!-- ==================== HERO ==================== -->
-  <section class="hero" aria-labelledby="hero-title">
-    <div class="wrap">
-      <h1 id="hero-title">Garage Door Maintenance in Englewood, FL</h1>
-
-      <ul class="hero-checks checks">
-        <li>Emergency 24/7</li>
-        <li>Springs Repair</li>
-        <li>Same Day Service</li>
-        <li>Opener Repair</li>
-        <li>Free Estimates</li>
-        <li>Cable Repair</li>
-        <li>Licensed, Insured &amp; Bonded</li>
-        <li>Panel Dent Repair</li>
-        <li>Off Track Repair</li>
-        <li>Commercial Service</li>
-        <li>Smart Opener Installs</li>
-        <li>No Extra Charge On Weekend &amp; Holiday</li>
-      </ul>
-
-      <h2>Corrosion Control for Garage Doors Near Lemon Bay and the Gulf</h2>
-      <p class="hero__ask">Garage Door Stuck or Not Responding?</p>
-
-      <p class="hero__lead">Don&rsquo;t Wait &ndash; <strong>Call Today For Fast, Same-Day Service &amp; a Free Estimate!</strong> OPEN 24/7</p>
-
-      <div class="hero__actions">
+  <section class="hero hero--svc" aria-labelledby="hero-title">
+    <div class="wrap svc-hero">
+      <div>
+        <p class="svc-hero__eyebrow">Garage Door Maintenance &middot; Englewood, FL</p>
+        <h1 id="hero-title">Garage Door Maintenance in Englewood, FL</h1>
+        <p class="svc-hero__lead">Salt air off the Gulf and Lemon Bay is the main enemy of an Englewood garage door. Our coastal tune-up removes the salt film, treats early rust, swaps corroded hardware for coated or stainless parts and leaves the door lubricated.</p>
+        <ul class="hero-checks checks">
+          <li>Salt-film cleaning</li>
+          <li>Rust treatment on hardware</li>
+          <li>Coated &amp; stainless fasteners</li>
+          <li>Nylon roller upgrades</li>
+          <li>Coastal bottom seals</li>
+          <li>Storm-season checks</li>
+        </ul>
+        <h2>Corrosion Control for Garage Doors Near Lemon Bay and the Gulf</h2>
+        <div class="hero__actions">
         <a class="btn btn--call" href="tel:+19419496507" data-cta="hero-call">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
           Call Now (941) 949-6507
@@ -829,8 +838,98 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
           Contact Us
         </a>
       </div>
+      </div>
+      <img class="svc-hero__img" src="assets/img/photo-galvanized-spring-below.jpg" width="900" height="600" fetchpriority="high" alt="Galvanized torsion spring above an open garage door, seen from below">
     </div>
   </section>
+
+  <!-- ==================== GARAGE DOOR MAINTENANCE: ENGLEWOOD ==================== -->
+  <section class="section svc-sec" id="overview" aria-labelledby="svc-intro-title">
+    <div class="wrap">
+      <div class="about__grid svc-split">
+        <img class="about__img" src="assets/img/photo-cable-drum.jpg" width="900" height="600" loading="lazy" alt="Lift cable wound on the drum at the end of the torsion shaft">
+        <div>
+          <h2 id="svc-intro-title">Garage door maintenance in Englewood is mostly corrosion control</h2>
+          <p>Inland, a garage door tune-up is about wear. In Englewood it is about salt. The breeze off the Gulf and Lemon Bay carries a fine salt film into every garage, and it settles on the hinges, rollers, cables and fasteners where nobody looks. Left alone, it turns smooth parts rough and sound bolts into rusted stubs.</p>
+          <p>Our Englewood maintenance visit is built around that: we clean the salt off, treat what has started to corrode, replace what is past saving, and leave the door lubricated with products that hold up in coastal air.</p>
+          <p class="about__actions"><a class="btn btn--call" href="tel:+19419496507" data-cta="svc-intro-call">Call (941) 949-6507</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt svc-sec" aria-labelledby="svc-b1-title">
+    <div class="wrap">
+      <div class="about__grid svc-split svc-split--flip">
+        <img class="about__img" src="assets/img/photo-nylon-rollers.jpg" width="900" height="600" loading="lazy" alt="A set of sealed nylon garage door rollers ready to fit">
+        <div>
+          <h2 id="svc-b1-title">Our coastal tune-up, point by point</h2>
+          <ul class="checks svc-list">
+            <li><strong>Hardware re-torque</strong>: hinge screws and track brackets corrode and loosen together. We check every fixing and replace rusted ones with coated or stainless hardware.</li>
+            <li><strong>Cable and drum inspection</strong>: cables rust from the bottom strand up, right where they meet the bottom bracket. We look there first.</li>
+            <li><strong>Roller check</strong>: steel rollers seize in salt and sealed nylon ones do not. We flag the ones that drag.</li>
+            <li><strong>Spring condition</strong>: coils inspected for pitting, with tension and balance tested with the opener disconnected.</li>
+            <li><strong>Bottom seal</strong>: a hardened or split seal lets wind-driven rain under the door. We fit a coastal-grade gasket when it is gone.</li>
+            <li><strong>Opener and sensors</strong>: damp salt air is hard on circuit boards and photo eyes. We clean, test and realign them.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section svc-sec" aria-labelledby="svc-b2-title">
+    <div class="wrap">
+      <div class="about__grid svc-split">
+        <img class="about__img" src="assets/img/photo-galvanized-springs-fitted.jpg" width="900" height="600" loading="lazy" alt="New galvanized torsion springs on the shaft above a windowed garage door">
+        <div>
+          <h2 id="svc-b2-title">How often Englewood doors need a service visit</h2>
+          <p>For homes on Manasota Key and along the Lemon Bay waterfront we recommend a visit every six months. Further inland, off McCall Rd or in Rotonda West, once a year is usually enough. A door that faces the water directly, or a garage left open for long stretches, belongs at the more frequent end.</p>
+          <p>Between visits, a damp-cloth wipe of the springs and cables every couple of months removes most of the salt before it does any damage.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt svc-sec" aria-labelledby="svc-b3-title">
+    <div class="wrap">
+      <div class="about__grid svc-split svc-split--flip">
+        <img class="about__img" src="assets/img/photo-door-after-repair.jpg" width="900" height="600" loading="lazy" alt="The same two-car garage door closed and level after the spring repair">
+        <div>
+          <h2 id="svc-b3-title">Storm-season checks for Englewood garage doors</h2>
+          <p>The garage door is the largest opening in most homes and the first thing a storm tests. Before hurricane season we check the track fixings, the hinges and any wind-load struts already on the door, so you know it is holding together the way it should rather than finding out in a gust. Where hardware has rusted or worked loose, we replace it then.</p>
+          <p>Book it in May or early June and the door goes into the season with sound fixings and fresh seals.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section svc-sec" aria-labelledby="svc-b4-title">
+    <div class="wrap">
+      <div class="about__grid svc-split">
+        <img class="about__img" src="assets/img/photo-safety-sensor.jpg" width="900" height="600" loading="lazy" alt="Garage door safety photo eye mounted on its bracket beside the track">
+        <div>
+          <h2 id="svc-b4-title">A simple between-visits routine for Englewood homeowners</h2>
+          <p>Ten minutes now and then keeps the salt from winning between our visits:</p>
+          <ul class="checks svc-list">
+            <li><strong>Every two months</strong>: wipe the springs, cables and hinges with a damp cloth to lift the salt, then let them dry.</li>
+            <li><strong>Every three months</strong>: a light coat of silicone or lithium garage-door lubricant on rollers, hinges and spring coils.</li>
+            <li><strong>After a storm</strong>: run the door through one full cycle and watch for binding, a crooked bottom edge or new noises.</li>
+            <li><strong>Keep the bottom clear</strong>: sand and debris against the seal hold moisture against the bottom section.</li>
+            <li><strong>Leave tension alone</strong>: springs, cables and drums are under load. Anything frayed or rusted through is our job.</li>
+          </ul>
+      <nav class="svc-related" aria-label="More garage door services in Englewood">
+        <p class="svc-related__title">More from OG Garage Doors in Englewood, FL</p>
+        <ul>
+          <li><a href="/garage-door-repair-englewood-fl">Garage door repair in Englewood</a></li>
+          <li><a href="/emergency-garage-door-repair-englewood-fl">Emergency garage door repair in Englewood</a></li>
+          <li><a href="/garage-door-spring-repair-englewood-fl">Garage door spring repair in Englewood</a></li>
+        </ul>
+      </nav>
+        </div>
+      </div>
+    </div>
+  </section>
+
 
   <!-- ==================== REVIEW PLATFORMS ==================== -->
   <section class="trust" aria-label="Review platforms where OG Garage Doors is rated 5 stars">
@@ -855,61 +954,6 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
       <div class="reviews__dots" id="reviews-dots" role="group" aria-label="Review pages"></div>
     </div>
   </section>
-
-  <!-- ==================== GARAGE DOOR MAINTENANCE: ENGLEWOOD ==================== -->
-  <section class="section" id="overview" aria-labelledby="svc-intro-title">
-    <div class="wrap">
-      <div class="about__grid">
-        <img class="about__img" src="assets/img/service-tune-up-maintenance.webp" width="660" height="300" loading="lazy" alt="Technician servicing garage door hardware with a hand tool during a tune-up">
-        <div>
-          <p class="eyebrow">Garage Door Maintenance &middot; Englewood, FL</p>
-          <h2 id="svc-intro-title">Garage door maintenance in Englewood is mostly corrosion control</h2>
-          <p>Inland, a garage door tune-up is about wear. In Englewood it is about salt. The breeze off the Gulf and Lemon Bay carries a fine salt film into every garage, and it settles on the hinges, rollers, cables and fasteners where nobody looks. Left alone, it turns smooth parts rough and sound bolts into rusted stubs.</p>
-          <p>Our Englewood maintenance visit is built around that: we clean the salt off, treat what has started to corrode, replace what is past saving, and leave the door lubricated with products that hold up in coastal air.</p>
-          <p class="about__actions"><a class="btn btn--call" href="tel:+19419496507" data-cta="svc-intro-call">Call (941) 949-6507</a></p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section section--alt" aria-labelledby="svc-b1-title">
-    <div class="wrap svc-prose">
-      <h2 id="svc-b1-title">Our coastal tune-up, point by point</h2>
-      <ul class="checks svc-list">
-        <li><strong>Hardware re-torque</strong>: hinge screws and track brackets corrode and loosen together. We check every fixing and replace rusted ones with coated or stainless hardware.</li>
-        <li><strong>Cable and drum inspection</strong>: cables rust from the bottom strand up, right where they meet the bottom bracket. We look there first.</li>
-        <li><strong>Roller check</strong>: steel rollers seize in salt and sealed nylon ones do not. We flag the ones that drag.</li>
-        <li><strong>Spring condition</strong>: coils inspected for pitting, with tension and balance tested with the opener disconnected.</li>
-        <li><strong>Bottom seal</strong>: a hardened or split seal lets wind-driven rain under the door. We fit a coastal-grade gasket when it is gone.</li>
-        <li><strong>Opener and sensors</strong>: damp salt air is hard on circuit boards and photo eyes. We clean, test and realign them.</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="section" aria-labelledby="svc-b2-title">
-    <div class="wrap svc-prose">
-      <h2 id="svc-b2-title">How often Englewood doors need a service visit</h2>
-      <p>For homes on Manasota Key and along the Lemon Bay waterfront we recommend a visit every six months. Further inland, off McCall Rd or in Rotonda West, once a year is usually enough. A door that faces the water directly, or a garage left open for long stretches, belongs at the more frequent end.</p>
-      <p>Between visits, a damp-cloth wipe of the springs and cables every couple of months removes most of the salt before it does any damage.</p>
-    </div>
-  </section>
-
-  <section class="section" aria-labelledby="svc-b3-title">
-    <div class="wrap svc-prose">
-      <h2 id="svc-b3-title">Storm-season checks for Englewood garage doors</h2>
-      <p>The garage door is the largest opening in most homes and the first thing a storm tests. Before hurricane season we check the track fixings, the hinges and any wind-load struts already on the door, so you know it is holding together the way it should rather than finding out in a gust. Where hardware has rusted or worked loose, we replace it then.</p>
-      <p>Book it in May or early June and the door goes into the season with sound fixings and fresh seals.</p>
-      <nav class="svc-related" aria-label="More garage door services in Englewood">
-        <p class="svc-related__title">More from OG Garage Doors in Englewood, FL</p>
-        <ul>
-          <li><a href="/garage-door-repair-englewood-fl">Garage door repair in Englewood</a></li>
-          <li><a href="/emergency-garage-door-repair-englewood-fl">Emergency garage door repair in Englewood</a></li>
-          <li><a href="/garage-door-spring-repair-englewood-fl">Garage door spring repair in Englewood</a></li>
-        </ul>
-      </nav>
-    </div>
-  </section>
-
 
   <!-- ==================== FAQ ==================== -->
   <section class="section section--alt" id="faq" aria-labelledby="faq-title">

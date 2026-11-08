@@ -167,12 +167,15 @@ The repair page is **emergency** repair on purpose: the plain "garage door
 repair <city>" query belongs to the city page (the home page, for Venice), and
 two pages on one query split it.
 
-They use the template's header, hero, review strip, FAQ shell, lead form and
-footer, but everything from the guarantee badges to the brand strip is cut and
-replaced with the page's own article - keeping the services grid, About and
-Expertise would hand each one the city page's prose. Every H2, paragraph and
-FAQ is written per page; the content-H2 guard covers them, and pairwise
-six-word overlap tops out at 34%, the same as the city pages.
+They share the template's header, review strip, FAQ shell, lead form and
+footer, but not its look: each has its own hero (H1, lead, six highlights and
+a job photo of that service on a plain dark background), the article sits
+straight under it with a photo beside every section, alternating sides, and
+the reviews follow. The city page's services grid, About, Expertise, gallery
+and brands are cut - keeping them would hand each page the city page's prose.
+Every hero lead, highlight, H2, paragraph and FAQ is written per page. Six-word
+overlap between whole pages tops out at 24.5% (shared form and reviews); between
+the articles of the same service in two cities it is under 2.5%.
 
 Linking: the city page's spring, tune-up and off-track cards link to that
 city's three pages; each service page links back to the city page and its two
@@ -183,10 +186,12 @@ the copy are written `[[spring]]`, `[[maintenance]]`, `[[emergency]]`,
 A city gets service pages only while its own page is built. To add a city,
 write its three entries in `$servicePages`.
 
-**Photos:** drop `assets/img/svc-<service>-<city>.jpg` (e.g.
-`svc-spring-sarasota.jpg`, under 100KB) and rebuild; until then the service's
-fallback photo ships and the build prints a note per page. Give the entry an
-`Alt` when the real photo goes in.
+**Photos:** six per page, chosen in `$servicePageExtras` from `$PHOTOS` -
+real job photos from `assets/img/Real Photos`, cropped to 900x600 by
+`tools/make-section-photos.ps1` (re-run it after adding a photo to its list).
+To give one slot its own picture, drop
+`assets/img/svc-<service>-<city>-<slot>.jpg` (slot `hero`, `1`-`5`, under
+100KB) and rebuild; add an `Alts` array to the entry to describe it.
 
 ## No door installation
 

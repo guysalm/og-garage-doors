@@ -63,7 +63,7 @@
 <meta property="og:title" content="Emergency Garage Door Repair North Port FL | 24/7 Service">
 <meta property="og:description" content="Emergency garage door repair in North Port, FL. Car stuck inside or door off track? Same-day slots held back, 24/7. Call (941) 949-6507.">
 <meta property="og:url" content="https://oggaragedoors.com/emergency-garage-door-repair-north-port-fl">
-<meta property="og:image" content="https://oggaragedoors.com/assets/img/service-off-track-repair.webp">
+<meta property="og:image" content="https://oggaragedoors.com/assets/img/photo-broken-spring-outside.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#14181D">
 
@@ -480,8 +480,22 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
 .local__zips strong{color:var(--ink)}
 
 /* ========== Service x city pages (built by tools/service-pages.ps1) ========== */
-.svc-prose{max-width:860px}
-.svc-prose h2{font-size:1.85rem;margin-bottom:16px}
+.hero--svc{text-align:left;padding:52px 0 60px;background:linear-gradient(135deg,#14181D 0%,#1C222A 62%,#3a1418 100%)}
+.hero--svc::before{display:none}
+.svc-hero{display:grid;grid-template-columns:1.12fr .88fr;gap:46px;align-items:center}
+.svc-hero__eyebrow{color:#F0B429;font-weight:700;text-transform:uppercase;letter-spacing:.7px;font-size:.88rem;margin-bottom:10px}
+.hero--svc h1{font-size:2.45rem;text-transform:none;letter-spacing:0;margin-bottom:14px}
+.svc-hero__lead{font-size:1.08rem;color:#E7EAEE;margin-bottom:20px}
+.hero--svc .hero-checks{margin:0 0 22px;max-width:none;gap:2px 26px}
+.hero--svc .hero-checks li{font-size:.95rem}
+.hero--svc h2{font-size:1.22rem;margin-bottom:22px}
+.hero--svc .hero__actions{justify-content:flex-start}
+.svc-hero__img{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:var(--radius);border:3px solid rgba(255,255,255,.12);box-shadow:0 12px 32px rgba(0,0,0,.5)}
+.svc-sec{padding:60px 0}
+.svc-split{gap:48px}
+.svc-split .about__img{aspect-ratio:3/2;max-height:none}
+.svc-split h2{font-size:1.8rem;margin-bottom:14px}
+.svc-split--flip > img{order:2}
 .svc-list{margin:4px 0 18px}
 .svc-list li{margin-bottom:11px}
 .svc-related{margin-top:30px;padding:20px 22px;border:1px solid #dde1e6;border-radius:var(--radius);background:var(--bg)}
@@ -701,6 +715,10 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
   .header-cta .btn--call{padding:10px 16px;font-size:.86rem;gap:7px;white-space:nowrap}
   .nav-toggle{padding:7px 9px}
   .about__grid,.expertise__grid,.contact__grid,.local__grid{grid-template-columns:1fr;gap:32px}
+  .svc-hero{grid-template-columns:1fr;gap:28px}
+  .hero--svc h1{font-size:1.85rem}
+  .svc-split--flip > img{order:0}
+  .svc-split h2{font-size:1.5rem}
   .expertise__media{order:-1}
 }
 @media (max-width:640px){
@@ -795,31 +813,22 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
 <main id="main">
 
   <!-- ==================== HERO ==================== -->
-  <section class="hero" aria-labelledby="hero-title">
-    <div class="wrap">
-      <h1 id="hero-title">Emergency Garage Door Repair in North Port, FL</h1>
-
-      <ul class="hero-checks checks">
-        <li>Emergency 24/7</li>
-        <li>Springs Repair</li>
-        <li>Same Day Service</li>
-        <li>Opener Repair</li>
-        <li>Free Estimates</li>
-        <li>Cable Repair</li>
-        <li>Licensed, Insured &amp; Bonded</li>
-        <li>Panel Dent Repair</li>
-        <li>Off Track Repair</li>
-        <li>Commercial Service</li>
-        <li>Smart Opener Installs</li>
-        <li>No Extra Charge On Weekend &amp; Holiday</li>
-      </ul>
-
-      <h2>Car Trapped Before the School Run? We Hold Same-Day Slots for That</h2>
-      <p class="hero__ask">Garage Door Stuck or Not Responding?</p>
-
-      <p class="hero__lead">Don&rsquo;t Wait &ndash; <strong>Call Today For Fast, Same-Day Service &amp; a Free Estimate!</strong> OPEN 24/7</p>
-
-      <div class="hero__actions">
+  <section class="hero hero--svc" aria-labelledby="hero-title">
+    <div class="wrap svc-hero">
+      <div>
+        <p class="svc-hero__eyebrow">Emergency Garage Door Repair &middot; North Port, FL</p>
+        <h1 id="hero-title">Emergency Garage Door Repair in North Port, FL</h1>
+        <p class="svc-hero__lead">Car stuck in the garage before the school run? We keep same-day slots free for North Port doors that will not open, answer 24/7, and fix most springs, cables, tracks and openers on the first visit.</p>
+        <ul class="hero-checks checks">
+          <li>Same-day slots held back</li>
+          <li>Car-trapped calls first</li>
+          <li>Off-track &amp; bumped doors</li>
+          <li>WiFi opener repairs</li>
+          <li>Price agreed on the driveway</li>
+          <li>No weekend surcharge</li>
+        </ul>
+        <h2>Car Trapped Before the School Run? We Hold Same-Day Slots for That</h2>
+        <div class="hero__actions">
         <a class="btn btn--call" href="tel:+19419496507" data-cta="hero-call">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
           Call Now (941) 949-6507
@@ -829,8 +838,96 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
           Contact Us
         </a>
       </div>
+      </div>
+      <img class="svc-hero__img" src="assets/img/photo-broken-spring-outside.jpg" width="900" height="600" fetchpriority="high" alt="Garage door with a broken torsion spring hanging across the top section">
     </div>
   </section>
+
+  <!-- ==================== EMERGENCY GARAGE DOOR REPAIR: NORTH PORT ==================== -->
+  <section class="section svc-sec" id="overview" aria-labelledby="svc-intro-title">
+    <div class="wrap">
+      <div class="about__grid svc-split">
+        <img class="about__img" src="assets/img/photo-door-off-track.jpg" width="900" height="600" loading="lazy" alt="Garage door hanging crooked out of its tracks above the driveway">
+        <div>
+          <h2 id="svc-intro-title">Garage door emergencies in North Port, and how fast we respond</h2>
+          <p>In North Port the most common emergency call is not dramatic. It is a family with the car inside, a door that refuses to move, and a school run and a commute up I-75 waiting. That is why we keep same-day slots free in the schedule for doors that will not open at all.</p>
+          <p>Call, tell us what the door is doing, and we give you an arrival time on the phone. Out of hours, someone still answers.</p>
+          <p class="about__actions"><a class="btn btn--call" href="tel:+19419496507" data-cta="svc-intro-call">Call (941) 949-6507</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt svc-sec" aria-labelledby="svc-b1-title">
+    <div class="wrap">
+      <div class="about__grid svc-split svc-split--flip">
+        <img class="about__img" src="assets/img/photo-safety-sensor.jpg" width="900" height="600" loading="lazy" alt="Garage door safety photo eye mounted on its bracket beside the track">
+        <div>
+          <h2 id="svc-b1-title">Fast fixes for the most common North Port breakdowns</h2>
+          <ul class="checks svc-list">
+            <li><strong>Door will not open with the car inside</strong>: usually a broken spring or a failed opener. We diagnose it on arrival and get the car out first.</li>
+            <li><strong>Door off the track</strong>: often after a bump from a car or a bike. We reseat the rollers, straighten the track and find out what pushed it over.</li>
+            <li><strong>Opener dead or app offline</strong>: boards, gears, belts and WiFi modules repaired, or a new opener fitted when the old one is not worth saving.</li>
+            <li><strong>Door reverses before it closes</strong>: photo eyes knocked out of line or blocked. Realigned and tested on the spot.</li>
+            <li><strong>Snapped cable</strong>: the door hangs crooked. Both cables replaced and the door rebalanced.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section svc-sec" aria-labelledby="svc-b2-title">
+    <div class="wrap">
+      <div class="about__grid svc-split">
+        <img class="about__img" src="assets/img/photo-cable-drum.jpg" width="900" height="600" loading="lazy" alt="Lift cable wound on the drum at the end of the torsion shaft">
+        <div>
+          <h2 id="svc-b2-title">Getting your car out of a North Port garage safely</h2>
+          <p>If the springs and cables are intact, the opener's red release cord lets you lift the door by hand. Pull it only with the door fully closed, then lift slowly from the bottom. If the door feels heavy, drops or sits crooked, stop: something has broken, and a door without its spring can weigh more than you can safely hold.</p>
+          <p>If in doubt, leave it and call. We would rather spend ten minutes on the phone than have anyone hurt for the sake of getting to work on time. If it does turn out to be the spring, our <a href="/garage-door-spring-repair-north-port-fl">North Port spring repair</a> page explains what we fit and why.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt svc-sec" aria-labelledby="svc-b3-title">
+    <div class="wrap">
+      <div class="about__grid svc-split svc-split--flip">
+        <img class="about__img" src="assets/img/photo-door-after-repair.jpg" width="900" height="600" loading="lazy" alt="The same two-car garage door closed and level after the spring repair">
+        <div>
+          <h2 id="svc-b3-title">24/7 emergency service from Warm Mineral Springs to Heron Creek</h2>
+          <p>We cover all of North Port &ndash; the streets off Price Blvd, Sumter Blvd and Toledo Blade Blvd, Heron Creek, the Warm Mineral Springs area and along the Tamiami Trail. One rate at any hour, no weekend surcharge, and a price agreed before the work starts.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section svc-sec" aria-labelledby="svc-b4-title">
+    <div class="wrap">
+      <div class="about__grid svc-split">
+        <img class="about__img" src="assets/img/photo-wall-keypad.jpg" width="900" height="600" loading="lazy" alt="Chamberlain myQ wireless keypad mounted beside a garage door">
+        <div>
+          <h2 id="svc-b4-title">What our North Port technicians carry on the truck</h2>
+          <p>First-visit fixes depend on having the part, so the trucks working North Port are stocked for the doors common on its streets:</p>
+          <ul class="checks svc-list">
+            <li><strong>Springs</strong>: standard and high-cycle torsion springs in the common sizes for builder-fitted doors.</li>
+            <li><strong>Cables and drums</strong>: replacement lift cables and drums for standard residential doors.</li>
+            <li><strong>Rollers and hinges</strong>: sealed nylon rollers and the hinge sizes that crack first on busy doors.</li>
+            <li><strong>Track sections and brackets</strong>: for doors bumped by a car or pushed out of line.</li>
+            <li><strong>Opener parts</strong>: gears, belts, logic boards and sensors for the major brands, plus WiFi modules.</li>
+          </ul>
+      <nav class="svc-related" aria-label="More garage door services in North Port">
+        <p class="svc-related__title">More from OG Garage Doors in North Port, FL</p>
+        <ul>
+          <li><a href="/garage-door-repair-north-port-fl">Garage door repair in North Port</a></li>
+          <li><a href="/garage-door-spring-repair-north-port-fl">Garage door spring repair in North Port</a></li>
+          <li><a href="/garage-door-maintenance-north-port-fl">Garage door maintenance in North Port</a></li>
+        </ul>
+      </nav>
+        </div>
+      </div>
+    </div>
+  </section>
+
 
   <!-- ==================== REVIEW PLATFORMS ==================== -->
   <section class="trust" aria-label="Review platforms where OG Garage Doors is rated 5 stars">
@@ -855,59 +952,6 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
       <div class="reviews__dots" id="reviews-dots" role="group" aria-label="Review pages"></div>
     </div>
   </section>
-
-  <!-- ==================== EMERGENCY GARAGE DOOR REPAIR: NORTH PORT ==================== -->
-  <section class="section" id="overview" aria-labelledby="svc-intro-title">
-    <div class="wrap">
-      <div class="about__grid">
-        <img class="about__img" src="assets/img/service-off-track-repair.webp" width="660" height="300" loading="lazy" alt="Residential garage door hanging off its track, waiting for emergency repair">
-        <div>
-          <p class="eyebrow">Emergency Garage Door Repair &middot; North Port, FL</p>
-          <h2 id="svc-intro-title">Garage door emergencies in North Port, and how fast we respond</h2>
-          <p>In North Port the most common emergency call is not dramatic. It is a family with the car inside, a door that refuses to move, and a school run and a commute up I-75 waiting. That is why we keep same-day slots free in the schedule for doors that will not open at all.</p>
-          <p>Call, tell us what the door is doing, and we give you an arrival time on the phone. Out of hours, someone still answers.</p>
-          <p class="about__actions"><a class="btn btn--call" href="tel:+19419496507" data-cta="svc-intro-call">Call (941) 949-6507</a></p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section section--alt" aria-labelledby="svc-b1-title">
-    <div class="wrap svc-prose">
-      <h2 id="svc-b1-title">Fast fixes for the most common North Port breakdowns</h2>
-      <ul class="checks svc-list">
-        <li><strong>Door will not open with the car inside</strong>: usually a broken spring or a failed opener. We diagnose it on arrival and get the car out first.</li>
-        <li><strong>Door off the track</strong>: often after a bump from a car or a bike. We reseat the rollers, straighten the track and find out what pushed it over.</li>
-        <li><strong>Opener dead or app offline</strong>: boards, gears, belts and WiFi modules repaired, or a new opener fitted when the old one is not worth saving.</li>
-        <li><strong>Door reverses before it closes</strong>: photo eyes knocked out of line or blocked. Realigned and tested on the spot.</li>
-        <li><strong>Snapped cable</strong>: the door hangs crooked. Both cables replaced and the door rebalanced.</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="section" aria-labelledby="svc-b2-title">
-    <div class="wrap svc-prose">
-      <h2 id="svc-b2-title">Getting your car out of a North Port garage safely</h2>
-      <p>If the springs and cables are intact, the opener's red release cord lets you lift the door by hand. Pull it only with the door fully closed, then lift slowly from the bottom. If the door feels heavy, drops or sits crooked, stop: something has broken, and a door without its spring can weigh more than you can safely hold.</p>
-      <p>If in doubt, leave it and call. We would rather spend ten minutes on the phone than have anyone hurt for the sake of getting to work on time. If it does turn out to be the spring, our <a href="/garage-door-spring-repair-north-port-fl">North Port spring repair</a> page explains what we fit and why.</p>
-    </div>
-  </section>
-
-  <section class="section" aria-labelledby="svc-b3-title">
-    <div class="wrap svc-prose">
-      <h2 id="svc-b3-title">24/7 emergency service from Warm Mineral Springs to Heron Creek</h2>
-      <p>We cover all of North Port &ndash; the streets off Price Blvd, Sumter Blvd and Toledo Blade Blvd, Heron Creek, the Warm Mineral Springs area and along the Tamiami Trail. One rate at any hour, no weekend surcharge, and a price agreed before the work starts.</p>
-      <nav class="svc-related" aria-label="More garage door services in North Port">
-        <p class="svc-related__title">More from OG Garage Doors in North Port, FL</p>
-        <ul>
-          <li><a href="/garage-door-repair-north-port-fl">Garage door repair in North Port</a></li>
-          <li><a href="/garage-door-spring-repair-north-port-fl">Garage door spring repair in North Port</a></li>
-          <li><a href="/garage-door-maintenance-north-port-fl">Garage door maintenance in North Port</a></li>
-        </ul>
-      </nav>
-    </div>
-  </section>
-
 
   <!-- ==================== FAQ ==================== -->
   <section class="section section--alt" id="faq" aria-labelledby="faq-title">

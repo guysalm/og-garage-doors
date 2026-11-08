@@ -63,7 +63,7 @@
 <meta property="og:title" content="Garage Door Spring Repair Sarasota FL | Same-Day Service">
 <meta property="og:description" content="Garage door spring repair in Sarasota, FL. Galvanized springs for Longboat Key and Siesta Key, high-cycle springs inland. Call (941) 949-6507.">
 <meta property="og:url" content="https://oggaragedoors.com/garage-door-spring-repair-sarasota-fl">
-<meta property="og:image" content="https://oggaragedoors.com/assets/img/expertise-residential-opener.webp">
+<meta property="og:image" content="https://oggaragedoors.com/assets/img/photo-galvanized-springs-fitted.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#14181D">
 
@@ -480,8 +480,22 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
 .local__zips strong{color:var(--ink)}
 
 /* ========== Service x city pages (built by tools/service-pages.ps1) ========== */
-.svc-prose{max-width:860px}
-.svc-prose h2{font-size:1.85rem;margin-bottom:16px}
+.hero--svc{text-align:left;padding:52px 0 60px;background:linear-gradient(135deg,#14181D 0%,#1C222A 62%,#3a1418 100%)}
+.hero--svc::before{display:none}
+.svc-hero{display:grid;grid-template-columns:1.12fr .88fr;gap:46px;align-items:center}
+.svc-hero__eyebrow{color:#F0B429;font-weight:700;text-transform:uppercase;letter-spacing:.7px;font-size:.88rem;margin-bottom:10px}
+.hero--svc h1{font-size:2.45rem;text-transform:none;letter-spacing:0;margin-bottom:14px}
+.svc-hero__lead{font-size:1.08rem;color:#E7EAEE;margin-bottom:20px}
+.hero--svc .hero-checks{margin:0 0 22px;max-width:none;gap:2px 26px}
+.hero--svc .hero-checks li{font-size:.95rem}
+.hero--svc h2{font-size:1.22rem;margin-bottom:22px}
+.hero--svc .hero__actions{justify-content:flex-start}
+.svc-hero__img{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:var(--radius);border:3px solid rgba(255,255,255,.12);box-shadow:0 12px 32px rgba(0,0,0,.5)}
+.svc-sec{padding:60px 0}
+.svc-split{gap:48px}
+.svc-split .about__img{aspect-ratio:3/2;max-height:none}
+.svc-split h2{font-size:1.8rem;margin-bottom:14px}
+.svc-split--flip > img{order:2}
 .svc-list{margin:4px 0 18px}
 .svc-list li{margin-bottom:11px}
 .svc-related{margin-top:30px;padding:20px 22px;border:1px solid #dde1e6;border-radius:var(--radius);background:var(--bg)}
@@ -701,6 +715,10 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
   .header-cta .btn--call{padding:10px 16px;font-size:.86rem;gap:7px;white-space:nowrap}
   .nav-toggle{padding:7px 9px}
   .about__grid,.expertise__grid,.contact__grid,.local__grid{grid-template-columns:1fr;gap:32px}
+  .svc-hero{grid-template-columns:1fr;gap:28px}
+  .hero--svc h1{font-size:1.85rem}
+  .svc-split--flip > img{order:0}
+  .svc-split h2{font-size:1.5rem}
   .expertise__media{order:-1}
 }
 @media (max-width:640px){
@@ -795,31 +813,22 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
 <main id="main">
 
   <!-- ==================== HERO ==================== -->
-  <section class="hero" aria-labelledby="hero-title">
-    <div class="wrap">
-      <h1 id="hero-title">Garage Door Spring Repair in Sarasota, FL</h1>
-
-      <ul class="hero-checks checks">
-        <li>Emergency 24/7</li>
-        <li>Springs Repair</li>
-        <li>Same Day Service</li>
-        <li>Opener Repair</li>
-        <li>Free Estimates</li>
-        <li>Cable Repair</li>
-        <li>Licensed, Insured &amp; Bonded</li>
-        <li>Panel Dent Repair</li>
-        <li>Off Track Repair</li>
-        <li>Commercial Service</li>
-        <li>Smart Opener Installs</li>
-        <li>No Extra Charge On Weekend &amp; Holiday</li>
-      </ul>
-
-      <h2>Galvanized Springs for the Keys, High-Cycle Springs Inland</h2>
-      <p class="hero__ask">Garage Door Stuck or Not Responding?</p>
-
-      <p class="hero__lead">Don&rsquo;t Wait &ndash; <strong>Call Today For Fast, Same-Day Service &amp; a Free Estimate!</strong> OPEN 24/7</p>
-
-      <div class="hero__actions">
+  <section class="hero hero--svc" aria-labelledby="hero-title">
+    <div class="wrap svc-hero">
+      <div>
+        <p class="svc-hero__eyebrow">Garage Door Spring Repair &middot; Sarasota, FL</p>
+        <h1 id="hero-title">Garage Door Spring Repair in Sarasota, FL</h1>
+        <p class="svc-hero__lead">Sarasota spring repair starts with where the house is: galvanized springs for salt air on Longboat, Lido and Siesta Key, high-cycle springs for busy doors in Lakewood Ranch and Palmer Ranch. Same-day across the county.</p>
+        <ul class="hero-checks checks">
+          <li>Galvanized springs for the Keys</li>
+          <li>High-cycle springs inland</li>
+          <li>Sized for impact-rated doors</li>
+          <li>Trucks staged near I-75</li>
+          <li>No HOA approval needed</li>
+          <li>Price before the old spring comes off</li>
+        </ul>
+        <h2>Galvanized Springs for the Keys, High-Cycle Springs Inland</h2>
+        <div class="hero__actions">
         <a class="btn btn--call" href="tel:+19419496507" data-cta="hero-call">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
           Call Now (941) 949-6507
@@ -829,8 +838,89 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
           Contact Us
         </a>
       </div>
+      </div>
+      <img class="svc-hero__img" src="assets/img/photo-galvanized-springs-fitted.jpg" width="900" height="600" fetchpriority="high" alt="New galvanized torsion springs on the shaft above a windowed garage door">
     </div>
   </section>
+
+  <!-- ==================== GARAGE DOOR SPRING REPAIR: SARASOTA ==================== -->
+  <section class="section svc-sec" id="overview" aria-labelledby="svc-intro-title">
+    <div class="wrap">
+      <div class="about__grid svc-split">
+        <img class="about__img" src="assets/img/photo-broken-torsion-spring.jpg" width="900" height="600" loading="lazy" alt="Broken torsion spring with a gap in the coil beside the center bracket">
+        <div>
+          <h2 id="svc-intro-title">The right garage door spring depends on where in Sarasota you live</h2>
+          <p>Sarasota is two climates for a garage door spring. On Longboat Key, Lido Key and Siesta Key the hardware lives in salt air a few hundred yards from the Gulf, and the enemy is corrosion. Inland, in Lakewood Ranch, Palmer Ranch and the neighborhoods along University Pkwy, the air is gentler and the enemy is simply use.</p>
+          <p>So we do not fit one spring for the whole county. Galvanized springs are the right answer for beachfront properties like those on Longboat Key; a high-cycle spring is usually the better buy for a busy family door further inland.</p>
+          <p class="about__actions"><a class="btn btn--call" href="tel:+19419496507" data-cta="svc-intro-call">Call (941) 949-6507</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt svc-sec" aria-labelledby="svc-b1-title">
+    <div class="wrap">
+      <div class="about__grid svc-split svc-split--flip">
+        <img class="about__img" src="assets/img/photo-galvanized-spring-below.jpg" width="900" height="600" loading="lazy" alt="Galvanized torsion spring above an open garage door, seen from below">
+        <div>
+          <h2 id="svc-b1-title">Galvanized springs for Longboat Key, Lido Key and Siesta Key</h2>
+          <p>Close to the water a bare oil-tempered spring rusts, the rust pits the wire, and the pit is where it breaks. A galvanized spring is zinc-coated against exactly that:</p>
+          <ul class="checks svc-list">
+            <li><strong>Corrosion resistance</strong>: far slower to rust in salt air, so the spring reaches its rated cycle life instead of snapping early.</li>
+            <li><strong>Matched hardware</strong>: we check the cables, drums and bearings at the same time, because a new spring on a corroded cable only moves the failure point.</li>
+            <li><strong>Lubricated on fitting</strong>: galvanized coils need a coat of lubricant to run smoothly and quietly, and we apply it before we leave.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section svc-sec" aria-labelledby="svc-b2-title">
+    <div class="wrap">
+      <div class="about__grid svc-split">
+        <img class="about__img" src="assets/img/photo-torsion-spring-shaft.jpg" width="900" height="600" loading="lazy" alt="Torsion spring on its shaft above a white raised-panel garage door">
+        <div>
+          <h2 id="svc-b2-title">Heavy impact-rated doors need the right spring size</h2>
+          <p>Many Sarasota homes, especially newer builds in Lakewood Ranch and Palmer Ranch, have impact-rated doors with window sections and insulated panels. Those doors weigh considerably more than a plain single-skin door, and the spring has to be sized to the real weight. An undersized spring wears out fast and leaves the opener doing the lifting.</p>
+          <p>We measure the door, read the specification of the spring that broke, and fit a matched pair of springs, then balance the door by hand. On an ARC street nothing about the outside changes, so there is nothing for the committee to review.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt svc-sec" aria-labelledby="svc-b3-title">
+    <div class="wrap">
+      <div class="about__grid svc-split svc-split--flip">
+        <img class="about__img" src="assets/img/photo-door-after-repair.jpg" width="900" height="600" loading="lazy" alt="The same two-car garage door closed and level after the spring repair">
+        <div>
+          <h2 id="svc-b3-title">Same-day spring repair from Lakewood Ranch to Siesta Key</h2>
+          <p>Our trucks are staged along the I-75 corridor near Fruitville Rd and Bee Ridge Rd, so a broken spring anywhere in Sarasota is normally a same-day call &ndash; out to Lakewood Ranch in the east and across the bridges to Siesta Key, Lido Key and Longboat Key in the west. You get the price on the driveway, before the old spring comes off.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section svc-sec" aria-labelledby="svc-b4-title">
+    <div class="wrap">
+      <div class="about__grid svc-split">
+        <img class="about__img" src="assets/img/photo-cable-drum.jpg" width="900" height="600" loading="lazy" alt="Lift cable wound on the drum at the end of the torsion shaft">
+        <div>
+          <h2 id="svc-b4-title">Extension springs in older Sarasota garages</h2>
+          <p>Not every Sarasota garage runs torsion springs. Older homes around Southgate, Gulf Gate and the streets off Bee Ridge Rd often still have extension springs stretched along the horizontal tracks. They work, but when one snaps it can whip across the garage unless a safety cable runs through it.</p>
+          <p>We replace extension springs in matched pairs, add safety cables where they are missing, and check the pulleys and cables they run on. Where the ceiling allows, we can also talk you through converting to a torsion system, which runs smoother and is safer to live with.</p>
+      <nav class="svc-related" aria-label="More garage door services in Sarasota">
+        <p class="svc-related__title">More from OG Garage Doors in Sarasota, FL</p>
+        <ul>
+          <li><a href="/garage-door-repair-sarasota-fl">Garage door repair in Sarasota</a></li>
+          <li><a href="/emergency-garage-door-repair-sarasota-fl">Emergency garage door repair in Sarasota</a></li>
+          <li><a href="/garage-door-maintenance-sarasota-fl">Garage door maintenance in Sarasota</a></li>
+        </ul>
+      </nav>
+        </div>
+      </div>
+    </div>
+  </section>
+
 
   <!-- ==================== REVIEW PLATFORMS ==================== -->
   <section class="trust" aria-label="Review platforms where OG Garage Doors is rated 5 stars">
@@ -855,58 +945,6 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
       <div class="reviews__dots" id="reviews-dots" role="group" aria-label="Review pages"></div>
     </div>
   </section>
-
-  <!-- ==================== GARAGE DOOR SPRING REPAIR: SARASOTA ==================== -->
-  <section class="section" id="overview" aria-labelledby="svc-intro-title">
-    <div class="wrap">
-      <div class="about__grid">
-        <img class="about__img" src="assets/img/expertise-residential-opener.webp" width="900" height="440" loading="lazy" alt="Torsion spring on its shaft above a residential garage door">
-        <div>
-          <p class="eyebrow">Garage Door Spring Repair &middot; Sarasota, FL</p>
-          <h2 id="svc-intro-title">The right garage door spring depends on where in Sarasota you live</h2>
-          <p>Sarasota is two climates for a garage door spring. On Longboat Key, Lido Key and Siesta Key the hardware lives in salt air a few hundred yards from the Gulf, and the enemy is corrosion. Inland, in Lakewood Ranch, Palmer Ranch and the neighborhoods along University Pkwy, the air is gentler and the enemy is simply use.</p>
-          <p>So we do not fit one spring for the whole county. Galvanized springs are the right answer for beachfront properties like those on Longboat Key; a high-cycle spring is usually the better buy for a busy family door further inland.</p>
-          <p class="about__actions"><a class="btn btn--call" href="tel:+19419496507" data-cta="svc-intro-call">Call (941) 949-6507</a></p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section section--alt" aria-labelledby="svc-b1-title">
-    <div class="wrap svc-prose">
-      <h2 id="svc-b1-title">Galvanized springs for Longboat Key, Lido Key and Siesta Key</h2>
-      <p>Close to the water a bare oil-tempered spring rusts, the rust pits the wire, and the pit is where it breaks. A galvanized spring is zinc-coated against exactly that:</p>
-      <ul class="checks svc-list">
-        <li><strong>Corrosion resistance</strong>: far slower to rust in salt air, so the spring reaches its rated cycle life instead of snapping early.</li>
-        <li><strong>Matched hardware</strong>: we check the cables, drums and bearings at the same time, because a new spring on a corroded cable only moves the failure point.</li>
-        <li><strong>Lubricated on fitting</strong>: galvanized coils need a coat of lubricant to run smoothly and quietly, and we apply it before we leave.</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="section" aria-labelledby="svc-b2-title">
-    <div class="wrap svc-prose">
-      <h2 id="svc-b2-title">Heavy impact-rated doors need the right spring size</h2>
-      <p>Many Sarasota homes, especially newer builds in Lakewood Ranch and Palmer Ranch, have impact-rated doors with window sections and insulated panels. Those doors weigh considerably more than a plain single-skin door, and the spring has to be sized to the real weight. An undersized spring wears out fast and leaves the opener doing the lifting.</p>
-      <p>We measure the door, read the specification of the spring that broke, and fit a matched pair of springs, then balance the door by hand. On an ARC street nothing about the outside changes, so there is nothing for the committee to review.</p>
-    </div>
-  </section>
-
-  <section class="section" aria-labelledby="svc-b3-title">
-    <div class="wrap svc-prose">
-      <h2 id="svc-b3-title">Same-day spring repair from Lakewood Ranch to Siesta Key</h2>
-      <p>Our trucks are staged along the I-75 corridor near Fruitville Rd and Bee Ridge Rd, so a broken spring anywhere in Sarasota is normally a same-day call &ndash; out to Lakewood Ranch in the east and across the bridges to Siesta Key, Lido Key and Longboat Key in the west. You get the price on the driveway, before the old spring comes off.</p>
-      <nav class="svc-related" aria-label="More garage door services in Sarasota">
-        <p class="svc-related__title">More from OG Garage Doors in Sarasota, FL</p>
-        <ul>
-          <li><a href="/garage-door-repair-sarasota-fl">Garage door repair in Sarasota</a></li>
-          <li><a href="/emergency-garage-door-repair-sarasota-fl">Emergency garage door repair in Sarasota</a></li>
-          <li><a href="/garage-door-maintenance-sarasota-fl">Garage door maintenance in Sarasota</a></li>
-        </ul>
-      </nav>
-    </div>
-  </section>
-
 
   <!-- ==================== FAQ ==================== -->
   <section class="section section--alt" id="faq" aria-labelledby="faq-title">

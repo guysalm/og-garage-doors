@@ -63,7 +63,7 @@
 <meta property="og:title" content="Garage Door Spring Repair Venice FL | Same-Day Springs">
 <meta property="og:description" content="Broken garage door spring in Venice, FL? High-cycle torsion and extension springs fitted same day, both sides balanced. Senior discount. Call (941) 949-6507.">
 <meta property="og:url" content="https://oggaragedoors.com/garage-door-spring-repair-venice-fl">
-<meta property="og:image" content="https://oggaragedoors.com/assets/img/expertise-residential-opener.webp">
+<meta property="og:image" content="https://oggaragedoors.com/assets/img/photo-broken-torsion-spring.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#14181D">
 
@@ -480,8 +480,22 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
 .local__zips strong{color:var(--ink)}
 
 /* ========== Service x city pages (built by tools/service-pages.ps1) ========== */
-.svc-prose{max-width:860px}
-.svc-prose h2{font-size:1.85rem;margin-bottom:16px}
+.hero--svc{text-align:left;padding:52px 0 60px;background:linear-gradient(135deg,#14181D 0%,#1C222A 62%,#3a1418 100%)}
+.hero--svc::before{display:none}
+.svc-hero{display:grid;grid-template-columns:1.12fr .88fr;gap:46px;align-items:center}
+.svc-hero__eyebrow{color:#F0B429;font-weight:700;text-transform:uppercase;letter-spacing:.7px;font-size:.88rem;margin-bottom:10px}
+.hero--svc h1{font-size:2.45rem;text-transform:none;letter-spacing:0;margin-bottom:14px}
+.svc-hero__lead{font-size:1.08rem;color:#E7EAEE;margin-bottom:20px}
+.hero--svc .hero-checks{margin:0 0 22px;max-width:none;gap:2px 26px}
+.hero--svc .hero-checks li{font-size:.95rem}
+.hero--svc h2{font-size:1.22rem;margin-bottom:22px}
+.hero--svc .hero__actions{justify-content:flex-start}
+.svc-hero__img{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:var(--radius);border:3px solid rgba(255,255,255,.12);box-shadow:0 12px 32px rgba(0,0,0,.5)}
+.svc-sec{padding:60px 0}
+.svc-split{gap:48px}
+.svc-split .about__img{aspect-ratio:3/2;max-height:none}
+.svc-split h2{font-size:1.8rem;margin-bottom:14px}
+.svc-split--flip > img{order:2}
 .svc-list{margin:4px 0 18px}
 .svc-list li{margin-bottom:11px}
 .svc-related{margin-top:30px;padding:20px 22px;border:1px solid #dde1e6;border-radius:var(--radius);background:var(--bg)}
@@ -701,6 +715,10 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
   .header-cta .btn--call{padding:10px 16px;font-size:.86rem;gap:7px;white-space:nowrap}
   .nav-toggle{padding:7px 9px}
   .about__grid,.expertise__grid,.contact__grid,.local__grid{grid-template-columns:1fr;gap:32px}
+  .svc-hero{grid-template-columns:1fr;gap:28px}
+  .hero--svc h1{font-size:1.85rem}
+  .svc-split--flip > img{order:0}
+  .svc-split h2{font-size:1.5rem}
   .expertise__media{order:-1}
 }
 @media (max-width:640px){
@@ -795,31 +813,22 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
 <main id="main">
 
   <!-- ==================== HERO ==================== -->
-  <section class="hero" aria-labelledby="hero-title">
-    <div class="wrap">
-      <h1 id="hero-title">Garage Door Spring Repair in Venice, FL</h1>
-
-      <ul class="hero-checks checks">
-        <li>Emergency 24/7</li>
-        <li>Springs Repair</li>
-        <li>Same Day Service</li>
-        <li>Opener Repair</li>
-        <li>Free Estimates</li>
-        <li>Cable Repair</li>
-        <li>Licensed, Insured &amp; Bonded</li>
-        <li>Panel Dent Repair</li>
-        <li>Off Track Repair</li>
-        <li>Commercial Service</li>
-        <li>Smart Opener Installs</li>
-        <li>No Extra Charge On Weekend &amp; Holiday</li>
-      </ul>
-
-      <h2>High-Cycle Springs Fitted Same Day on the Island and the Mainland</h2>
-      <p class="hero__ask">Garage Door Stuck or Not Responding?</p>
-
-      <p class="hero__lead">Don&rsquo;t Wait &ndash; <strong>Call Today For Fast, Same-Day Service &amp; a Free Estimate!</strong> OPEN 24/7</p>
-
-      <div class="hero__actions">
+  <section class="hero hero--svc" aria-labelledby="hero-title">
+    <div class="wrap svc-hero">
+      <div>
+        <p class="svc-hero__eyebrow">Garage Door Spring Repair &middot; Venice, FL</p>
+        <h1 id="hero-title">Garage Door Spring Repair in Venice, FL</h1>
+        <p class="svc-hero__lead">A broken torsion spring is the most common reason a Venice garage door stops opening. We replace both springs, fit high-cycle springs on request and balance the door by hand, usually the same day you call.</p>
+        <ul class="hero-checks checks">
+          <li>Torsion &amp; extension springs</li>
+          <li>Both springs replaced as a pair</li>
+          <li>High-cycle springs available</li>
+          <li>Same-day across Venice</li>
+          <li>Senior &amp; veteran discount</li>
+          <li>Price agreed before work</li>
+        </ul>
+        <h2>High-Cycle Springs Fitted Same Day on the Island and the Mainland</h2>
+        <div class="hero__actions">
         <a class="btn btn--call" href="tel:+19419496507" data-cta="hero-call">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
           Call Now (941) 949-6507
@@ -829,8 +838,97 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
           Contact Us
         </a>
       </div>
+      </div>
+      <img class="svc-hero__img" src="assets/img/photo-broken-torsion-spring.jpg" width="900" height="600" fetchpriority="high" alt="Broken torsion spring with a gap in the coil beside the center bracket">
     </div>
   </section>
+
+  <!-- ==================== GARAGE DOOR SPRING REPAIR: VENICE ==================== -->
+  <section class="section svc-sec" id="overview" aria-labelledby="svc-intro-title">
+    <div class="wrap">
+      <div class="about__grid svc-split">
+        <img class="about__img" src="assets/img/photo-broken-spring-outside.jpg" width="900" height="600" loading="lazy" alt="Garage door with a broken torsion spring hanging across the top section">
+        <div>
+          <h2 id="svc-intro-title">Broken spring on a Venice garage door? Leave the door where it is</h2>
+          <p>A torsion spring that lets go sounds like a gunshot in the garage, and in Venice it usually happens early in the morning, when the first cycle of the day asks a tired spring to lift the full weight of the door. Once it has broken, the door weighs what it actually weighs &ndash; often 150 pounds or more &ndash; and the opener was never built to lift that on its own.</p>
+          <p>Leave the door closed, unplug the opener if it keeps straining, and call us. We keep the spring sizes common to Venice homes on the truck, so on most calls the door is balanced, tested and running again the same day, on Venice Island, in South Venice or anywhere along the Tamiami Trail.</p>
+          <p class="about__actions"><a class="btn btn--call" href="tel:+19419496507" data-cta="svc-intro-call">Call (941) 949-6507</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt svc-sec" aria-labelledby="svc-b1-title">
+    <div class="wrap">
+      <div class="about__grid svc-split svc-split--flip">
+        <img class="about__img" src="assets/img/photo-torsion-spring-shaft.jpg" width="900" height="600" loading="lazy" alt="Torsion spring on its shaft above a white raised-panel garage door">
+        <div>
+          <h2 id="svc-b1-title">Torsion or extension: which springs Venice garages use</h2>
+          <p>Most of the homes we see between Venice Ave and Jacaranda Blvd run a torsion system &ndash; one or two springs on a steel shaft above the door. Older and smaller garages still use extension springs that stretch along the horizontal tracks. They fail differently, and we replace them differently.</p>
+          <ul class="checks svc-list">
+            <li><strong>Torsion springs</strong>: wound on the shaft and released as the door rises. We replace both springs even when only one has broken, because the survivor is the same age and close to the same failure point.</li>
+            <li><strong>Extension springs</strong>: these stretch beside each track and must run with a safety cable through the middle, so a broken spring cannot whip across the garage. If yours have no containment cable, we add one.</li>
+            <li><strong>High-cycle option</strong>: a standard spring is rated for about 10,000 cycles. A high-cycle spring lasts several times longer on a door that opens four or five times a day.</li>
+            <li><strong>Balance before we leave</strong>: with the opener disconnected, the door should hold at waist height on its own. We set the tension until it does.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section svc-sec" aria-labelledby="svc-b2-title">
+    <div class="wrap">
+      <div class="about__grid svc-split">
+        <img class="about__img" src="assets/img/photo-spring-job-in-progress.jpg" width="900" height="600" loading="lazy" alt="Spring replacement under way, tools and old springs on the garage floor">
+        <div>
+          <h2 id="svc-b2-title">Why Venice homeowners should not adjust a spring themselves</h2>
+          <p>A wound torsion spring stores enough energy to break a wrist or throw a winding bar across the garage. Online videos make it look like a two-bar job; what they do not show is the cone slipping on a worn set screw. In a town with as many retirees as Venice, we would far rather take the call than hear about the accident.</p>
+          <p>We bring the winding bars, the right cones and a second pair of hands when the job needs it, and we show you the broken coil before quoting, so you can see exactly what failed and why.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt svc-sec" aria-labelledby="svc-b3-title">
+    <div class="wrap">
+      <div class="about__grid svc-split svc-split--flip">
+        <img class="about__img" src="assets/img/photo-door-after-repair.jpg" width="900" height="600" loading="lazy" alt="The same two-car garage door closed and level after the spring repair">
+        <div>
+          <h2 id="svc-b3-title">Same-day spring replacement from Venice Island to Laurel Road</h2>
+          <p>We work both sides of the Intracoastal every day &ndash; the island streets off Venice Ave, the South Venice neighborhoods, and the newer communities out toward Laurel Rd and Jacaranda Blvd. The price is agreed on the driveway before any spring comes off, the senior and veteran discount applies every day of the week, and there is no surcharge for a Saturday or a holiday.</p>
+          <p>Not sure it is a spring? Look at the coil above the door. If there is a two-inch gap in it, it is &ndash; and we can usually fix it today.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section svc-sec" aria-labelledby="svc-b4-title">
+    <div class="wrap">
+      <div class="about__grid svc-split">
+        <img class="about__img" src="assets/img/photo-cable-drum.jpg" width="900" height="600" loading="lazy" alt="Lift cable wound on the drum at the end of the torsion shaft">
+        <div>
+          <h2 id="svc-b4-title">What happens during a Venice spring replacement visit</h2>
+          <p>A spring job takes about an hour once we are on the driveway. This is the order we work in, so you know what to expect:</p>
+          <ul class="checks svc-list">
+            <li><strong>Make the door safe</strong>: the door is clamped in place and the opener unplugged before anything is loosened.</li>
+            <li><strong>Measure, then quote</strong>: wire size, inside diameter and length of the broken spring are read, and you get the price before work starts.</li>
+            <li><strong>Unwind and replace</strong>: the old springs are unwound under control with winding bars, then the new pair goes on the shaft.</li>
+            <li><strong>Cables and drums checked</strong>: a spring failure often frays a cable, so we look before tensioning the new springs.</li>
+            <li><strong>Balance, lubricate, test</strong>: the door is set to hold at mid-height, the springs lubricated, and the opener reconnected and run.</li>
+          </ul>
+      <nav class="svc-related" aria-label="More garage door services in Venice">
+        <p class="svc-related__title">More from OG Garage Doors in Venice, FL</p>
+        <ul>
+          <li><a href="/">Garage door repair in Venice</a></li>
+          <li><a href="/emergency-garage-door-repair-venice-fl">Emergency garage door repair in Venice</a></li>
+          <li><a href="/garage-door-maintenance-venice-fl">Garage door maintenance in Venice</a></li>
+        </ul>
+      </nav>
+        </div>
+      </div>
+    </div>
+  </section>
+
 
   <!-- ==================== REVIEW PLATFORMS ==================== -->
   <section class="trust" aria-label="Review platforms where OG Garage Doors is rated 5 stars">
@@ -855,60 +953,6 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
       <div class="reviews__dots" id="reviews-dots" role="group" aria-label="Review pages"></div>
     </div>
   </section>
-
-  <!-- ==================== GARAGE DOOR SPRING REPAIR: VENICE ==================== -->
-  <section class="section" id="overview" aria-labelledby="svc-intro-title">
-    <div class="wrap">
-      <div class="about__grid">
-        <img class="about__img" src="assets/img/expertise-residential-opener.webp" width="900" height="440" loading="lazy" alt="Torsion spring on its shaft above a residential garage door">
-        <div>
-          <p class="eyebrow">Garage Door Spring Repair &middot; Venice, FL</p>
-          <h2 id="svc-intro-title">Broken spring on a Venice garage door? Leave the door where it is</h2>
-          <p>A torsion spring that lets go sounds like a gunshot in the garage, and in Venice it usually happens early in the morning, when the first cycle of the day asks a tired spring to lift the full weight of the door. Once it has broken, the door weighs what it actually weighs &ndash; often 150 pounds or more &ndash; and the opener was never built to lift that on its own.</p>
-          <p>Leave the door closed, unplug the opener if it keeps straining, and call us. We keep the spring sizes common to Venice homes on the truck, so on most calls the door is balanced, tested and running again the same day, on Venice Island, in South Venice or anywhere along the Tamiami Trail.</p>
-          <p class="about__actions"><a class="btn btn--call" href="tel:+19419496507" data-cta="svc-intro-call">Call (941) 949-6507</a></p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section section--alt" aria-labelledby="svc-b1-title">
-    <div class="wrap svc-prose">
-      <h2 id="svc-b1-title">Torsion or extension: which springs Venice garages use</h2>
-      <p>Most of the homes we see between Venice Ave and Jacaranda Blvd run a torsion system &ndash; one or two springs on a steel shaft above the door. Older and smaller garages still use extension springs that stretch along the horizontal tracks. They fail differently, and we replace them differently.</p>
-      <ul class="checks svc-list">
-        <li><strong>Torsion springs</strong>: wound on the shaft and released as the door rises. We replace both springs even when only one has broken, because the survivor is the same age and close to the same failure point.</li>
-        <li><strong>Extension springs</strong>: these stretch beside each track and must run with a safety cable through the middle, so a broken spring cannot whip across the garage. If yours have no containment cable, we add one.</li>
-        <li><strong>High-cycle option</strong>: a standard spring is rated for about 10,000 cycles. A high-cycle spring lasts several times longer on a door that opens four or five times a day.</li>
-        <li><strong>Balance before we leave</strong>: with the opener disconnected, the door should hold at waist height on its own. We set the tension until it does.</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="section" aria-labelledby="svc-b2-title">
-    <div class="wrap svc-prose">
-      <h2 id="svc-b2-title">Why Venice homeowners should not adjust a spring themselves</h2>
-      <p>A wound torsion spring stores enough energy to break a wrist or throw a winding bar across the garage. Online videos make it look like a two-bar job; what they do not show is the cone slipping on a worn set screw. In a town with as many retirees as Venice, we would far rather take the call than hear about the accident.</p>
-      <p>We bring the winding bars, the right cones and a second pair of hands when the job needs it, and we show you the broken coil before quoting, so you can see exactly what failed and why.</p>
-    </div>
-  </section>
-
-  <section class="section" aria-labelledby="svc-b3-title">
-    <div class="wrap svc-prose">
-      <h2 id="svc-b3-title">Same-day spring replacement from Venice Island to Laurel Road</h2>
-      <p>We work both sides of the Intracoastal every day &ndash; the island streets off Venice Ave, the South Venice neighborhoods, and the newer communities out toward Laurel Rd and Jacaranda Blvd. The price is agreed on the driveway before any spring comes off, the senior and veteran discount applies every day of the week, and there is no surcharge for a Saturday or a holiday.</p>
-      <p>Not sure it is a spring? Look at the coil above the door. If there is a two-inch gap in it, it is &ndash; and we can usually fix it today.</p>
-      <nav class="svc-related" aria-label="More garage door services in Venice">
-        <p class="svc-related__title">More from OG Garage Doors in Venice, FL</p>
-        <ul>
-          <li><a href="/">Garage door repair in Venice</a></li>
-          <li><a href="/emergency-garage-door-repair-venice-fl">Emergency garage door repair in Venice</a></li>
-          <li><a href="/garage-door-maintenance-venice-fl">Garage door maintenance in Venice</a></li>
-        </ul>
-      </nav>
-    </div>
-  </section>
-
 
   <!-- ==================== FAQ ==================== -->
   <section class="section section--alt" id="faq" aria-labelledby="faq-title">

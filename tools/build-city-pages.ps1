@@ -1138,16 +1138,25 @@ foreach ($c in $cities) {
 }
 
 # ------------------------------------------------------ service x city pages
-# Built from the same template as the city pages so the header, hero, review
-# strip, lead form, footer and tracking are identical, but everything between
-# the reviews and the FAQ - services grid, value props, About, Expertise,
-# gallery, brands - is cut and replaced with the page's own article. Keeping
-# those sections would hand every service page the city page's prose, which
-# is the duplicate-content problem this site has already been through once.
+# Built from the same template as the city pages so the header, review strip,
+# lead form, footer and tracking are identical. Three things differ, so the
+# page reads as a spring (or maintenance, or emergency) page from the first
+# screen rather than as another copy of the city page:
+#   - the hero is the page's own: H1, a lead paragraph, six highlights and a
+#     job photo of that service, on a plain dark background
+#   - the article sits directly under the hero, a photo beside every section,
+#     alternating sides; the review strip and cards move below it
+#   - everything the city page has between the reviews and the FAQ (services
+#     grid, value props, About, Expertise, gallery, brands) is cut, because
+#     keeping it would hand every service page the city page's prose
 $svcBuilt = @()
+$revStart = '  <!-- ==================== REVIEW PLATFORMS ==================== -->'
 $cutStart = '  <!-- ==================== GUARANTEE BADGES ==================== -->'
 $cutEnd   = '  <!-- ==================== FAQ ==================== -->'
-if ($tpl.IndexOf($cutStart) -lt 0 -or $tpl.IndexOf($cutEnd) -lt 0) { throw "Service pages: section markers not found in the template" }
+foreach ($mk in @($revStart, $cutStart, $cutEnd)) {
+  if ($tpl.IndexOf($mk) -lt 0) { throw "Service pages: section marker not found in the template: $mk" }
+}
+$svcOwnPhotos = 0
 
 foreach ($key in ($servicePages.Keys | Sort-Object)) {
   $svcKey, $citySlug = $key -split '\|', 2
@@ -1174,17 +1183,37 @@ foreach ($key in ($servicePages.Keys | Sort-Object)) {
     return $s
   }
 
-  # photo: the page's own if it has been dropped in, otherwise the service's
-  $imgRel = "assets/img/svc-$svcKey-$($citySlug -replace '^garage-door-repair-','' -replace '-fl$','').jpg"
-  if (Test-Path (Join-Path $root ($imgRel -replace '/','\'))) {
-    Add-Type -AssemblyName System.Drawing
-    $bmp = [System.Drawing.Image]::FromFile((Join-Path $root ($imgRel -replace '/','\')))
-    $imgW = $bmp.Width; $imgH = $bmp.Height; $bmp.Dispose()
-    $imgAlt = if ($pg.ContainsKey("Alt")) { $pg.Alt } else { "$($svc.ServiceName) on a garage door in $($c.City)" }
-  } else {
-    $imgRel = $svc.FallbackImg; $imgW = $svc.FallbackW; $imgH = $svc.FallbackH; $imgAlt = $svc.FallbackAlt
-    Write-Host "  note: no $("assets/img/svc-$svcKey-$($citySlug -replace '^garage-door-repair-','' -replace '-fl$','').jpg") yet - $slug uses the fallback photo" -ForegroundColor Yellow
+  $ex = $servicePageExtras[$key]
+  if (-not $ex) { throw "${key}: no entry in `$servicePageExtras" }
+  foreach ($f in @("Lead","Chips","Imgs","Block4")) {
+    if (-not $ex.ContainsKey($f) -or -not $ex[$f]) { throw "${key}: nothing written for $f in `$servicePageExtras" }
   }
+  if ($ex.Imgs.Count -ne 6) { throw "${key}: Imgs needs six photos (hero, intro, four sections), has $($ex.Imgs.Count)" }
+  $blocks = @($pg.Blocks) + @($ex.Block4)
+
+  # photos: a page's own file for a slot wins (svc-<service>-<city>-<slot>.jpg),
+  # otherwise the job photo named in Imgs
+  $cityShort = $citySlug -replace '^garage-door-repair-','' -replace '-fl$',''
+  $slotNames = @("hero","1","2","3","4","5")
+  $pagePhotos = @()
+  for ($n = 0; $n -lt 6; $n++) {
+    $own = "assets/img/svc-$svcKey-$cityShort-$($slotNames[$n]).jpg"
+    if (Test-Path (Join-Path $root ($own -replace '/','\'))) {
+      Add-Type -AssemblyName System.Drawing
+      $bmp = [System.Drawing.Image]::FromFile((Join-Path $root ($own -replace '/','\')))
+      $pagePhotos += [pscustomobject]@{ Src = $own; W = $bmp.Width; H = $bmp.Height
+        Alt = $(if ($ex.ContainsKey("Alts") -and $ex.Alts[$n]) { $ex.Alts[$n] } else { "$($svc.ServiceName) job in $($c.City), FL" }) }
+      $bmp.Dispose()
+      $svcOwnPhotos++
+    } else {
+      $pk = $ex.Imgs[$n]
+      if (-not $PHOTOS.ContainsKey($pk)) { throw "${key}: '$pk' is not in `$PHOTOS" }
+      $src = "assets/img/photo-$pk.jpg"
+      if (-not (Test-Path (Join-Path $root ($src -replace '/','\')))) { throw "${key}: $src is missing - run tools\make-section-photos.ps1" }
+      $pagePhotos += [pscustomobject]@{ Src = $src; W = 900; H = 600; Alt = $PHOTOS[$pk] }
+    }
+  }
+  $imgRel = $pagePhotos[0].Src
 
   $vals = @{}
   foreach ($k in $SITE.Keys) { $vals[$k] = $SITE[$k] }
@@ -1199,8 +1228,10 @@ foreach ($key in ($servicePages.Keys | Sort-Object)) {
   $copy = Get-CityCopy $c
   foreach ($k in $copy.Keys) { $vals[$k] = $copy[$k] }
 
-  # cut the city-page sections first, then substitute what is left
-  $page = $tpl.Substring(0, $tpl.IndexOf($cutStart)) + "{{svc_article}}`n`n" + $tpl.Substring($tpl.IndexOf($cutEnd))
+  # hero, then the article, then the review strip and cards, then the FAQ:
+  # the city-page sections are cut first, then what is left is substituted
+  $iRev = $tpl.IndexOf($revStart); $iCut = $tpl.IndexOf($cutStart)
+  $page = $tpl.Substring(0, $iRev) + "{{svc_article}}`n`n" + $tpl.Substring($iRev, $iCut - $iRev) + $tpl.Substring($tpl.IndexOf($cutEnd))
   foreach ($k in $vals.Keys) { $page = $page.Replace("{{$k}}", $vals[$k]) }
 
   $newSite = $siteBlock
@@ -1216,7 +1247,31 @@ foreach ($key in ($servicePages.Keys | Sort-Object)) {
   $page = [regex]::Replace($page, '<meta property="og:title" content=".*?">', "<meta property=""og:title"" content=""$t"">")
   $page = [regex]::Replace($page, '<meta property="og:description" content=".*?">', "<meta property=""og:description"" content=""$d"">")
   $page = [regex]::Replace($page, '<meta property="og:image" content=".*?">', "<meta property=""og:image"" content=""$($SITE.site_url)$imgRel"">")
-  $page = [regex]::Replace($page, '(?s)(<h1 id="hero-title">).*?(</h1>)', "`${1}$(HtmlEscape $pg.H1)`${2}")
+
+  # the page's own hero, keeping the template's call / contact buttons
+  $heroRe  = '(?s)  <section class="hero" aria-labelledby="hero-title">.*?</section>'
+  $heroOld = [regex]::Match($page, $heroRe).Value
+  $actions = [regex]::Match($heroOld, '(?s)<div class="hero__actions">.*?</a>\s*</div>').Value
+  if (-not $heroOld -or -not $actions) { throw "${key}: hero or its buttons not found in the template" }
+  $chips = ($ex.Chips | ForEach-Object { "          <li>$_</li>" }) -join "`n"
+  $hero = @"
+  <section class="hero hero--svc" aria-labelledby="hero-title">
+    <div class="wrap svc-hero">
+      <div>
+        <p class="svc-hero__eyebrow">$($svc.ServiceName) &middot; $(HtmlEscape $c.City), FL</p>
+        <h1 id="hero-title">$(HtmlEscape $pg.H1)</h1>
+        <p class="svc-hero__lead">$(Resolve-SvcLinks $ex.Lead)</p>
+        <ul class="hero-checks checks">
+$chips
+        </ul>
+        <h2>$($pg.HeroH2)</h2>
+        $actions
+      </div>
+      <img class="svc-hero__img" src="$($pagePhotos[0].Src)" width="$($pagePhotos[0].W)" height="$($pagePhotos[0].H)" fetchpriority="high" alt="$(HtmlEscape $pagePhotos[0].Alt)">
+    </div>
+  </section>
+"@
+  $page = $page.Replace($heroOld, $hero)
 
   # the review cards stay, their hidden heading goes: "What <city> customers
   # say" would be the same H2 on all four pages of a city
@@ -1285,26 +1340,32 @@ foreach ($key in ($servicePages.Keys | Sort-Object)) {
   # ---- the article
   $sb = New-Object System.Text.StringBuilder
   [void]$sb.Append("  <!-- ==================== $($svc.ServiceName.ToUpper()): $($c.City.ToUpper()) ==================== -->`n")
-  [void]$sb.Append("  <section class=""section"" id=""overview"" aria-labelledby=""svc-intro-title"">`n    <div class=""wrap"">`n      <div class=""about__grid"">`n")
-  [void]$sb.Append("        <img class=""about__img"" src=""$imgRel"" width=""$imgW"" height=""$imgH"" loading=""lazy"" alt=""$(HtmlEscape $imgAlt)"">`n        <div>`n")
-  [void]$sb.Append("          <p class=""eyebrow"">$($svc.ServiceName) &middot; $(HtmlEscape $c.City), FL</p>`n")
+  # every section is a photo beside the text, sides alternating like the
+  # reference pages; the intro keeps a call button under its text
+  function Get-SvcPhotoTag($ph) {
+    return "        <img class=""about__img"" src=""$($ph.Src)"" width=""$($ph.W)"" height=""$($ph.H)"" loading=""lazy"" alt=""$(HtmlEscape $ph.Alt)"">`n"
+  }
+  [void]$sb.Append("  <section class=""section svc-sec"" id=""overview"" aria-labelledby=""svc-intro-title"">`n    <div class=""wrap"">`n      <div class=""about__grid svc-split"">`n")
+  [void]$sb.Append((Get-SvcPhotoTag $pagePhotos[1]) + "        <div>`n")
   [void]$sb.Append("          <h2 id=""svc-intro-title"">$(Resolve-SvcLinks $pg.Intro.H2)</h2>`n")
   foreach ($p in $pg.Intro.P) { [void]$sb.Append("          <p>$(Resolve-SvcLinks $p)</p>`n") }
   [void]$sb.Append("          <p class=""about__actions""><a class=""btn btn--call"" href=""tel:$($SITE.phone_number)"" data-cta=""svc-intro-call"">Call $($SITE.phone_display)</a></p>`n")
   [void]$sb.Append("        </div>`n      </div>`n    </div>`n  </section>`n")
 
   $i = 0
-  foreach ($b in $pg.Blocks) {
+  foreach ($b in $blocks) {
     $i++
-    $cls  = if ($i -eq 1) { "section section--alt" } else { "section" }
-    $last = ($i -eq $pg.Blocks.Count)
-    [void]$sb.Append("`n  <section class=""$cls"" aria-labelledby=""svc-b$i-title"">`n    <div class=""wrap svc-prose"">`n")
-    [void]$sb.Append("      <h2 id=""svc-b$i-title"">$(Resolve-SvcLinks $b.H2)</h2>`n")
-    if ($b.ContainsKey("P")) { foreach ($p in $b.P) { [void]$sb.Append("      <p>$(Resolve-SvcLinks $p)</p>`n") } }
+    $cls  = if ($i % 2 -eq 1) { "section section--alt svc-sec" } else { "section svc-sec" }
+    $flip = if ($i % 2 -eq 1) { " svc-split--flip" } else { "" }
+    $last = ($i -eq $blocks.Count)
+    [void]$sb.Append("`n  <section class=""$cls"" aria-labelledby=""svc-b$i-title"">`n    <div class=""wrap"">`n      <div class=""about__grid svc-split$flip"">`n")
+    [void]$sb.Append((Get-SvcPhotoTag $pagePhotos[$i + 1]) + "        <div>`n")
+    [void]$sb.Append("          <h2 id=""svc-b$i-title"">$(Resolve-SvcLinks $b.H2)</h2>`n")
+    if ($b.ContainsKey("P")) { foreach ($p in $b.P) { [void]$sb.Append("          <p>$(Resolve-SvcLinks $p)</p>`n") } }
     if ($b.ContainsKey("L")) {
-      [void]$sb.Append("      <ul class=""checks svc-list"">`n")
-      foreach ($li in $b.L) { [void]$sb.Append("        <li>$(Resolve-SvcLinks $li)</li>`n") }
-      [void]$sb.Append("      </ul>`n")
+      [void]$sb.Append("          <ul class=""checks svc-list"">`n")
+      foreach ($li in $b.L) { [void]$sb.Append("            <li>$(Resolve-SvcLinks $li)</li>`n") }
+      [void]$sb.Append("          </ul>`n")
     }
     if ($last) {
       $rel = @("<li><a href=""$cityHref"">Garage door repair in $(HtmlEscape $c.City)</a></li>")
@@ -1316,7 +1377,7 @@ foreach ($key in ($servicePages.Keys | Sort-Object)) {
       [void]$sb.Append("        <p class=""svc-related__title"">More from $($SITE.business_name) in $(HtmlEscape $c.City), FL</p>`n")
       [void]$sb.Append("        <ul>`n" + (($rel | ForEach-Object { "          $_" }) -join "`n") + "`n        </ul>`n      </nav>`n")
     }
-    [void]$sb.Append("    </div>`n  </section>`n")
+    [void]$sb.Append("        </div>`n      </div>`n    </div>`n  </section>`n")
   }
   $page = $page.Replace("{{svc_article}}", $sb.ToString())
 

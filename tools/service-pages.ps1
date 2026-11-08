@@ -13,10 +13,10 @@
 # Inline links: [[city]] [[spring]] [[maintenance]] [[emergency]] resolve to
 # the right URL for that page's city.
 #
-# Photos: drop assets/img/svc-<service>-<city>.jpg (under 100KB, roughly 900x600)
-# and the next build uses it. Until then the service's fallback photo ships and
-# the build prints a note naming the missing file. Set Alt on the page entry
-# when the real photo goes in, so the alt describes that photo.
+# Photos: every page shows six (hero + one per section), picked from $PHOTOS -
+# job photos cropped by tools/make-section-photos.ps1. To give one slot its own
+# photo, drop assets/img/svc-<service>-<city>-<slot>.jpg (slot = hero, 1-5;
+# 900x600, under 100KB) and rebuild.
 
 $SERVICES = [ordered]@{
   emergency = @{
@@ -25,8 +25,6 @@ $SERVICES = [ordered]@{
     ServiceType = "Emergency garage door repair"
     LinkLabel   = "Emergency garage door repair"
     NavLabel    = "Emergency Repair"
-    FallbackImg = "assets/img/service-off-track-repair.webp"; FallbackW = 660; FallbackH = 300
-    FallbackAlt = "Residential garage door hanging off its track, waiting for emergency repair"
   }
   spring = @{
     Prefix      = "garage-door-spring-repair"
@@ -34,8 +32,6 @@ $SERVICES = [ordered]@{
     ServiceType = "Garage door spring repair and replacement"
     LinkLabel   = "Garage door spring repair"
     NavLabel    = "Spring Repair"
-    FallbackImg = "assets/img/expertise-residential-opener.webp"; FallbackW = 900; FallbackH = 440
-    FallbackAlt = "Torsion spring on its shaft above a residential garage door"
   }
   maintenance = @{
     Prefix      = "garage-door-maintenance"
@@ -43,8 +39,6 @@ $SERVICES = [ordered]@{
     ServiceType = "Garage door maintenance and tune-up"
     LinkLabel   = "Garage door maintenance"
     NavLabel    = "Maintenance"
-    FallbackImg = "assets/img/service-tune-up-maintenance.webp"; FallbackW = 660; FallbackH = 300
-    FallbackAlt = "Technician servicing garage door hardware with a hand tool during a tune-up"
   }
 }
 
@@ -587,6 +581,190 @@ $servicePages = @{
     ,@("Can you match a damaged panel on a Lakewood Ranch door?",
        "In most cases, yes. We match the panel profile and factory color so the repair reads as part of the original door.")
   )
+}
+
+}
+
+# ------------------------------------------------------------------ photos
+# assets/img/photo-<key>.jpg, 900x600, cut from "assets/img/Real Photos" by
+# tools/make-section-photos.ps1. The alt describes the photo, not the page.
+$PHOTOS = @{
+  "broken-spring-outside"     = "Garage door with a broken torsion spring hanging across the top section"
+  "broken-torsion-spring"     = "Broken torsion spring with a gap in the coil beside the center bracket"
+  "cable-drum"                = "Lift cable wound on the drum at the end of the torsion shaft"
+  "door-after-repair"         = "The same two-car garage door closed and level after the spring repair"
+  "door-off-track"            = "Garage door hanging crooked out of its tracks above the driveway"
+  "galvanized-spring-below"   = "Galvanized torsion spring above an open garage door, seen from below"
+  "galvanized-springs-fitted" = "New galvanized torsion springs on the shaft above a windowed garage door"
+  "matching-sections"         = "Matching garage door sections with arched windows, ready to fit"
+  "nylon-rollers"             = "A set of sealed nylon garage door rollers ready to fit"
+  "safety-sensor"             = "Garage door safety photo eye mounted on its bracket beside the track"
+  "spring-job-in-progress"    = "Spring replacement under way, tools and old springs on the garage floor"
+  "torsion-spring-shaft"      = "Torsion spring on its shaft above a white raised-panel garage door"
+  "wall-keypad"               = "Chamberlain myQ wireless keypad mounted beside a garage door"
+}
+
+# ------------------------------------------------- hero, photos, 4th section
+# Lead and Chips fill the page's own hero, so the first screen says what the
+# page is about. Imgs is six $PHOTOS keys: hero, intro, then one per section.
+# Block4 is appended after the three Blocks above.
+$servicePageExtras = @{
+
+"spring|garage-door-repair-venice-fl" = @{
+  Lead  = "A broken torsion spring is the most common reason a Venice garage door stops opening. We replace both springs, fit high-cycle springs on request and balance the door by hand, usually the same day you call."
+  Chips = @("Torsion &amp; extension springs","Both springs replaced as a pair","High-cycle springs available","Same-day across Venice","Senior &amp; veteran discount","Price agreed before work")
+  Imgs  = @("broken-torsion-spring","broken-spring-outside","torsion-spring-shaft","spring-job-in-progress","door-after-repair","cable-drum")
+  Block4 = @{ H2 = "What happens during a Venice spring replacement visit"
+    P = @("A spring job takes about an hour once we are on the driveway. This is the order we work in, so you know what to expect:")
+    L = @(
+      "<strong>Make the door safe</strong>: the door is clamped in place and the opener unplugged before anything is loosened."
+      "<strong>Measure, then quote</strong>: wire size, inside diameter and length of the broken spring are read, and you get the price before work starts."
+      "<strong>Unwind and replace</strong>: the old springs are unwound under control with winding bars, then the new pair goes on the shaft."
+      "<strong>Cables and drums checked</strong>: a spring failure often frays a cable, so we look before tensioning the new springs."
+      "<strong>Balance, lubricate, test</strong>: the door is set to hold at mid-height, the springs lubricated, and the opener reconnected and run."
+    ) }
+}
+
+"spring|garage-door-repair-englewood-fl" = @{
+  Lead  = "Englewood's salt air pits ordinary garage door springs until they snap years early. We replace them with galvanized springs and stainless cable built for the coast, on Manasota Key and around Lemon Bay, usually the same day."
+  Chips = @("Galvanized torsion springs","Stainless steel lift cables","Seized bearings replaced","Manasota Key same-day visits","No weekend surcharge","Door balanced before we leave")
+  Imgs  = @("galvanized-spring-below","broken-torsion-spring","galvanized-springs-fitted","cable-drum","spring-job-in-progress","broken-spring-outside")
+  Block4 = @{ H2 = "Reading the rust: when an Englewood spring is close to failing"
+    P = @("Before a spring breaks it usually tells you, if you know where to look:")
+    L = @(
+      "<strong>Orange bloom along the coils</strong>: surface rust that has not pitted yet. Clean it, lubricate it and keep an eye on it."
+      "<strong>Flaking or scaly wire</strong>: the rust has eaten into the steel. That spring is living on borrowed time."
+      "<strong>A coil that looks thinner in one spot</strong>: pitting at a single point, which is exactly where a break starts."
+      "<strong>Squealing as the door moves</strong>: dry, corroded coils grinding against each other. Lubricant helps; replacement is usually close."
+      "<strong>Rusted winding cones</strong>: corroded cones make it harder to adjust the spring safely. We replace them along with the spring."
+    ) }
+}
+
+"spring|garage-door-repair-north-port-fl" = @{
+  Lead  = "Builder-grade springs on North Port's newer homes are rated for about 10,000 cycles, and a busy family door uses that in under three years. We replace them with heavy-duty high-cycle springs, usually the same day."
+  Chips = @("High-cycle springs, 20,000+ cycles","Both sides replaced together","Same-day slots held back","Off Price, Sumter &amp; Toledo Blade","Opener force re-checked","Weekend price = weekday price")
+  Imgs  = @("broken-spring-outside","torsion-spring-shaft","galvanized-springs-fitted","broken-torsion-spring","door-after-repair","spring-job-in-progress")
+  Block4 = @{ H2 = "Builder-grade versus high-cycle: what North Port owners choose"
+    P = @(
+      "On a typical two-car door in North Port the choice comes down to how long you plan to stay and how hard the door works. A family that opens the garage ten times a day almost always comes out ahead with high-cycle springs; a seasonal or lightly used door can do fine with a standard pair."
+      "We price both on the driveway, explain the difference in cycles, and let you decide. Either way both springs are replaced, the door is balanced, and the opener is checked so it is not straining against a heavy door."
+    ) }
+}
+
+"spring|garage-door-repair-sarasota-fl" = @{
+  Lead  = "Sarasota spring repair starts with where the house is: galvanized springs for salt air on Longboat, Lido and Siesta Key, high-cycle springs for busy doors in Lakewood Ranch and Palmer Ranch. Same-day across the county."
+  Chips = @("Galvanized springs for the Keys","High-cycle springs inland","Sized for impact-rated doors","Trucks staged near I-75","No HOA approval needed","Price before the old spring comes off")
+  Imgs  = @("galvanized-springs-fitted","broken-torsion-spring","galvanized-spring-below","torsion-spring-shaft","door-after-repair","cable-drum")
+  Block4 = @{ H2 = "Extension springs in older Sarasota garages"
+    P = @(
+      "Not every Sarasota garage runs torsion springs. Older homes around Southgate, Gulf Gate and the streets off Bee Ridge Rd often still have extension springs stretched along the horizontal tracks. They work, but when one snaps it can whip across the garage unless a safety cable runs through it."
+      "We replace extension springs in matched pairs, add safety cables where they are missing, and check the pulleys and cables they run on. Where the ceiling allows, we can also talk you through converting to a torsion system, which runs smoother and is safer to live with."
+    ) }
+}
+
+"maintenance|garage-door-repair-venice-fl" = @{
+  Lead  = "Garage door maintenance in Venice catches worn rollers, loose hinges and tired springs before they strand you. Our 25-point tune-up balances, lubricates and safety-tests the whole door, with seasonal-home visits timed to your return."
+  Chips = @("25-point tune-up","Spring tension &amp; balance","Rollers, hinges &amp; track","Opener force &amp; safety reverse","Seasonal-home check-ins","Senior &amp; veteran discount")
+  Imgs  = @("torsion-spring-shaft","cable-drum","safety-sensor","door-after-repair","nylon-rollers","wall-keypad")
+  Block4 = @{ H2 = "Signs your Venice garage door is overdue for a tune-up"
+    P = @("Any one of these is worth a call. Two or more and the door is asking for attention:")
+    L = @(
+      "<strong>It is louder than it used to be</strong>: grinding or rattling usually means dry rollers or loose hardware."
+      "<strong>It shudders or jerks</strong>: binding rollers or a track out of line, both quick to correct at a tune-up."
+      "<strong>It no longer holds half open</strong>: the springs have lost tension and the opener is taking up the slack."
+      "<strong>The opener hesitates or reverses</strong>: force settings drift over time, and photo eyes get knocked."
+      "<strong>Light under the bottom edge</strong>: a worn bottom seal, which lets rain, heat and insects in."
+    ) }
+}
+
+"maintenance|garage-door-repair-englewood-fl" = @{
+  Lead  = "Salt air off the Gulf and Lemon Bay is the main enemy of an Englewood garage door. Our coastal tune-up removes the salt film, treats early rust, swaps corroded hardware for coated or stainless parts and leaves the door lubricated."
+  Chips = @("Salt-film cleaning","Rust treatment on hardware","Coated &amp; stainless fasteners","Nylon roller upgrades","Coastal bottom seals","Storm-season checks")
+  Imgs  = @("galvanized-spring-below","cable-drum","nylon-rollers","galvanized-springs-fitted","door-after-repair","safety-sensor")
+  Block4 = @{ H2 = "A simple between-visits routine for Englewood homeowners"
+    P = @("Ten minutes now and then keeps the salt from winning between our visits:")
+    L = @(
+      "<strong>Every two months</strong>: wipe the springs, cables and hinges with a damp cloth to lift the salt, then let them dry."
+      "<strong>Every three months</strong>: a light coat of silicone or lithium garage-door lubricant on rollers, hinges and spring coils."
+      "<strong>After a storm</strong>: run the door through one full cycle and watch for binding, a crooked bottom edge or new noises."
+      "<strong>Keep the bottom clear</strong>: sand and debris against the seal hold moisture against the bottom section."
+      "<strong>Leave tension alone</strong>: springs, cables and drums are under load. Anything frayed or rusted through is our job."
+    ) }
+}
+
+"maintenance|garage-door-repair-north-port-fl" = @{
+  Lead  = "North Port family doors run ten or more times a day, wearing rollers, hinges and springs years ahead of schedule. Our 25-point tune-up resets the balance, replaces worn parts on approval and safety-tests the door for kids and pets."
+  Chips = @("25-point high-use tune-up","Roller &amp; hinge wear checks","Safety-reverse testing","Smart opener &amp; app check","Every six months for busy doors","Same rate seven days a week")
+  Imgs  = @("nylon-rollers","torsion-spring-shaft","cable-drum","safety-sensor","wall-keypad","door-after-repair")
+  Block4 = @{ H2 = "Maintenance versus a repair call: the cost in North Port terms"
+    P = @(
+      "Most of the emergency calls we take in North Port started months earlier as something a tune-up would have caught: a cracked hinge, a roller wearing flat, a spring losing tension. Caught early, those are small adjustments or inexpensive parts. Left alone, they become a door that will not open on a weekday morning."
+      "A tune-up costs far less than an emergency visit, keeps the opener from working against a heavy door, and is the cheapest way to make builder-grade hardware outlast its rating. On a door that works as hard as North Port doors do, it pays for itself."
+    ) }
+}
+
+"maintenance|garage-door-repair-sarasota-fl" = @{
+  Lead  = "Sarasota's year-round Gulf humidity breaks down lubricant and rusts bare steel. Our tune-up keeps the door ahead of it: humidity-resistant lubrication, rust checks on every fixing, opener service and a pre-hurricane-season inspection."
+  Chips = @("Humidity-proof lubrication","Rust checks on every fixing","Pre-hurricane-season inspection","MyQ &amp; app connection tested","ARC-friendly appearance care","Keys and inland, one price")
+  Imgs  = @("cable-drum","galvanized-spring-below","nylon-rollers","door-after-repair","torsion-spring-shaft","safety-sensor")
+  Block4 = @{ H2 = "Inland or on the Keys: the Sarasota maintenance difference"
+    P = @("We use the same checklist across the county, but the schedule and the emphasis change with location:")
+    L = @(
+      "<strong>Longboat, Lido and Siesta Key</strong>: every six months. Salt speeds up corrosion on springs, cables and fasteners, so we look hardest at rust and swap hardware for coated or stainless parts."
+      "<strong>Downtown and the Bee Ridge and Fruitville neighborhoods</strong>: once a year, with extra attention on older doors and extension-spring systems."
+      "<strong>Lakewood Ranch and Palmer Ranch</strong>: once a year, focused on wear from heavy daily use, opener settings and keeping the door straight and quiet."
+    ) }
+}
+
+"emergency|garage-door-repair-venice-fl" = @{
+  Lead  = "Garage door stuck open, off its track or hanging on one cable in Venice? We answer 24/7, and most emergency calls see a technician within 60 to 90 minutes, at the same rate on nights, weekends and holidays."
+  Chips = @("24/7, a person answers","60-90 minute arrivals","Open doors secured overnight","Cables, tracks &amp; openers","No after-hours premium","Senior &amp; veteran discount")
+  Imgs  = @("door-off-track","broken-spring-outside","cable-drum","door-after-repair","safety-sensor","matching-sections")
+  Block4 = @{ H2 = "Emergency or can it wait? A quick guide for Venice homeowners"
+    P = @("If you are not sure which, describe it on the phone and we will tell you honestly:")
+    L = @(
+      "<strong>Call now</strong>: the door is stuck open overnight, hanging crooked, off its track, or a car is trapped inside."
+      "<strong>Also call now</strong>: a spring or cable has visibly broken. Do not use the opener."
+      "<strong>Book for tomorrow</strong>: the door works but is noisy, slow, or reverses now and then."
+      "<strong>Book a tune-up</strong>: the door feels heavier by hand than it used to, or rattles a little more each month."
+    ) }
+}
+
+"emergency|garage-door-repair-englewood-fl" = @{
+  Lead  = "When an Englewood garage door fails it is usually salt: a rusted cable snaps, or a seized roller drags the door off its track. We answer 24/7 and carry stainless cable, galvanized springs and sealed rollers, so the emergency fix lasts."
+  Chips = @("24/7 emergency line","Stainless replacement cables","Storm-damage repairs","Manasota Key day or night","Door secured before we leave","Same rate every day")
+  Imgs  = @("broken-spring-outside","cable-drum","door-off-track","matching-sections","door-after-repair","galvanized-springs-fitted")
+  Block4 = @{ H2 = "Hurricane-season emergencies on the Englewood coast"
+    P = @(
+      "During storm season the calls change. We see doors pushed in by wind and left bowed, openers knocked out by power surges, tracks bent by debris, and doors that cannot be closed before the next band of weather arrives. The priority on those calls is simple: get the door closed and secure first, then repair it properly."
+      "If a storm is forecast, check that the door closes fully, the manual release works and nothing is stored where it could block the tracks. If something is not right, call before the weather, not during it."
+    ) }
+}
+
+"emergency|garage-door-repair-north-port-fl" = @{
+  Lead  = "Car stuck in the garage before the school run? We keep same-day slots free for North Port doors that will not open, answer 24/7, and fix most springs, cables, tracks and openers on the first visit."
+  Chips = @("Same-day slots held back","Car-trapped calls first","Off-track &amp; bumped doors","WiFi opener repairs","Price agreed on the driveway","No weekend surcharge")
+  Imgs  = @("broken-spring-outside","door-off-track","safety-sensor","cable-drum","door-after-repair","wall-keypad")
+  Block4 = @{ H2 = "What our North Port technicians carry on the truck"
+    P = @("First-visit fixes depend on having the part, so the trucks working North Port are stocked for the doors common on its streets:")
+    L = @(
+      "<strong>Springs</strong>: standard and high-cycle torsion springs in the common sizes for builder-fitted doors."
+      "<strong>Cables and drums</strong>: replacement lift cables and drums for standard residential doors."
+      "<strong>Rollers and hinges</strong>: sealed nylon rollers and the hinge sizes that crack first on busy doors."
+      "<strong>Track sections and brackets</strong>: for doors bumped by a car or pushed out of line."
+      "<strong>Opener parts</strong>: gears, belts, logic boards and sensors for the major brands, plus WiFi modules."
+    ) }
+}
+
+"emergency|garage-door-repair-sarasota-fl" = @{
+  Lead  = "Garage door emergency in Sarasota? Our trucks are staged along I-75 near Fruitville Rd, so most calls are reached in 45 to 60 minutes, day or night, with one rate at every hour and the price agreed first."
+  Chips = @("45-60 minute dispatch","Staged near I-75","Gated-community access handled","Car-damaged panels matched","Doors secured overnight","No holiday surcharge")
+  Imgs  = @("door-off-track","door-after-repair","broken-spring-outside","matching-sections","cable-drum","safety-sensor")
+  Block4 = @{ H2 = "Condo and commercial garage door emergencies in Sarasota"
+    P = @(
+      "Not every emergency is a single-family garage. We also take calls from condo buildings with shared garage doors, and from storefronts and units along the I-75 corridor, where a door that will not open means residents cannot get their cars out or a business cannot open."
+      "Commercial roll-ups and operators are repaired out of hours, and for associations we work with the building manager on access and scheduling."
+    ) }
 }
 
 }

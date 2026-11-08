@@ -63,7 +63,7 @@
 <meta property="og:title" content="Garage Door Maintenance Sarasota FL | Tune-Ups &amp; Checks">
 <meta property="og:description" content="Garage door maintenance in Sarasota, FL: lubrication, hardware checks and hurricane-season inspections across the county. Call (941) 949-6507.">
 <meta property="og:url" content="https://oggaragedoors.com/garage-door-maintenance-sarasota-fl">
-<meta property="og:image" content="https://oggaragedoors.com/assets/img/service-tune-up-maintenance.webp">
+<meta property="og:image" content="https://oggaragedoors.com/assets/img/photo-cable-drum.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#14181D">
 
@@ -480,8 +480,22 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
 .local__zips strong{color:var(--ink)}
 
 /* ========== Service x city pages (built by tools/service-pages.ps1) ========== */
-.svc-prose{max-width:860px}
-.svc-prose h2{font-size:1.85rem;margin-bottom:16px}
+.hero--svc{text-align:left;padding:52px 0 60px;background:linear-gradient(135deg,#14181D 0%,#1C222A 62%,#3a1418 100%)}
+.hero--svc::before{display:none}
+.svc-hero{display:grid;grid-template-columns:1.12fr .88fr;gap:46px;align-items:center}
+.svc-hero__eyebrow{color:#F0B429;font-weight:700;text-transform:uppercase;letter-spacing:.7px;font-size:.88rem;margin-bottom:10px}
+.hero--svc h1{font-size:2.45rem;text-transform:none;letter-spacing:0;margin-bottom:14px}
+.svc-hero__lead{font-size:1.08rem;color:#E7EAEE;margin-bottom:20px}
+.hero--svc .hero-checks{margin:0 0 22px;max-width:none;gap:2px 26px}
+.hero--svc .hero-checks li{font-size:.95rem}
+.hero--svc h2{font-size:1.22rem;margin-bottom:22px}
+.hero--svc .hero__actions{justify-content:flex-start}
+.svc-hero__img{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:var(--radius);border:3px solid rgba(255,255,255,.12);box-shadow:0 12px 32px rgba(0,0,0,.5)}
+.svc-sec{padding:60px 0}
+.svc-split{gap:48px}
+.svc-split .about__img{aspect-ratio:3/2;max-height:none}
+.svc-split h2{font-size:1.8rem;margin-bottom:14px}
+.svc-split--flip > img{order:2}
 .svc-list{margin:4px 0 18px}
 .svc-list li{margin-bottom:11px}
 .svc-related{margin-top:30px;padding:20px 22px;border:1px solid #dde1e6;border-radius:var(--radius);background:var(--bg)}
@@ -701,6 +715,10 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
   .header-cta .btn--call{padding:10px 16px;font-size:.86rem;gap:7px;white-space:nowrap}
   .nav-toggle{padding:7px 9px}
   .about__grid,.expertise__grid,.contact__grid,.local__grid{grid-template-columns:1fr;gap:32px}
+  .svc-hero{grid-template-columns:1fr;gap:28px}
+  .hero--svc h1{font-size:1.85rem}
+  .svc-split--flip > img{order:0}
+  .svc-split h2{font-size:1.5rem}
   .expertise__media{order:-1}
 }
 @media (max-width:640px){
@@ -795,31 +813,22 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
 <main id="main">
 
   <!-- ==================== HERO ==================== -->
-  <section class="hero" aria-labelledby="hero-title">
-    <div class="wrap">
-      <h1 id="hero-title">Garage Door Maintenance in Sarasota, FL</h1>
-
-      <ul class="hero-checks checks">
-        <li>Emergency 24/7</li>
-        <li>Springs Repair</li>
-        <li>Same Day Service</li>
-        <li>Opener Repair</li>
-        <li>Free Estimates</li>
-        <li>Cable Repair</li>
-        <li>Licensed, Insured &amp; Bonded</li>
-        <li>Panel Dent Repair</li>
-        <li>Off Track Repair</li>
-        <li>Commercial Service</li>
-        <li>Smart Opener Installs</li>
-        <li>No Extra Charge On Weekend &amp; Holiday</li>
-      </ul>
-
-      <h2>Gulf Humidity Works on Hardware All Year. We Keep Ahead of It</h2>
-      <p class="hero__ask">Garage Door Stuck or Not Responding?</p>
-
-      <p class="hero__lead">Don&rsquo;t Wait &ndash; <strong>Call Today For Fast, Same-Day Service &amp; a Free Estimate!</strong> OPEN 24/7</p>
-
-      <div class="hero__actions">
+  <section class="hero hero--svc" aria-labelledby="hero-title">
+    <div class="wrap svc-hero">
+      <div>
+        <p class="svc-hero__eyebrow">Garage Door Maintenance &middot; Sarasota, FL</p>
+        <h1 id="hero-title">Garage Door Maintenance in Sarasota, FL</h1>
+        <p class="svc-hero__lead">Sarasota's year-round Gulf humidity breaks down lubricant and rusts bare steel. Our tune-up keeps the door ahead of it: humidity-resistant lubrication, rust checks on every fixing, opener service and a pre-hurricane-season inspection.</p>
+        <ul class="hero-checks checks">
+          <li>Humidity-proof lubrication</li>
+          <li>Rust checks on every fixing</li>
+          <li>Pre-hurricane-season inspection</li>
+          <li>MyQ &amp; app connection tested</li>
+          <li>ARC-friendly appearance care</li>
+          <li>Keys and inland, one price</li>
+        </ul>
+        <h2>Gulf Humidity Works on Hardware All Year. We Keep Ahead of It</h2>
+        <div class="hero__actions">
         <a class="btn btn--call" href="tel:+19419496507" data-cta="hero-call">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.4 2.1z"/></svg>
           Call Now (941) 949-6507
@@ -829,8 +838,96 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
           Contact Us
         </a>
       </div>
+      </div>
+      <img class="svc-hero__img" src="assets/img/photo-cable-drum.jpg" width="900" height="600" fetchpriority="high" alt="Lift cable wound on the drum at the end of the torsion shaft">
     </div>
   </section>
+
+  <!-- ==================== GARAGE DOOR MAINTENANCE: SARASOTA ==================== -->
+  <section class="section svc-sec" id="overview" aria-labelledby="svc-intro-title">
+    <div class="wrap">
+      <div class="about__grid svc-split">
+        <img class="about__img" src="assets/img/photo-galvanized-spring-below.jpg" width="900" height="600" loading="lazy" alt="Galvanized torsion spring above an open garage door, seen from below">
+        <div>
+          <h2 id="svc-intro-title">What Sarasota humidity does to an unserviced garage door</h2>
+          <p>Sarasota's air is wet for most of the year, and the garage is where that humidity sits. Lubricant breaks down faster, bare steel rollers and hinges start to rust, cable strands fray from the inside, and the opener's circuit board takes on moisture every summer. None of it shows from the driveway until something binds.</p>
+          <p>Regular maintenance keeps the door ahead of the climate: clean, lubricated hardware, correct balance, and the small worn parts caught before they take a bigger one with them.</p>
+          <p class="about__actions"><a class="btn btn--call" href="tel:+19419496507" data-cta="svc-intro-call">Call (941) 949-6507</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt svc-sec" aria-labelledby="svc-b1-title">
+    <div class="wrap">
+      <div class="about__grid svc-split svc-split--flip">
+        <img class="about__img" src="assets/img/photo-nylon-rollers.jpg" width="900" height="600" loading="lazy" alt="A set of sealed nylon garage door rollers ready to fit">
+        <div>
+          <h2 id="svc-b1-title">What a Sarasota garage door tune-up includes</h2>
+          <ul class="checks svc-list">
+            <li><strong>Lubrication that lasts in humidity</strong>: hinges, rollers, bearings and springs treated with a garage-door lubricant that does not wash out in the wet season.</li>
+            <li><strong>Rust check on every fixing</strong>: hinges, brackets and track bolts inspected and replaced where corrosion has started.</li>
+            <li><strong>Cable and spring inspection</strong>: fraying and pitting found early, with tension and balance reset.</li>
+            <li><strong>Opener service</strong>: drive tension, travel limits, force settings and the MyQ or app connection tested.</li>
+            <li><strong>Safety tests</strong>: photo eyes aligned and the auto-reverse tested against an obstruction.</li>
+            <li><strong>Seal check</strong>: bottom and side seals inspected so summer storms stay on the driveway.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section svc-sec" aria-labelledby="svc-b2-title">
+    <div class="wrap">
+      <div class="about__grid svc-split">
+        <img class="about__img" src="assets/img/photo-door-after-repair.jpg" width="900" height="600" loading="lazy" alt="The same two-car garage door closed and level after the spring repair">
+        <div>
+          <h2 id="svc-b2-title">A pre-hurricane-season inspection for Sarasota homes</h2>
+          <p>Hurricane season starts on June 1, and the garage door is usually the largest opening in the house. Book a maintenance visit in May and we check the fixings, hinges, track and any wind-load bracing the door already has, and replace hardware that has rusted or worked loose. It is far easier to tighten a door in May than to secure one in a storm.</p>
+          <p>On the keys we look harder at corrosion; inland we look harder at wear. The checklist is the same, the emphasis is not.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt svc-sec" aria-labelledby="svc-b3-title">
+    <div class="wrap">
+      <div class="about__grid svc-split svc-split--flip">
+        <img class="about__img" src="assets/img/photo-torsion-spring-shaft.jpg" width="900" height="600" loading="lazy" alt="Torsion spring on its shaft above a white raised-panel garage door">
+        <div>
+          <h2 id="svc-b3-title">Maintenance that keeps ARC-street doors looking approved</h2>
+          <p>In Lakewood Ranch, Palmer Ranch and the other review-committee communities, a door that sags, gaps at the bottom or runs crooked draws attention. Routine maintenance keeps the seals tight, the sections level and the door running straight, and we treat the outside hardware so it does not streak rust down the paint.</p>
+          <p>We cover all of Sarasota, from the Fruitville and Bee Ridge neighborhoods to University Pkwy and the barrier islands, at one rate seven days a week.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section svc-sec" aria-labelledby="svc-b4-title">
+    <div class="wrap">
+      <div class="about__grid svc-split">
+        <img class="about__img" src="assets/img/photo-safety-sensor.jpg" width="900" height="600" loading="lazy" alt="Garage door safety photo eye mounted on its bracket beside the track">
+        <div>
+          <h2 id="svc-b4-title">Inland or on the Keys: the Sarasota maintenance difference</h2>
+          <p>We use the same checklist across the county, but the schedule and the emphasis change with location:</p>
+          <ul class="checks svc-list">
+            <li><strong>Longboat, Lido and Siesta Key</strong>: every six months. Salt speeds up corrosion on springs, cables and fasteners, so we look hardest at rust and swap hardware for coated or stainless parts.</li>
+            <li><strong>Downtown and the Bee Ridge and Fruitville neighborhoods</strong>: once a year, with extra attention on older doors and extension-spring systems.</li>
+            <li><strong>Lakewood Ranch and Palmer Ranch</strong>: once a year, focused on wear from heavy daily use, opener settings and keeping the door straight and quiet.</li>
+          </ul>
+      <nav class="svc-related" aria-label="More garage door services in Sarasota">
+        <p class="svc-related__title">More from OG Garage Doors in Sarasota, FL</p>
+        <ul>
+          <li><a href="/garage-door-repair-sarasota-fl">Garage door repair in Sarasota</a></li>
+          <li><a href="/emergency-garage-door-repair-sarasota-fl">Emergency garage door repair in Sarasota</a></li>
+          <li><a href="/garage-door-spring-repair-sarasota-fl">Garage door spring repair in Sarasota</a></li>
+        </ul>
+      </nav>
+        </div>
+      </div>
+    </div>
+  </section>
+
 
   <!-- ==================== REVIEW PLATFORMS ==================== -->
   <section class="trust" aria-label="Review platforms where OG Garage Doors is rated 5 stars">
@@ -855,61 +952,6 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
       <div class="reviews__dots" id="reviews-dots" role="group" aria-label="Review pages"></div>
     </div>
   </section>
-
-  <!-- ==================== GARAGE DOOR MAINTENANCE: SARASOTA ==================== -->
-  <section class="section" id="overview" aria-labelledby="svc-intro-title">
-    <div class="wrap">
-      <div class="about__grid">
-        <img class="about__img" src="assets/img/service-tune-up-maintenance.webp" width="660" height="300" loading="lazy" alt="Technician servicing garage door hardware with a hand tool during a tune-up">
-        <div>
-          <p class="eyebrow">Garage Door Maintenance &middot; Sarasota, FL</p>
-          <h2 id="svc-intro-title">What Sarasota humidity does to an unserviced garage door</h2>
-          <p>Sarasota's air is wet for most of the year, and the garage is where that humidity sits. Lubricant breaks down faster, bare steel rollers and hinges start to rust, cable strands fray from the inside, and the opener's circuit board takes on moisture every summer. None of it shows from the driveway until something binds.</p>
-          <p>Regular maintenance keeps the door ahead of the climate: clean, lubricated hardware, correct balance, and the small worn parts caught before they take a bigger one with them.</p>
-          <p class="about__actions"><a class="btn btn--call" href="tel:+19419496507" data-cta="svc-intro-call">Call (941) 949-6507</a></p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section section--alt" aria-labelledby="svc-b1-title">
-    <div class="wrap svc-prose">
-      <h2 id="svc-b1-title">What a Sarasota garage door tune-up includes</h2>
-      <ul class="checks svc-list">
-        <li><strong>Lubrication that lasts in humidity</strong>: hinges, rollers, bearings and springs treated with a garage-door lubricant that does not wash out in the wet season.</li>
-        <li><strong>Rust check on every fixing</strong>: hinges, brackets and track bolts inspected and replaced where corrosion has started.</li>
-        <li><strong>Cable and spring inspection</strong>: fraying and pitting found early, with tension and balance reset.</li>
-        <li><strong>Opener service</strong>: drive tension, travel limits, force settings and the MyQ or app connection tested.</li>
-        <li><strong>Safety tests</strong>: photo eyes aligned and the auto-reverse tested against an obstruction.</li>
-        <li><strong>Seal check</strong>: bottom and side seals inspected so summer storms stay on the driveway.</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="section" aria-labelledby="svc-b2-title">
-    <div class="wrap svc-prose">
-      <h2 id="svc-b2-title">A pre-hurricane-season inspection for Sarasota homes</h2>
-      <p>Hurricane season starts on June 1, and the garage door is usually the largest opening in the house. Book a maintenance visit in May and we check the fixings, hinges, track and any wind-load bracing the door already has, and replace hardware that has rusted or worked loose. It is far easier to tighten a door in May than to secure one in a storm.</p>
-      <p>On the keys we look harder at corrosion; inland we look harder at wear. The checklist is the same, the emphasis is not.</p>
-    </div>
-  </section>
-
-  <section class="section" aria-labelledby="svc-b3-title">
-    <div class="wrap svc-prose">
-      <h2 id="svc-b3-title">Maintenance that keeps ARC-street doors looking approved</h2>
-      <p>In Lakewood Ranch, Palmer Ranch and the other review-committee communities, a door that sags, gaps at the bottom or runs crooked draws attention. Routine maintenance keeps the seals tight, the sections level and the door running straight, and we treat the outside hardware so it does not streak rust down the paint.</p>
-      <p>We cover all of Sarasota, from the Fruitville and Bee Ridge neighborhoods to University Pkwy and the barrier islands, at one rate seven days a week.</p>
-      <nav class="svc-related" aria-label="More garage door services in Sarasota">
-        <p class="svc-related__title">More from OG Garage Doors in Sarasota, FL</p>
-        <ul>
-          <li><a href="/garage-door-repair-sarasota-fl">Garage door repair in Sarasota</a></li>
-          <li><a href="/emergency-garage-door-repair-sarasota-fl">Emergency garage door repair in Sarasota</a></li>
-          <li><a href="/garage-door-spring-repair-sarasota-fl">Garage door spring repair in Sarasota</a></li>
-        </ul>
-      </nav>
-    </div>
-  </section>
-
 
   <!-- ==================== FAQ ==================== -->
   <section class="section section--alt" id="faq" aria-labelledby="faq-title">
