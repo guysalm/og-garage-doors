@@ -152,6 +152,42 @@ The build strips the legend before substituting anything, and throws if it
 cannot find it — about 3KB a page by the time the cards and answers were
 tokenised.
 
+## Service pages (service x city)
+
+Each published area has three more pages, built by the same generator from
+copy in `tools/service-pages.ps1`:
+
+| Service | URL pattern |
+|---|---|
+| Emergency repair | `/emergency-garage-door-repair-<city>-fl` |
+| Spring repair | `/garage-door-spring-repair-<city>-fl` |
+| Maintenance | `/garage-door-maintenance-<city>-fl` |
+
+The repair page is **emergency** repair on purpose: the plain "garage door
+repair <city>" query belongs to the city page (the home page, for Venice), and
+two pages on one query split it.
+
+They use the template's header, hero, review strip, FAQ shell, lead form and
+footer, but everything from the guarantee badges to the brand strip is cut and
+replaced with the page's own article - keeping the services grid, About and
+Expertise would hand each one the city page's prose. Every H2, paragraph and
+FAQ is written per page; the content-H2 guard covers them, and pairwise
+six-word overlap tops out at 34%, the same as the city pages.
+
+Linking: the city page's spring, tune-up and off-track cards link to that
+city's three pages; each service page links back to the city page and its two
+siblings, and the footer's card anchors point at the city page. Inline links in
+the copy are written `[[spring]]`, `[[maintenance]]`, `[[emergency]]`,
+`[[city]]`.
+
+A city gets service pages only while its own page is built. To add a city,
+write its three entries in `$servicePages`.
+
+**Photos:** drop `assets/img/svc-<service>-<city>.jpg` (e.g.
+`svc-spring-sarasota.jpg`, under 100KB) and rebuild; until then the service's
+fallback photo ships and the build prints a note per page. Give the entry an
+`Alt` when the real photo goes in.
+
 ## No door installation
 
 **The site must not offer, imply or illustrate garage door installation or

@@ -888,6 +888,43 @@ function Build-AreaLinks($list, $currentSlug) {
   }) -join "`n"
   return "<h3 id=""footer-areas"">Service Areas</h3>`n        <ul class=""footer-links"">`n$items`n        </ul>"
 }
+# ------------------------------------------------- service x city page copy
+# Emergency repair, spring repair and maintenance pages per published area.
+# Copy and the reasoning behind it live in tools/service-pages.ps1.
+. (Join-Path $PSScriptRoot "service-pages.ps1")
+
+function Get-SvcSlug([string]$svcKey, [string]$citySlug) {
+  return $SERVICES[$svcKey].Prefix + "-" + ($citySlug -replace '^garage-door-repair-','')
+}
+function Get-CityHref([string]$citySlug) {
+  if ($citySlug -eq $HOME_CITY) { return "/" } else { return "/$citySlug" }
+}
+# a city gets service pages only when its own page is live, so every link
+# between the two resolves
+function Test-CityLive([string]$citySlug) {
+  return ($citySlug -eq $HOME_CITY) -or ($null -eq $ACTIVE_CITIES) -or ($ACTIVE_CITIES -contains $citySlug)
+}
+function Test-HasSvcPage([string]$svcKey, [string]$citySlug) {
+  return $servicePages.ContainsKey("$svcKey|$citySlug") -and (Test-CityLive $citySlug)
+}
+
+# Links the city page's service cards to that city's own service pages, so
+# the new pages are one click from the page Google already crawls most.
+function Add-ServiceLinks([string]$page, [string]$citySlug) {
+  $cards = @(
+    ,@("spring",      "<h3>Broken Spring Repair</h3>")
+    ,@("maintenance", "<h3>Garage Tune-up &amp; Maintenance</h3>")
+    ,@("emergency",   "<h3>Garage Door &amp; Off-Track Repair</h3>")
+  )
+  foreach ($cd in $cards) {
+    if (-not (Test-HasSvcPage $cd[0] $citySlug)) { continue }
+    if ($page.IndexOf($cd[1]) -lt 0) { throw "${citySlug}: service card heading '$($cd[1])' not found to link - its template wording changed" }
+    $inner = $cd[1] -replace '^<h3>','' -replace '</h3>$',''
+    $page = $page.Replace($cd[1], "<h3><a href=""/$(Get-SvcSlug $cd[0] $citySlug)"">$inner</a></h3>")
+  }
+  return $page
+}
+
 # ----------------------------------------------------------------- home page
 # The template must never ship as-is: Screaming Frog and Googlebot's first pass
 # read raw HTML, and an unrendered <link rel="canonical" href="{{page_url}}">
@@ -969,6 +1006,8 @@ $homePage = [regex]::Replace($homePage,
 
 $homeAreas = Build-AreaLinks $servedCities $HOME_CITY
 $homePage  = [regex]::Replace($homePage, '(?s)<h3 id="footer-areas">.*?</ul>', { param($m) $homeAreas })
+
+if ($homeCity) { $homePage = Add-ServiceLinks $homePage $homeCity.Slug }
 
 $leftover = [regex]::Matches($homePage, '\{\{\w+\}\}')
 if ($leftover.Count) { throw "Home page still has unresolved tokens: $(($leftover | ForEach-Object { $_.Value } | Select-Object -Unique) -join ', ')" }
@@ -1089,11 +1128,221 @@ foreach ($c in $cities) {
   # 9. this city's own footer link should not point at itself
   $page = $page.Replace("<a href=""/$($c.Slug)"">", "<a href=""/$($c.Slug)"" aria-current=""page"">")
 
+  # 10. service cards link to this city's spring, maintenance and emergency pages
+  $page = Add-ServiceLinks $page $c.Slug
+
   $out = Join-Path $root "$($c.Slug).html"
   [System.IO.File]::WriteAllText($out, $page, (New-Object System.Text.UTF8Encoding $false))
   $built += $c
   "{0,-46} {1,6} KB   {2} FAQs, {3} services" -f ($c.Slug + ".html"), [int]((Get-Item $out).Length/1KB), $c.Faqs.Count, $c.Services.Count
 }
+
+# ------------------------------------------------------ service x city pages
+# Built from the same template as the city pages so the header, hero, review
+# strip, lead form, footer and tracking are identical, but everything between
+# the reviews and the FAQ - services grid, value props, About, Expertise,
+# gallery, brands - is cut and replaced with the page's own article. Keeping
+# those sections would hand every service page the city page's prose, which
+# is the duplicate-content problem this site has already been through once.
+$svcBuilt = @()
+$cutStart = '  <!-- ==================== GUARANTEE BADGES ==================== -->'
+$cutEnd   = '  <!-- ==================== FAQ ==================== -->'
+if ($tpl.IndexOf($cutStart) -lt 0 -or $tpl.IndexOf($cutEnd) -lt 0) { throw "Service pages: section markers not found in the template" }
+
+foreach ($key in ($servicePages.Keys | Sort-Object)) {
+  $svcKey, $citySlug = $key -split '\|', 2
+  if (-not $SERVICES.Contains($svcKey)) { throw "service-pages: unknown service '$svcKey' in '$key'" }
+  if (-not (Test-CityLive $citySlug)) { continue }
+  $c = $cities | Where-Object { $_.Slug -eq $citySlug } | Select-Object -First 1
+  if (-not $c) { throw "service-pages: '$citySlug' is not in the city content file" }
+
+  $pg   = $servicePages[$key]
+  $svc  = $SERVICES[$svcKey]
+  $slug = Get-SvcSlug $svcKey $citySlug
+  $loc  = "$($c.City), FL"
+  $url  = $SITE.site_url.TrimEnd("/") + "/" + $slug
+  $cityHref = Get-CityHref $citySlug
+  foreach ($f in @("Title","Desc","H1","HeroH2","Intro","Blocks","Faqs")) {
+    if (-not $pg.ContainsKey($f) -or -not $pg[$f]) { throw "${key}: nothing written for $f" }
+  }
+
+  $hrefs = @{ city = $cityHref }
+  foreach ($k in $SERVICES.Keys) { $hrefs[$k] = "/" + (Get-SvcSlug $k $citySlug) }
+  function Resolve-SvcLinks([string]$s) {
+    foreach ($k in $hrefs.Keys) { $s = $s.Replace("[[$k]]", $hrefs[$k]) }
+    if ($s -match '\[\[\w+\]\]') { throw "${key}: unresolved link token in '$s'" }
+    return $s
+  }
+
+  # photo: the page's own if it has been dropped in, otherwise the service's
+  $imgRel = "assets/img/svc-$svcKey-$($citySlug -replace '^garage-door-repair-','' -replace '-fl$','').jpg"
+  if (Test-Path (Join-Path $root ($imgRel -replace '/','\'))) {
+    Add-Type -AssemblyName System.Drawing
+    $bmp = [System.Drawing.Image]::FromFile((Join-Path $root ($imgRel -replace '/','\')))
+    $imgW = $bmp.Width; $imgH = $bmp.Height; $bmp.Dispose()
+    $imgAlt = if ($pg.ContainsKey("Alt")) { $pg.Alt } else { "$($svc.ServiceName) on a garage door in $($c.City)" }
+  } else {
+    $imgRel = $svc.FallbackImg; $imgW = $svc.FallbackW; $imgH = $svc.FallbackH; $imgAlt = $svc.FallbackAlt
+    Write-Host "  note: no $("assets/img/svc-$svcKey-$($citySlug -replace '^garage-door-repair-','' -replace '-fl$','').jpg") yet - $slug uses the fallback photo" -ForegroundColor Yellow
+  }
+
+  $vals = @{}
+  foreach ($k in $SITE.Keys) { $vals[$k] = $SITE[$k] }
+  $vals["location"]      = $loc
+  $vals["zip"]           = $c.FirstZip
+  $vals["page_url"]      = $url
+  $vals["service_area"]  = "$($c.City) and the surrounding area"
+  $vals["service_name"]  = $svc.ServiceName
+  $vals["svc_smart_img"] = $smartImg
+  $vals["svc_smart_alt"] = $smartAlt
+  $vals["hero_h2"]       = $pg.HeroH2
+  $copy = Get-CityCopy $c
+  foreach ($k in $copy.Keys) { $vals[$k] = $copy[$k] }
+
+  # cut the city-page sections first, then substitute what is left
+  $page = $tpl.Substring(0, $tpl.IndexOf($cutStart)) + "{{svc_article}}`n`n" + $tpl.Substring($tpl.IndexOf($cutEnd))
+  foreach ($k in $vals.Keys) { $page = $page.Replace("{{$k}}", $vals[$k]) }
+
+  $newSite = $siteBlock
+  foreach ($k in @("location","zip","page_url","service_area","service_name")) {
+    $newSite = [regex]::Replace($newSite, "(?m)^(\s*$k\s*:\s*"")(.*?)("")", { param($m) $m.Groups[1].Value + $vals[$k] + $m.Groups[3].Value })
+  }
+  $page = $page.Replace($siteBlock, $newSite)
+
+  # head
+  $t = HtmlEscape $pg.Title; $d = HtmlEscape $pg.Desc
+  $page = [regex]::Replace($page, '(?s)<title>.*?</title>', "<title>$t</title>")
+  $page = [regex]::Replace($page, '<meta name="description" content=".*?">', "<meta name=""description"" content=""$d"">")
+  $page = [regex]::Replace($page, '<meta property="og:title" content=".*?">', "<meta property=""og:title"" content=""$t"">")
+  $page = [regex]::Replace($page, '<meta property="og:description" content=".*?">', "<meta property=""og:description"" content=""$d"">")
+  $page = [regex]::Replace($page, '<meta property="og:image" content=".*?">', "<meta property=""og:image"" content=""$($SITE.site_url)$imgRel"">")
+  $page = [regex]::Replace($page, '(?s)(<h1 id="hero-title">).*?(</h1>)', "`${1}$(HtmlEscape $pg.H1)`${2}")
+
+  # the review cards stay, their hidden heading goes: "What <city> customers
+  # say" would be the same H2 on all four pages of a city
+  $page = $page.Replace('<section class="reviews" id="reviews" aria-labelledby="reviews-title">', '<section class="reviews" id="reviews" aria-label="Customer reviews">')
+  $page = [regex]::Replace($page, '\s*<h2 class="sr-only" id="reviews-title">.*?</h2>', '')
+
+  # nav: the template's anchors point at sections this page does not have
+  $nav = @"
+<ul>
+        <li><a href="#overview">$($svc.NavLabel)</a></li>
+        <li><a href="$cityHref#services">All Services</a></li>
+        <li><a href="#reviews">Reviews</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+"@
+  $page = [regex]::Replace($page, '(?s)(<nav class="site-nav" id="primary-nav" aria-label="Primary">\s*)<ul>.*?</ul>', { param($m) $m.Groups[1].Value + $nav })
+
+  # footer service links: spring and tune-up go to this city's own pages,
+  # every other card anchor goes to the city page that has the card
+  $page = $page.Replace('href="#svc-spring"', "href=""$($hrefs.spring)""")
+  $page = $page.Replace('href="#svc-tuneup"', "href=""$($hrefs.maintenance)""")
+  $page = $page.Replace('href="#svc-', "href=""$cityHref#svc-")
+  $page = $page.Replace("href=""/$slug""", "href=""#overview""")
+
+  $areasBlock = Build-AreaLinks $servedCities $slug
+  $page = [regex]::Replace($page, '(?s)<h3 id="footer-areas">.*?</ul>', { param($m) $areasBlock })
+  $page = [regex]::Replace($page, '(?s)<a class="brand" href="/"[^>]*>(.*?)</a>',
+    { param($m) '<span class="brand">' + $m.Groups[1].Value + '</span>' })
+
+  # schema: the service, who provides it (by @id, the entity lives on the
+  # home page) and where it sits under the city page
+  $cityUrl = $SITE.site_url.TrimEnd("/") + $(if ($cityHref -eq "/") { "/" } else { $cityHref })
+  $ld = @"
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Service",
+      "@id": "$url#service",
+      "name": "$($svc.ServiceName) in $loc",
+      "serviceType": "$($svc.ServiceType)",
+      "url": "$url",
+      "areaServed": { "@type": "City", "name": "$loc" },
+      "provider": {
+        "@type": "LocalBusiness",
+        "@id": "$($SITE.site_url)#localbusiness",
+        "name": "$($SITE.business_name)",
+        "url": "$($SITE.site_url)"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Garage Door Repair $loc", "item": "$cityUrl" },
+        { "@type": "ListItem", "position": 2, "name": "$($svc.ServiceName)", "item": "$url" }
+      ]
+    }
+  ]
+}
+</script>
+"@
+  $page = [regex]::Replace($page, '(?s)<script type="application/ld\+json">.*?</script>', { param($m) $ld })
+
+  # ---- the article
+  $sb = New-Object System.Text.StringBuilder
+  [void]$sb.Append("  <!-- ==================== $($svc.ServiceName.ToUpper()): $($c.City.ToUpper()) ==================== -->`n")
+  [void]$sb.Append("  <section class=""section"" id=""overview"" aria-labelledby=""svc-intro-title"">`n    <div class=""wrap"">`n      <div class=""about__grid"">`n")
+  [void]$sb.Append("        <img class=""about__img"" src=""$imgRel"" width=""$imgW"" height=""$imgH"" loading=""lazy"" alt=""$(HtmlEscape $imgAlt)"">`n        <div>`n")
+  [void]$sb.Append("          <p class=""eyebrow"">$($svc.ServiceName) &middot; $(HtmlEscape $c.City), FL</p>`n")
+  [void]$sb.Append("          <h2 id=""svc-intro-title"">$(Resolve-SvcLinks $pg.Intro.H2)</h2>`n")
+  foreach ($p in $pg.Intro.P) { [void]$sb.Append("          <p>$(Resolve-SvcLinks $p)</p>`n") }
+  [void]$sb.Append("          <p class=""about__actions""><a class=""btn btn--call"" href=""tel:$($SITE.phone_number)"" data-cta=""svc-intro-call"">Call $($SITE.phone_display)</a></p>`n")
+  [void]$sb.Append("        </div>`n      </div>`n    </div>`n  </section>`n")
+
+  $i = 0
+  foreach ($b in $pg.Blocks) {
+    $i++
+    $cls  = if ($i -eq 1) { "section section--alt" } else { "section" }
+    $last = ($i -eq $pg.Blocks.Count)
+    [void]$sb.Append("`n  <section class=""$cls"" aria-labelledby=""svc-b$i-title"">`n    <div class=""wrap svc-prose"">`n")
+    [void]$sb.Append("      <h2 id=""svc-b$i-title"">$(Resolve-SvcLinks $b.H2)</h2>`n")
+    if ($b.ContainsKey("P")) { foreach ($p in $b.P) { [void]$sb.Append("      <p>$(Resolve-SvcLinks $p)</p>`n") } }
+    if ($b.ContainsKey("L")) {
+      [void]$sb.Append("      <ul class=""checks svc-list"">`n")
+      foreach ($li in $b.L) { [void]$sb.Append("        <li>$(Resolve-SvcLinks $li)</li>`n") }
+      [void]$sb.Append("      </ul>`n")
+    }
+    if ($last) {
+      $rel = @("<li><a href=""$cityHref"">Garage door repair in $(HtmlEscape $c.City)</a></li>")
+      foreach ($k in $SERVICES.Keys) {
+        if ($k -eq $svcKey -or -not (Test-HasSvcPage $k $citySlug)) { continue }
+        $rel += "<li><a href=""$($hrefs[$k])"">$($SERVICES[$k].LinkLabel) in $(HtmlEscape $c.City)</a></li>"
+      }
+      [void]$sb.Append("      <nav class=""svc-related"" aria-label=""More garage door services in $(HtmlEscape $c.City)"">`n")
+      [void]$sb.Append("        <p class=""svc-related__title"">More from $($SITE.business_name) in $(HtmlEscape $c.City), FL</p>`n")
+      [void]$sb.Append("        <ul>`n" + (($rel | ForEach-Object { "          $_" }) -join "`n") + "`n        </ul>`n      </nav>`n")
+    }
+    [void]$sb.Append("    </div>`n  </section>`n")
+  }
+  $page = $page.Replace("{{svc_article}}", $sb.ToString())
+
+  # FAQ: this page's own questions replace the shared four
+  $fb = New-Object System.Text.StringBuilder
+  $first = $true
+  foreach ($f in $pg.Faqs) {
+    $open = if ($first) { " open" } else { "" }; $first = $false
+    [void]$fb.Append("`n        <details$open>`n          <summary>$(HtmlEscape $f[0])</summary>`n          <p>$(Resolve-SvcLinks $f[1])</p>`n        </details>")
+  }
+  $faqRe = '(?s)(<div class="faq">).*?</details>(\s*</div>)'
+  if (-not [regex]::IsMatch($page, $faqRe)) { throw "${key}: FAQ block not found in the template" }
+  $faqHtml = $fb.ToString()
+  $page = [regex]::Replace($page, $faqRe, { param($m) $m.Groups[1].Value + $faqHtml + $m.Groups[2].Value }, 1)
+
+  $leftover = [regex]::Matches($page, '\{\{\w+\}\}')
+  if ($leftover.Count) { throw "${slug}: unresolved tokens: $(($leftover | ForEach-Object { $_.Value } | Select-Object -Unique) -join ', ')" }
+
+  $out = Join-Path $root "$slug.html"
+  [System.IO.File]::WriteAllText($out, $page, (New-Object System.Text.UTF8Encoding $false))
+  $svcBuilt += [pscustomobject]@{ Slug = $slug; City = $c.City }
+  "{0,-46} {1,6} KB   {2}" -f ($slug + ".html"), [int]((Get-Item $out).Length/1KB), $svc.ServiceName
+}
+# from here on every generated page is listed, verified, hashed and redirected
+$cityCount = $built.Count
+$built += $svcBuilt
 
 # ------------------------------------------------------------------- sitemap
 $today = (Get-Date).ToString("yyyy-MM-dd")
@@ -1435,7 +1684,7 @@ if ($problems.Count) {
 }
 
 Write-Host ""
-Write-Host "Built $($built.Count) city pages + index.html + sitemap.xml + robots.txt"
+Write-Host "Built $cityCount city pages + $($svcBuilt.Count) service pages + index.html + sitemap.xml + robots.txt"
 Write-Host "Verified: $($checks.Count) pages, all self-canonical, no tokens, no .html links" -ForegroundColor Green
 Write-Host "Title widths (Arial 20px, limit ${TITLE_LIMIT_PX}px):"
 $titleWidths | Sort-Object | ForEach-Object { Write-Host $_ }
