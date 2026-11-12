@@ -1105,8 +1105,8 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
                alt="We accept Visa, MasterCard, American Express and Discover">
         </p>
         <!-- Our own profiles, so these are followed links, not nofollow: they
-             are half of what tells Google the Facebook page, the BBB listing
-             and this site are one business. The other half is the sameAs
+             are half of what tells Google the Facebook page, the BBB listing,
+             the Yellow Pages listing and this site are one business. The other half is the sameAs
              array in the JSON-LD above, which must list the same URLs. -->
         <div class="footer__find">
           <ul>
@@ -1116,6 +1116,9 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
             <li><a href="https://www.bbb.org/us/fl/venice/profile/garage-door-repair/og-garage-doors-service-0653-90466720" target="_blank" rel="noopener" data-cta="footer-bbb">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 4 5.2v5.9c0 4.6 3.2 8.9 8 10.9 4.8-2 8-6.3 8-10.9V5.2L12 2zm-1.2 13.6-3-3 1.4-1.4 1.6 1.6 4.2-4.2 1.4 1.4-5.6 5.6z"/></svg>
               BBB Profile</a></li>
+            <li><a href="https://www.yellowpages.com/venice-fl/mip/og-garage-doors-service-583201459" target="_blank" rel="noopener" data-cta="footer-yellowpages">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h12a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm1 4v2h10V6H7zm0 4v2h10v-2H7zm0 4v2h6v-2H7z"/></svg>
+              Yellow Pages</a></li>
           </ul>
         </div>
       </div>
@@ -1268,7 +1271,8 @@ var SITE = {
   ads_id         : "AW-18453880924",
   ads_call_conv  : "AW-18453880924/pCMaCJqc6bIdENzAv99E",
   facebook_url   : "https://www.facebook.com/people/OG-Garage-Doors-Service/61595490601279/",
-  bbb_url        : "https://www.bbb.org/us/fl/venice/profile/garage-door-repair/og-garage-doors-service-0653-90466720"
+  bbb_url        : "https://www.bbb.org/us/fl/venice/profile/garage-door-repair/og-garage-doors-service-0653-90466720",
+  yellowpages_url: "https://www.yellowpages.com/venice-fl/mip/og-garage-doors-service-583201459"
 };
 
 /* =========================================================================
@@ -1655,7 +1659,7 @@ var REVIEWS = [
      generate_lead    the form actually posted. Fired from section 4 on the
                       success path, not from here, because a submit that
                       fails is not a lead. GA4's own recommended event name
-     outbound_click   the Facebook or BBB profile link
+     outbound_click   the Facebook, BBB or Yellow Pages profile link
 
    Each carries cta: the data-cta value, so one event name covers fourteen
    placements and the placement stays a breakdown rather than fourteen event
