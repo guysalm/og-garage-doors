@@ -769,6 +769,63 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
   html{scroll-behavior:auto}
   *{transition:none !important;animation:none !important}
 }
+
+/* ========== Chat (Mia) ==========
+   Sits above the quick-contact bar, which is fixed to the bottom at every
+   width. Under 641px the panel becomes a bottom sheet over the bar. */
+.chat-fab{
+  position:fixed;right:18px;bottom:84px;z-index:130;
+  width:60px;height:60px;border-radius:50%;border:0;cursor:pointer;
+  background:var(--crimson);color:#fff;box-shadow:0 8px 24px rgba(0,0,0,.28);
+  display:flex;align-items:center;justify-content:center;transition:transform .18s
+}
+.chat-fab:hover{transform:scale(1.05)}
+.chat-fab svg{width:28px;height:28px;fill:#fff}
+.chat-fab__dot{position:absolute;top:4px;right:4px;width:12px;height:12px;border-radius:50%;background:#17914B;border:2px solid #fff}
+.chat-teaser{
+  position:fixed;right:18px;bottom:154px;z-index:130;max-width:250px;
+  background:#fff;color:var(--ink);border-radius:14px 14px 4px 14px;padding:12px 34px 12px 14px;
+  box-shadow:var(--shadow-lg);font-size:.92rem;line-height:1.4;cursor:pointer
+}
+.chat-teaser__x{position:absolute;top:4px;right:6px;border:0;background:none;font-size:1.1rem;line-height:1;color:#8A939E;cursor:pointer;padding:4px}
+.chat{
+  position:fixed;right:18px;bottom:84px;z-index:160;
+  width:370px;max-width:calc(100vw - 36px);height:540px;max-height:calc(100vh - 110px);
+  display:flex;flex-direction:column;background:#fff;border-radius:14px;overflow:hidden;
+  box-shadow:0 14px 44px rgba(0,0,0,.30)
+}
+.chat[hidden],.chat-teaser[hidden],.chat-fab[hidden]{display:none}
+.chat__head{display:flex;align-items:center;gap:10px;padding:12px 12px 12px 14px;background:var(--ink);color:#fff}
+.chat__avatar{width:38px;height:38px;border-radius:50%;background:var(--crimson);display:flex;align-items:center;justify-content:center;font-weight:700;flex:0 0 38px}
+.chat__who{flex:1;min-width:0}
+.chat__name{font-weight:700;line-height:1.2}
+.chat__status{font-size:.78rem;color:#B9C0C8}
+.chat__status::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:#2BC46B;margin-right:6px}
+.chat__close{border:0;background:none;color:#fff;cursor:pointer;padding:6px;line-height:0}
+.chat__close svg{width:20px;height:20px;fill:#fff}
+.chat__log{flex:1;overflow-y:auto;padding:14px;background:#F4F5F7;display:flex;flex-direction:column;gap:8px}
+.chat__msg{max-width:85%;padding:9px 12px;border-radius:14px;font-size:.93rem;line-height:1.4;white-space:pre-wrap;overflow-wrap:anywhere}
+.chat__msg--bot{align-self:flex-start;background:#fff;color:var(--ink);border-bottom-left-radius:4px;box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.chat__msg--me{align-self:flex-end;background:var(--crimson);color:#fff;border-bottom-right-radius:4px}
+.chat__typing{align-self:flex-start;display:flex;gap:4px;padding:12px 14px;background:#fff;border-radius:14px}
+.chat__typing span{width:7px;height:7px;border-radius:50%;background:#9AA2AC;animation:chatdot 1s infinite}
+.chat__typing span:nth-child(2){animation-delay:.15s}
+.chat__typing span:nth-child(3){animation-delay:.3s}
+@keyframes chatdot{0%,80%,100%{opacity:.3}40%{opacity:1}}
+.chat__chips{display:flex;flex-wrap:wrap;gap:6px;padding:0 14px 10px;background:#F4F5F7}
+.chat__chip{border:1px solid var(--crimson);background:#fff;color:var(--crimson-3);border-radius:var(--radius-pill);padding:6px 12px;font-size:.85rem;font-weight:600;cursor:pointer}
+.chat__chip:hover{background:#FDECEE}
+.chat__form{display:flex;gap:8px;padding:10px;border-top:1px solid #E3E6EA;background:#fff}
+.chat__input{flex:1;min-width:0;border:1px solid #CFD4DA;border-radius:var(--radius-pill);padding:10px 14px;font:inherit;font-size:16px}
+.chat__send{border:0;border-radius:50%;width:42px;height:42px;flex:0 0 42px;background:var(--crimson);cursor:pointer;display:flex;align-items:center;justify-content:center}
+.chat__send:disabled{opacity:.5;cursor:default}
+.chat__send svg{width:20px;height:20px;fill:#fff}
+.chat__foot{font-size:.72rem;color:var(--muted);text-align:center;padding:0 10px 8px;background:#fff}
+@media (max-width:640px){
+  .chat{right:0;left:0;bottom:0;width:100%;max-width:none;height:78vh;max-height:none;border-radius:14px 14px 0 0}
+  .chat-fab{bottom:72px;right:14px;width:56px;height:56px}
+  .chat-teaser{bottom:136px;right:14px}
+}
 </style>
 </head>
 <body>
@@ -1237,6 +1294,49 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
     </div>
   </div>
 </div>
+
+<!-- ==================== CHAT (Mia) ====================
+     Replies come from netlify/functions/chat.mts at /api/chat. The hidden
+     form only registers "chat-lead" with Netlify Forms at deploy time; the
+     chat script posts a lead to it once Mia has saved one. -->
+<form name="chat-lead" method="POST" data-netlify="true" netlify-honeypot="bot-field" hidden>
+  <input type="hidden" name="form-name" value="chat-lead">
+  <input name="bot-field"><input name="name"><input name="phone"><input name="address">
+  <input name="issue"><input name="best_time"><input name="page">
+</form>
+<button class="chat-fab" id="chat-fab" type="button" aria-label="Chat with us" aria-controls="chat" aria-expanded="false">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 2H4a2 2 0 0 0-2 2v18l4-4h14a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zM7 9h10v2H7V9zm6 5H7v-2h6v2zm4-6H7V6h10v2z"/></svg>
+  <span class="chat-fab__dot" aria-hidden="true"></span>
+</button>
+<div class="chat-teaser" id="chat-teaser" hidden>
+  <button class="chat-teaser__x" type="button" aria-label="Dismiss">&times;</button>
+  <span>Hi, I&rsquo;m Mia from OG Garage Doors &#128075; How can I help you today?</span>
+</div>
+<section class="chat" id="chat" role="dialog" aria-label="Chat with Mia from OG Garage Doors" hidden>
+  <div class="chat__head">
+    <div class="chat__avatar" aria-hidden="true">M</div>
+    <div class="chat__who">
+      <div class="chat__name">Mia &middot; OG Garage Doors</div>
+      <div class="chat__status">Online now</div>
+    </div>
+    <button class="chat__close" type="button" aria-label="Close chat">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 6.4 17.6 5 12 10.6 6.4 5 5 6.4 10.6 12 5 17.6 6.4 19 12 13.4 17.6 19 19 17.6 13.4 12z"/></svg>
+    </button>
+  </div>
+  <div class="chat__log" id="chat-log" aria-live="polite"></div>
+  <div class="chat__chips" id="chat-chips">
+    <button class="chat__chip" type="button">Get a price</button>
+    <button class="chat__chip" type="button">Book a repair</button>
+    <button class="chat__chip" type="button">I have a question</button>
+  </div>
+  <form class="chat__form" id="chat-form" autocomplete="off">
+    <input class="chat__input" id="chat-input" type="text" maxlength="800" placeholder="Type your message..." aria-label="Your message">
+    <button class="chat__send" type="submit" aria-label="Send">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 21 23 12 2 3v7l15 2-15 2z"/></svg>
+    </button>
+  </form>
+  <p class="chat__foot">Prefer to talk? Call <a href="tel:+19419496507" data-cta="chat-call">(941) 949-6507</a></p>
+</section>
 
 <script>
 /* =========================================================================
@@ -1892,6 +1992,191 @@ var REVIEWS = [
 
     if (e.target.closest("a")) closeQuote();   /* the call link */
   });
+})();
+
+/* =========================================================================
+   7. CHAT (Mia)
+   Replies come from /api/chat (netlify/functions/chat.mts), which talks to
+   Claude and, once it has a visitor's details, creates a Pending job in the
+   Dispatch app. When the reply says a lead was saved, this posts the same
+   details to the "chat-lead" Netlify Form and fires generate_lead.
+
+   Opening: on a wide screen the panel opens by itself after 5s; on a phone
+   only a small greeting bubble appears, because a sheet over the page on
+   arrival costs calls. Either happens once a session - closing the chat or
+   the greeting keeps it closed. The conversation lives in sessionStorage,
+   so it follows the visitor between pages and ends with the tab.
+   The greeting is shown here and never sent: no request until they type.
+   ========================================================================= */
+(function(){
+  var fab = document.getElementById("chat-fab");
+  var panel = document.getElementById("chat");
+  if (!fab || !panel || !window.fetch) return;
+  var teaser = document.getElementById("chat-teaser");
+  var log = document.getElementById("chat-log");
+  var chips = document.getElementById("chat-chips");
+  var form = document.getElementById("chat-form");
+  var input = document.getElementById("chat-input");
+  var sendBtn = form.querySelector(".chat__send");
+
+  var GREETING = "Hi, I’m Mia from OG Garage Doors 👋 How can I help you today?";
+  var TROUBLE = "Sorry, I’m having trouble connecting right now. Please call us at " + SITE.phone_display + " and we’ll take care of you right away.";
+  var KEY = "og-chat";
+  var AUTO_OPEN_MS = 5000;
+  var MAX_SENT = 40;
+  var busy = false;
+
+  function load(){
+    try {
+      var s = JSON.parse(sessionStorage.getItem(KEY));
+      if (s && s.turns) return s;
+    } catch (e) {}
+    return { turns: [], opened: false, dismissed: false, leadSent: false };
+  }
+  function save(){
+    try { sessionStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
+  }
+  var state = load();
+
+  function bubble(role, text){
+    var d = document.createElement("div");
+    d.className = "chat__msg chat__msg--" + (role === "user" ? "me" : "bot");
+    d.textContent = text;
+    log.appendChild(d);
+    log.scrollTop = log.scrollHeight;
+    return d;
+  }
+  function render(){
+    log.textContent = "";
+    bubble("assistant", GREETING);
+    state.turns.forEach(function(t){ bubble(t.role, t.text); });
+    chips.hidden = state.turns.length > 0;
+  }
+  function typing(on){
+    var t = document.getElementById("chat-typing");
+    if (on && !t) {
+      t = document.createElement("div");
+      t.id = "chat-typing";
+      t.className = "chat__typing";
+      t.setAttribute("aria-label", "Mia is typing");
+      t.innerHTML = "<span></span><span></span><span></span>";
+      log.appendChild(t);
+      log.scrollTop = log.scrollHeight;
+    } else if (!on && t) {
+      t.parentNode.removeChild(t);
+    }
+  }
+
+  function openChat(byUser){
+    panel.hidden = false;
+    fab.hidden = true;
+    teaser.hidden = true;
+    fab.setAttribute("aria-expanded", "true");
+    if (!state.opened) {
+      state.opened = true;
+      if (window.ogTrack) window.ogTrack("chat_open", { cta: byUser ? "chat-fab" : "chat-auto" });
+    }
+    state.dismissed = false;
+    save();
+    render();
+    /* Only take focus when the visitor asked for the chat - an auto-open
+       that grabbed focus would pull a phone keyboard up or hijack typing. */
+    if (byUser) input.focus({ preventScroll: true });
+  }
+  function closeChat(){
+    panel.hidden = true;
+    fab.hidden = false;
+    fab.setAttribute("aria-expanded", "false");
+    state.dismissed = true;
+    save();
+  }
+
+  function postLead(lead){
+    var fields = {
+      "form-name": "chat-lead",
+      name: lead.name, phone: lead.phone, address: lead.address,
+      issue: lead.issue, best_time: lead.best_time || "", page: location.pathname
+    };
+    var pairs = [];
+    for (var k in fields) pairs.push(encodeURIComponent(k) + "=" + encodeURIComponent(fields[k] || ""));
+    fetch("/", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: pairs.join("&")
+    }).catch(function(){ /* the Dispatch job already exists; this copy is a backup */ });
+  }
+
+  function send(text){
+    text = (text || "").trim();
+    if (!text || busy) return;
+    busy = true;
+    sendBtn.disabled = true;
+    chips.hidden = true;
+    state.turns.push({ role: "user", text: text.slice(0, 800) });
+    save();
+    bubble("user", text);
+    typing(true);
+
+    fetch("/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ messages: state.turns.slice(-MAX_SENT) })
+    }).then(function(res){
+      return res.json().catch(function(){ return {}; });
+    }).then(function(data){
+      var reply = (data && data.reply) || TROUBLE;
+      state.turns.push({ role: "assistant", text: reply });
+      if (data && data.lead && !state.leadSent) {
+        state.leadSent = true;
+        postLead(data.lead);
+        if (window.ogTrack) window.ogTrack("generate_lead", { cta: "chat" });
+      }
+    }).catch(function(){
+      state.turns.push({ role: "assistant", text: TROUBLE });
+    }).then(function(){
+      typing(false);
+      bubble("assistant", state.turns[state.turns.length - 1].text);
+      save();
+      busy = false;
+      sendBtn.disabled = false;
+    });
+  }
+
+  fab.addEventListener("click", function(){ openChat(true); });
+  panel.querySelector(".chat__close").addEventListener("click", closeChat);
+  teaser.addEventListener("click", function(e){
+    if (e.target.closest(".chat-teaser__x")) {
+      teaser.hidden = true;
+      state.dismissed = true;
+      save();
+      return;
+    }
+    openChat(true);
+  });
+  chips.addEventListener("click", function(e){
+    var chip = e.target.closest(".chat__chip");
+    if (chip) send(chip.textContent);
+  });
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+    var text = input.value;
+    input.value = "";
+    send(text);
+  });
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Escape" && !panel.hidden) closeChat();
+  });
+
+  /* Carry an open chat across page loads; otherwise greet once a session. */
+  if (state.opened && !state.dismissed) {
+    openChat(false);
+  } else if (!state.opened && !state.dismissed) {
+    setTimeout(function(){
+      if (state.opened || state.dismissed) return;
+      if (window.matchMedia("(min-width:900px)").matches) openChat(false);
+      else teaser.hidden = false;
+    }, AUTO_OPEN_MS);
+  }
 })();
 
 </script>

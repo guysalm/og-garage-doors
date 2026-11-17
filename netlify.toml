@@ -18,3 +18,34 @@
   to = "/"
   status = 301
   force = true
+
+# ---------------------------------------------------------------- chat (Mia)
+# netlify/functions/chat.mts answers POST /api/chat (its path is set in the
+# function's own config). Netlify installs package.json's dependencies at
+# deploy time and bundles them into the function.
+[functions]
+  node_bundler = "esbuild"
+
+# publish = "." would otherwise serve the function's source, its packages and
+# the package files as plain downloads. None of it is secret (keys live in
+# Netlify's environment variables), but none of it is site content either.
+[[redirects]]
+  from = "/netlify/*"
+  to = "/404"
+  status = 404
+  force = true
+[[redirects]]
+  from = "/node_modules/*"
+  to = "/404"
+  status = 404
+  force = true
+[[redirects]]
+  from = "/package.json"
+  to = "/404"
+  status = 404
+  force = true
+[[redirects]]
+  from = "/package-lock.json"
+  to = "/404"
+  status = 404
+  force = true
