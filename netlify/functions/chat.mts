@@ -4,8 +4,8 @@
  * The browser sends the conversation as plain text turns; this function asks
  * Claude for Mia's next reply. When Mia has a visitor's details she calls the
  * save_lead tool, which creates a Pending job in the Dispatch app (source
- * 'website'). dispatch-bot then WhatsApps the owner about it, and the browser
- * also files it as a Netlify Form submission ("chat-lead").
+ * 'website', or 'manual' until the Dispatch migration runs). The browser also
+ * files it as a Netlify Form submission ("chat-lead").
  *
  * Environment (Netlify → Site configuration → Environment variables):
  *   ANTHROPIC_API_KEY     required
@@ -95,6 +95,9 @@ const json = (body: unknown, status = 200) =>
     headers: { "content-type": "application/json", "cache-control": "no-store" },
   });
 
+/** First line of every chat lead's notes; also how a repeat is recognised. */
+const NOTE_HEAD = "Lead from the oggaragedoors.com chat (Mia). Call the customer back.";
+
 const SORRY = `Sorry, I'm having trouble on my end right now. Please call us at ${PHONE_DISPLAY} and we'll take care of you right away.`;
 
 function parseTurns(body: unknown): Turn[] | null {
@@ -150,7 +153,8 @@ async function saveLead(lead: Lead, turns: Turn[]): Promise<string | null> {
   // Same visitor saving twice (a double send, or a second chat) within two hours: keep one job.
   const since = new Date(Date.now() - 2 * 3600_000).toISOString();
   const dup = await supabase(
-    `jobs?select=id&source=eq.website&customer_phone=eq.${encodeURIComponent(phone)}&created_at=gte.${since}&limit=1`,
+    `jobs?select=id&customer_phone=eq.${encodeURIComponent(phone)}&created_at=gte.${since}` +
+      `&notes=like.${encodeURIComponent(NOTE_HEAD + "*")}&limit=1`,
   );
   if (dup.ok && ((await dup.json()) as unknown[]).length) return null;
 
@@ -160,7 +164,7 @@ async function saveLead(lead: Lead, turns: Turn[]): Promise<string | null> {
     .join("\n")
     .slice(0, 1500);
   const notes = [
-    "Lead from the oggaragedoors.com chat (Mia). Call the customer back.",
+    NOTE_HEAD,
     lead.best_time.trim() ? `Best time to call: ${lead.best_time.trim()}` : "",
     lead.wants_price ? "Asked for a price." : "",
     `Customer wrote:\n${said}`,
@@ -169,7 +173,10 @@ async function saveLead(lead: Lead, turns: Turn[]): Promise<string | null> {
     .join("\n");
 
   const now = new Date().toISOString();
-  for (let attempt = 0; attempt < 3; attempt++) {
+  // 'website' needs the Dispatch migration 20261117120000_website_leads; until it
+  // has run the database rejects it, and the lead is saved as 'manual' instead.
+  let source = "website";
+  for (let attempt = 0; attempt < 4; attempt++) {
     const res = await supabase("jobs", {
       method: "POST",
       headers: { prefer: "return=minimal" },
@@ -180,7 +187,7 @@ async function saveLead(lead: Lead, turns: Turn[]): Promise<string | null> {
         customer_address: lead.address.trim().slice(0, 300),
         customer_issue: lead.issue.trim().slice(0, 300),
         status: "pending",
-        source: "website",
+        source,
         auto_dispatch: false,
         region: "FL",
         notes,
@@ -191,9 +198,13 @@ async function saveLead(lead: Lead, turns: Turn[]): Promise<string | null> {
     if (res.ok) return null;
     const err = await res.text();
     if (res.status === 409 && err.includes("job_id")) continue; // random id collided; try another
+    if (source === "website" && err.includes("jobs_source_check")) {
+      source = "manual";
+      continue;
+    }
     throw new Error(`Supabase insert ${res.status}: ${err.slice(0, 300)}`);
   }
-  throw new Error("Supabase insert: no free job id after 3 tries");
+  throw new Error("Supabase insert: gave up after 4 tries");
 }
 
 export default async (req: Request): Promise<Response> => {
