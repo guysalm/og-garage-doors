@@ -2018,6 +2018,17 @@ var REVIEWS = [
   var KEY = "og-chat";
   var AUTO_OPEN_MS = 5000;
   var MAX_SENT = 40;
+
+  /* Pace replies like a person typing: a moment to "read", then typing time
+     that grows with the reply, both randomised. Measured from when the
+     visitor sent, so a slow server reply is not made slower still. */
+  function rand(min, max){ return min + Math.random() * (max - min); }
+  function readDelay(){ return rand(700, 1800); }
+  function typeDelay(reply){
+    var perChar = rand(28, 45);
+    return Math.min(9000, rand(800, 1600) + reply.length * perChar);
+  }
+  function wait(ms){ return new Promise(function(r){ setTimeout(r, Math.max(0, ms)); }); }
   var busy = false;
 
   function load(){
@@ -2107,7 +2118,8 @@ var REVIEWS = [
     state.turns.push({ role: "user", text: text.slice(0, 800) });
     save();
     bubble("user", text);
-    typing(true);
+    var started = Date.now();
+    var showTyping = wait(readDelay()).then(function(){ typing(true); });
 
     fetch("/api/chat", {
       method: "POST",
@@ -2115,6 +2127,11 @@ var REVIEWS = [
       body: JSON.stringify({ messages: state.turns.slice(-MAX_SENT), leadSaved: !!state.leadSent })
     }).then(function(res){
       return res.json().catch(function(){ return {}; });
+    }).then(function(data){
+      var reply = (data && data.reply) || TROUBLE;
+      return showTyping.then(function(){
+        return wait(typeDelay(reply) - (Date.now() - started));
+      }).then(function(){ return data; });
     }).then(function(data){
       var reply = (data && data.reply) || TROUBLE;
       state.turns.push({ role: "assistant", text: reply });
@@ -2125,6 +2142,8 @@ var REVIEWS = [
       }
     }).catch(function(){
       state.turns.push({ role: "assistant", text: TROUBLE });
+      /* let the dots appear first, or they would show up after the reply and stay */
+      return showTyping;
     }).then(function(){
       typing(false);
       bubble("assistant", state.turns[state.turns.length - 1].text);
