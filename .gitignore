@@ -21,3 +21,6 @@ assets/Capture.PNG
 
 # Netlify Functions dependencies (installed by Netlify at deploy time)
 node_modules/
+
+# Mia's full-size photo; the site uses the crop from tools/make-chat-avatar.ps1
+assets/Mia.jpg

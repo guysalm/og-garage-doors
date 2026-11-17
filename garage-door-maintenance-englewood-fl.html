@@ -776,17 +776,19 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
 .chat-fab{
   position:fixed;right:18px;bottom:84px;z-index:130;
   width:60px;height:60px;border-radius:50%;border:0;cursor:pointer;
-  background:var(--crimson);color:#fff;box-shadow:0 8px 24px rgba(0,0,0,.28);
+  background:#fff;padding:0;color:#fff;box-shadow:0 8px 24px rgba(0,0,0,.28);
   display:flex;align-items:center;justify-content:center;transition:transform .18s
 }
 .chat-fab:hover{transform:scale(1.05)}
-.chat-fab svg{width:28px;height:28px;fill:#fff}
-.chat-fab__dot{position:absolute;top:4px;right:4px;width:12px;height:12px;border-radius:50%;background:#17914B;border:2px solid #fff}
+.chat-fab__img{width:100%;height:100%;border-radius:50%;object-fit:cover;border:3px solid #fff}
+.chat-fab__dot{position:absolute;bottom:2px;right:2px;width:12px;height:12px;border-radius:50%;background:#17914B;border:2px solid #fff}
 .chat-teaser{
   position:fixed;right:18px;bottom:154px;z-index:130;max-width:250px;
   background:#fff;color:var(--ink);border-radius:14px 14px 4px 14px;padding:12px 34px 12px 14px;
-  box-shadow:var(--shadow-lg);font-size:.92rem;line-height:1.4;cursor:pointer
+  box-shadow:var(--shadow-lg);font-size:.92rem;line-height:1.4;cursor:pointer;
+  display:flex;gap:10px;align-items:flex-start
 }
+.chat-teaser__img{width:36px;height:36px;border-radius:50%;object-fit:cover;flex:0 0 36px}
 .chat-teaser__x{position:absolute;top:4px;right:6px;border:0;background:none;font-size:1.1rem;line-height:1;color:#8A939E;cursor:pointer;padding:4px}
 .chat{
   position:fixed;right:18px;bottom:84px;z-index:160;
@@ -796,9 +798,9 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
 }
 .chat[hidden],.chat-teaser[hidden],.chat-fab[hidden]{display:none}
 .chat__head{display:flex;align-items:center;gap:10px;padding:12px 12px 12px 14px;background:var(--ink);color:#fff}
-.chat__avatar{width:38px;height:38px;border-radius:50%;background:var(--crimson);display:flex;align-items:center;justify-content:center;font-weight:700;flex:0 0 38px}
+.chat__avatar{width:40px;height:40px;border-radius:50%;object-fit:cover;flex:0 0 40px;border:2px solid #fff}
 .chat__who{flex:1;min-width:0}
-.chat__name{font-weight:700;line-height:1.2}
+.chat__name{font-weight:700;line-height:1.2;color:#fff}
 .chat__status{font-size:.78rem;color:#B9C0C8}
 .chat__status::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:#2BC46B;margin-right:6px}
 .chat__close{border:0;background:none;color:#fff;cursor:pointer;padding:6px;line-height:0}
@@ -1304,20 +1306,21 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
   <input name="bot-field"><input name="name"><input name="phone"><input name="address">
   <input name="issue"><input name="best_time"><input name="page">
 </form>
-<button class="chat-fab" id="chat-fab" type="button" aria-label="Chat with us" aria-controls="chat" aria-expanded="false">
-  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 2H4a2 2 0 0 0-2 2v18l4-4h14a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zM7 9h10v2H7V9zm6 5H7v-2h6v2zm4-6H7V6h10v2z"/></svg>
+<button class="chat-fab" id="chat-fab" type="button" aria-label="Chat with Mia" aria-controls="chat" aria-expanded="false">
+  <img class="chat-fab__img" src="assets/img/chat-mia.jpg" width="60" height="60" alt="" loading="lazy">
   <span class="chat-fab__dot" aria-hidden="true"></span>
 </button>
 <div class="chat-teaser" id="chat-teaser" hidden>
   <button class="chat-teaser__x" type="button" aria-label="Dismiss">&times;</button>
+  <img class="chat-teaser__img" src="assets/img/chat-mia.jpg" width="36" height="36" alt="" loading="lazy">
   <span>Hi, I&rsquo;m Mia from OG Garage Doors &#128075; How can I help you today?</span>
 </div>
 <section class="chat" id="chat" role="dialog" aria-label="Chat with Mia from OG Garage Doors" hidden>
   <div class="chat__head">
-    <div class="chat__avatar" aria-hidden="true">M</div>
+    <img class="chat__avatar" src="assets/img/chat-mia.jpg" width="40" height="40" alt="Mia" loading="lazy">
     <div class="chat__who">
-      <div class="chat__name">Mia &middot; OG Garage Doors</div>
-      <div class="chat__status">Online now</div>
+      <div class="chat__name">Mia</div>
+      <div class="chat__status">OG Garage Doors &middot; Online</div>
     </div>
     <button class="chat__close" type="button" aria-label="Close chat">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 6.4 17.6 5 12 10.6 6.4 5 5 6.4 10.6 12 5 17.6 6.4 19 12 13.4 17.6 19 19 17.6 13.4 12z"/></svg>

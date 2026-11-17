@@ -11,7 +11,7 @@
  *   ANTHROPIC_API_KEY     required
  *   SUPABASE_URL          required to save leads (Dispatch project)
  *   SUPABASE_SECRET_KEY   required to save leads — sb_secret_… key, server only
- *   CHAT_MODEL            optional, defaults to claude-opus-5-5
+ *   CHAT_MODEL            optional, defaults to claude-haiku-5-5
  *
  * The browser never sees either key. History comes back from the browser as
  * text only (no thinking blocks), so nothing it sends can be a tampered model
@@ -19,7 +19,9 @@
  */
 import Anthropic from "@anthropic-ai/sdk";
 
-const MODEL = process.env.CHAT_MODEL || "claude-opus-5-5";
+// Haiku 5.5 on the owner's choice: well under a cent a conversation. CHAT_MODEL
+// overrides it (e.g. claude-sonnet-5-5) without a code change.
+const MODEL = process.env.CHAT_MODEL || "claude-haiku-5-5";
 // Server-side refusal fallback exists for these; Haiku has none and rejects the field.
 const HAS_FALLBACK = new Set(["claude-opus-5-5", "claude-sonnet-5-5", "claude-opus-5", "claude-fable-5-2", "claude-fable-5-1"]);
 
