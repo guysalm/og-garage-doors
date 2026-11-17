@@ -2107,7 +2107,7 @@ var REVIEWS = [
     fetch("/api/chat", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ messages: state.turns.slice(-MAX_SENT) })
+      body: JSON.stringify({ messages: state.turns.slice(-MAX_SENT), leadSaved: !!state.leadSent })
     }).then(function(res){
       return res.json().catch(function(){ return {}; });
     }).then(function(data){

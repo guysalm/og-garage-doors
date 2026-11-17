@@ -58,7 +58,8 @@ Ask for one or two things at a time, in a natural way. If they already said some
 If they only have a question, answer it briefly and then offer to have a technician call them.
 
 ## Safety
-A broken spring or cable is dangerous: tell them not to open or close the door by hand or try to fix it themselves. If a car is trapped or the door is stuck open at night, suggest they also call ${PHONE_DISPLAY} right away.
+A broken spring or cable is dangerous: tell them not to open or close the door by hand or try to fix it themselves.
+If it is urgent (a car is trapped, they cannot get out, or the door is stuck open at night), say in your first reply that the fastest way is to call ${PHONE_DISPLAY} now, and still offer to take their details.
 
 ## How you write
 - Warm, friendly and short: one to three sentences per message. Plain text, no markdown, no bullet lists, at most one emoji now and then.
@@ -144,21 +145,19 @@ async function supabase(path: string, init: RequestInit = {}): Promise<Response>
   });
 }
 
-/** Creates the Dispatch job. Returns an error message for Claude, or null on success. */
+/**
+ * Creates the Dispatch job, or updates it when this visitor already has one from
+ * the last two hours (details added after the first save, or a second chat).
+ * Returns an error message for Claude, or null on success.
+ */
 async function saveLead(lead: Lead, turns: Turn[]): Promise<string | null> {
   const phone = usPhone(lead.phone);
   if (!phone) return "That phone number is not a valid 10-digit US number. Ask the customer to check it.";
   if (!lead.name.trim() || !lead.address.trim() || !lead.issue.trim()) {
     return "Name, address and the problem are all needed. Ask for whatever is missing.";
   }
-
-  // Same visitor saving twice (a double send, or a second chat) within two hours: keep one job.
-  const since = new Date(Date.now() - 2 * 3600_000).toISOString();
-  const dup = await supabase(
-    `jobs?select=id&customer_phone=eq.${encodeURIComponent(phone)}&created_at=gte.${since}` +
-      `&notes=like.${encodeURIComponent(NOTE_HEAD + "*")}&limit=1`,
-  );
-  if (dup.ok && ((await dup.json()) as unknown[]).length) return null;
+  // A stray "." or quote is not a time.
+  const bestTime = /[a-z0-9]/i.test(lead.best_time) ? lead.best_time.trim().slice(0, 100) : "";
 
   const said = turns
     .filter((t) => t.role === "user")
@@ -167,7 +166,7 @@ async function saveLead(lead: Lead, turns: Turn[]): Promise<string | null> {
     .slice(0, 1500);
   const notes = [
     NOTE_HEAD,
-    lead.best_time.trim() ? `Best time to call: ${lead.best_time.trim()}` : "",
+    bestTime ? `Best time to call: ${bestTime}` : "",
     lead.wants_price ? "Asked for a price." : "",
     `Customer wrote:\n${said}`,
   ]
@@ -175,6 +174,26 @@ async function saveLead(lead: Lead, turns: Turn[]): Promise<string | null> {
     .join("\n");
 
   const now = new Date().toISOString();
+  const details = {
+    customer_name: lead.name.trim().slice(0, 120),
+    customer_address: lead.address.trim().slice(0, 300),
+    customer_issue: lead.issue.trim().slice(0, 300),
+    notes,
+    updated_at: now,
+  };
+
+  const since = new Date(Date.now() - 2 * 3600_000).toISOString();
+  const dup = await supabase(
+    `jobs?select=id&customer_phone=eq.${encodeURIComponent(phone)}&created_at=gte.${since}` +
+      `&notes=like.${encodeURIComponent(NOTE_HEAD + "*")}&order=created_at.desc&limit=1`,
+  );
+  const existing = dup.ok ? ((await dup.json()) as { id: string }[])[0] : undefined;
+  if (existing) {
+    const res = await supabase(`jobs?id=eq.${existing.id}`, { method: "PATCH", body: JSON.stringify(details) });
+    if (!res.ok) throw new Error(`Supabase update ${res.status}: ${(await res.text()).slice(0, 300)}`);
+    return null;
+  }
+
   // 'website' needs the Dispatch migration 20261117120000_website_leads; until it
   // has run the database rejects it, and the lead is saved as 'manual' instead.
   let source = "website";
@@ -183,18 +202,14 @@ async function saveLead(lead: Lead, turns: Turn[]): Promise<string | null> {
       method: "POST",
       headers: { prefer: "return=minimal" },
       body: JSON.stringify({
+        ...details,
         job_id: jobId(),
-        customer_name: lead.name.trim().slice(0, 120),
         customer_phone: phone,
-        customer_address: lead.address.trim().slice(0, 300),
-        customer_issue: lead.issue.trim().slice(0, 300),
         status: "pending",
         source,
         auto_dispatch: false,
         region: "FL",
-        notes,
         job_date: now.slice(0, 10),
-        updated_at: now,
       }),
     });
     if (res.ok) return null;
@@ -216,15 +231,27 @@ export default async (req: Request): Promise<Response> => {
   const origin = req.headers.get("origin");
   if (origin && new URL(origin).host !== new URL(req.url).host) return json({ error: "forbidden" }, 403);
 
-  let turns: Turn[] | null = null;
+  let body: unknown = null;
   try {
-    turns = parseTurns(await req.json());
+    body = await req.json();
   } catch {
-    turns = null;
+    body = null;
   }
+  const turns = parseTurns(body);
   if (!turns) return json({ error: "bad request" }, 400);
 
   const messages: Anthropic.Beta.BetaMessageParam[] = turns.map((t) => ({ role: t.role, content: t.text }));
+  // History reaches us as text only, so Mia cannot see her own earlier save_lead
+  // call. Without this she saves again and apologises for "not having saved".
+  if ((body as { leadSaved?: unknown }).leadSaved === true) {
+    messages.push({
+      role: "system",
+      content:
+        "The visitor's details were already saved earlier in this chat and a technician will call them. " +
+        "Only call save_lead again if they give new or corrected details (it updates the same request). " +
+        "Do not say you are saving or have saved anything unless you call it.",
+    });
+  }
   let savedLead: Lead | null = null;
 
   try {
