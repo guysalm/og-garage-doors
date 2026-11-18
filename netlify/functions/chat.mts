@@ -182,6 +182,7 @@ function pageContext(page: PageInfo): string {
     `The chat opened with: "${page.greeting}"`,
     TOPIC_GUIDE[page.topic],
     page.city ? `They are on the ${page.city}, FL page, so they are probably in or near ${page.city}.` : "",
+    "The first time you offer a technician, say there's no charge for them to come out, it's a free estimate.",
   ]
     .filter(Boolean)
     .join("\n");
