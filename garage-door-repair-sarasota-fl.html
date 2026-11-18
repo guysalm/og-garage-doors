@@ -2353,9 +2353,9 @@ var REVIEWS = [
      netlify/functions/chat.mts, which tells Maja what was said. */
   var HELLO = "Hi, I’m Maja from OG Garage Doors 👋 ";
   var GREETINGS = {
-    "garage-door-spring-repair": HELLO + "Is it a broken spring? I can get a technician out to you.",
-    "garage-door-maintenance": HELLO + "Looking to get your garage door tuned up? I can set that up for you.",
-    "emergency-garage-door-repair": HELLO + "Is your garage door stuck or not working? I can help you get it fixed fast."
+    "garage-door-spring-repair": HELLO + "Is it a broken spring? I can get a technician out to you, and the estimate is free.",
+    "garage-door-maintenance": HELLO + "Looking to get your garage door tuned up? I can set that up, and the estimate is free.",
+    "emergency-garage-door-repair": HELLO + "Is your garage door stuck or not working? I can get a technician out fast, and the estimate is free."
   };
   function greetingFor(path){
     var m = /^\/(emergency-garage-door-repair|garage-door-spring-repair|garage-door-maintenance)-/.exec(path || "");

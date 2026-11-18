@@ -135,9 +135,9 @@ type Topic = "spring" | "maintenance" | "emergency" | "general";
 type PageInfo = { topic: Topic; city: string | null; greeting: string };
 
 const GREETINGS: Record<Topic, string> = {
-  spring: "Hi, I'm Maja from OG Garage Doors 👋 Is it a broken spring? I can get a technician out to you.",
-  maintenance: "Hi, I'm Maja from OG Garage Doors 👋 Looking to get your garage door tuned up? I can set that up for you.",
-  emergency: "Hi, I'm Maja from OG Garage Doors 👋 Is your garage door stuck or not working? I can help you get it fixed fast.",
+  spring: "Hi, I'm Maja from OG Garage Doors 👋 Is it a broken spring? I can get a technician out to you, and the estimate is free.",
+  maintenance: "Hi, I'm Maja from OG Garage Doors 👋 Looking to get your garage door tuned up? I can set that up, and the estimate is free.",
+  emergency: "Hi, I'm Maja from OG Garage Doors 👋 Is your garage door stuck or not working? I can get a technician out fast, and the estimate is free.",
   general: "Hi, I'm Maja from OG Garage Doors 👋 How can I help you today?",
 };
 
