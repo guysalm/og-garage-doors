@@ -145,18 +145,18 @@ const TOPIC_GUIDE: Record<Topic, string> = {
   spring:
     "They came to the garage door SPRING repair page, so they most likely have a broken or worn spring. " +
     "Keep the conversation on that: if they have not said yet, ask whether their spring is broken or what the door is doing. " +
-    "A broken spring is dangerous, so ask them to leave the door as it is until the technician checks it. Then set up the technician (and in that same message tell them there's no charge for the technician to come out, it's a free estimate).",
+    "A broken spring is dangerous, so ask them to leave the door as it is until the technician checks it. Then set up the technician.",
   maintenance:
     "They came to the garage door MAINTENANCE page, so they most likely want a tune-up, not an emergency repair. " +
     "Talk about maintenance: a tune-up covers lubrication, checking the springs, cables, rollers and hinges, tightening the hardware, " +
     "and balance and safety-reverse tests. Ask whether it is routine maintenance or something is bothering them about the door, " +
-    "then set up the visit (and in that same message tell them there's no charge for the technician to come out, it's a free estimate).",
+    "then set up the visit.",
   emergency:
     "They came to the EMERGENCY garage door repair page, so their door is probably stuck, won't open or close, or is unsafe right now. " +
     "Ask what is happening. If it is urgent (a car trapped, the door stuck open, they cannot get out), tell them the fastest way is to call " +
     "the phone number now, and still offer to take their details.",
   general:
-    "They are on a general garage door repair page. Find out what they need, then set up the technician (and in that same message tell them there's no charge for the technician to come out, it's a free estimate).",
+    "They are on a general garage door repair page. Find out what they need, then set up the technician.",
 };
 
 const PAGE_RE = /^\/(emergency-garage-door-repair|garage-door-spring-repair|garage-door-maintenance|garage-door-repair)-([a-z-]+)-fl(?:\.html)?\/?$/;
@@ -182,6 +182,7 @@ function pageContext(page: PageInfo): string {
     `The chat opened with: "${page.greeting}"`,
     TOPIC_GUIDE[page.topic],
     page.city ? `They are on the ${page.city}, FL page, so they are probably in or near ${page.city}.` : "",
+    "The first time you offer a technician, say there's no charge for them to come out, it's a free estimate.",
   ]
     .filter(Boolean)
     .join("\n");
