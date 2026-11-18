@@ -770,7 +770,7 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
   *{transition:none !important;animation:none !important}
 }
 
-/* ========== Chat (Mia) ==========
+/* ========== Chat (Maja) ==========
    Sits above the quick-contact bar, which is fixed to the bottom at every
    width. Under 641px the panel becomes a bottom sheet over the bar. */
 .chat-fab{
@@ -1297,29 +1297,29 @@ section[id],.service-card[id],#main{scroll-margin-top:112px}
   </div>
 </div>
 
-<!-- ==================== CHAT (Mia) ====================
+<!-- ==================== CHAT (Maja) ====================
      Replies come from netlify/functions/chat.mts at /api/chat. The hidden
      form only registers "chat-lead" with Netlify Forms at deploy time; the
-     chat script posts a lead to it once Mia has saved one. -->
+     chat script posts a lead to it once Maja has saved one. -->
 <form name="chat-lead" method="POST" data-netlify="true" netlify-honeypot="bot-field" hidden>
   <input type="hidden" name="form-name" value="chat-lead">
   <input name="bot-field"><input name="name"><input name="phone"><input name="address">
   <input name="issue"><input name="best_time"><input name="page">
 </form>
-<button class="chat-fab" id="chat-fab" type="button" aria-label="Chat with Mia" aria-controls="chat" aria-expanded="false">
+<button class="chat-fab" id="chat-fab" type="button" aria-label="Chat with Maja" aria-controls="chat" aria-expanded="false">
   <img class="chat-fab__img" src="assets/img/chat-mia.jpg" width="60" height="60" alt="" loading="lazy">
   <span class="chat-fab__dot" aria-hidden="true"></span>
 </button>
 <div class="chat-teaser" id="chat-teaser" hidden>
   <button class="chat-teaser__x" type="button" aria-label="Dismiss">&times;</button>
   <img class="chat-teaser__img" src="assets/img/chat-mia.jpg" width="36" height="36" alt="" loading="lazy">
-  <span>Hi, I&rsquo;m Mia from OG Garage Doors &#128075; How can I help you today?</span>
+  <span>Hi, I&rsquo;m Maja from OG Garage Doors &#128075; How can I help you today?</span>
 </div>
-<section class="chat" id="chat" role="dialog" aria-label="Chat with Mia from OG Garage Doors" hidden>
+<section class="chat" id="chat" role="dialog" aria-label="Chat with Maja from OG Garage Doors" hidden>
   <div class="chat__head">
-    <img class="chat__avatar" src="assets/img/chat-mia.jpg" width="40" height="40" alt="Mia" loading="lazy">
+    <img class="chat__avatar" src="assets/img/chat-mia.jpg" width="40" height="40" alt="Maja" loading="lazy">
     <div class="chat__who">
-      <div class="chat__name">Mia</div>
+      <div class="chat__name">Maja</div>
       <div class="chat__status">OG Garage Doors &middot; Online</div>
     </div>
     <button class="chat__close" type="button" aria-label="Close chat">
@@ -1993,7 +1993,7 @@ var REVIEWS = [
 })();
 
 /* =========================================================================
-   7. CHAT (Mia)
+   7. CHAT (Maja)
    Replies come from /api/chat (netlify/functions/chat.mts), which talks to
    Claude and, once it has a visitor's details, creates a Pending job in the
    Dispatch app. When the reply says a lead was saved, this posts the same
@@ -2016,7 +2016,7 @@ var REVIEWS = [
   var input = document.getElementById("chat-input");
   var sendBtn = form.querySelector(".chat__send");
 
-  var GREETING = "Hi, I’m Mia from OG Garage Doors 👋 How can I help you today?";
+  var GREETING = "Hi, I’m Maja from OG Garage Doors 👋 How can I help you today?";
   var TROUBLE = "Sorry, I’m having trouble connecting right now. Please call us at " + SITE.phone_display + " and we’ll take care of you right away.";
   var KEY = "og-chat";
   var AUTO_OPEN_MS = 5000;
@@ -2065,7 +2065,7 @@ var REVIEWS = [
       t = document.createElement("div");
       t.id = "chat-typing";
       t.className = "chat__typing";
-      t.setAttribute("aria-label", "Mia is typing");
+      t.setAttribute("aria-label", "Maja is typing");
       t.innerHTML = "<span></span><span></span><span></span>";
       log.appendChild(t);
       log.scrollTop = log.scrollHeight;
