@@ -144,8 +144,8 @@ const GREETINGS: Record<Topic, string> = {
 
 const TOPIC_GUIDE: Record<Topic, string> = {
   spring:
-    "They came to the garage door SPRING repair page, so they most likely have a broken or worn spring. " +
-    "Keep the conversation on that: if they have not said yet, ask whether their spring is broken or what the door is doing. " +
+    "They came to the garage door SPRING repair page, so keep the conversation on spring repair: if they have not said yet, ask whether their spring is broken or what the door is doing. " +
+    "Whatever they describe, you still leave the cause to the technician: only they can tell what it is, so never tell the visitor it sounds like or could be a spring. " +
     "A broken spring is dangerous, so ask them to leave the door as it is until the technician checks it. Then set up the technician.",
   maintenance:
     "They came to the garage door MAINTENANCE page, so they most likely want a tune-up, not an emergency repair. " +
