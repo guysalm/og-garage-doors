@@ -2010,7 +2010,21 @@ var REVIEWS = [
   var input = document.getElementById("chat-input");
   var sendBtn = form.querySelector(".chat__send");
 
-  var GREETING = "Hi, I’m Maja from OG Garage Doors 👋 How can I help you today?";
+  /* The greeting follows the page the visitor landed on, so someone who came
+     for a spring is asked about the spring. Keep in step with GREETINGS in
+     netlify/functions/chat.mts, which tells Maja what was said. */
+  var HELLO = "Hi, I’m Maja from OG Garage Doors 👋 ";
+  var GREETINGS = {
+    "garage-door-spring-repair": HELLO + "Is it a broken spring? I can get a technician out to you, and the estimate is free.",
+    "garage-door-maintenance": HELLO + "Looking to get your garage door tuned up? I can set that up, and the estimate is free.",
+    "emergency-garage-door-repair": HELLO + "Is your garage door stuck or not working? I can get a technician out fast, and the estimate is free."
+  };
+  function greetingFor(path){
+    var m = /^\/(emergency-garage-door-repair|garage-door-spring-repair|garage-door-maintenance)-/.exec(path || "");
+    return (m && GREETINGS[m[1]]) || HELLO + "How can I help you today?";
+  }
+  /* Once the visitor has written, the chat belongs to the page it began on. */
+  function greeting(){ return greetingFor(state.turns.length && state.page ? state.page : location.pathname); }
   var TROUBLE = "Sorry, I’m having trouble connecting right now. Please call us at " + SITE.phone_display + " and we’ll take care of you right away.";
   var KEY = "og-chat";
   var AUTO_OPEN_MS = 5000;
@@ -2050,7 +2064,7 @@ var REVIEWS = [
   }
   function render(){
     log.textContent = "";
-    bubble("assistant", GREETING);
+    bubble("assistant", greeting());
     state.turns.forEach(function(t){ bubble(t.role, t.text); });
   }
   function typing(on){
@@ -2112,6 +2126,7 @@ var REVIEWS = [
     if (!text || busy) return;
     busy = true;
     sendBtn.disabled = true;
+    if (!state.turns.length) state.page = location.pathname;
     state.turns.push({ role: "user", text: text.slice(0, 800) });
     save();
     bubble("user", text);
@@ -2123,7 +2138,7 @@ var REVIEWS = [
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         messages: state.turns.slice(-MAX_SENT), leadSaved: !!state.leadSent,
-        session: state.session || "", page: location.pathname
+        session: state.session || "", page: state.page || location.pathname
       })
     }).then(function(res){
       return res.json().catch(function(){ return {}; });
@@ -2184,7 +2199,10 @@ var REVIEWS = [
     setTimeout(function(){
       if (state.opened || state.dismissed) return;
       if (window.matchMedia("(min-width:900px)").matches) openChat(false);
-      else teaser.hidden = false;
+      else {
+        teaser.querySelector("span").textContent = greeting();
+        teaser.hidden = false;
+      }
     }, AUTO_OPEN_MS);
   }
 })();
