@@ -4,13 +4,14 @@
   "description": "Static site. Dependencies here are for the Netlify Functions in netlify/functions only; the pages have no build step.",
   "type": "module",
   "dependencies": {
-    "@anthropic-ai/sdk": "1.10.0"
+    "@anthropic-ai/sdk": "1.10.0",
+    "@netlify/blobs": "11.1.6"
   },
   "devDependencies": {
     "@types/node": "22.15.21",
     "typescript": "5.9.3"
   },
   "scripts": {
-    "check": "tsc --noEmit --strict --target es2022 --module nodenext --moduleResolution nodenext --skipLibCheck --lib es2022,dom --types node netlify/functions/chat.mts"
+    "check": "tsc --noEmit --strict --target es2022 --module nodenext --moduleResolution nodenext --skipLibCheck --lib es2022,dom --types node netlify/functions/chat.mts netlify/functions/chat-cleanup.mts"
   }
 }

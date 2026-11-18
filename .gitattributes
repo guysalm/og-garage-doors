@@ -1,0 +1,7 @@
+# The page generator matches template text by its LF line endings. Keep every
+# checkout LF so that a pull on Windows (core.autocrlf=true) cannot break it.
+* text=auto eol=lf
+*.jpg binary
+*.png binary
+*.webp binary
+*.ico binary

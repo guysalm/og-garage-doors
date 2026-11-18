@@ -2502,7 +2502,10 @@ var REVIEWS = [
     fetch("/api/chat", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ messages: state.turns.slice(-MAX_SENT), leadSaved: !!state.leadSent })
+      body: JSON.stringify({
+        messages: state.turns.slice(-MAX_SENT), leadSaved: !!state.leadSent,
+        session: state.session || "", page: location.pathname
+      })
     }).then(function(res){
       return res.json().catch(function(){ return {}; });
     }).then(function(data){
@@ -2513,6 +2516,9 @@ var REVIEWS = [
     }).then(function(data){
       var reply = (data && data.reply) || TROUBLE;
       state.turns.push({ role: "assistant", text: reply });
+      /* the server names the conversation on its first reply; later
+         messages send it back so the transcript stays one record */
+      if (data && data.session) state.session = data.session;
       if (data && data.lead && !state.leadSent) {
         state.leadSent = true;
         postLead(data.lead);

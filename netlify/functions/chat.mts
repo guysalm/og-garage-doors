@@ -18,6 +18,7 @@
  * block; within one request the tool loop passes Claude's content back intact.
  */
 import Anthropic from "@anthropic-ai/sdk";
+import { getStore } from "@netlify/blobs";
 
 // Haiku 5.5 on the owner's choice: well under a cent a conversation. CHAT_MODEL
 // overrides it (e.g. claude-sonnet-5-5) without a code change.
@@ -239,7 +240,79 @@ async function saveLead(lead: Lead, turns: Turn[]): Promise<string | null> {
   throw new Error("Supabase insert: gave up after 4 tries");
 }
 
+/**
+ * Transcripts — every conversation is kept in the Netlify Blobs store
+ * "chat-transcripts" so the owner can see what visitors ask. The key is the
+ * session id the server hands the browser on its first message:
+ * "YYYY-MM-DD/<random>", the date being the day the chat started, so a day's
+ * chats list by prefix and chat-cleanup.mts drops them after RETAIN_DAYS
+ * without opening each one. Each reply overwrites the whole conversation.
+ * A storage failure is logged and never stops Mia answering.
+ */
+const TRANSCRIPTS = "chat-transcripts";
+const SESSION_RE = /^\d{4}-\d{2}-\d{2}\/[a-z0-9]{16}$/;
+
+function newSession(): string {
+  const bytes = crypto.getRandomValues(new Uint8Array(16));
+  const rand = Array.from(bytes, (b) => "abcdefghijklmnopqrstuvwxyz0123456789"[b % 36]).join("");
+  return `${new Date().toISOString().slice(0, 10)}/${rand}`;
+}
+
+async function recordTranscript(
+  session: string,
+  page: string,
+  turns: Turn[],
+  reply: string,
+  lead: Lead | null,
+  leadSavedBefore: boolean,
+): Promise<void> {
+  try {
+    const store = getStore(TRANSCRIPTS);
+    const prev = (await store.getMetadata(session))?.metadata as { started?: string; lead?: boolean; page?: string } | undefined;
+    // The page the chat began on, not wherever the visitor wandered after.
+    const firstPage = prev?.page || page;
+    const now = new Date().toISOString();
+    const hasLead = Boolean(lead) || leadSavedBefore || Boolean(prev?.lead);
+    await store.setJSON(
+      session,
+      {
+        session,
+        started: prev?.started ?? now,
+        updated: now,
+        page: firstPage,
+        lead: lead ?? undefined,
+        leadSaved: hasLead,
+        turns: [...turns, { role: "assistant", text: reply }],
+      },
+      { metadata: { started: prev?.started ?? now, updated: now, lead: hasLead, page: firstPage } },
+    );
+  } catch (err) {
+    console.error("[chat] transcript not saved:", err);
+  }
+}
+
 export default async (req: Request): Promise<Response> => {
+  const res = await answer(req.clone());
+  // Method, origin and malformed-body refusals are not conversations.
+  if (res.status === 400 || res.status === 403 || res.status === 405) return res;
+
+  let body: unknown = null;
+  try {
+    body = await req.json();
+  } catch {
+    body = null;
+  }
+  const b = (body ?? {}) as { session?: unknown; page?: unknown; leadSaved?: unknown };
+  const session = typeof b.session === "string" && SESSION_RE.test(b.session) ? b.session : newSession();
+  const page = typeof b.page === "string" ? b.page.slice(0, 200) : "";
+
+  const data = (await res.json()) as { reply: string; lead: Lead | null };
+  const turns = parseTurns(body);
+  if (turns) await recordTranscript(session, page, turns, data.reply, data.lead, b.leadSaved === true);
+  return json({ ...data, session }, res.status);
+};
+
+async function answer(req: Request): Promise<Response> {
   if (req.method !== "POST") return json({ error: "POST only" }, 405);
 
   // Only this site's own pages may use the chat.
@@ -333,7 +406,7 @@ export default async (req: Request): Promise<Response> => {
     else console.error("[chat] failed:", err);
     return json({ reply: SORRY, lead: savedLead }, 502);
   }
-};
+}
 
 export const config = {
   path: "/api/chat",
